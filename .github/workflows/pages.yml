@@ -24,10 +24,10 @@ jobs:
           cache: npm
       - uses: actions/configure-pages@v5
         id: pages
-      - run: npm ci
-      # Record the read-aloud voice. If this fails, the site still deploys and
-      # cook mode reads with a voice on the visitor's device instead.
+      # Record the read-aloud voice. All of it may fail without stopping the deploy:
+      # cook mode then reads with a voice on the visitor's device instead.
       - uses: actions/cache@v4
+        continue-on-error: true
         with:
           path: public/audio
           key: narration-${{ hashFiles('src/content/recipes/**', 'src/lib/narration.mjs', 'src/data/cookbook.json') }}
@@ -35,9 +35,14 @@ jobs:
       - name: Record recipe narration
         continue-on-error: true
         timeout-minutes: 20
+        env:
+          ONNXRUNTIME_NODE_INSTALL_CUDA: skip
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          npm ci
           npm run narrate
+      # The site itself never installs the voice tools.
+      - run: npm ci --omit=dev
       - run: npm run build
         env:
           PAGES_ORIGIN: ${{ steps.pages.outputs.origin }}

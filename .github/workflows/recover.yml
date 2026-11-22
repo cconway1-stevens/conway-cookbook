@@ -1,0 +1,25 @@
+name: Recover published nutrition
+on:
+  push:
+    branches: [migration/recover-nutrition]
+permissions:
+  actions: read
+  contents: write
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: 45072983117
+          name: github-pages-1
+          path: old
+      - run: |
+          node scripts/recover-nutrition.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/data/nutrition
+          git commit -m 'Recover saved recipe analyses from Pages'
+          git push origin HEAD:migration/recover-nutrition

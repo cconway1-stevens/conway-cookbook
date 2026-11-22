@@ -20,6 +20,7 @@ const recipes = defineCollection({
     category: list('course', [...courseNames, ...book.meals]),
     meal: z.array(list('meal', book.meals)).default([]),
     cuisine: z.array(z.string()).default([]),
+    academyLinks: z.array(z.string()).optional(),
     tags: z.array(z.string()).default([]),
     date: z.coerce.date().default(new Date(0)),
     author: z.string().optional(),

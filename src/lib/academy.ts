@@ -1,3 +1,4 @@
+import { modules } from './coursework';
 import { directions, ingredients, type Recipe } from './recipes';
 
 export const lessons = [
@@ -14,6 +15,14 @@ export const lessons = [
   { id: 'custard', title: 'Soak bread evenly for pudding', match: /soak the bread|bread cubes.*custard/i,
     steps: ['Cut the bread into similarly sized pieces. Whisk the custard until the whites and yolks are fully blended.', 'Pour the custard slowly over the whole dish. Use a spoon to press down the pieces that float up.', 'After the recipe’s soaking time, open a cube from the middle. The center should be moist before the dish goes into the oven.'] },
 ];
+export function academyLinksFor(recipe: Recipe) {
+  if (!recipe.data.academyLinks) return skillsFor(recipe);
+  return [...new Set(recipe.data.academyLinks)].map(id => {
+    const link = [...lessons, ...modules].find(item => item.id === id);
+    if (!link) throw new Error(`Unknown Academy link in ${recipe.id}: ${id}`);
+    return link;
+  });
+}
 export function skillsFor(recipe: Recipe) {
   const text = [...ingredients(recipe).flatMap(g => g.items), ...directions(recipe).map(s => s.title + ' ' + s.text)].join('\n');
   return lessons.filter(lesson => lesson.match.test(text));

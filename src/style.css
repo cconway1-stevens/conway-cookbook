@@ -628,3 +628,8 @@ input[role=switch]:disabled { opacity: .4; cursor: not-allowed; }
   #converter, .convert-ingredient { display: none !important; }
 }
 @media print { .recipe #skills, .recipe #nutrition { display: none; } }
+@media screen {
+  .technique-help { padding-block: .45rem; font-size: .95rem; }
+  .technique-help summary { width: fit-content; cursor: pointer; padding-block: .4rem; }
+  .technique-help ul { display: flex; flex-wrap: wrap; gap: .45rem 1rem; padding-bottom: .4rem; }
+}

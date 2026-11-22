@@ -1,7 +1,7 @@
 export const modules = [
-  { title: 'Prep school', ids: ['scale','onion-strips','dice'], goal: 'Plan a batch, handle an onion and produce vegetables that cook evenly.' },
-  { title: 'Stovetop control', ids: ['simmer'], goal: 'Use the surface of a liquid to judge heat and reduction.' },
-  { title: 'The baking bench', ids: ['fold','custard'], goal: 'Control how solids are distributed through dough and custard.' },
+  { id: 'prep-school', title: 'Prep school', ids: ['scale','onion-strips','dice'], goal: 'Plan a batch, handle an onion and produce vegetables that cook evenly.' },
+  { id: 'stovetop', title: 'Stovetop control', ids: ['simmer'], goal: 'Use the surface of a liquid to judge heat and reduction.' },
+  { id: 'baking-bench', title: 'The baking bench', ids: ['fold','custard'], goal: 'Control how solids are distributed through dough and custard.' },
 ];
 export const labs: Record<string, [string,string,string,string]> = {
   scale: ['A scale, a bowl and a recipe with a stated yield.', 'Scale a four-serving batch to six. Calculate the flour for an original quantity of 300 g, then weigh the new amount.', 'Why might the bake time stay close to the original?', 'The conversion factor changes quantities. Pan depth and the actual doneness cues determine timing. Six divided by four gives 1.5, so use 450 g flour.'],

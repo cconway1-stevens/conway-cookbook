@@ -3,7 +3,7 @@ import { render } from 'astro:content';
 import Cookbook from '../../layouts/Cookbook.astro';
 import RecipeCard from '../../components/RecipeCard.astro';
 import Spot from '../../components/Spot.astro';
-import { skillsFor } from '../../lib/academy';
+import { academyLinksFor } from '../../lib/academy';
 import { nutritionFor } from '../../lib/nutrition';
 import RecipeExtras from '../../components/RecipeExtras.astro';
 import Parts from '../../components/Parts.astro';
@@ -27,7 +27,7 @@ export async function getStaticPaths() {
 
 const { recipe, pairs } = Astro.props;
 const { data } = recipe;
-const skills = skillsFor(recipe);
+const skills = academyLinksFor(recipe);
 const nutrition = await nutritionFor(recipe);
 const pin = Astro.site && new URL('https://www.pinterest.com/pin/create/button/');
 if (pin && Astro.site) {
@@ -81,7 +81,10 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
         </div>
         {data.image ? <figure class="print"><img src={base + data.image} srcset={`${base}card-images/${recipe.id}/360.webp 360w, ${base}card-images/${recipe.id}/720.webp 720w`} sizes="(max-width:720px) 86vw, 440px" alt={data.imageAlt ?? data.title} width="1200" height="800" /></figure> : <Spot category={data.category} />}
       </header>
-      <nav class="reader-links" aria-label="Recipe sections"><a href="#ingredients">Ingredients</a><a href="#directions">Directions</a><a href="#notes">Notes</a><a href="#photos">Gallery</a>{skills.length > 0 && <a href="#skills">Learn a skill</a>}{nutrition && <a href="#nutrition">Nutrition</a>}<button class="linkish" type="button" id="convert-open" hidden>Convert units</button></nav>
+      <nav class="reader-links" aria-label="Recipe sections"><a href="#ingredients">Ingredients</a><a href="#directions">Directions</a><a href="#notes">Notes</a><a href="#photos">Gallery</a>{nutrition && <a href="#nutrition">Nutrition</a>}<button class="linkish" type="button" id="convert-open" hidden>Convert units</button></nav>
+      {skills.length > 0 && <details id="skills" class="technique-help"><summary>Technique help</summary>
+        <ul>{skills.map(skill => <li><a href={base + 'academy/#' + skill.id}>{skill.title}</a></li>)}</ul>
+      </details>}
       <div class="recipe-body">
         {Content && <Content />}
         {groups && <>
@@ -111,7 +114,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
       {data.image && <label><input type="checkbox" id="print-photo" /> Recipe photo</label>}
       {!!data.familyNotes?.length && <label><input type="checkbox" id="print-notes" /> Family notes</label>}
       <div class="block-actions"><button value="print" class="button">Print</button><button value="cancel" class="button quiet">Cancel</button></div></form></dialog>
-    {skills.length > 0 && <section class="block" id="skills"><h2>Learn a skill</h2><ul>{skills.map(skill => <li><a href={base + 'academy/#' + skill.id}>{skill.title}</a></li>)}</ul></section>}
+
     {nutrition && <section class="block" id="nutrition"><h2>Nutrition</h2><p>{nutrition.basis}</p><dl>{nutrition.rows.map(n => <div><dt>{n.name}</dt><dd>{n.amount} {n.unit}</dd></div>)}</dl><p>Calculated from the listed ingredients by <a href="https://spoonacular.com/food-api">Spoonacular</a>. Brands and preparation can affect actual values.</p></section>}
     <RecipeExtras recipe={recipe} />
     {pairs.length > 0 && <section class="block pairs" aria-labelledby="pairs-title"><h2 id="pairs-title">Goes well with</h2><ul class="cards">{pairs.map((r) => <RecipeCard recipe={r} />)}</ul></section>}

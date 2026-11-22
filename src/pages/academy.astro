@@ -7,8 +7,8 @@ const recipes = await allRecipes();
 ---
 <Cookbook title="Cooking Academy" current="academy">
 <div class="wrap academy"><header><h1>Cooking Academy</h1><p>Watch a technique, try it at the counter, then use it in a family recipe.</p><output id="progress" hidden></output></header>
-<nav aria-label="Course modules">{modules.map((m,i)=><a href={'#module-'+i}>{m.title}</a>)}</nav>
-{modules.map((m,i)=><section id={'module-'+i}><h2>{m.title}</h2><p>{m.goal}</p>
+<nav aria-label="Course modules">{modules.map(m=><a href={'#'+m.id}>{m.title}</a>)}</nav>
+{modules.map(m=><section id={m.id}><h2>{m.title}</h2><p>{m.goal}</p>
 {m.ids.map(id=>{
  const lesson=lessons.find(l=>l.id===id)!;
  const [kit,lab,q,a]=labs[id];
@@ -16,7 +16,7 @@ const recipes = await allRecipes();
  return <article id={id}><h3>{lesson.title}</h3><div class="lesson">
  <div><video controls playsinline preload="none" width="640" height="300" aria-label={'Silent illustrated demonstration: '+lesson.title} src={base+'academy/'+id+'.mp4'}></video><p><b>Set out </b>{kit}</p></div>
  <div><ol>{lesson.steps.map(s=><li>{s}</li>)}</ol><h4>Counter practice</h4><p>{lab}</p><details><summary>{q}</summary><p>{a}</p></details>
- {id==='scale' && <p>Yield-factor exercise adapted from <a href="https://opentextbc.ca/basickitchenandfoodservicemanagement/chapter/converting-and-adjusting-recipes-and-formulas/">Basic Kitchen and Food Service Management</a>, BC Cook Articulation Committee, BCcampus. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Quantities and practice questions adapted for this cookbook.</p>}
+ {id==='scale' && <p>Yield-factor exercise adapted from <a href="https://opentextbc.ca/basickitchenandfoodservicemanagement/chapter/convert-and-adjust-recipes-and-formulas/">Basic Kitchen and Food Service Management</a>, BC Cook Articulation Committee, BCcampus. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Quantities and practice questions adapted for this cookbook.</p>}
  {id==='dice' && <p><a href="https://food.unl.edu/article/how-use-chefs-knife/">Knife grip guide · Nebraska Extension</a></p>}
  {practice.length>0 && <p><b>Cook with this skill </b>{practice.map((r,j)=><>{j>0 && ' · '}<a href={recipeUrl(r.id)}>{r.data.title}</a></>)}</p>}
  <label class="completion" hidden><input type="checkbox" value={id}/> Practiced this skill</label></div></div></article>;

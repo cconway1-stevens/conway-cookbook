@@ -1,0 +1,23 @@
+{
+  "title": "Pineapple Lime Agua Fresca",
+  "description": "Fresh pineapple blended with cold water and lime.",
+  "category": "Drinks",
+  "time": "10 minutes",
+  "minutes": 10,
+  "servings": "4",
+  "difficulty": "Easy",
+  "ingredients": [
+    "3 cups ripe pineapple chunks",
+    "2 cups cold water",
+    "2 tablespoons fresh lime juice",
+    "Ice"
+  ],
+  "steps": [
+    "Blend the pineapple, cold water, and lime juice until smooth.",
+    "Strain through a fine-mesh sieve if you prefer a lighter texture. Stir and serve over ice."
+  ],
+  "tags": [
+    "Alcohol-free",
+    "Pineapple"
+  ]
+}

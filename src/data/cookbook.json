@@ -15,7 +15,8 @@
     { "name": "Sides", "menu": "side", "art": "pan" },
     { "name": "Breads", "menu": "side", "art": "loaf" },
     { "name": "Desserts", "menu": "sweet", "art": "pie", "meal": "Dessert" },
-    { "name": "Drinks", "menu": "drink", "art": "glass" }
+    { "name": "Drinks", "menu": "drink", "art": "glass" },
+    { "name": "Cocktails", "menu": "drink", "art": "glass" }
   ],
   "courseForMeal": "Mains",
   "menu": {

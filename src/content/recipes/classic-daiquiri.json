@@ -1,0 +1,23 @@
+{
+  "title": "Classic Daiquiri",
+  "description": "White rum and fresh lime shaken with simple syrup.",
+  "category": "Cocktails",
+  "time": "5 minutes",
+  "minutes": 5,
+  "servings": "1",
+  "difficulty": "Easy",
+  "ingredients": [
+    "2 fluid ounces white rum",
+    "1 fluid ounce fresh lime juice",
+    "¾ fluid ounce simple syrup",
+    "Ice"
+  ],
+  "steps": [
+    "Add the rum, lime juice, and simple syrup to a shaker filled with ice.",
+    "Shake for about 12 seconds and strain into a chilled coupe."
+  ],
+  "tags": [
+    "Rum",
+    "Lime"
+  ]
+}

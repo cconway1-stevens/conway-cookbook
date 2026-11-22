@@ -18,7 +18,7 @@ function start(info: Info) {
   const capital = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
   const stepWords = (n: number[]) => (n.length ? `${n.length > 1 ? 'Steps' : 'Step'} ${n.join(', ')}` : '');
   const make = (tag: string, className = '', text = '') => { const el = document.createElement(tag); if (className) el.className = className; if (text) el.textContent = text; return el; };
-  const target = (node: EventTarget | null) => (node instanceof Element ? node.closest<HTMLElement>('.ing, .ing-line') : null);
+  const target = (node: EventTarget | null) => (node instanceof Element && !node.closest('button, input') ? node.closest<HTMLElement>('.ing, .ing-line') : null);
 
   interface Row { g: string; where: string; line: string; note: string; now: boolean }
   const row = (id: string, now: boolean, showLine = true): Row => {

@@ -57,7 +57,11 @@ export const micStatus = async (): Promise<string> =>
   !SR || !('processLocally' in SR.prototype) || typeof SR.available !== 'function' ? 'unavailable' : SR.available(local).catch(() => 'unavailable');
 export async function listen(onHeard: (text: string) => void, onFail: (why: string) => void, wanted: () => boolean) {
   let status = await micStatus();
-  if (status !== 'available' && status !== 'unavailable') { await SR.install(local).catch(() => false); status = await micStatus(); }
+  if (!wanted()) return;
+  if (status !== 'available' && status !== 'unavailable' && typeof SR.install === 'function') {
+    await SR.install(local).catch(() => false);
+    status = await micStatus();
+  }
   if (status !== 'available') return void onFail('This browser couldn’t set up on-device listening, so the microphone stays off.');
   if (!wanted()) return;
   const rec = new SR();
@@ -65,7 +69,15 @@ export async function listen(onHeard: (text: string) => void, onFail: (why: stri
   rec.onresult = (e: any) => { for (let i = e.resultIndex; i < e.results.length; i++) if (e.results[i].isFinal) onHeard(e.results[i][0].transcript); };
   let dead = false;
   rec.onerror = (e: any) => { if (['not-allowed', 'service-not-allowed', 'language-not-supported', 'audio-capture'].includes(e.error)) { dead = true; onFail('The microphone isn’t available. Check this browser’s permission for the page.'); } };
-  rec.onend = () => setTimeout(() => { if (!dead && wanted()) rec.start(); }, 300);
-  rec.start();
+  const start = () => {
+    if (dead || !wanted()) return;
+    try { rec.start(); }
+    catch {
+      dead = true;
+      onFail('On-device listening couldn’t start. Check microphone access and try again.');
+    }
+  };
+  rec.onend = () => setTimeout(start, 300);
+  start();
   return () => { dead = true; rec.abort(); };
 }

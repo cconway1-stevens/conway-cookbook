@@ -28,7 +28,7 @@ const pages = [
   ...data.steps.map((s) => ({ title: s.title, heading: s.heading, why: s.why, lines: s.lines.map((line) => ({ line, group: '' })) })),
 ];
 const KEY = `conway-cook-${data.id}`;
-let page = 0, warned = false, openedFrom: HTMLElement | null = null;
+let page = 0, finished = false, openedFrom: HTMLElement | null = null;
 let ticks = pages.map((p) => p.lines.map(() => false));
 
 const store = () => { try { localStorage.setItem(KEY, JSON.stringify({ page, ticks })); } catch { /* private window */ } };
@@ -72,6 +72,12 @@ function whyNow() {
 /* ---------- Timers ---------- */
 const timers: { label: string; end: number; el: HTMLElement; done: boolean }[] = [];
 let sound: AudioContext | undefined;
+function prepareSound() {
+  try {
+    sound ??= new AudioContext();
+    void sound.resume().catch(() => {});
+  } catch { /* The visible timer still runs. */ }
+}
 function chime() {
   if (!sound) return;
   [0, 0.35, 0.7].forEach((at) => {
@@ -81,7 +87,7 @@ function chime() {
   });
 }
 function startTimer(minutes: number, label: string) {
-  sound ??= new AudioContext(); sound.resume();
+  prepareSound();
   const el = document.createElement('button');
   el.type = 'button'; el.className = 'timer';
   const timer = { label, end: Date.now() + minutes * 60000, el, done: false };
@@ -93,7 +99,7 @@ function drawTimers() {
     const left = Math.max(0, Math.ceil((t.end - Date.now()) / 1000));
     t.el.textContent = left ? `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')} ${t.label}` : `Done: ${t.label}`;
     t.el.setAttribute('aria-label', `${t.el.textContent}. Press to remove.`);
-    if (!left && !t.done) { t.done = true; t.el.classList.add('ring'); chime(); if (!speaking) say([{ line: data.phrases.timer }]); }
+    if (!left && !t.done) { t.done = true; t.el.classList.add('ring'); chime(); if (dialog.open && !speaking) say([{ line: data.phrases.timer }]); }
   }
 }
 setInterval(drawTimers, 500);
@@ -104,7 +110,10 @@ const times = (text: string) => [...text.matchAll(/(\d+)(?:\s*(?:–|-|to)\s*\d+
 const left = (p = page) => ticks[p].filter((t) => !t).length;
 function draw(focus = true) {
   const p = pages[page];
-  warned = false; $('cook-warn').textContent = '';
+  finished = false;
+  $('cook-check-hint').hidden = false;
+  $<HTMLButtonElement>('cook-next').disabled = false;
+  $('cook-warn').textContent = '';
   $('cook-count').textContent = page ? `Step ${page} of ${pages.length - 1}` : 'Before you start';
   $('cook-heading').textContent = p.title || `Step ${page}`;
   let group = '';
@@ -112,7 +121,7 @@ function draw(focus = true) {
     const li = document.createElement('li'); li.dataset.row = String(row);
     const label = document.createElement('label'), box = document.createElement('input'), text = document.createElement('span');
     box.type = 'checkbox'; box.checked = ticks[page][row]; fill(text, line);
-    box.addEventListener('change', () => { ticks[page][row] = box.checked; warned = false; $('cook-warn').textContent = ''; store(); drawTrack(); });
+    box.addEventListener('change', () => { ticks[page][row] = box.checked; store(); drawTrack(); });
     label.append(box, text); li.append(label);
     if (g === group) return [li];
     group = g;
@@ -160,20 +169,12 @@ function drawTrack() {
 function tickAll() { ticks[page] = ticks[page].map(() => true); store(); }
 function go(to: number) { const way = to < page ? 'back' : 'next'; $('cook-card').classList.remove('next', 'back'); replay($('cook-card'), way); page = Math.min(Math.max(0, to), pages.length - 1); draw(); }
 function next() {
-  if (left() && !warned) {
-    warned = true;
-    const n = left();
-    $('cook-warn').textContent = `${n} ${n === 1 ? 'line is' : 'lines are'} not ticked. Finish ${n === 1 ? 'it' : 'them'}, or press ${$('cook-next').textContent} again to go on anyway.`;
-    $('cook-lines').querySelector(`[data-row="${ticks[page].indexOf(false)}"]`)?.scrollIntoView({ block: 'nearest' });
-    if (prefs.auto || micOn) say([{ line: data.phrases.unchecked }]);
-    return;
-  }
+  if (finished) return;
   if (page < pages.length - 1) return go(page + 1);
-  const missed = pages.map((_, i) => i).filter((i) => left(i));
-  if (missed.length) {
-    $('cook-warn').textContent = `Not ticked yet: ${missed.map((i) => (i ? `step ${i}` : 'ingredients')).join(', ')}. Pick one above to go back, or close when you’re ready.`;
-    return;
-  }
+  hush();
+  finished = true;
+  $('cook-check-hint').hidden = true;
+  $<HTMLButtonElement>('cook-next').disabled = true;
   $('cook-count').textContent = 'All done'; $('cook-heading').textContent = 'Enjoy it.';
   $('cook-lines').replaceChildren(); $('cook-extra').replaceChildren(); $('cook-why').hidden = true;
   const again = document.createElement('button'); again.type = 'button'; again.className = 'button quiet'; again.textContent = 'Start over';
@@ -185,23 +186,36 @@ function next() {
   say([{ line: data.phrases.finished }]);
 }
 function tickNext() {
+  if (finished) return;
   const row = ticks[page].indexOf(false);
   if (row < 0) return next();
   ticks[page][row] = true;
   const box = $('cook-lines').querySelector<HTMLInputElement>(`[data-row="${row}"] input`);
   if (box) box.checked = true;
-  warned = false; $('cook-warn').textContent = ''; store(); drawTrack();
+  $('cook-warn').textContent = ''; store(); drawTrack();
   const after = ticks[page].indexOf(false);
   if (after >= 0) say([{ line: pages[page].lines[after].line, row: after }]); else next();
 }
 
 /* ---------- Voice commands ---------- */
+let micRequest = 0;
 let micOn = false, stopMic: (() => void) | undefined;
 const numbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
 function command(heard: string) {
   const words = heard.toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
   // Short phrases only, so kitchen chatter doesn't turn the page.
-  if (!words || words.split(' ').length > 4) return;
+  if (!words) return;
+  const custom = words.match(/^(?:set |start )?(?:a )?timer(?: for)? (\w+)(?: (seconds?|minutes?|hours?))?$/)
+    ?? words.match(/^(?:start |set )?(?:a )?(\w+) (seconds?|minutes?|hours?) timer$/);
+  if (custom) {
+    const amount = /^\d+$/.test(custom[1]) ? Number(custom[1]) : numbers.indexOf(custom[1]);
+    const minutes = amount * (custom[2]?.startsWith('second') ? 1 / 60 : custom[2]?.startsWith('hour') ? 60 : 1);
+    if (minutes >= 1 / 60 && minutes <= 24 * 60) startTimer(minutes, 'Kitchen timer');
+    return;
+  }
+  if (/^(next|next step|skip)$/.test(words)) return next();
+  if (/^(back|go back|previous|previous step)$/.test(words)) return go(page - 1);
+  if (words.split(' ').length > 4) return;
   if (/\b(stop|quiet|pause)\b/.test(words)) return hush();
   if (/^(why|why is that|explain)$/.test(words)) return speaking ? undefined : whyNow();
   if (speaking) return; // don't obey our own narration
@@ -209,17 +223,16 @@ function command(heard: string) {
   if (step) { const n = /^\d+$/.test(step[1]) ? Number(step[1]) : numbers.indexOf(step[1]); if (n > 0) return go(n); }
   if (/\b(check|tick)\b/.test(words)) return tickNext();
   if (/\bdone\b/.test(words)) { tickAll(); return next(); }
-  if (/\b(next|skip)\b/.test(words)) return next();
-  if (/\b(back|previous)\b/.test(words)) return go(page - 1);
   if (/\b(repeat|again|read)\b/.test(words)) return readPage();
   if (/\bingredients?\b/.test(words)) return go(0);
   if (/\btimer\b/.test(words)) $('cook-extra').querySelector<HTMLButtonElement>('[data-timer]')?.click();
 }
 async function mic(on: boolean) {
+  const request = ++micRequest;
   stopMic?.(); stopMic = undefined; micOn = on;
   if (!on) return;
-  const stop = await listen(command, (why) => { micOn = false; $('cook-warn').textContent = why; document.dispatchEvent(new CustomEvent('mic:failed', { detail: why })); }, () => micOn && dialog.open);
-  if (stop && micOn && dialog.open) { stopMic = stop; $('cook-warn').textContent = 'Listening. Try saying “next”.'; } else stop?.();
+  const stop = await listen(command, (why) => { if (request !== micRequest) return; micOn = false; $('cook-warn').textContent = why; document.dispatchEvent(new CustomEvent('mic:failed', { detail: why })); }, () => request === micRequest && micOn && dialog.open);
+  if (stop && request === micRequest && micOn && dialog.open) { stopMic = stop; $('cook-warn').textContent = 'Listening. Try saying “next”.'; } else stop?.();
 }
 
 /* ---------- Keep the screen on, open and close ---------- */
@@ -229,7 +242,7 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 
 function open(from: HTMLElement) {
   openedFrom = from; dialog.showModal(); document.documentElement.classList.add('cooking');
-  stayAwake(); draw(); if (prefs.mic) mic(true);
+  prepareSound(); stayAwake(); draw(); if (prefs.mic) mic(true);
 }
 dialog.addEventListener('close', () => {
   hush(); mic(false); panel(false, false);
@@ -239,12 +252,23 @@ const starter = document.querySelector<HTMLButtonElement>('[data-cook]')!;
 const label = () => { starter.textContent = page || ticks.flat().some(Boolean) ? 'Keep cooking' : 'Start cooking'; };
 starter.hidden = !data.steps.length; label();
 starter.addEventListener('click', () => open(starter));
+const customTimer = $<HTMLFormElement>('custom-timer');
+customTimer.addEventListener('submit', event => {
+  event.preventDefault();
+  const amount = $<HTMLInputElement>('timer-duration').valueAsNumber;
+  const minutes = amount / ($<HTMLSelectElement>('timer-unit').value === 'seconds' ? 60 : 1);
+  if (Number.isFinite(minutes) && minutes >= 1 / 60 && minutes <= 24 * 60) {
+    startTimer(minutes, 'Kitchen timer');
+    $<HTMLDetailsElement>('timer-tools').open = false;
+    $('timer-tools').querySelector('summary')?.focus();
+  } else $('cook-warn').textContent = 'Choose a duration between 1 second and 24 hours.';
+});
 $('cook-close').addEventListener('click', () => dialog.close());
 $('cook-back').addEventListener('click', () => go(page - 1));
 $('cook-next').addEventListener('click', next);
 $('cook-read').addEventListener('click', () => (speaking ? hush() : readPage()));
 dialog.addEventListener('keydown', (event) => {
-  if ((event.target as Element).closest('#cook-voice, #acc-widget-host') || event.metaKey || event.ctrlKey || event.altKey) return;
+  if ((event.target as Element).closest('#cook-voice, #acc-widget-host, #custom-timer') || event.metaKey || event.ctrlKey || event.altKey) return;
   if (event.key === 'ArrowRight' || event.key === 'PageDown') { event.preventDefault(); next(); }
   else if (event.key === 'ArrowLeft' || event.key === 'PageUp') { event.preventDefault(); go(page - 1); }
   else if (event.key.toLowerCase() === 'r') speaking ? hush() : readPage();

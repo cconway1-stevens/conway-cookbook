@@ -54,3 +54,22 @@
   .drawer-index a { font-size: .88rem; padding-inline: .55rem; }
   .catalog-drawer { margin-top: .65rem; }
 }
+
+@media screen {
+  .box[data-layout=compact] .cards { gap: .75rem; }
+  .box[data-layout=compact] .card-face {
+    grid-template-columns: clamp(3.5rem, 19vw, 7rem) minmax(0, 1fr);
+    padding: .75rem;
+  }
+  .box[data-layout=compact] .card-photo {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    border-radius: .3rem;
+  }
+  .box[data-layout=compact] .card-art .spot { width: min(100%, 4rem); padding: .45rem; }
+  .box[data-layout=compact] .card-top { min-width: 0; min-height: 0; }
+  .box[data-layout=compact] .card-title { overflow-wrap: anywhere; text-wrap: wrap; }
+  .box[data-layout=compact] .card-meta { overflow-wrap: anywhere; }
+  .box[data-layout=compact] .card-go button { min-width: 0; max-width: 100%; min-height: 44px; overflow-wrap: anywhere; }
+}

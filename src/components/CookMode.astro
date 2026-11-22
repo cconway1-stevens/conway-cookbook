@@ -15,9 +15,18 @@ const { recipe } = Astro.props;
   <div class="cook-card" id="cook-card" tabindex="-1">
     <p class="cook-count" id="cook-count"></p>
     <h2 id="cook-heading"></h2>
+    <p class="cook-check-hint" id="cook-check-hint">Check items as you go, or choose Next whenever you’re ready.</p>
     <ul class="cook-lines" id="cook-lines"></ul>
     <details class="why" id="cook-why" hidden><summary><span class="why-mark" aria-hidden="true">?</span>Why?</summary><p id="cook-why-text"></p></details>
     <div class="cook-extra" id="cook-extra"></div>
+    <details id="timer-tools">
+      <summary>Kitchen timer</summary>
+      <form id="custom-timer">
+        <label>Duration <input id="timer-duration" type="number" min="1" step="1" value="5" required /></label>
+        <label>Unit <select id="timer-unit"><option value="minutes">Minutes</option><option value="seconds">Seconds</option></select></label>
+        <button class="button quiet" type="submit">Start timer</button>
+      </form>
+    </details>
   </div>
   <p class="cook-warn" id="cook-warn" role="status"></p>
   <div class="cook-nav">

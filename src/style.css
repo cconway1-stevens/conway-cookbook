@@ -609,3 +609,21 @@ input[role=switch]:disabled { opacity: .4; cursor: not-allowed; }
 @media print {
   .ingredient-progress, .ingredient-tick { display: none !important; }
 }
+
+@media screen {
+  .cook-check-hint { margin-bottom: .65rem; color: var(--soft); }
+  #timer-tools { margin-block: .75rem; }
+  #timer-tools summary { cursor: pointer; width: fit-content; padding-block: .4rem; }
+  #custom-timer, .converter-fields { display: flex; flex-wrap: wrap; align-items: end; gap: .6rem; }
+  #custom-timer label, .converter-fields label { display: grid; gap: .25rem; }
+  #timer-duration, #convert-amount { width: 8ch; }
+  #converter { margin: auto; width: min(92vw, 34rem); background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: .75rem; padding: 1.2rem; }
+  #converter::backdrop { background: #14292199; }
+  #converter form { display: grid; gap: .8rem; }
+  #converter output { font-size: 1.25rem; font-weight: 700; }
+  #convert-source:empty { display: none; }
+  .convert-ingredient { font-size: .85em; }
+}
+@media print {
+  #converter, .convert-ingredient { display: none !important; }
+}

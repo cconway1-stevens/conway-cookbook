@@ -77,7 +77,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
         </div>
         {data.image ? <figure class="print"><img src={base + data.image} srcset={`${base}card-images/${recipe.id}/360.webp 360w, ${base}card-images/${recipe.id}/720.webp 720w`} sizes="(max-width:720px) 86vw, 440px" alt={data.imageAlt ?? data.title} width="1200" height="800" /></figure> : <Spot category={data.category} />}
       </header>
-      <nav class="reader-links" aria-label="Recipe sections"><a href="#ingredients">Ingredients</a><a href="#directions">Directions</a><a href="#notes">Notes</a><a href="#photos">Gallery</a></nav>
+      <nav class="reader-links" aria-label="Recipe sections"><a href="#ingredients">Ingredients</a><a href="#directions">Directions</a><a href="#notes">Notes</a><a href="#photos">Gallery</a><button class="linkish" type="button" id="convert-open" hidden>Convert units</button></nav>
       <div class="recipe-body">
         {Content && <Content />}
         {groups && <>
@@ -110,10 +110,25 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
     <RecipeExtras recipe={recipe} />
     {pairs.length > 0 && <section class="block pairs" aria-labelledby="pairs-title"><h2 id="pairs-title">Goes well with</h2><ul class="cards">{pairs.map((r) => <RecipeCard recipe={r} />)}</ul></section>}
   </article>
+  <dialog id="converter" aria-labelledby="converter-title">
+    <form method="dialog">
+      <h2 id="converter-title">Kitchen converter</h2>
+      <p id="convert-source"></p>
+      <div class="converter-fields">
+        <label>Amount <input id="convert-amount" type="number" step="any" inputmode="decimal" /></label>
+        <label>From <select id="convert-from"></select></label>
+        <label>To <select id="convert-to"></select></label>
+      </div>
+      <output aria-live="polite"></output>
+      <p>Volume uses US measures. Converting between volume and weight requires an ingredient-specific density.</p>
+      <button class="button quiet">Close</button>
+    </form>
+  </dialog>
   <CookMode recipe={recipe} />
 </Cookbook>
 <script>
   import '../../scripts/ingredient-hover';
+  import '../../scripts/converter';
   const progress = document.querySelector<HTMLElement>('#ingredient-progress');
   const ticks = [...document.querySelectorAll<HTMLInputElement>('.ingredient-tick')];
   if (progress && ticks.length) {

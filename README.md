@@ -1,61 +1,68 @@
 # The Conway Cookbook
 
-A public, read-only family cookbook built with Astro. Each recipe is one file. Drop it in the folder and the site builds its page, search, filters, randomizer, menu builder, shopping list, and cook mode from it.
+A family recipe box for the dishes we make again, the notes we leave on the cards, and the meals we share.
+
+**[Open the cookbook](https://cconway1-stevens.github.io/conway-cookbook/)** · [Browse recipes](https://cconway1-stevens.github.io/conway-cookbook/recipes/) · [Add a recipe](#add-a-recipe)
+
+<a href="https://cconway1-stevens.github.io/conway-cookbook/"><img src="public/images/cookbook-cover.jpg" width="320" alt="Illustrated cookbook cover with apple crumble pie, apple blossoms, and gingham"></a>
+
+## Cook from the site
+
+- Search the recipe box by ingredient, cuisine, meal, or how much time you have.
+- Build a menu, print its shopping list, or share it as a link.
+- Follow a recipe step by step in cook mode, with read-aloud directions and timers.
+- Pick **Blue Plate** or **Heirloom** in Settings. Open the reading-help button for larger text, contrast controls, or less motion.
 
 ## Add a recipe
 
-1. Copy `recipe-template.json` into `src/content/recipes/` and name it like `sunday-pot-roast.json`. The filename becomes the link.
-2. Fill it in. Required: `title`, `description`, `category`, `time`, `servings`, `ingredients`, `steps`. Delete any other line you don't need.
-   - `category` is a course: Breakfast, Appetizers, Soups & Salads, Mains, Sides, Breads, Desserts, or Drinks. A meal such as `Dinner` works too.
-   - `meal` is any of Breakfast, Lunch, Dinner, Dessert. `cuisine` and `tags` are free text. A new one becomes a filter by itself.
-   - `ingredients` is a list of lines, or of groups with a `group` name and `items`. `steps` is a list of text, or of a `title` and `text`, and an optional `why` that explains the step in a sentence or two.
-   - `minutes` is the time as a number, for the "Ready in" filter.
-3. For a photo, put it in `public/images/` and add `"image": "images/your-photo.jpg"` and `"imageAlt"`.
-4. Commit to `main` to publish. You can do all of this on GitHub's website. If something is wrong, the build stops, names the file, and the live site stays as it was.
+Contributors with write access to this repository can import an existing recipe or enter one by hand. Merging to `main` publishes the change through GitHub Pages.
 
-Markdown recipes (`.md`, with `## Ingredients` and numbered `## Directions`) also work.
+### Import a recipe from a URL
+
+1. Open the [Import recipe from URL workflow](https://github.com/cconway1-stevens/conway-cookbook/actions/workflows/import-recipe.yml).
+2. Choose **Run workflow** on `main`. Paste a public HTTPS recipe URL, pick a course, and confirm you have permission to share the recipe publicly.
+3. Open the finished run. Follow **Review draft and open a pull request** in its summary.
+4. Check the ingredients, directions, and source credit. Make any edits on the draft branch, then open and merge the pull request when it’s ready.
+
+The importer reads [Schema.org Recipe data](https://schema.org/Recipe) from the source page. It does not import photos. Draft branches are public on GitHub, but they do not appear in the cookbook unless you merge them. If a site blocks the request or does not supply recipe data, add the recipe by hand.
+
+### Write a recipe by hand
+
+1. Copy [the recipe template](recipe-template.json) into [`src/content/recipes/`](src/content/recipes/) as `sunday-pot-roast.json`. The filename becomes the recipe’s URL.
+2. Fill in `title`, `description`, `category`, `time`, `servings`, `ingredients`, and `steps`. Delete optional fields you don’t use.
+   - Use a course from [`src/data/cookbook.json`](src/data/cookbook.json), or a meal such as `Dinner`. Set `minutes` to include the recipe in the **Ready in** filter.
+   - Write ingredients as lines or groups with `group` and `items`. Write steps as plain text or objects with `title` and `text`.
+3. For a cover photo, add the file to [`public/images/`](public/images/) and set `image` (for example, `images/sunday-pot-roast.jpg`) and `imageAlt`.
+4. Open a pull request. If a recipe fails validation, fix the file before merging.
+
+You can also write a `.md` recipe with `## Ingredients` and numbered `## Directions`. [Sample recipes](src/content/recipes/samples/) fill out the demo collection. Moving one out of `samples/` keeps its URL.
 
 ## Photos, video, and notes
 
-Every recipe page has a gallery and notes.
+Recipe pages have a gallery and notes. Decide whether to keep your additions on this device or share them with everyone:
 
-- **For everyone:** put files in `src/media/<recipe id>/`, for example `src/media/apple-crumble-pie/thanksgiving.jpg`. That's all; they show up by themselves. JPEG, PNG, WebP, AVIF, GIF, MP4, WebM, MOV, MP3, M4A, WAV, OGG, and PDF work. Save HEIC photos as JPEG first. A file name such as `first-try.jpg` becomes the caption. For your own captions, order, or YouTube and Vimeo links, add `media` to the recipe. For notes, add `familyNotes`. Each page links straight to the right GitHub upload and edit screens, which need repository access and take files up to 25 MB.
-- **Just for you:** anyone can add photos, video, recordings, and notes on the page itself. Those stay in that browser and are never uploaded.
+- **On this device**: Use the gallery and notes controls on a recipe page. Your additions stay in that browser.
+- **For everyone**: Add gallery files to `src/media/<recipe-id>/`, or use the recipe’s GitHub link. Set `media` to customize captions, order, or embed links. Set `familyNotes` to publish notes. GitHub’s web upload accepts individual files up to 25 MB.
 
-The site publishes photos only as resized copies with hidden data, such as location, removed. The original you commit stays in this public repository with everything in it, and video and sound files are published as they are. Photos saved from the page's own "Save the cleaned photos" button are already clean.
+The build resizes gallery photos and strips hidden metadata from the copies it serves. Originals you commit stay public. The recipe page can save cleaned copies before you upload them.
 
-## Change the site itself
+## Develop and deploy
 
-`src/data/cookbook.json` holds the title, tagline, cover, meals, courses, menu sections, menu papers, themes, and read-aloud phrases. The build checks it and says what to fix.
+Use Node.js 24. Install dependencies and start Astro’s development server:
 
-The whole cookbook is also published as one index at `/cookbook.json`.
+```bash
+npm ci
+npm run dev
+```
 
-## Themes
+Run `npm run build` to generate the site in `dist/`, or `npm run preview` to preview that build. The [Pages workflow](.github/workflows/pages.yml) deploys changes to `main`. To deploy your own copy, select **GitHub Actions** under **Settings → Pages**.
 
-Visitors pick a theme on the Settings page. **Blue Plate** is the default and **Heirloom** is the original look. To add one, copy a file in `src/themes/`, change the theme id inside it, and add it to `themes` in `src/data/cookbook.json`. `src/style.css` holds structure only.
+- [`src/data/cookbook.json`](src/data/cookbook.json): site text, courses, menu options, themes, and reading phrases
+- [`src/themes/`](src/themes/): theme styles; [`src/motion.css`](src/motion.css): animations that respect reduced-motion settings
+- [Cookbook JSON](https://cconway1-stevens.github.io/conway-cookbook/cookbook.json): the published recipe index
 
-## Easier to read
+The deploy can record narration with Kokoro. If recording fails, cook mode uses a voice on the visitor’s device. Run `npm run narrate -- --list` to print the recording script. Local recording needs `ffmpeg` and downloads the voice model.
 
-The round button in the corner opens reading help: text size, contrast, dyslexia-friendly fonts, a reading guide, less motion, and more. It is the open source [AccessibleWeb Widget](https://github.com/ifrederico/accessible-web-widget) (MIT), pinned to one version, and takes its colors from the theme. Its fonts are served from this site. It is a convenience for readers and does not make a site ADA or WCAG compliant by itself.
+Reading help uses the [AccessibleWeb Widget](https://github.com/ifrederico/accessible-web-widget). Voice commands use on-device speech recognition when the browser supports it.
 
-Animations live in `src/motion.css`. They stop for anyone whose device asks for reduced motion, and for "Stop Animations" in reading help.
-
-## Sample recipes
-
-Everything in `src/content/recipes/samples/` is filler. Delete the folder whenever you like. To keep one, move it up a folder; its link stays the same.
-
-## Cook mode and the read-aloud voice
-
-The GitHub deploy records each line with Kokoro, an open voice model, and publishes small MP3 files. It downloads the model inside GitHub's runner and calls no speech service. If recording fails, the site still deploys and a voice on the visitor's own device reads instead. `npm run narrate -- --list` prints every line it would record. Recording on your own computer needs `ffmpeg` and downloads the model (about 92 MB).
-
-Voice commands run only where the browser can recognize speech on the device. Elsewhere the microphone stays off.
-
-## Run locally
-
-Use Node.js 24. Run `npm ci`, then `npm run dev`. Run `npm run build` to generate the static site in `dist/`.
-
-## Publish on GitHub Pages
-
-Push the project to your GitHub repository on `main`. In **Settings → Pages**, choose **GitHub Actions** as the source. Run the **Deploy cookbook to GitHub Pages** workflow once from the Actions tab if the initial push preceded that settings change. Later changes to `main` deploy automatically.
-
-The public site has no recipe editing interface. GitHub repository access controls who can publish. A public repository also exposes the source files and commit history.
+Made by Cameron Conway.

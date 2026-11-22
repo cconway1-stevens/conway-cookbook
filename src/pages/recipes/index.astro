@@ -10,7 +10,16 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
 ---
 <Cookbook title="Recipe box" description="Search every recipe by meal, cuisine, time, or ingredient." current="recipes">
   <div class="wrap box">
-    <div class="block-head"><h1>The recipe box</h1><button type="button" class="button quiet" data-pull hidden>Pull a card for me</button></div>
+    <div class="block-head">
+      <h1>The recipe box</h1>
+      <button type="button" class="button quiet" data-pull hidden>Pull a card for me</button>
+      {book.repo && (
+        <p class="recipe-import">
+          <a href={`https://github.com/${book.repo}/actions/workflows/import-recipe.yml`} aria-describedby="recipe-import-note">Import recipe from URL</a>
+          <span id="recipe-import-note">GitHub write access required. Imports are drafts for review.</span>
+        </p>
+      )}
+    </div>
     <form id="filters" class="filters" role="search" hidden>
       <div class="search">
         <label for="q">Search by dish, ingredient, or tag</label>

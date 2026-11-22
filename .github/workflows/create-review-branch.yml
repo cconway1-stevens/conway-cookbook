@@ -1,0 +1,52 @@
+name: Create cookbook review branch
+on:
+  workflow_call:
+    inputs:
+      kind:
+        description: Content folder (recipes or menus)
+        required: true
+        type: string
+      file:
+        description: Validated JSON file to put on the review branch
+        required: true
+        type: string
+permissions:
+  contents: write
+jobs:
+  draft:
+    name: Create GitHub review branch
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v4
+        with:
+          name: cookbook-draft-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/cookbook-draft
+      - name: Push draft branch and link to review
+        env:
+          KIND: ${{ inputs.kind }}
+          FILE: ${{ inputs.file }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          case "$KIND" in
+            recipes) label=recipe ;;
+            menus) label=menu ;;
+            *) echo '::error::Unsupported cookbook content folder.'; exit 1 ;;
+          esac
+          [[ "$FILE" =~ ^[a-z0-9-]+\.json$ ]]
+          path="src/content/$KIND/$FILE"
+          [[ ! -e "$path" ]]
+          cp -- "$RUNNER_TEMP/cookbook-draft/$FILE" "$path"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$path"
+          git commit -m "Draft $label: $FILE"
+          branch="$label-draft-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          git push origin "HEAD:refs/heads/$branch"
+          {
+            printf '## Draft %s ready\n\n' "$label"
+            printf '[Review draft and open a pull request](%s/%s/compare/%s...%s?expand=1)\n\n' \
+              "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$DEFAULT_BRANCH" "$branch"
+            printf 'Nothing was published to the cookbook. Review the %s before merging.\n' "$label"
+          } >> "$GITHUB_STEP_SUMMARY"

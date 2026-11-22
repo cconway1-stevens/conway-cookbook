@@ -29,5 +29,7 @@
   ],
   "cuisine": [
     "Puerto Rican"
-  ]
+  ],
+  "image": "images/christmas-coquito.jpg",
+  "imageAlt": "White coquito in a small glass dusted with cinnamon"
 }

@@ -2,7 +2,7 @@
 import { base } from '../lib/recipes';
 import { book } from '../lib/cookbook';
 
-const { current, thumbs }: { current: string; thumbs: string[] } = Astro.props;
+const { current, thumbs, names = [] }: { current: string; thumbs: string[]; names?: string[] } = Astro.props;
 const groups = [
   {
     name: 'Recipes',
@@ -49,13 +49,17 @@ const groups = [
     </nav>
     <form class="header-search" action={base + 'recipes/'} role="search" aria-label="Recipe search">
       <label class="vh" for="nav-query">Search recipes</label>
-      <input id="nav-query" type="search" name="q" placeholder="Search recipes" enterkeyhint="search" />
+      <input id="nav-query" type="search" name="q" placeholder="Search recipes" autocomplete="off" enterkeyhint="search" data-names={JSON.stringify(names)} />
       <button type="submit" aria-label="Search"><span aria-hidden="true"></span></button>
     </form>
   </div>
 </header>
 
 <script>
+  import { typeNames } from '../scripts/motion';
+  const query = document.querySelector<HTMLInputElement>('#nav-query');
+  if (query) typeNames(query, JSON.parse(query.dataset.names ?? '[]'), query.closest('form'));
+
   const header = document.querySelector('[data-site-header]');
   const groups = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-nav-group]'));
 
@@ -84,15 +88,16 @@ const groups = [
 <style>
   .masthead { position: relative; z-index: 5; }
   .site-header-inner {
-    display: grid;
-    grid-template-columns: auto auto minmax(9rem, 15rem);
+    display: flex;
+    flex-wrap: wrap; /* so larger text has somewhere to go */
     justify-content: space-between;
     align-items: center;
     gap: .35rem clamp(.5rem, 2vw, 1.6rem);
     padding-block: .5rem;
   }
+  .site-header-inner > * { min-width: 0; max-width: 100%; }
   .site-nav { display: block; font: inherit; }
-  .site-nav-items { display: flex; align-items: center; gap: clamp(.05rem, .65vw, .6rem); }
+  .site-nav-items { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(.05rem, .65vw, .6rem); }
   .nav-group { position: relative; }
   .nav-top {
     display: flex;
@@ -143,6 +148,7 @@ const groups = [
   }
   .nav-dropdown a:hover, .nav-dropdown [aria-current] { background: var(--tint); color: var(--accent); }
   .header-search {
+    flex: 0 1 15rem;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 44px;
     align-items: stretch;
@@ -191,12 +197,16 @@ const groups = [
     transform: rotate(45deg);
   }
   @media (max-width: 760px) {
-    .site-header-inner { grid-template-columns: auto minmax(0, 1fr); gap: .2rem .45rem; }
-    .site-header-inner > .wordmark { grid-column: 1 / -1; }
-    .header-search { justify-self: end; width: min(100%, 15rem); }
+    .site-header-inner { gap: .2rem .45rem; }
+    .site-header-inner > .wordmark { flex-basis: 100%; }
+    .header-search { flex: 1 1 7rem; max-width: 15rem; }
+    /* Dropdowns hang from the whole nav, so they can't run off a narrow screen. */
+    .site-nav { position: relative; }
+    .nav-group { position: static; }
+    .nav-dropdown { min-width: 0; max-width: 100%; }
+    .nav-dropdown a { white-space: normal; }
   }
   @media (max-width: 355px) {
-    .site-header-inner { grid-template-columns: 1fr; }
-    .header-search { justify-self: stretch; width: 100%; }
+    .header-search { flex-basis: 100%; max-width: none; }
   }
 </style>

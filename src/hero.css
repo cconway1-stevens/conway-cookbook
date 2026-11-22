@@ -85,6 +85,8 @@
     border-radius: .3rem;
     font: 600 1rem/1.2 var(--body);
   }
+  .rolodex-flip { touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+  .rolodex-flip.held { background: var(--ink); color: var(--card); animation: rattle .12s infinite; }
   .rolodex-flip:hover { background: var(--highlight); }
 
   .rotary-frame {
@@ -200,7 +202,7 @@
     .book-spread { grid-template-columns: minmax(0, 1fr); }
     .book-spread:has(.rolodex)::before { display: none; }
     .book-title-leaf { justify-items: center; text-align: center; border-bottom: 3px double var(--line); }
-    .book-title-leaf h1 { font-size: clamp(2.6rem, 10vw, 4.4rem); }
+    .book-title-leaf h1 { font-size: clamp(min(2.6rem, 14vw), 10vw, 4.4rem); }
     .rolodex { width: min(100%, 35rem); margin-inline: auto; }
   }
 

@@ -47,9 +47,34 @@ if (rolodex && current && button && status && tabs) {
         if (!pool.includes(active)) show(pool[0]);
       });
     }
-    button.addEventListener('click', () => {
+    const flip = () => {
       const otherCards = pool.filter((option) => option !== active);
       if (otherCards.length) show(otherCards[Math.floor(Math.random() * otherCards.length)]);
+    };
+    // Tap for one card. Hold to keep flipping, and let go to land.
+    const label = button.textContent;
+    let wait = 0, turning = 0, held = false;
+    const release = () => {
+      clearTimeout(wait); clearInterval(turning); turning = 0;
+      button.classList.remove('held'); button.textContent = label;
+    };
+    button.title = 'Tap to flip one card, or hold to keep flipping';
+    button.addEventListener('pointerdown', (event) => {
+      if (event.button || button.disabled) return;
+      held = false;
+      button.setPointerCapture(event.pointerId);
+      wait = window.setTimeout(() => {
+        held = true;
+        button.classList.add('held'); button.textContent = 'Let go!';
+        flip(); turning = window.setInterval(flip, calm() ? 600 : 170);
+      }, 350);
     });
+    for (const type of ['pointerup', 'pointercancel', 'lostpointercapture', 'blur']) button.addEventListener(type, release);
+    button.addEventListener('contextmenu', (event) => event.preventDefault());
+    button.addEventListener('click', (event) => {
+      if (held && event.detail) { held = false; return; } // the click that ends a hold
+      flip();
+    });
+    flip(); // every visit opens on a different card
   }
 }

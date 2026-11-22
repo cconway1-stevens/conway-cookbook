@@ -70,15 +70,21 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
 
           <div class="recipe-actions">
             <button type="button" class="button" data-cook hidden>Start cooking</button>
-            <button type="button" class="button quiet print-button" hidden>Print recipe</button>
-            <button type="button" class="button quiet to-cook-button" data-to-cook={recipe.id} data-title={data.title} hidden>To cook</button>
-            <button type="button" class="button quiet" data-add={recipe.id} data-title={data.title} hidden>Add to menu</button>
+            <a class="button quiet" href="#ingredients">Read recipe</a>
           </div>
-<details class="recipe-more"><summary>Recipe details &amp; sharing</summary>          <ul class="tapes">
-            {data.meal.map((m) => <li><a class="tape blue" href={q('meal', m)}>{m}</a></li>)}
-            {data.cuisine.map((c) => <li><a class="tape" href={q('cuisine', c)}>{c}</a></li>)}
-            {data.tags.map((t) => <li><a class="tape green" href={q('tag', t)}>{t}</a></li>)}
-          </ul>            {pin && <a class="button quiet" href={pin.href} target="_blank" rel="noopener noreferrer">Save on Pinterest</a>}</details>
+          <details class="recipe-more"><summary>Save, print &amp; share</summary>
+            <div class="recipe-tools">
+              <button type="button" class="button quiet print-button" hidden>Print recipe</button>
+              <button type="button" class="button quiet to-cook-button" data-to-cook={recipe.id} data-title={data.title} hidden>To cook</button>
+              <button type="button" class="button quiet" data-add={recipe.id} data-title={data.title} hidden>Add to menu</button>
+            </div>
+            <ul class="tapes">
+              {data.meal.map((m) => <li><a class="tape blue" href={q('meal', m)}>{m}</a></li>)}
+              {data.cuisine.map((c) => <li><a class="tape" href={q('cuisine', c)}>{c}</a></li>)}
+              {data.tags.map((t) => <li><a class="tape green" href={q('tag', t)}>{t}</a></li>)}
+            </ul>
+            {pin && <a class="button quiet" href={pin.href} target="_blank" rel="noopener noreferrer">Save on Pinterest</a>}
+          </details>
           {isSample(recipe) && <p class="sample">Sample card. It’s here to fill the box until the family recipes are in.</p>}
         </div>
         {data.image ? <figure class="print"><img src={base + data.image} srcset={`${base}card-images/${recipe.id}/360.webp 360w, ${base}card-images/${recipe.id}/720.webp 720w`} sizes="(max-width:720px) 86vw, 440px" alt={data.imageAlt ?? data.title} width="1200" height="800" /></figure> : <Spot category={data.category} />}
@@ -94,7 +100,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
           <section class="sec sec-ingredients" id="ingredients" role="group" aria-describedby="ing-help"><h2>Ingredients</h2><UnitChoice /><p class="ingredient-progress" id="ingredient-progress" role="status" hidden></p>
             {groups.map((g, gi) => <>{g.name && <h3>{g.name}</h3>}<ul>{g.items.map((item, ii) => <li class="ing-line" data-e={link!.ids[gi][ii]}><input type="checkbox" class="ingredient-tick" aria-label={`Gathered: ${item}`} hidden />{item}</li>)}</ul></>)}
           </section>
-          <section class="sec sec-directions" id="directions" role="group" aria-describedby="ing-help"><h2>Directions</h2>
+          <section class="sec sec-directions" id="directions" role="group" aria-describedby="ing-help"><h2>Directions <small class="step-count">{steps.length} {steps.length === 1 ? 'step' : 'steps'}</small></h2>
             <p class="ing-hint" id="ing-help">Tap or hover over a marked ingredient to see its amount. Use the arrow keys to move between ingredients.</p>
             <ol role="list">{steps.map((step, si) => (
               <li>
@@ -130,13 +136,27 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
   const progress = document.querySelector<HTMLElement>('#ingredient-progress');
   const ticks = [...document.querySelectorAll<HTMLInputElement>('.ingredient-tick')];
   if (progress && ticks.length) {
+    const storageKey = 'cookbook:gathered:' + location.pathname;
+    // Match the full list so an edited recipe never restores obsolete checkmarks.
+    const signature = JSON.stringify(ticks.map(tick => tick.getAttribute('aria-label')));
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(storageKey) ?? 'null');
+      if (saved?.signature === signature && Array.isArray(saved.checked)) {
+        ticks.forEach((tick, index) => { tick.checked = saved.checked[index] === true; });
+      }
+    } catch { /* The checklist also works when storage is unavailable. */ }
     const updateProgress = () => {
       const checked = ticks.filter(tick => tick.checked).length;
       progress.textContent = checked === ticks.length ? 'Everything’s on the counter!' : `${checked} of ${ticks.length} ingredients gathered`;
     };
     for (const tick of ticks) {
       tick.hidden = false;
-      tick.addEventListener('change', updateProgress);
+      tick.addEventListener('change', () => {
+        updateProgress();
+        try {
+          sessionStorage.setItem(storageKey, JSON.stringify({ signature, checked: ticks.map(input => input.checked) }));
+        } catch { /* Keep using the checklist in memory. */ }
+      });
     }
     progress.hidden = false;
     updateProgress();
@@ -163,3 +183,33 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
     window.print();
   });
 </script>
+
+<style>
+  @media screen {
+    .facts {
+      border-block: 1px solid var(--line);
+      padding-block: .85rem;
+    }
+    .facts dd { font-size: 1.18rem; }
+    .recipe-actions { align-items: stretch; }
+    .recipe-actions [data-cook] { flex: 0 1 auto; padding: .65rem 1.2rem; font-size: 1.1rem; }
+    .recipe-tools { display: flex; flex-wrap: wrap; gap: .5rem; margin-block: .75rem; }
+    .reader-links { gap: .3rem .65rem; }
+    .reader-links a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+    .sec-ingredients { border-top: .25rem solid var(--accent); }
+    .step-count { font: 400 1rem var(--body); color: var(--soft); white-space: nowrap; }
+    .step-title { display: block; margin-bottom: .25rem; }
+    .sec-directions li { padding-inline-start: 3rem; }
+    .sec-directions li::before {
+      display: grid;
+      place-items: center;
+      width: 2.2rem;
+      height: 2.2rem;
+      background: var(--tint);
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      font-size: 1.25rem;
+    }
+  }
+  @media print { .step-count, .recipe-tools { display: none; } }
+</style>

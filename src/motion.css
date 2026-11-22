@@ -66,6 +66,12 @@
 .recipe-heading .tapes li { animation: stamp .35s backwards; animation-delay: calc(.45s + var(--i, 0) * 70ms); }
 [data-cook] { animation: glow 2.2s 1.2s 3; }
 
+/* ---- Photos: they are dealt onto the page, a new one drops in, and the big one arrives ---- */
+@supports (animation-timeline: view()) { .shot:not(.fresh), .family-notes li { animation: deal linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; } }
+.shot.fresh { animation: drop .5s; }
+#lb-img.arrive { animation: rise .3s; }
+.shot-open img { transition: scale .4s; } .shot-open:hover img { scale: 1.05; }
+
 /* ---- Cook mode: 1 the card slides the way you went, 2 lines arrive in turn, 3 a tick pops,
    4 the line being read fills with color, 5 finished tabs pop (and the end gets confetti) ---- */
 .cook-card.next { animation: from-right .38s cubic-bezier(.2, .9, .3, 1); } .cook-card.back { animation: from-left .38s cubic-bezier(.2, .9, .3, 1); }

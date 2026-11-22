@@ -22,5 +22,13 @@
   ],
   "notes": {
     "Make ahead": "Optional. Add as many of these as you like."
-  }
+  },
+  "familyNotes": [
+    { "text": "Optional. What someone said after making it.", "by": "Nana", "date": "2026-12-25" },
+    "A note can also be plain text."
+  ],
+  "media": [
+    { "file": "first-try.jpg", "caption": "Optional. A file in src/media/<this recipe's name>/", "by": "Cameron" },
+    { "url": "https://www.youtube.com/watch?v=...", "caption": "Optional. YouTube, Vimeo, or any link" }
+  ]
 }

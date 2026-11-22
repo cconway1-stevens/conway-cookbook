@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import Cookbook from '../../layouts/Cookbook.astro';
 import RecipeCard from '../../components/RecipeCard.astro';
 import Spot from '../../components/Spot.astro';
+import RecipeExtras from '../../components/RecipeExtras.astro';
 import CookMode from '../../components/CookMode.astro';
 import { allRecipes, base, directions, ingredients, isSample, recipeUrl } from '../../lib/recipes';
 
@@ -80,6 +81,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
       </div>
       {data.source && <p class="credit source">Adapted from <a href={data.source.url}>{data.source.name}</a>.</p>}
     </div>
+    <RecipeExtras recipe={recipe} />
     {pairs.length > 0 && <section class="block pairs" aria-labelledby="pairs-title"><h2 id="pairs-title">Goes well with</h2><ul class="cards">{pairs.map((r) => <RecipeCard recipe={r} />)}</ul></section>}
   </article>
   <CookMode recipe={recipe} />

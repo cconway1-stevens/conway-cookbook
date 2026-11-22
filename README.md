@@ -15,6 +15,15 @@ A public, read-only family cookbook built with Astro. Each recipe is one file. D
 
 Markdown recipes (`.md`, with `## Ingredients` and numbered `## Directions`) also work.
 
+## Photos, video, and notes
+
+Every recipe page has a gallery and notes.
+
+- **For everyone:** put files in `src/media/<recipe id>/`, for example `src/media/apple-crumble-pie/thanksgiving.jpg`. That's all; they show up by themselves. JPEG, PNG, WebP, AVIF, GIF, MP4, WebM, MOV, MP3, M4A, WAV, OGG, and PDF work. Save HEIC photos as JPEG first. A file name such as `first-try.jpg` becomes the caption. For your own captions, order, or YouTube and Vimeo links, add `media` to the recipe. For notes, add `familyNotes`. Each page links straight to the right GitHub upload and edit screens, which need repository access and take files up to 25 MB.
+- **Just for you:** anyone can add photos, video, recordings, and notes on the page itself. Those stay in that browser and are never uploaded.
+
+The site publishes photos only as resized copies with hidden data, such as location, removed. The original you commit stays in this public repository with everything in it, and video and sound files are published as they are. Photos saved from the page's own "Save the cleaned photos" button are already clean.
+
 ## Change the site itself
 
 `src/data/cookbook.json` holds the title, tagline, cover, meals, courses, menu sections, menu papers, themes, and read-aloud phrases. The build checks it and says what to fix.

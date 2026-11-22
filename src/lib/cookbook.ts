@@ -9,6 +9,7 @@ const id = z.string().regex(/^[a-z0-9-]+$/, 'use lowercase letters, numbers, and
 const schema = z.object({
   title: name, tagline: name, description: name, footer: name,
   cover: z.object({ small: z.string(), large: name, image: name, imageAlt: name }),
+  repo: z.string().regex(/^[\w.-]+\/[\w.-]+$/, 'should look like owner/name').optional(), branch: name.default('main'),
   meals: z.array(name).min(1),
   courses: z.array(z.object({ name, menu: id, art: id, meal: name.optional() })).min(1),
   courseForMeal: name,

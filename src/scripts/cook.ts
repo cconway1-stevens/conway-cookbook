@@ -153,7 +153,9 @@ function next() {
   $('cook-lines').replaceChildren(); $('cook-extra').replaceChildren();
   const again = document.createElement('button'); again.type = 'button'; again.className = 'button quiet'; again.textContent = 'Start over';
   again.addEventListener('click', () => { ticks = pages.map((p) => p.lines.map(() => false)); go(0); });
-  $('cook-extra').append(again);
+  const share = document.createElement('button'); share.type = 'button'; share.className = 'button'; share.textContent = 'Add a photo or a note';
+  share.addEventListener('click', () => { dialog.close(); document.getElementById('photos')?.scrollIntoView({ behavior: 'smooth' }); });
+  $('cook-extra').append(share, again);
   confetti(dialog);
   say([{ line: data.phrases.finished }]);
 }

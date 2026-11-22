@@ -129,6 +129,16 @@
   .invite h2 { color: var(--gold); } .invite .button { background: linear-gradient(#f3dfa4, #d9b866); border-color: #d9b866; color: #2a2110; }
   .mini-menu { rotate: 2deg; background: var(--fiber), #fffaf0; outline: 4px double #a98c4f; outline-offset: -14px; } .mini-menu b { font: 400 1.9rem/1.2 var(--display); color: var(--accent); } .mini-menu span { font-style: italic; }
 
+  /* Album of real photographs */
+  .extras { border-radius: 2px; background: var(--fiber), #fffaf0; }
+  .extras h2 { padding-bottom: .5rem; border-bottom: 4px double #a98c4f; } .extras .block-head h2 { flex: 1; }
+  .shot { position: relative; padding: 10px 10px .2rem; background: #fffdf7; }
+  .shot.photo::after { content: ''; position: absolute; top: 10px; left: 10px; right: 10px; aspect-ratio: 1; pointer-events: none; background: var(--corners); background-size: 24px 24px; background-repeat: no-repeat; }
+  .shot:nth-child(3n+1) { rotate: -1deg; } .shot:nth-child(3n) { rotate: 1deg; } .shot:is(:hover, :focus-within) { rotate: 0deg; }
+  .shot-words { font: 400 1.05rem/1.8 var(--hand); color: #2c3a57; } .shot-words small { font: italic 400 1rem/1.5 var(--body); }
+  .family-notes li { background: #fffdf4; box-shadow: 0 1px 3px #4a2f1566; } .family-notes li:nth-child(even) { rotate: .7deg; } .family-notes p { font: 400 1.1rem/1.95 var(--hand); color: #2c3a57; } .family-notes small { font-style: italic; }
+  .my-notes textarea { border: 1px solid #8a7650; border-radius: 2px; background: #fffdf4; font: 1.06rem/1.8 var(--body); }
+
   /* Menu builder */
   .menu-card { box-shadow: 0 1px 2px #4a2f1555, 0 14px 30px var(--shade); }
   .menu-card h2 { font-family: var(--display); } .menu-card h3 { font: italic 400 1.4rem/1.4 var(--body); }

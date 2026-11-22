@@ -4,6 +4,8 @@
   "tagline": "A place for the recipes we come back to and the stories that go with them.",
   "description": "A collection of recipes worth keeping.",
   "footer": "Recipes worth keeping.",
+  "repo": "cconway1-stevens/conway-cookbook",
+  "branch": "main",
   "meals": ["Breakfast", "Lunch", "Dinner", "Dessert"],
   "courses": [
     { "name": "Breakfast", "menu": "main", "art": "pancakes", "meal": "Breakfast" },

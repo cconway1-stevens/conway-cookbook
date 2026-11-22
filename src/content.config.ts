@@ -35,6 +35,12 @@ const recipes = defineCollection({
     ingredients: z.array(z.union([z.string(), z.object({ group: z.string(), items: z.array(z.string()) })])).min(1).optional(),
     steps: z.array(z.union([z.string(), z.object({ title: z.string().optional(), text: z.string() })])).min(1).optional(),
     notes: z.record(z.string(), z.string()).optional(),
+    // What people have added. See README.
+    familyNotes: z.array(z.union([z.string().transform((text) => ({ text })), z.object({ text: z.string(), by: z.string().optional(), date: z.coerce.date().optional() })])).optional(),
+    media: z.array(z.union([
+      z.object({ file: z.string(), caption: z.string().optional(), by: z.string().optional() }).strict(),
+      z.object({ url: z.url().refine((u) => /^https?:/.test(u), { message: 'should start with https://' }), caption: z.string().optional(), by: z.string().optional() }).strict(),
+    ])).optional(),
   }).refine((r) => !r.ingredients === !r.steps, { message: 'A JSON recipe needs both ingredients and steps.' }).transform(({ category, meal, ...rest }) => {
     // "category: Dinner" works too. It files under courseForMeal, for that meal.
     const course = book.courses.find((c) => c.name === category);

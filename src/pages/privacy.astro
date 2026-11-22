@@ -1,0 +1,14 @@
+---
+import Cookbook from '../layouts/Cookbook.astro';
+import { book } from '../lib/cookbook';
+---
+<Cookbook title="Privacy and cookies"><article class="wrap notice"><h1>Privacy &amp; cookies</h1>
+<p>You can browse the cookbook without an account. The cookbook sets no advertising or analytics cookies and includes no visitor analytics.</p>
+<h2>What stays in your browser</h2>
+<p>Features you use can remember your theme, units, voice and accessibility settings, saved recipes, menus, recipe notes and cooking or academy progress in local storage. Gallery uploads use a local browser database. These items stay in this browser profile until you remove them or the browser clears them. Anyone using the same profile may be able to see them.</p>
+<p>To erase these records, open your browser’s site-data settings and remove data for cconway1-stevens.github.io. This also clears data for other pages on that same host. Your browser lets you block storage or revoke microphone permission in site settings.</p>
+<h2>Who receives data</h2><p>GitHub Pages hosts the cookbook and logs visitor IP addresses for security. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection">GitHub Pages data collection</a></p>
+<p>Nutrition is calculated from published recipe ingredients and yields during recipe maintenance. Opening a recipe reads the saved result. Voice commands use on-device recognition in supported browsers. Your browser may need to download a language pack.</p>
+<p>Playing an external embedded video connects to its provider, which receives connection information such as your IP address and may use its own storage. You can leave the video unloaded. External links and sharing services are subject to their providers’ privacy notices.</p>
+<h2>Privacy questions</h2><p>Contact the cookbook maintainer through the <a href={`https://github.com/${book.repo}`}>cookbook repository</a>. Issues are public. Keep personal details out of public posts.</p></article></Cookbook>
+<style>.notice { max-width: 68ch; padding-block: 2rem; }.notice h2 { margin-top: 1.5rem; }.notice p { margin-block: .75rem; }</style>

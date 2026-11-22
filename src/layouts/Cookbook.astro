@@ -52,7 +52,7 @@ const bars = Object.fromEntries(book.themes.map((t) => [t.id, t.bar]));
         <span>{book.footer}</span>
       </div>
       <div class="footer-meta">
-        <span>Made by Cameron Conway</span>
+        <a href={base + 'privacy/'}>Privacy &amp; cookies</a><span>Made by Cameron Conway</span>
         {book.repo && (
           <a class="footer-source" href={`https://github.com/${book.repo}`}>
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m8 6-6 6 6 6m8-12 6 6-6 6" /></svg>

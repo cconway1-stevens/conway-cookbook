@@ -98,7 +98,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
         {Content && <Content />}
         {groups && <>
           <section class="sec sec-ingredients" id="ingredients" role="group" aria-describedby="ing-help"><h2>Ingredients</h2><UnitChoice /><p class="ingredient-progress" id="ingredient-progress" role="status" hidden></p>
-            {groups.map((g, gi) => <>{g.name && <h3>{g.name}</h3>}<ul>{g.items.map((item, ii) => <li class="ing-line" data-e={link!.ids[gi][ii]}><input type="checkbox" class="ingredient-tick" aria-label={`Gathered: ${item}`} hidden />{item}</li>)}</ul></>)}
+            <div class="ingredient-groups">{groups.map((g, gi) => <div>{g.name && <h3>{g.name}</h3>}<ul>{g.items.map((item, ii) => <li class="ing-line" data-e={link!.ids[gi][ii]}><input type="checkbox" class="ingredient-tick" aria-label={`Gathered: ${item}`} hidden />{item}</li>)}</ul></div>)}</div>
           </section>
           <section class="sec sec-directions" id="directions" role="group" aria-describedby="ing-help"><h2>Directions <small class="step-count">{steps.length} {steps.length === 1 ? 'step' : 'steps'}</small></h2>
             <p class="ing-hint" id="ing-help">Tap or hover over a marked ingredient to see its amount. Use the arrow keys to move between ingredients.</p>
@@ -124,7 +124,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
       {!!data.familyNotes?.length && <label><input type="checkbox" id="print-notes" /> Family notes</label>}
       <div class="block-actions"><button value="print" class="button">Print</button><button value="cancel" class="button quiet">Cancel</button></div></form></dialog>
 
-    {nutrition && <section class="block" id="nutrition"><h2>Nutrition</h2><p>{nutrition.basis}</p><dl>{nutrition.rows.map(n => <div><dt>{n.name}</dt><dd>{n.amount} {n.unit}</dd></div>)}</dl><p>Calculated from the listed ingredients by <a href="https://spoonacular.com/food-api">Spoonacular</a>. Brands and preparation can affect actual values.</p></section>}
+    {nutrition && <section class="nutrition-label" id="nutrition" aria-labelledby="nutrition-title"><h2 id="nutrition-title">Nutrition facts</h2><p class="nutrition-basis">{nutrition.basis}{nutrition.basis === 'Whole recipe' && ` · Recipe serves ${data.servings}`}</p><dl>{nutrition.rows.map(n => <div class:list={[{ calories: n.name === 'Calories' }]}><dt>{n.name}</dt><dd>{Math.round(n.amount).toLocaleString('en-US')} {n.unit}</dd></div>)}</dl><p class="nutrition-note"><strong>Recipe estimate.</strong> Calculated by <a href="https://spoonacular.com/food-api">Spoonacular</a> from the listed ingredients. Brands, preparation and portion size affect the actual values.</p></section>}
     <RecipeExtras recipe={recipe} />
     {pairs.length > 0 && <section class="block pairs" aria-labelledby="pairs-title"><h2 id="pairs-title">Goes well with</h2><ul class="cards">{pairs.map((r) => <RecipeCard recipe={r} />)}</ul></section>}
   </article>

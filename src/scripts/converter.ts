@@ -74,7 +74,7 @@ const rows = [...document.querySelectorAll<HTMLElement>('.sec-ingredients li')].
   const prefix = parsed?.prefix ?? text.match(/^(?:[\d¼½¾⅓⅔⅛⅜⅝⅞]+(?:[./–-][\d]+)?(?:\s+\d+\/\d+)?)(?=\s)/)?.[0] ?? '';
   const quantity = document.createElement(parsed ? 'button' : 'span');
   quantity.className = 'measure-quantity';
-  quantity.textContent = prefix;
+  quantity.textContent = compactQuantity(prefix);
   if (quantity instanceof HTMLButtonElement && parsed) {
     quantity.type = 'button';
     quantity.classList.add('convert-ingredient');
@@ -91,10 +91,15 @@ const rows = [...document.querySelectorAll<HTMLElement>('.sec-ingredients li')].
   return [{ quantity, parsed, prefix }];
 });
 
+function compactQuantity(value: string) {
+  return value.replace(/tablespoons?/gi, 'tbsp').replace(/teaspoons?/gi, 'tsp')
+    .replace(/ounces?/gi, 'oz').replace(/pounds?/gi, 'lb');
+}
+
 function applyUnits(system: string) {
   if (picker) picker.value = system;
   for (const { quantity, parsed, prefix } of rows) {
-    quantity.textContent = prefix;
+    quantity.textContent = compactQuantity(prefix);
     if (!parsed || system === 'original') continue;
     const volume = Object.hasOwn(volumes, parsed.unit);
     const factors: Record<string, number> = volume ? volumes : weights;

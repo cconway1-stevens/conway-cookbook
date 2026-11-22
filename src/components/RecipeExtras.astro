@@ -19,7 +19,7 @@ const when = (d?: Date) => d && d.toLocaleDateString('en-US', { year: 'numeric',
         {m.kind === 'photo' && <a class="shot-open" href={m.src} data-kind="photo" data-caption={m.caption} data-by={m.by}><img src={m.thumb ?? m.src} alt={m.alt} width="560" height="560" loading="lazy" /></a>}
         {m.kind === 'video' && <video controls preload="metadata" playsinline src={m.src} aria-label={m.caption || 'Video'} />}
         {m.kind === 'audio' && <audio controls preload="metadata" src={m.src} aria-label={m.caption || 'Recording'} />}
-        {m.kind === 'embed' && <button type="button" class="shot-play" data-src={m.src} data-title={m.caption}><span aria-hidden="true">▶</span>Play video</button>}
+        {m.kind === 'embed' && <button type="button" class="shot-play" data-src={m.src} data-title={m.caption}><span aria-hidden="true">▶</span>Load video from {new URL(m.src).hostname} (connects to this provider)</button>}
         {(m.kind === 'link' || m.kind === 'file') && <a class="shot-link" href={m.src} rel="noopener">{m.kind === 'file' ? 'Open the PDF' : 'Open the link'}</a>}
         {(m.caption || m.by) && <p class="shot-words">{m.caption}{m.by && <small> {m.caption && '· '}{m.by}</small>}</p>}
       </li>))}

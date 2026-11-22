@@ -53,13 +53,8 @@
   .dividers a:hover { transform: translateY(-4px); }
   .dividers span { font: 400 1.65rem/1.3 var(--heading); } .dividers small { font: italic 400 1.05rem/1.4 var(--body); color: var(--soft); }
   .tape { border-radius: 0; background: #fff8e8; color: var(--second); font: italic 400 1.02rem/1.5 var(--body); box-shadow: inset 0 0 0 1px var(--line); }
-  .tape-check :checked + .tape { background: var(--second); color: #fff5e2; }
   .chip span { border: 1px solid #a98c4f; border-radius: 0; background: #fff8e8; color: var(--second); }
   .chip :checked + span { background: var(--second); border-color: var(--second); color: #fff5e2; }
-  .tabs { border: 0; border-bottom: 1px solid #a98c4f; }
-  .tabs span { background: #f2e6ca; border: 1px solid var(--line); border-bottom: 0; border-radius: 4px 4px 0 0; font-weight: 400; }
-  .tabs :checked + span { background: var(--second); color: #fff5e2; box-shadow: none; }
-  .tabs label:hover :not(:checked) + span { background: var(--highlight); }
 
   /* Album leaves */
   .card { background: none; }
@@ -94,7 +89,6 @@
   .facts dt { font-style: italic; } .facts dd { font: 400 1.15rem/1.4 var(--body); }
   .sec h3 { font: italic 400 1.2rem/1.4 var(--body); color: var(--accent); }
   .sec-ingredients li { font: 400 1.06rem/1.5 var(--body); border-bottom: 1px dotted #a98c4f; }
-  .sec-directions li::before { font: 400 2.5rem/1 var(--display); color: var(--accent); }
   .sec-directions li strong { font-weight: 700; }
   .why > p { border-left: 3px solid #a98c4f; background: #f6ecd2; font-style: italic; }
   .why > summary { border-width: 1px; font-weight: 400; } .why-mark { font-family: var(--display); font-style: italic; }

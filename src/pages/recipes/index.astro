@@ -8,43 +8,41 @@ const meals = book.meals.filter((m) => recipes.some((r) => r.data.meal.includes(
 const cuisines = tally(recipes.flatMap((r) => r.data.cuisine));
 const tags = tally(recipes.flatMap((r) => r.data.tags));
 ---
-<Cookbook title="Recipe box" description="Search every recipe by meal, cuisine, time, or ingredient." current="recipes">
+<Cookbook title="Recipe box" description="Search every recipe by meal, cuisine, time, or ingredient." current="recipes" showHeaderSearch={false}>
   <div class="wrap box">
     <div class="block-head">
       <h1>The recipe box</h1>
-      <button type="button" class="button quiet" data-pull hidden>Pull a card for me</button>
-      {book.repo && (
-        <p class="recipe-import">
-          <a href={`https://github.com/${book.repo}/actions/workflows/import-recipe.yml`} aria-describedby="recipe-import-note">Import recipe from URL</a>
-          <span id="recipe-import-note">GitHub write access required. Imports are drafts for review.</span>
-        </p>
-      )}
+      <button type="button" class="linkish box-surprise" data-pull hidden>Surprise me</button>
     </div>
-    <form id="filters" class="filters" role="search" hidden>
+    <form id="filters" class="filters" role="search" aria-label="Find recipes" hidden>
       <div class="search">
         <label for="q">Search by dish, ingredient, or tag</label>
-        <input id="q" name="q" type="search" placeholder="Try “lemon” or “vegetarian”" autocomplete="off" />
+        <input id="q" name="q" type="search" placeholder="Try “lemon” or “vegetarian”" autocomplete="off" enterkeyhint="search" />
       </div>
-      <fieldset class="tabs"><legend class="vh">Meal</legend>
-        {['', ...meals].map((m) => <label><input type="radio" name="meal" value={m} checked={m === ''} /><span>{m || 'Everything'}</span></label>)}
+      <fieldset class="meal-filters"><legend class="vh">Meal</legend>
+        {['', ...meals].map((m) => <label><input type="radio" name="meal" value={m} checked={m === ''} /><span>{m || 'All recipes'}</span></label>)}
       </fieldset>
-      <details class="more" open><summary>Cuisine, tags, and time</summary><div class="drawer">
-        <fieldset><legend>Cuisine</legend><div class="tapes">
-          {cuisines.map(([c]) => <label class="tape-check"><input type="checkbox" name="cuisine" value={c} /><span class="tape">{c}</span></label>)}
+      <details class="more-filters"><summary>More filters <span id="filter-count" hidden></span></summary><div class="filter-options">
+        <fieldset><legend>Cuisine</legend><div class="filter-choices">
+          {cuisines.map(([c]) => <label><input type="checkbox" name="cuisine" value={c} />{c}</label>)}
         </div></fieldset>
-        <fieldset><legend>Tags</legend><div class="chips">
-          {tags.map(([t]) => <label class="chip"><input type="checkbox" name="tag" value={t} /><span>{t}</span></label>)}
+        <fieldset><legend>Tags</legend><div class="filter-choices">
+          {tags.map(([t]) => <label><input type="checkbox" name="tag" value={t} />{t}</label>)}
         </div></fieldset>
         <div class="ready"><label for="ready">Ready in</label>
-          <select id="ready" name="ready"><option value="">Any time</option><option value="20">20 minutes</option><option value="30">30 minutes</option><option value="60">1 hour</option><option value="90">1½ hours</option></select>
+          <select id="ready" name="ready"><option value="">Any time</option><option value="20">20 minutes or less</option><option value="30">30 minutes or less</option><option value="60">1 hour or less</option><option value="90">1½ hours or less</option></select>
         </div>
       </div></details>
     </form>
-    <div class="results"><p id="count" role="status">{recipes.length} recipes</p><button type="button" id="clear" class="linkish" hidden>Clear all filters</button></div>
+    <div class="results">
+      <p id="count" role="status">{recipes.length} recipes</p>
+      <button type="button" id="clear" class="linkish" hidden>Clear all</button>
+    </div>
+    <ul id="active-filters" class="active-filters" aria-label="Applied filters" role="list" hidden></ul>
     <ul class="cards">{recipes.map((recipe) => <RecipeCard recipe={recipe} level="h2" />)}</ul>
     <div id="none" class="none" hidden>
       <h2>No card for that yet</h2>
-      <p>Take off a filter, or try a shorter word.</p>
+      <p>Remove a filter or try a different ingredient or dish.</p>
       <button type="button" class="button" id="clear2">Show every recipe</button>
     </div>
   </div>
@@ -54,6 +52,10 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
   const form = document.querySelector<HTMLFormElement>('#filters')!;
   const cards = [...document.querySelectorAll<HTMLElement>('.card')];
   const count = document.querySelector('#count')!, clear = document.querySelector<HTMLElement>('#clear')!, none = document.querySelector<HTMLElement>('#none')!;
+  const search = form.querySelector<HTMLInputElement>('#q')!;
+  const ready = form.querySelector<HTMLSelectElement>('#ready')!;
+  const activeFilters = document.querySelector<HTMLUListElement>('#active-filters')!;
+  const filterCount = document.querySelector<HTMLElement>('#filter-count')!;
   const fold = (text: string) => text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   const index = cards.map((card) => ({
     card, text: fold(card.dataset.search!), minutes: Number(card.dataset.minutes) || Infinity,
@@ -68,6 +70,33 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
     };
   };
   type State = ReturnType<typeof read>;
+  function showApplied(s: State) {
+    const selected = [
+      ...(s.q ? [{ name: 'q', value: s.q, label: `Search: ${s.q}` }] : []),
+      ...(s.meal ? [{ name: 'meal', value: s.meal, label: s.meal }] : []),
+      ...s.cuisine.map((value) => ({ name: 'cuisine', value, label: value })),
+      ...s.tag.map((value) => ({ name: 'tag', value, label: value })),
+      ...(s.ready ? [{ name: 'ready', value: s.ready, label: ready.selectedOptions[0].text }] : []),
+    ];
+    activeFilters.replaceChildren(...selected.map(({ name, value, label }) => {
+      const li = document.createElement('li');
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.name = name;
+      button.dataset.value = value;
+      button.setAttribute('aria-label', `Remove ${label} filter`);
+      const cross = document.createElement('span');
+      cross.setAttribute('aria-hidden', 'true');
+      cross.textContent = '×';
+      button.append(label, cross);
+      li.append(button);
+      return li;
+    }));
+    activeFilters.hidden = clear.hidden = !selected.length;
+    const advanced = s.cuisine.length + s.tag.length + Number(Boolean(s.ready));
+    filterCount.textContent = String(advanced);
+    filterCount.hidden = !advanced;
+  }
   const matches = (row: (typeof index)[number], s: State) =>
     fold(s.q).split(/\s+/).every((word) => row.text.includes(word)) &&
     (!s.meal || row.meal.includes(s.meal)) &&
@@ -86,8 +115,7 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
     const words = `${shown} ${shown === 1 ? 'recipe' : 'recipes'}`;
     if (count.textContent !== words) { count.textContent = words; replay(count, 'bump'); }
     none.hidden = shown > 0;
-    const active = !!(s.q || s.meal || s.ready || s.cuisine.length || s.tag.length);
-    clear.hidden = !active;
+    showApplied(s);
     document.querySelectorAll<HTMLButtonElement>('[data-pull]').forEach((b) => (b.disabled = !shown));
     // Grey out a filter that would leave nothing in the box.
     form.querySelectorAll<HTMLInputElement>('input[type=checkbox]').forEach((input) => {
@@ -106,18 +134,34 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
   function fromUrl() {
     const params = new URLSearchParams(location.search);
     form.reset();
-    (form.elements.namedItem('q') as HTMLInputElement).value = params.get('q') ?? '';
-    (form.elements.namedItem('ready') as HTMLSelectElement).value = params.get('ready') ?? '';
+    search.value = params.get('q') ?? '';
+    const time = params.get('ready') ?? '';
+    if (Array.from(ready.options).some((option) => option.value === time)) ready.value = time;
     form.querySelectorAll<HTMLInputElement>('input[type=radio], input[type=checkbox]').forEach((input) => {
       if (params.has(input.name)) input.checked = params.getAll(input.name).includes(input.value);
     });
     if (!form.querySelector('[name=meal]:checked')) form.querySelector<HTMLInputElement>('[name=meal]')!.checked = true;
     apply(false);
   }
-  const reset = () => { history.replaceState(null, '', location.pathname); fromUrl(); document.querySelector<HTMLInputElement>('#q')!.focus(); };
+  const reset = () => { form.reset(); apply(); search.focus(); };
   form.hidden = false;
-  // On a phone, keep the cards in view unless a filter in the drawer is in use.
-  if (matchMedia('(max-width: 720px)').matches && !/cuisine|tag|ready/.test(location.search)) form.querySelector('details')!.open = false;
+  activeFilters.addEventListener('click', (event) => {
+    const button = (event.target as Element).closest('button');
+    if (!button) return;
+    const position = [...activeFilters.querySelectorAll('button')].indexOf(button);
+    const { name, value } = button.dataset;
+    if (name === 'q') search.value = '';
+    else if (name === 'ready') ready.value = '';
+    else if (name === 'meal') form.querySelector<HTMLInputElement>('[name=meal][value=""]')!.checked = true;
+    else {
+      const chosen = [...form.querySelectorAll<HTMLInputElement>('input[type=checkbox]')]
+        .find((input) => input.name === name && input.value === value);
+      if (chosen) chosen.checked = false;
+    }
+    apply();
+    const remaining = activeFilters.querySelectorAll('button');
+    (remaining[Math.min(position, remaining.length - 1)] ?? search).focus();
+  });
   form.addEventListener('input', () => apply());
   form.addEventListener('submit', (event) => event.preventDefault());
   clear.addEventListener('click', reset);

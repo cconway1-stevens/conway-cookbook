@@ -43,8 +43,7 @@
 .box > .cards .card.back { animation: pop .35s; }
 #count.bump { animation: pop .35s; transform-origin: left; }
 #count { display: inline-block; }
-.tabs :checked + span { animation: rise .25s; }
-:is(.chip, .tape-check) :checked + span { animation: pop .3s; }
+.chip :checked + span { animation: pop .3s; }
 .none h2 { animation: wobble .4s 2; }
 
 /* ---- Recipe: 1 the card is pulled up, 2 the photo lands, 3 tape is stamped,

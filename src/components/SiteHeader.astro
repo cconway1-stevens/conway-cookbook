@@ -2,7 +2,7 @@
 import { base } from '../lib/recipes';
 import { book } from '../lib/cookbook';
 
-const { current, thumbs, names = [] }: { current: string; thumbs: string[]; names?: string[] } = Astro.props;
+const { current, thumbs, names = [], showSearch = true }: { current: string; thumbs: string[]; names?: string[]; showSearch?: boolean } = Astro.props;
 const groups = [
   {
     name: 'Recipes',
@@ -47,11 +47,11 @@ const groups = [
         <li><a class="nav-top" href={base + 'settings/'} aria-current={current === 'settings' ? 'page' : undefined}>Settings</a></li>
       </ul>
     </nav>
-    <form class="header-search" action={base + 'recipes/'} role="search" aria-label="Recipe search">
+    {showSearch && <form class="header-search" action={base + 'recipes/'} role="search" aria-label="Recipe search">
       <label class="vh" for="nav-query">Search recipes</label>
       <input id="nav-query" type="search" name="q" placeholder="Search recipes" autocomplete="off" enterkeyhint="search" data-names={JSON.stringify(names)} />
       <button type="submit" aria-label="Search"><span aria-hidden="true"></span></button>
-    </form>
+    </form>}
   </div>
 </header>
 

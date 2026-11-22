@@ -17,17 +17,7 @@
 :where([data-theme=blue-plate]) {
   .masthead { border-bottom: 7px solid var(--second); }
   .footer { border-top: 7px solid var(--second); }
-  .hero {
-    background: var(--gingham);
-    mask: linear-gradient(#000 0 0) top / 100% calc(100% - 22px) no-repeat, radial-gradient(22px at 50% 0, #000 97%, transparent) bottom / 44px 22px repeat-x;
-  }
-  /* A white enamel plate with a cobalt rim */
-  .label { border: 7px solid var(--second); border-radius: 22px; overflow: hidden; box-shadow: 0 10px 24px #3a121540; }
   .print { transform: rotate(2.2deg); }
-  .dish-link { border-top: 5px solid var(--second); }
-  .shot:nth-child(3n+1) { transform: rotate(-1.1deg); } .shot:nth-child(3n) { transform: rotate(.9deg); } .shot:is(:hover, :focus-within) { transform: none; }
-  .family-notes li { background: #fdfdf9 repeating-linear-gradient(transparent 0 calc(1.9rem - 1px), var(--line) calc(1.9rem - 1px) 1.9rem); border-top: 3px solid var(--accent); box-shadow: 0 1px 3px #0004; font-family: var(--type); line-height: 1.9rem; padding-block: 0 .4rem; }
-  .my-notes textarea { background: white repeating-linear-gradient(transparent 0 calc(1.9rem - 1px), var(--line) calc(1.9rem - 1px) 1.9rem) 0 .7rem local; }
   .mini-menu { transform: rotate(-2deg); }
   .dividers a { border: 0; border-bottom: 5px solid #0003; border-radius: 12px 12px 3px 3px; transition: transform .18s; }
   .dividers a:hover { transform: translateY(-6px); }

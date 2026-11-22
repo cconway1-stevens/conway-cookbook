@@ -1,0 +1,29 @@
+---
+import RolodexCard from './RolodexCard.astro';
+import type { Recipe } from '../lib/recipes';
+
+const { recipes }: { recipes: Recipe[] } = Astro.props;
+const featured = recipes.find(({ id }) => id === 'apple-crumble-pie') ??
+  recipes.find(({ data }) => data.image) ?? recipes[0];
+const others = recipes.filter(({ id }) => id !== featured?.id);
+---
+{featured && (
+  <section class="rolodex" aria-labelledby="rolodex-title" data-rolodex>
+    <header class="rolodex-head">
+      <h2 id="rolodex-title">From the recipe box</h2>
+      <button type="button" class="rolodex-flip" data-flip hidden>Flip a card</button>
+    </header>
+    <div class="rolodex-tray">
+      <div class="rolodex-stack">
+        <div class="rolodex-rings" aria-hidden="true"><i></i><i></i></div>
+        <div class="rolodex-current" data-current-card>
+          <RolodexCard recipe={featured} featured />
+        </div>
+      </div>
+    </div>
+    <p class="vh" role="status" data-flip-status></p>
+    {others.map((recipe) => (
+      <template data-recipe-card><RolodexCard recipe={recipe} /></template>
+    ))}
+  </section>
+)}

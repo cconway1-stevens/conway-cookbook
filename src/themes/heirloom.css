@@ -33,36 +33,8 @@
   #mark :is(img, svg) { border-color: #b8964c; }
   nav { font-weight: 400; } nav a:hover, nav a[aria-current] { border-color: #b8964c; }
 
-  /* The cover */
-  .hero { background: var(--cloth); color: #f9eed6; padding-block: clamp(1rem, 2.6vw, 2.2rem); }
-  .label { position: relative; background: none; align-items: center; padding: clamp(.6rem, 2vw, 1.6rem); }
-  .label::before { content: ''; position: absolute; inset: 0; border: 2px solid var(--gold); outline: 1px solid var(--gold); outline-offset: -8px; pointer-events: none; }
-  .label::after { content: ''; position: absolute; inset: 12px; pointer-events: none; background: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2764%27 height=%2764%27%3E%3Cg fill=%27none%27 stroke=%27%23d9b866%27 stroke-width=%271.6%27 stroke-linecap=%27round%27%3E%3Cpath d=%27M4 60V18C4 10 10 4 18 4h42%27/%3E%3Cpath d=%27M12 52V24c0-7 5-12 12-12h28%27/%3E%3Cpath d=%27M12 24c9 1 13 6 14 14 8-1 11-6 9-12M24 12c1 9 6 13 14 14-1 8-6 11-12 9%27/%3E%3C/g%3E%3Cg fill=%27%23d9b866%27%3E%3Cpath d=%27M26 26c9-3 15 1 17 9-8 3-15 0-17-9z%27/%3E%3Cpath d=%27M26 26c-3 9 1 15 9 17 3-8 0-15-9-17z%27/%3E%3Ccircle cx=%2720%27 cy=%2720%27 r=%272.6%27/%3E%3Ccircle cx=%2756%27 cy=%2712%27 r=%271.8%27/%3E%3Ccircle cx=%2712%27 cy=%2756%27 r=%271.8%27/%3E%3C/g%3E%3C/svg%3E") top left / 58px no-repeat, url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2764%27 height=%2764%27%3E%3Cg transform=%27matrix(1 0 0 -1 0 64)%27%3E%3Cg fill=%27none%27 stroke=%27%23d9b866%27 stroke-width=%271.6%27 stroke-linecap=%27round%27%3E%3Cpath d=%27M4 60V18C4 10 10 4 18 4h42%27/%3E%3Cpath d=%27M12 52V24c0-7 5-12 12-12h28%27/%3E%3Cpath d=%27M12 24c9 1 13 6 14 14 8-1 11-6 9-12M24 12c1 9 6 13 14 14-1 8-6 11-12 9%27/%3E%3C/g%3E%3Cg fill=%27%23d9b866%27%3E%3Cpath d=%27M26 26c9-3 15 1 17 9-8 3-15 0-17-9z%27/%3E%3Cpath d=%27M26 26c-3 9 1 15 9 17 3-8 0-15-9-17z%27/%3E%3Ccircle cx=%2720%27 cy=%2720%27 r=%272.6%27/%3E%3Ccircle cx=%2756%27 cy=%2712%27 r=%271.8%27/%3E%3Ccircle cx=%2712%27 cy=%2756%27 r=%271.8%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") bottom left / 58px no-repeat; }
-  .label h1 { color: var(--gold); letter-spacing: .005em; line-height: 1; text-shadow: 0 1px 0 #0d1c15, 0 -1px 0 #f5e4ad55; }
-  .label h1 span { color: #f9eed6; font: 400 .5em/1.3 var(--body); font-style: italic; text-shadow: none; }
-  .hero-head { position: relative; padding-top: calc(var(--pad) + .6rem); }
-  .spin { --edge: #b8964c; }
-  .find-box { gap: 1px; border-width: 1px; border-radius: 3px; } .spin-meals { gap: 1px; } .spin-meals span { background: #fffaf0; font-weight: 400; }
-  .spin-meals :checked + span, .spin-meals label:hover span { background: #f0dda8; }
-  .find-bar { gap: 1px; } .find-bar #home-q { border: 0; border-radius: 0; }
-  .find-go { background: var(--accent); } .find-surprise { border-radius: 0; background: linear-gradient(#f3dfa4, #d9b866); color: #2a2110; }
-  .find-surprise:hover { background: #f7e7b8; } .find-surprise.held { background: #2a2110; color: #f3dfa4; }
-  .find-bar :focus-visible { outline-color: var(--second); } .find-go:focus-visible { outline-color: #fff2d6; }
-  .hero-all { color: #f9eed6; font-style: italic; font-weight: 400; }
-  .hero-actions { border-top: 0; }
-  .hero :focus-visible { outline-color: #fff2d6; }
-  /* The dish, mounted on an album leaf */
-  #dish { position: relative; z-index: 1; padding: clamp(.6rem, 1.4vw, 1rem) clamp(.6rem, 1.4vw, 1rem) 0; background: var(--fiber), #f7eedb; box-shadow: 0 1px 0 #fff, 0 12px 26px #07120c99; }
-  .slides { border: 7px solid #fffdf7; box-shadow: 0 1px 4px #4a2f1566; }
-  .slides::after, .print::after { content: ''; position: absolute; inset: -7px; pointer-events: none; background: var(--corners); background-size: 34px 34px; background-repeat: no-repeat; }
-  .slides { overflow: visible; } .slide { overflow: hidden; }
-  .dish-link { padding-inline: .4rem; } .dish-link:hover { background: none; }
-  .dish-link span { font: 400 clamp(1.15rem, 1.7vw, 1.45rem)/1.7 var(--hand); color: #2c3a57; }
-  .dish-link b { border-radius: 3px; background: var(--accent); font: 400 1.05rem/1 var(--body); } .dish-link:hover b { background: var(--accent-dark); }
-  .landed { animation: mounted .7s cubic-bezier(.2, .9, .3, 1.15); } .landed .slide > * { animation: none; }
-  @keyframes mounted { from { transform: translateY(-26px) rotate(-4deg) scale(1.05); box-shadow: 0 34px 50px #07120c; } }
+  .print::after { content: ''; position: absolute; inset: -7px; pointer-events: none; background: var(--corners); background-size: 34px 34px; background-repeat: no-repeat; }
 
-  /* Headings, set like a chapter opening */
   .block > h2, .block > .block-head, .box > .block-head, .builder > .block-head, .settings > h1 { padding-bottom: .7rem; border-bottom: 4px double #a98c4f; }
   .button, .add, .card-view, .card-go .add { border-radius: 3px; box-shadow: none; font: 400 1.0625rem/1.4 var(--body); }
   .button { background: var(--accent); } .button:active { transform: none; box-shadow: none; }
@@ -95,8 +67,8 @@
   .card-photo { width: 100%; margin: 0 0 .6rem; border-radius: 0; border: 6px solid #fffdf7; box-shadow: 0 1px 4px #4a2f1577; }
   .card-face:has(img.card-photo)::before { content: ''; position: absolute; z-index: 1; top: 14px; left: 18px; right: 18px; aspect-ratio: 3 / 2; pointer-events: none; background: var(--corners); background-size: 26px 26px; background-repeat: no-repeat; }
   .card-face:has(.card-art)::before { content: ''; position: absolute; z-index: 1; top: -11px; left: 50%; width: 108px; height: 27px; translate: -50%; rotate: -2deg; background: #e9d9a6cc; box-shadow: 0 1px 2px #4a2f1540; clip-path: polygon(0 0, 2% 18%, 0 36%, 2% 54%, 0 72%, 2% 100%, 98% 100%, 100% 80%, 98% 60%, 100% 40%, 98% 20%, 100% 0); }
+  .card-art .spot { background: none; } .spot-ink { stroke: #3a3226; stroke-width: 1.5; }
   .card-art { border: 0; box-shadow: none; background: linear-gradient(#b5505a, #b5505a) 0 18% / 100% 1px no-repeat, repeating-linear-gradient(#fffdf4 0 25px, #cfdbe0 25px 26px); }
-  .card-art .spot, .slide .card-art .spot { background: none; } .spot-ink { stroke: #3a3226; stroke-width: 1.5; }
   .card > .card-tab { position: absolute; z-index: 2; left: 12px; top: 26px; margin: 0; padding: .15rem .8rem; background: #fffdf4; box-shadow: 0 1px 3px #4a2f1566; font: italic 400 1rem/1.5 var(--body); color: var(--accent); rotate: -2deg; }
   .card-top { min-height: 0; border: 0; padding: 0; }
   .card-title { font: 400 1.45rem/1.3 var(--heading); }
@@ -172,11 +144,7 @@
   .cook-voice-head { border-bottom: 4px double #a98c4f; }
   #toast { border-radius: 2px; }
 
-  @media (max-width: 900px) { .label h1 { font-size: min(6.9vw, 4.2rem); } .hero-actions { padding: .6rem var(--pad) 1rem; position: relative; z-index: 1; } }
   @media (max-width: 600px) {
-    .label { padding: .5rem; } .label h1 { font-size: 17vw; } .label h1 span { padding-left: .9em; }
-    .hero-head { padding: 1.3rem 1.2rem .8rem; } #dish { margin-inline: .7rem; } .label::after { background-size: 38px; } .hero-head { padding-left: 1.5rem; } .dish-link span { font-size: 1.1rem; }
-    .slides::after { background-size: 26px 26px; }
     .sheet { box-shadow: 0 1px 2px #4a2f1555, 0 10px 22px var(--shade); } .sheet::after { width: 120px; }
   }
 }

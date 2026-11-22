@@ -1,0 +1,17 @@
+---
+import Spot from './Spot.astro';
+import { base, recipeUrl, type Recipe } from '../lib/recipes';
+
+const { recipe, featured = false }: { recipe: Recipe; featured?: boolean } = Astro.props;
+---
+<a class="rolodex-card" href={recipeUrl(recipe.id)} data-thumb={recipe.data.image ? base + 'thumbs/' + recipe.id + '.jpg' : undefined}>
+  <div class="rolodex-art">
+    {recipe.data.image
+      ? <img src={base + recipe.data.image} alt="" width="1200" height="800" fetchpriority={featured ? 'high' : undefined} />
+      : <Spot category={recipe.data.category} />}
+  </div>
+  <div class="rolodex-caption">
+    <div><p class="rolodex-meta">{recipe.data.category} · {recipe.data.time}</p><h3>{recipe.data.title}</h3></div>
+    <span class="rolodex-read" aria-hidden="true">View recipe</span>
+  </div>
+</a>

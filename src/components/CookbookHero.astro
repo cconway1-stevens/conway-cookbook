@@ -1,0 +1,35 @@
+---
+import RecipeRolodex from './RecipeRolodex.astro';
+import { book } from '../lib/cookbook';
+import { base, type Recipe } from '../lib/recipes';
+import '../hero.css';
+
+const { recipes, meals }: { recipes: Recipe[]; meals: readonly (readonly [string, number])[] } = Astro.props;
+---
+<section class="cookbook-hero" aria-labelledby="cover-title">
+  <div class="wrap">
+    <div class="book-spread">
+      <div class="book-title-leaf">
+        <h1 id="cover-title"><span>{book.cover.small}</span> {book.cover.large}</h1>
+        <p>{book.tagline}</p>
+        <a class="button" href={base + 'recipes/'}>Open the recipe box</a>
+      </div>
+      <RecipeRolodex recipes={recipes} />
+    </div>
+    <form class="cookbook-search" action={base + 'recipes/'} role="search" aria-label="Recipe search">
+      <div class="cookbook-query">
+        <label for="home-q">Search recipes</label>
+        <input id="home-q" type="search" name="q" placeholder="Try cinnamon, chicken, or pancakes" enterkeyhint="search" />
+      </div>
+      <div class="cookbook-meal">
+        <label for="home-meal">Meal</label>
+        <select id="home-meal" name="meal">
+          <option value="">Any meal</option>
+          {meals.map(([meal]) => <option value={meal}>{meal}</option>)}
+        </select>
+      </div>
+      <button class="button" type="submit">Find recipes</button>
+    </form>
+  </div>
+</section>
+<script>import '../scripts/randomizer';</script>

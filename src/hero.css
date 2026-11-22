@@ -1,0 +1,190 @@
+@layer base, theme, print;
+@layer base {
+  .cookbook-hero {
+    padding-block: clamp(1.25rem, 4vw, 3.75rem);
+    background: radial-gradient(ellipse at 50% 35%, transparent, var(--shade)), var(--tint);
+    color: var(--ink);
+  }
+
+  .book-spread {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    background: var(--fiber, none), var(--card);
+    border: 1px solid var(--line);
+    border-radius: .75rem .75rem .35rem .35rem;
+    box-shadow: 0 4px 0 -1px var(--tint), 0 5px 0 0 var(--line),
+      0 9px 0 -1px var(--tint), 0 10px 0 0 var(--line), 0 18px 28px var(--shade);
+  }
+
+  .book-spread:has(.rolodex)::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    inset: 0 auto 0 42.5%;
+    width: clamp(1.1rem, 4vw, 2.9rem);
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, var(--shade) 48%, var(--line) 50%, var(--shade) 52%, transparent);
+    pointer-events: none;
+  }
+
+  .book-title-leaf {
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: clamp(.85rem, 2vw, 1.4rem);
+    padding: clamp(1.4rem, 5vw, 4.3rem);
+    min-width: 0;
+  }
+
+  .book-title-leaf h1 {
+    color: var(--second);
+    font: 400 clamp(2.6rem, 6.15vw, 6rem)/.96 var(--display);
+    letter-spacing: -.02em;
+    overflow-wrap: anywhere;
+  }
+
+  .book-title-leaf h1 span {
+    display: block;
+    font-size: .56em;
+    color: var(--accent);
+    margin-bottom: .14em;
+  }
+
+  .book-title-leaf p {
+    max-width: 29ch;
+    color: var(--soft);
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    text-wrap: pretty;
+  }
+
+  .rolodex {
+    min-width: 0;
+    display: grid;
+    align-content: center;
+    gap: .8rem;
+    padding: clamp(1rem, 3.4vw, 2.75rem);
+  }
+
+  .rolodex-head, .rolodex-caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .55rem 1rem;
+    flex-wrap: wrap;
+  }
+
+  .rolodex-head h2 { font: 400 clamp(1.3rem, 2.3vw, 1.9rem)/1.2 var(--heading); color: var(--second); }
+  .rolodex-flip {
+    min-height: 44px;
+    padding: .35rem .85rem;
+    color: var(--second);
+    background: var(--tint);
+    border: 1px solid var(--line);
+    border-radius: .3rem;
+    font: 600 1rem/1.2 var(--body);
+  }
+  .rolodex-flip:hover { background: var(--highlight); }
+
+  .rolodex-tray {
+    --tray-line: color-mix(in srgb, var(--second) 75%, black);
+    padding: clamp(.6rem, 2vw, 1.2rem) clamp(.55rem, 1.6vw, 1rem) 1.45rem;
+    background: linear-gradient(180deg, var(--tray-line), var(--second));
+    border: 1px solid var(--tray-line);
+    border-radius: .7rem;
+    box-shadow: inset 0 -4px 0 var(--tray-line), 0 5px 12px var(--shade);
+  }
+
+  .rolodex-stack {
+    position: relative;
+    border-radius: .3rem;
+    box-shadow: 0 4px 0 -1px var(--highlight), 0 7px 0 -2px var(--card),
+      0 10px 0 -3px var(--tint), 0 13px 0 -4px var(--line);
+  }
+
+  .rolodex-rings {
+    position: absolute;
+    z-index: 1;
+    inset: -.5rem 23% auto;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
+  .rolodex-rings i {
+    width: .64rem;
+    height: 1.17rem;
+    border-radius: 1rem;
+    background: linear-gradient(90deg, #555557 4%, #dbd5bd 38%, #a39e8a 65%, #494949);
+    box-shadow: 0 2px 0 #362c24, 0 4px 3px #0005;
+  }
+
+  .rolodex-card {
+    display: block;
+    transform-origin: 50% 0%;
+    padding: .55rem;
+    border-radius: .3rem;
+    color: var(--ink);
+    background: var(--fiber, none), var(--card);
+    text-decoration: none;
+  }
+
+  .rolodex-art {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: .15rem;
+    background: var(--tint);
+  }
+
+  .rolodex-art img { width: 100%; height: 100%; object-fit: cover; }
+  .rolodex-art .spot { width: min(50%, 13rem); height: auto; }
+  .rolodex-caption { padding: .65rem .35rem .4rem; }
+  .rolodex-meta { font: .88rem/1.25 var(--type); color: var(--soft); }
+  .rolodex-caption h3 { margin-top: .2rem; font: 400 clamp(1.2rem, 2.2vw, 1.7rem)/1.14 var(--heading); }
+  .rolodex-read { font-size: .92rem; color: var(--accent); text-decoration: underline; text-underline-offset: .15em; }
+  .rolodex-card:hover .rolodex-caption h3 { color: var(--accent); }
+  .rolodex-card:focus-visible { outline-color: var(--highlight); }
+
+  .cookbook-search {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(9rem, .34fr) auto;
+    align-items: end;
+    gap: .7rem;
+    max-width: 48rem;
+    margin: clamp(1.3rem, 3vw, 2.3rem) auto 0;
+    padding: clamp(.8rem, 2vw, 1.3rem);
+    background: var(--fiber, none), var(--card);
+    border: 1px solid var(--line);
+    border-radius: .35rem;
+  }
+  .cookbook-search label { display: block; margin-bottom: .3rem; font-weight: 600; }
+  .cookbook-search .button { min-height: 2.9rem; padding-block: .5rem; box-shadow: none; }
+
+  @media (max-width: 730px) {
+    .book-spread { grid-template-columns: minmax(0, 1fr); }
+    .book-spread:has(.rolodex)::before { display: none; }
+    .book-title-leaf { justify-items: center; text-align: center; border-bottom: 3px double var(--line); }
+    .book-title-leaf h1 { font-size: clamp(2.6rem, 10vw, 4.4rem); }
+    .rolodex { width: min(100%, 35rem); margin-inline: auto; }
+  }
+
+  @media (max-width: 520px) {
+    .cookbook-search { grid-template-columns: minmax(0, 1fr) auto; }
+    .cookbook-query { grid-column: 1 / -1; }
+    .cookbook-search .button { padding-inline: .65rem; font-size: 1rem; }
+  }
+}
+
+@layer theme {
+  [data-theme=blue-plate] .cookbook-hero {
+    background: linear-gradient(90deg, #fff8 50%, transparent 50%) 0 0 / 30px 30px,
+      linear-gradient(#fdfdf942 50%, transparent 50%) 0 0 / 30px 30px, var(--page);
+  }
+  [data-theme=blue-plate] .book-spread { border-color: var(--second); }
+  [data-theme=heirloom] .cookbook-hero { background: var(--cloth); }
+  [data-theme=heirloom] .book-spread { border-color: var(--gold); }
+  [data-theme=heirloom] .rolodex-tray { background: var(--cloth); }
+}

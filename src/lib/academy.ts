@@ -2,6 +2,10 @@ import { modules } from './coursework';
 import { directions, ingredients, type Recipe } from './recipes';
 
 export const lessons = [
+  { id: 'brown-butter', title: 'Brown butter by sight and smell', match: /brown (?:half the|the sauce) butter/i,
+    steps: ['Cut unsalted butter into even pieces. Melt it in a light-colored pan over medium-low heat so the milk solids are visible against the bottom.', 'Stir with a heatproof spatula, sweeping the corners. The bubbling comes from escaping water. As the foam settles, look under it for little golden specks.', 'When the flecks turn hazelnut brown and smell nutty, scrape everything into a heatproof bowl immediately. Black flecks and an acrid smell mean the solids have burned; start again.'] },
+  { id: 'stove-heat', title: 'Control the heat on your stove and oven', match: /brown (?:half the|the sauce) butter/i,
+    steps: ['Gas: center the pan over a burner and keep the flame under its base. Turn it down as the flecks turn golden.', 'Electric coil or radiant glass: the element stays hot after you lower the dial. Move the pan to a cool burner if the browning speeds up.', 'Induction: use a compatible flat-bottomed pan. Start low to medium-low and avoid boost. The pan heats quickly, especially with a small amount of butter.', 'Convection is an oven setting for the baking stage. If your oven does not automatically convert temperatures, a common starting point is 25°F below the conventional recipe setting. Check early: cookies need set edges, while bread pudding needs a set center at least 160°F.'] },
   { id: 'scale', title: 'Scale a recipe by yield', match: /cups? (?:all-purpose )?flour/i,
     steps: ['Write down the original and desired yields in the same units. Divide desired yield by original yield.', 'Multiply each measured ingredient by that factor. Keep the original units or convert to a known weight before scaling.', 'Select pans that maintain a similar depth. Check doneness as you cook and adjust seasoning to taste.'] },
   { id: 'onion-strips', title: 'Slice an onion into fine strips', match: /(?:thinly sliced|sliced|julienned).*onion|onion[^.\n]*(?:thinly sliced|julienned)/i,

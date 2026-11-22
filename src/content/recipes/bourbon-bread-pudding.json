@@ -1,6 +1,6 @@
 {
   "title": "Bourbon Bread Pudding",
-  "description": "Cinnamon-vanilla bread pudding with a golden top and warm brown sugar bourbon sauce.",
+  "description": "Cinnamon-vanilla bread pudding with a golden top and warm brown-butter and brown sugar bourbon sauce.",
   "category": "Desserts",
   "meal": [
     "Dessert"
@@ -61,8 +61,13 @@
       "text": "Bake for 40–50 minutes, until the top is golden and the center is set and registers at least 160°F. Let the pudding rest for 10 minutes before cutting."
     },
     {
+      "title": "Brown the sauce butter",
+      "group": "sauce",
+      "text": "While the pudding rests, melt the 4 tablespoons sauce butter in a small light-colored saucepan over medium-low heat. Stir across the bottom until the foam reveals hazelnut-brown flecks and a toasted aroma. Immediately pour it all into a heatproof bowl."
+    },
+    {
       "title": "Make the sauce",
-      "text": "Combine the butter, brown sugar, cream, and salt in a small saucepan. Bring to a gentle simmer over medium heat and stir for 3–4 minutes, until smooth and slightly thickened. Take the pan off the heat before stirring in the bourbon.",
+      "text": "With the pan off the heat, add the cream, brown sugar, salt and browned butter, scraping in the toasted flecks. Return to medium-low heat and whisk at a gentle simmer for 3–4 minutes until smooth. Move the pan away from the burner before stirring in the measured bourbon.",
       "group": "sauce"
     },
     {

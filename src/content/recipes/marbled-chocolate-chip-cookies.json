@@ -1,6 +1,6 @@
 {
   "title": "Ghirardelli-Style Marbled Chocolate Chip Cookies",
-  "description": "Brown sugar cookies with dark and semisweet chocolate, from fine flecks to big melted pockets.",
+  "description": "Brown-butter and brown sugar cookies with dark and semisweet chocolate, from fine flecks to big melted pockets.",
   "category": "Desserts",
   "meal": [
     "Dessert"
@@ -8,13 +8,18 @@
   "cuisine": [
     "American"
   ],
-  "academyLinks": ["fold", "baking-bench"],
+  "academyLinks": [
+    "brown-butter",
+    "stove-heat",
+    "fold",
+    "baking-bench"
+  ],
   "tags": [
     "Baking"
   ],
   "date": "2026-11-22",
-  "time": "45 minutes",
-  "minutes": 45,
+  "time": "About 1¼ hours, including cooling",
+  "minutes": 75,
   "servings": "About 36 cookies",
   "image": "images/marbled-chocolate-chip-cookies.webp",
   "imageAlt": "Stack of chocolate chip cookies with dark chocolate shards and melted chocolate pockets",
@@ -22,7 +27,8 @@
     "2¼ cups all-purpose flour",
     "1 teaspoon baking soda",
     "½ teaspoon fine salt",
-    "1 cup unsalted butter, softened",
+    "1 cup unsalted butter, divided; soften half",
+    "1 tablespoon water",
     "¾ cup packed light brown sugar",
     "¾ cup granulated sugar",
     "2 large eggs",
@@ -33,12 +39,20 @@
   ],
   "steps": [
     {
+      "title": "Brown half the butter",
+      "text": "Melt ½ cup butter in a light-colored saucepan over medium-low heat. Stir along the bottom as it foams. When the flecks turn hazelnut brown and smell toasted, immediately scrape the butter and flecks into a heatproof bowl."
+    },
+    {
+      "title": "Cool until spreadable",
+      "text": "Let the browned butter cool until lukewarm. Whisk in 1 tablespoon water to replace moisture lost during browning. Stir in the remaining ½ cup softened butter. Chill briefly, stirring occasionally, until opaque and soft enough to hold a spoon mark."
+    },
+    {
       "title": "Heat the oven",
       "text": "Heat the oven to 375°F. Line two baking sheets with parchment. Whisk together the flour, baking soda, and salt."
     },
     {
       "title": "Make the dough",
-      "text": "Beat the butter with the brown and granulated sugars until creamy. Beat in the eggs one at a time, then the vanilla. Mix in the flour mixture on low just until the dry streaks disappear."
+      "text": "Beat the cooled butter mixture with the brown and granulated sugars until creamy. Beat in the eggs one at a time, then the vanilla. Mix in the flour mixture on low just until the dry streaks disappear."
     },
     {
       "title": "Marble the chocolate",

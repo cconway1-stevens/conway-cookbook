@@ -96,7 +96,8 @@
   .sec-ingredients li { font: 400 1.06rem/1.5 var(--body); border-bottom: 1px dotted #a98c4f; }
   .sec-directions li::before { font: 400 2.5rem/1 var(--display); color: var(--accent); }
   .sec-directions li strong { font-weight: 700; }
-  .why { border-left: 3px solid #a98c4f; background: #f6ecd2; font-style: italic; } .why b { margin-right: .5rem; color: var(--accent); font: 600 1rem/1 var(--body); font-style: normal; letter-spacing: 0; text-transform: none; }
+  .why > p { border-left: 3px solid #a98c4f; background: #f6ecd2; font-style: italic; }
+  .why > summary { border-width: 1px; font-weight: 400; } .why-mark { font-family: var(--display); font-style: italic; }
 
   .invite { position: relative; border-radius: 0; background: var(--cloth); outline: 2px solid var(--gold); outline-offset: -12px; padding: clamp(2rem, 5vw, 3.6rem); color: #f9eed6; }
   .invite h2 { color: var(--gold); } .invite .button { background: linear-gradient(#f3dfa4, #d9b866); border-color: #d9b866; color: #2a2110; }

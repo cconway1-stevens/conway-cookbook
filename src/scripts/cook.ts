@@ -2,6 +2,21 @@
 import { confetti, number, replay } from './motion';
 import { listen, prefs, quiet, speak, type Line } from './voice';
 
+// Ingredient words get the same hover as on the recipe page.
+function fill(el: HTMLElement, line: Line) {
+  if (!line.parts) { el.textContent = line.text; return; }
+  el.replaceChildren(...line.parts.map((p) => {
+    if (typeof p === 'string') return document.createTextNode(p);
+    const word = document.createElement('span');
+    word.className = p.gm ? 'ing ing-group' : 'ing'; word.textContent = p.s;
+    if (p.e) word.dataset.e = p.e.join(' ');
+    if (p.o) word.dataset.o = p.o.join(' ');
+    if (p.g) word.dataset.g = p.g;
+    if (p.gm) word.dataset.gm = p.gm;
+    return word;
+  }));
+}
+
 interface Data { id: string; title: string; groups: { name: string; lines: Line[] }[]; steps: { title: string; heading: Line; lines: Line[]; why?: Line }[]; phrases: Record<string, Line> }
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -45,7 +60,14 @@ async function say(lines: { line: Line; row?: number }[]) {
   }
   if (mine === run) hush();
 }
-const readPage = () => say([{ line: pages[page].heading }, ...pages[page].lines.map(({ line }, row) => ({ line, row })), ...(pages[page].why ? [{ line: pages[page].why! }] : [])]);
+const readPage = () => say([{ line: pages[page].heading }, ...pages[page].lines.map(({ line }, row) => ({ line, row })), ...(pages[page].why && $<HTMLDetailsElement>('cook-why').open ? [{ line: pages[page].why! }] : [])]);
+// "Why": open the note and read it out. Reading a page aloud includes it only when it is open.
+function whyNow() {
+  const why = $<HTMLDetailsElement>('cook-why');
+  if (!pages[page].why) return;
+  why.open = true;
+  say([{ line: pages[page].why! }]);
+}
 
 /* ---------- Timers ---------- */
 const timers: { label: string; end: number; el: HTMLElement; done: boolean }[] = [];
@@ -89,7 +111,7 @@ function draw(focus = true) {
   $('cook-lines').replaceChildren(...p.lines.flatMap(({ line, group: g }, row) => {
     const li = document.createElement('li'); li.dataset.row = String(row);
     const label = document.createElement('label'), box = document.createElement('input'), text = document.createElement('span');
-    box.type = 'checkbox'; box.checked = ticks[page][row]; text.textContent = line.text;
+    box.type = 'checkbox'; box.checked = ticks[page][row]; fill(text, line);
     box.addEventListener('change', () => { ticks[page][row] = box.checked; warned = false; $('cook-warn').textContent = ''; store(); drawTrack(); });
     label.append(box, text); li.append(label);
     if (g === group) return [li];
@@ -98,9 +120,9 @@ function draw(focus = true) {
     return [head, li];
   }));
   number($('cook-lines').children);
-  const why = $('cook-why');
-  why.hidden = !p.why; why.replaceChildren();
-  if (p.why) { const label = document.createElement('b'); label.textContent = 'Why'; why.append(label, ' ' + p.why.text); }
+  const why = $<HTMLDetailsElement>('cook-why');
+  why.hidden = !p.why; why.open = false;
+  if (p.why) fill($('cook-why-text'), p.why);
   $('cook-extra').replaceChildren();
   if (!page) {
     const all = document.createElement('button'); all.type = 'button'; all.className = 'button quiet'; all.textContent = 'I have everything';
@@ -181,6 +203,7 @@ function command(heard: string) {
   // Short phrases only, so kitchen chatter doesn't turn the page.
   if (!words || words.split(' ').length > 4) return;
   if (/\b(stop|quiet|pause)\b/.test(words)) return hush();
+  if (/^(why|why is that|explain)$/.test(words)) return speaking ? undefined : whyNow();
   if (speaking) return; // don't obey our own narration
   const step = words.match(/\bstep (\w+)/);
   if (step) { const n = /^\d+$/.test(step[1]) ? Number(step[1]) : numbers.indexOf(step[1]); if (n > 0) return go(n); }

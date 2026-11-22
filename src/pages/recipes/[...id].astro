@@ -4,8 +4,9 @@ import Cookbook from '../../layouts/Cookbook.astro';
 import RecipeCard from '../../components/RecipeCard.astro';
 import Spot from '../../components/Spot.astro';
 import RecipeExtras from '../../components/RecipeExtras.astro';
+import Parts from '../../components/Parts.astro';
 import CookMode from '../../components/CookMode.astro';
-import { allRecipes, base, directions, ingredients, isSample, recipeUrl } from '../../lib/recipes';
+import { allRecipes, base, directions, ingredients, isSample, json, linkOf, recipeUrl } from '../../lib/recipes';
 
 export async function getStaticPaths() {
   const recipes = await allRecipes();
@@ -33,6 +34,7 @@ if (pin && Astro.site) {
   }).toString();
 }
 const groups = data.ingredients ? ingredients(recipe) : null;
+const link = groups ? linkOf(recipe) : null;
 const Content = groups ? null : (await render(recipe)).Content;
 const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURIComponent(value)}`;
 ---
@@ -70,12 +72,14 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
         {Content && <Content />}
         {groups && <>
           {data.story && <section class="sec"><h2>The story</h2><p>{data.story}</p></section>}
-          <section class="sec sec-ingredients"><h2>Ingredients</h2>
-            {groups.map((g) => <>{g.name && <h3>{g.name}</h3>}<ul>{g.items.map((item) => <li>{item}</li>)}</ul></>)}
+          <section class="sec sec-ingredients" role="group" aria-describedby="ing-help"><h2>Ingredients</h2>
+            {groups.map((g, gi) => <>{g.name && <h3>{g.name}</h3>}<ul>{g.items.map((item, ii) => <li class="ing-line" data-e={link!.ids[gi][ii]}>{item}</li>)}</ul></>)}
           </section>
-          <section class="sec sec-directions"><h2>Directions</h2>
-            <ol>{directions(recipe).map((step) => <li>{step.title && <strong>{step.title}.</strong>} {step.text}{step.why && <p class="why"><b>Why</b> {step.why}</p>}</li>)}</ol>
+          <section class="sec sec-directions" role="group" aria-describedby="ing-help"><h2>Directions</h2>
+            <p class="ing-hint" id="ing-help">Hover over an ingredient, or tap it, to see how much it takes and where else it is used. With a keyboard, use the arrow keys.</p>
+            <ol>{directions(recipe).map((step, si) => <li>{step.title && <strong>{step.title}.</strong>} <Parts parts={link!.steps[si].parts} />{step.why && <details class="why"><summary><span class="why-mark" aria-hidden="true">?</span>Why?</summary><p><Parts parts={link!.steps[si].whyParts} /></p></details>}</li>)}</ol>
           </section>
+          <script type="application/json" id="ing-data" set:html={json(link!.data)} />
           {Object.entries(data.notes ?? {}).map(([title, text]) => <section class="sec"><h2>{title}</h2><p>{text}</p></section>)}
         </>}
       </div>
@@ -87,6 +91,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
   <CookMode recipe={recipe} />
 </Cookbook>
 <script>
+  import '../../scripts/ingredient-hover';
   const print = document.querySelector<HTMLButtonElement>('.print-button')!;
   print.hidden = false;
   print.addEventListener('click', () => window.print());

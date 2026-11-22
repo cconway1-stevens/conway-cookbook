@@ -16,7 +16,7 @@ const { recipe } = Astro.props;
     <p class="cook-count" id="cook-count"></p>
     <h2 id="cook-heading"></h2>
     <ul class="cook-lines" id="cook-lines"></ul>
-    <p class="why" id="cook-why" hidden></p>
+    <details class="why" id="cook-why" hidden><summary><span class="why-mark" aria-hidden="true">?</span>Why?</summary><p id="cook-why-text"></p></details>
     <div class="cook-extra" id="cook-extra"></div>
   </div>
   <p class="cook-warn" id="cook-warn" role="status"></p>

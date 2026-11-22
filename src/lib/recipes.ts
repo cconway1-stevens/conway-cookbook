@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { existsSync } from 'node:fs';
 import { courseOf } from './cookbook';
+import { linkRecipe } from './ingredient-links.mjs';
 import { PHRASES, clipName, heading, ingredientGroups, spoken, steps } from './narration.mjs';
 
 export type Recipe = CollectionEntry<'recipes'>;
@@ -23,6 +24,15 @@ export const ingredients = (recipe: Recipe): { name: string; items: string[] }[]
 
 export const directions = (recipe: Recipe): { title: string; text: string; lines: string[]; why?: string }[] => steps(recipe.data, recipe.body);
 
+// Which ingredient line each ingredient word in the steps means. Only recipes with JSON ingredients.
+const linked = new WeakMap<object, ReturnType<typeof linkRecipe> | null>();
+export function linkOf(recipe: Recipe) {
+  if (!recipe.data.ingredients) return null;
+  if (!linked.has(recipe)) linked.set(recipe, linkRecipe(ingredients(recipe) as any, steps(recipe.data, recipe.body)));
+  return linked.get(recipe)!;
+}
+const withParts = <T extends object>(line: T, parts?: unknown[]) => (parts?.some((p) => typeof p !== 'string') ? { ...line, parts } : line);
+
 // Cook mode: every line with its recorded clip, when one has been made.
 export const clip = (text: string) => {
   const file = clipName(text);
@@ -32,7 +42,10 @@ export const cookData = (recipe: Recipe) => ({
   id: recipe.id,
   title: recipe.data.title,
   groups: ingredients(recipe).map((g) => ({ name: g.name, lines: g.items.map(clip) })),
-  steps: steps(recipe.data, recipe.body).map((step: { title: string; lines: string[]; why?: string }, i: number) => ({ title: step.title, heading: clip(heading(step, i)), lines: step.lines.map(clip), why: step.why ? clip(step.why) : undefined })),
+  steps: steps(recipe.data, recipe.body).map((step: { title: string; lines: string[]; why?: string }, i: number) => {
+    const link = linkOf(recipe)?.steps[i];
+    return { title: step.title, heading: clip(heading(step, i)), lines: step.lines.map((l, n) => withParts(clip(l), link?.lineParts[n])), why: step.why ? withParts(clip(step.why), link?.whyParts) : undefined };
+  }),
   phrases: Object.fromEntries(Object.entries(PHRASES).map(([key, text]) => [key, clip(text as string)])),
 });
 

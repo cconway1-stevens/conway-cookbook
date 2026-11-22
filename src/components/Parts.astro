@@ -1,0 +1,5 @@
+---
+// Text with its ingredient words wrapped, so a hover can find them.
+const { parts = [] } = Astro.props;
+---
+{parts.map((p: string | { s: string; e?: string[]; o?: string[]; g?: string; gm?: string }) => typeof p === 'string' ? p : <span class:list={['ing', { 'ing-group': p.gm }]} data-e={p.e?.join(' ')} data-o={p.o?.join(' ')} data-g={p.g} data-gm={p.gm}>{p.s}</span>)}

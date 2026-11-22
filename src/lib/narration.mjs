@@ -51,7 +51,7 @@ export function ingredientGroups(data, body) {
   if (!data?.ingredients) return bodyGroups(body);
   const groups = [];
   for (const item of data.ingredients) {
-    if (typeof item === 'object') groups.push({ name: item.group, items: item.items.map((i) => i.trim()) });
+    if (typeof item === 'object') groups.push({ name: item.group, items: item.items.map((i) => i.trim()), aka: item.aka });
     else {
       if (!groups.length || groups.at(-1).name) groups.push({ name: '', items: [] });
       groups.at(-1).items.push(item.trim());
@@ -62,8 +62,8 @@ export function ingredientGroups(data, body) {
 export function steps(data, body) {
   if (!data?.steps) return bodySteps(body);
   return data.steps.map((step) => {
-    const { title = '', text, why } = typeof step === 'string' ? { text: step } : step;
-    return { title: title.replace(/[.:]$/, ''), text: text.trim(), lines: sentences(text.trim()), why: why?.trim() || undefined };
+    const { title = '', text, why, group } = typeof step === 'string' ? { text: step } : step;
+    return { title: title.replace(/[.:]$/, ''), text: text.trim(), lines: sentences(text.trim()), why: why?.trim() || undefined, group };
   });
 }
 

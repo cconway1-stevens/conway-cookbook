@@ -31,7 +31,8 @@ The importer reads [Schema.org Recipe data](https://schema.org/Recipe) from the 
 1. Copy [the recipe template](recipe-template.json) into [`src/content/recipes/`](src/content/recipes/) as `sunday-pot-roast.json`. The filename becomes the recipe’s URL.
 2. Fill in `title`, `description`, `category`, `time`, `servings`, `ingredients`, and `steps`. Delete optional fields you don’t use.
    - Use a course from [`src/data/cookbook.json`](src/data/cookbook.json), or a meal such as `Dinner`. Set `minutes` to include the recipe in the **Ready in** filter.
-   - Write ingredients as lines or groups with `group` and `items`. Write steps as text or objects with `title`, `text`, and an optional `why` explanation.
+   - Write ingredients as lines or groups with `group` and `items`. Write steps as text or objects with `title`, `text`, and an optional `why` explanation, which opens from a “Why?” button.
+   - Ingredient names in the steps show their amounts on hover. When an ingredient is in two groups and the page picks the wrong one, add `"group": "crumble"` (part of the group's name) to that step.
 3. For a cover photo, add the file to [`public/images/`](public/images/) and set `image` (for example, `images/sunday-pot-roast.jpg`) and `imageAlt`.
 4. Open a pull request. If a recipe fails validation, fix the file before merging.
 

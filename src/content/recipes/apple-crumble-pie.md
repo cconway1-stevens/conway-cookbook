@@ -6,8 +6,8 @@ date: 2026-11-22
 time: 2 hours, plus cooling
 servings: 6–8
 difficulty: Medium
-image: images/apple-crumble-pie.jpg
-imageAlt: Golden apple crumble pie on a wooden table
+image: images/apple-crumble-pie-illustration.jpg
+imageAlt: Illustrated apple pie and slice with a golden cinnamon-oat crumb topping
 source:
   name: Claire Saffitz’s pie recipe at Made In
   url: https://madeincookware.com/recipes/classic-apple-crumble-pie-recipe

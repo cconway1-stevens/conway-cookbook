@@ -10,7 +10,7 @@ const cuisines = tally(recipes.flatMap((r) => r.data.cuisine));
 const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURIComponent(value)}`;
 ---
 <Cookbook>
-  <CookbookHero recipes={recipes} meals={meals} />
+  <CookbookHero recipes={recipes} />
 
   <div class="wrap">
     <section class="block" aria-labelledby="meals-title">

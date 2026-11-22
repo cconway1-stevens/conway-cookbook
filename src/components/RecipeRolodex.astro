@@ -24,7 +24,9 @@ const others = recipes.filter(({ id }) => id !== featured?.id);
       ))}
       <button type="button" data-card-filter="" aria-pressed="true">All recipes</button>
     </div>
-    <div class="rolodex-tray">
+    <div class="rotary-frame">
+      <div class="rotary-stand" aria-hidden="true"></div>
+      <div class="rotary-knobs" aria-hidden="true"><i></i><i></i></div>
       <div class="rolodex-stack">
         <div class="rolodex-rings" aria-hidden="true"><i></i><i></i></div>
         <div class="rolodex-current" data-current-card>

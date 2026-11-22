@@ -87,20 +87,66 @@
   }
   .rolodex-flip:hover { background: var(--highlight); }
 
-  .rolodex-tray {
-    --tray-line: color-mix(in srgb, var(--second) 75%, black);
-    padding: clamp(.6rem, 2vw, 1.2rem) clamp(.55rem, 1.6vw, 1rem) 1.45rem;
-    background: linear-gradient(180deg, var(--tray-line), var(--second));
-    border: 1px solid var(--tray-line);
-    border-radius: .7rem;
-    box-shadow: inset 0 -4px 0 var(--tray-line), 0 5px 12px var(--shade);
+  .rotary-frame {
+    --metal: var(--second);
+    --metal-dark: color-mix(in srgb, var(--metal) 57%, black);
+    --metal-light: color-mix(in srgb, var(--metal) 60%, white);
+    position: relative;
+    isolation: isolate;
+    padding: .8rem clamp(.65rem, 1.6vw, 1.25rem) 1.85rem;
+  }
+
+  .rotary-stand {
+    position: absolute;
+    inset: 33% .13rem .18rem;
+    z-index: -1;
+    border: clamp(.31rem, .8vw, .6rem) solid var(--metal);
+    border-radius: 1.3rem 1.3rem 1.05rem 1.05rem;
+    box-shadow: inset 0 2px 0 var(--metal-light), 0 3px 0 var(--metal-dark), 0 8px 9px var(--shade);
+  }
+
+  .rotary-knobs {
+    pointer-events: none;
+    position: absolute;
+    inset: 45% -.12rem auto;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+  }
+
+  .rotary-knobs i {
+    width: clamp(.85rem, 2.6vw, 1.85rem);
+    height: clamp(1.75rem, 3.8vw, 2.65rem);
+    border: 2px solid var(--metal-dark);
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 38% 38%, var(--metal-light) 3%, var(--metal) 43%, var(--metal-dark) 80%);
+    box-shadow: 0 2px 2px var(--shade);
   }
 
   .rolodex-stack {
     position: relative;
-    border-radius: .3rem;
+    isolation: isolate;
+    border: 1px solid var(--line);
+    border-radius: .3rem .3rem .55rem .55rem;
     box-shadow: 0 4px 0 -1px var(--highlight), 0 7px 0 -2px var(--card),
-      0 10px 0 -3px var(--tint), 0 13px 0 -4px var(--line);
+      0 10px 0 -3px var(--line), 0 13px 0 -4px var(--tint),
+      0 16px 0 -5px var(--line), 0 19px 0 -6px var(--metal);
+  }
+
+  .rolodex-stack::before, .rolodex-stack::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: -.32rem 4% .2rem;
+    border: 1px solid var(--line);
+    border-radius: .3rem;
+    background: var(--tint);
+    transform: rotate(-.9deg);
+  }
+
+  .rolodex-stack::after {
+    inset: -.48rem 8% .4rem;
+    transform: rotate(.8deg);
   }
 
   .rolodex-rings {
@@ -123,7 +169,7 @@
   .rolodex-card {
     display: block;
     transform-origin: 50% 0%;
-    padding: .55rem;
+    padding: .4rem;
     border-radius: .3rem;
     color: var(--ink);
     background: var(--fiber, none), var(--card);
@@ -150,21 +196,6 @@
   .rolodex-card:hover .rolodex-caption h3 { color: var(--accent); }
   .rolodex-card:focus-visible { outline-color: var(--highlight); }
 
-  .cookbook-search {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(9rem, .34fr) auto;
-    align-items: end;
-    gap: .7rem;
-    max-width: 48rem;
-    margin: clamp(1.3rem, 3vw, 2.3rem) auto 0;
-    padding: clamp(.8rem, 2vw, 1.3rem);
-    background: var(--fiber, none), var(--card);
-    border: 1px solid var(--line);
-    border-radius: .35rem;
-  }
-  .cookbook-search label { display: block; margin-bottom: .3rem; font-weight: 600; }
-  .cookbook-search .button { min-height: 2.9rem; padding-block: .5rem; box-shadow: none; }
-
   @media (max-width: 730px) {
     .book-spread { grid-template-columns: minmax(0, 1fr); }
     .book-spread:has(.rolodex)::before { display: none; }
@@ -173,11 +204,7 @@
     .rolodex { width: min(100%, 35rem); margin-inline: auto; }
   }
 
-  @media (max-width: 520px) {
-    .cookbook-search { grid-template-columns: minmax(0, 1fr) auto; }
-    .cookbook-query { grid-column: 1 / -1; }
-    .cookbook-search .button { padding-inline: .65rem; font-size: 1rem; }
-  }
+
 }
 
 @layer theme {
@@ -188,7 +215,7 @@
   [data-theme=blue-plate] .book-spread { border-color: var(--second); }
   [data-theme=heirloom] .cookbook-hero { background: var(--cloth); }
   [data-theme=heirloom] .book-spread { border-color: var(--gold); }
-  [data-theme=heirloom] .rolodex-tray { background: var(--cloth); }
+
 }
 
 @layer base {
@@ -197,9 +224,10 @@
   .rolodex { padding: clamp(.85rem, 2.3vw, 1.9rem); gap: .55rem; }
   .rolodex-tabs {
     display: flex;
-    gap: .3rem;
+    align-items: end;
+    gap: .22rem;
     min-width: 0;
-    padding: .15rem .15rem .4rem;
+    padding: .2rem .15rem 0;
     overflow-x: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--line) transparent;
@@ -207,10 +235,11 @@
   .rolodex-tabs button {
     flex: none;
     min-height: 44px;
-    padding: .28rem .55rem;
+    padding: .3rem .62rem .2rem;
     border: 1px solid var(--line);
-    border-bottom-width: 2px;
-    border-radius: .4rem .4rem .12rem .12rem;
+    border-bottom-color: var(--shade);
+    border-radius: .7rem .7rem 0 0;
+    box-shadow: inset 0 2px 0 #fff6;
     background: var(--tint);
     color: var(--second);
     font: .88rem/1.15 var(--type);
@@ -218,12 +247,20 @@
   }
   .rolodex-tabs button:hover { background: var(--highlight); }
   .rolodex-tabs button:focus-visible { outline-offset: -3px; }
-  .rolodex-tabs button[aria-pressed=true] { background: var(--second); border-color: var(--second); color: white; }
+  .rolodex-tabs button[aria-pressed=true] {
+    min-height: 48px;
+    background: var(--card);
+    border-color: var(--second);
+    border-top: 3px solid var(--accent);
+    border-bottom-color: var(--card);
+    color: var(--second);
+    font-weight: 700;
+  }
+  .rolodex-tabs + .rotary-frame { margin-top: -.4rem; }
   .rolodex-flip:disabled { opacity: .55; cursor: default; }
   .rolodex-flip:disabled:hover { background: var(--tint); }
   .rolodex-art { max-height: 17rem; }
   .rolodex-art img { min-height: 0; }
-  .cookbook-search { margin-top: clamp(1rem, 2.3vw, 1.7rem); padding-block: .7rem; }
 
   @media (max-width: 730px) {
     .rolodex-art { max-height: none; }
@@ -254,8 +291,13 @@
     outline: 3px double color-mix(in srgb, var(--gold) 74%, var(--soft));
     outline-offset: -.65rem;
   }
-  [data-theme=heirloom] .rolodex-tabs button { border-radius: .2rem .2rem 0 0; }
-  [data-theme=heirloom] .rolodex-tray { border: 3px double color-mix(in srgb, var(--gold) 70%, var(--second)); }
+  [data-theme=heirloom] .rolodex-tabs button { border-radius: .38rem .38rem 0 0; background-image: var(--fiber); }
+  [data-theme=heirloom] .rolodex-tabs button[aria-pressed=true] { border-top-color: var(--gold); }
+  [data-theme=heirloom] .rotary-frame {
+    --metal: #695436;
+    --metal-light: #cfb771;
+    --metal-dark: #392e22;
+  }
   [data-theme=heirloom] .rolodex-card { background: var(--fiber), #fff6df; }
   [data-theme=heirloom] .rolodex-caption { border-top: 3px double var(--line); margin-top: .3rem; }
 }
@@ -264,9 +306,8 @@
   @media (min-width: 731px) and (max-height: 850px) {
     .cookbook-hero { padding-block: .9rem 1.15rem; }
     .rolodex { padding: .85rem clamp(.9rem, 2.1vw, 1.6rem); gap: .45rem; }
-    .rolodex-art { max-height: clamp(10.5rem, 25vh, 14.25rem); }
+    .rolodex-art { max-height: clamp(11rem, 34vh, 17rem); }
     .rolodex-art img { object-position: center 44%; }
-    .cookbook-search { margin-top: .75rem; padding-block: .5rem; }
     .rolodex-caption { padding-block: .45rem .3rem; }
   }
 }

@@ -49,6 +49,16 @@ const bars = Object.fromEntries(book.themes.map((t) => [t.id, t.bar]));
         <a href={base + 'menu/'} id="menu-link" aria-current={current === 'menu' ? 'page' : undefined}>Menu builder <span id="menu-count" hidden>0</span></a>
         <a href={base + 'settings/'} aria-current={current === 'settings' ? 'page' : undefined}>Settings</a>
       </nav>
+      <form class="nav-search" action={base + 'recipes/'} role="search" aria-label="Recipe search">
+        <label class="vh" for="nav-query">Search recipes</label>
+        <input id="nav-query" type="search" name="q" placeholder="Search recipes" enterkeyhint="search" />
+        <label class="vh" for="nav-meal">Meal</label>
+        <select id="nav-meal" name="meal">
+          <option value="">Any meal</option>
+          {book.meals.map((meal) => <option value={meal}>{meal}</option>)}
+        </select>
+        <button type="submit">Search</button>
+      </form>
     </div>
   </header>
   <main id="main"><slot /></main>

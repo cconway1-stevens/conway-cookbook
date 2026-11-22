@@ -10,9 +10,12 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
 ---
 <Cookbook title="Recipe box" description="Search every recipe by meal, cuisine, time, or ingredient." current="recipes" showHeaderSearch={false}>
   <div class="wrap box">
-    <div class="block-head">
+    <div class="block-head box-heading">
       <h1>The recipe box</h1>
-      <button type="button" class="linkish box-surprise" data-pull hidden>Surprise me</button>
+      <div class="box-actions">
+        <button type="button" class="button quiet box-queue" id="queue" aria-pressed="false" hidden>To cook</button>
+        <button type="button" class="linkish box-surprise" data-pull hidden>Surprise me</button>
+      </div>
     </div>
     <form id="filters" class="filters" role="search" aria-label="Find recipes" hidden>
       <div class="search">
@@ -42,16 +45,20 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
     <ul class="cards">{recipes.map((recipe) => <RecipeCard recipe={recipe} level="h2" />)}</ul>
     <div id="none" class="none" hidden>
       <h2>No card for that yet</h2>
-      <p>Remove a filter or try a different ingredient or dish.</p>
+      <p id="none-help">Remove a filter or try a different ingredient or dish.</p>
       <button type="button" class="button" id="clear2">Show every recipe</button>
     </div>
   </div>
 </Cookbook>
 <script>
+  import { toCook } from '../../scripts/to-cook';
   import { replay } from '../../scripts/motion';
   const form = document.querySelector<HTMLFormElement>('#filters')!;
   const cards = [...document.querySelectorAll<HTMLElement>('.card')];
   const count = document.querySelector('#count')!, clear = document.querySelector<HTMLElement>('#clear')!, none = document.querySelector<HTMLElement>('#none')!;
+  const queue = document.querySelector<HTMLButtonElement>('#queue')!;
+  const noneHelp = document.querySelector('#none-help')!;
+  let queuedOnly = false;
   const search = form.querySelector<HTMLInputElement>('#q')!;
   const ready = form.querySelector<HTMLSelectElement>('#ready')!;
   const activeFilters = document.querySelector<HTMLUListElement>('#active-filters')!;
@@ -108,13 +115,19 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
     const s = read();
     const shown = index.filter((row) => {
       const was = row.card.hidden;
-      row.card.hidden = !matches(row, s);
+      row.card.hidden = !matches(row, s) || (queuedOnly && !toCook(row.card.dataset.id!));
       if (was && !row.card.hidden) replay(row.card, 'back');
       return !row.card.hidden;
     }).length;
     const words = `${shown} ${shown === 1 ? 'recipe' : 'recipes'}`;
     if (count.textContent !== words) { count.textContent = words; replay(count, 'bump'); }
     none.hidden = shown > 0;
+    const queued = index.filter(row => toCook(row.card.dataset.id!)).length;
+    queue.textContent = `To cook (${queued})`;
+    queue.setAttribute('aria-pressed', String(queuedOnly));
+    noneHelp.textContent = queuedOnly && !queued
+      ? 'Use + To cook on any recipe to start your list.'
+      : 'Remove a filter or try a different ingredient or dish.';
     showApplied(s);
     document.querySelectorAll<HTMLButtonElement>('[data-pull]').forEach((b) => (b.disabled = !shown));
     // Grey out a filter that would leave nothing in the box.
@@ -124,6 +137,7 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
     });
     if (!writeUrl) return;
     const params = new URLSearchParams();
+    if (queuedOnly) params.set('view', 'to-cook');
     if (s.q) params.set('q', s.q);
     if (s.meal) params.set('meal', s.meal);
     s.cuisine.forEach((c) => params.append('cuisine', c));
@@ -134,6 +148,7 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
   function fromUrl() {
     const params = new URLSearchParams(location.search);
     form.reset();
+    queuedOnly = params.get('view') === 'to-cook';
     search.value = params.get('q') ?? '';
     const time = params.get('ready') ?? '';
     if (Array.from(ready.options).some((option) => option.value === time)) ready.value = time;
@@ -145,6 +160,9 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
   }
   const reset = () => { form.reset(); apply(); search.focus(); };
   form.hidden = false;
+  queue.hidden = false;
+  queue.addEventListener('click', () => { queuedOnly = !queuedOnly; apply(); });
+  document.addEventListener('to-cook:change', () => apply(false));
   activeFilters.addEventListener('click', (event) => {
     const button = (event.target as Element).closest('button');
     if (!button) return;
@@ -165,7 +183,7 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
   form.addEventListener('input', () => apply());
   form.addEventListener('submit', (event) => event.preventDefault());
   clear.addEventListener('click', reset);
-  document.querySelector('#clear2')!.addEventListener('click', reset);
+  document.querySelector('#clear2')!.addEventListener('click', () => { queuedOnly = false; reset(); });
   window.addEventListener('pageshow', fromUrl);
   fromUrl();
 </script>

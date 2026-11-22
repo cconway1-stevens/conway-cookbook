@@ -1,0 +1,48 @@
+{
+  "title": "Haitian Brown Sugar Limeade (Sitwonad)",
+  "description": "Fresh lime juice and light brown sugar make a tart, amber pitcher of Haitian-style limeade.",
+  "category": "Drinks",
+  "meal": [
+    "Lunch",
+    "Dinner"
+  ],
+  "cuisine": [
+    "Haitian"
+  ],
+  "tags": [
+    "Quick",
+    "Gluten free",
+    "Vegetarian"
+  ],
+  "date": "2026-11-22",
+  "time": "20 minutes",
+  "minutes": 20,
+  "servings": "6",
+  "image": "images/fresh-lemonade.webp",
+  "imageAlt": "Pitcher and glass of amber limeade with ice and green limes",
+  "ingredients": [
+    "¾ cup packed light brown sugar, plus more to taste",
+    "5 cups water, divided",
+    "1 cup freshly squeezed lime juice (about 6–8 limes)",
+    "Ice",
+    "Lime wheels, optional"
+  ],
+  "steps": [
+    {
+      "title": "Dissolve the sugar",
+      "text": "Warm 1 cup of the water with the brown sugar, stirring just until dissolved. Let the syrup cool."
+    },
+    {
+      "title": "Mix and taste",
+      "text": "Strain the lime juice into a pitcher. Stir in the cooled syrup and the remaining 4 cups water. Taste and add a little cold water or more brown sugar if needed."
+    },
+    {
+      "title": "Pour over ice",
+      "text": "Fill glasses with ice, pour in the limeade, and add a lime wheel if you like."
+    }
+  ],
+  "source": {
+    "name": "Haitian Creole Cuisine’s limonade",
+    "url": "https://www.haitiancreolecuisine.com/phone/lemonade.html"
+  }
+}

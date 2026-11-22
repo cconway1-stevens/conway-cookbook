@@ -1,0 +1,77 @@
+{
+  "title": "Bourbon Bread Pudding",
+  "description": "Cinnamon-vanilla bread pudding with a golden top and warm brown sugar bourbon sauce.",
+  "category": "Desserts",
+  "meal": [
+    "Dessert"
+  ],
+  "cuisine": [
+    "Creole"
+  ],
+  "tags": [
+    "Baking",
+    "Comfort food"
+  ],
+  "date": "2026-11-22",
+  "time": "About 1½ hours",
+  "minutes": 90,
+  "servings": "8",
+  "image": "images/bourbon-bread-pudding.webp",
+  "imageAlt": "Golden bread pudding with bourbon sauce on a navy plate",
+  "ingredients": [
+    {
+      "group": "For the bread pudding",
+      "items": [
+        "1 tablespoon unsalted butter, for the pan",
+        "10 ounces day-old French bread, cut in 1-inch cubes (about 8 cups)",
+        "4 large eggs",
+        "2 cups whole milk",
+        "1 cup heavy cream",
+        "¾ cup packed light brown sugar",
+        "2 teaspoons vanilla extract",
+        "1 teaspoon ground cinnamon",
+        "¼ teaspoon ground nutmeg",
+        "½ teaspoon fine salt"
+      ]
+    },
+    {
+      "group": "For the sauce",
+      "items": [
+        "4 tablespoons unsalted butter",
+        "½ cup packed light brown sugar",
+        "½ cup heavy cream",
+        "Pinch of fine salt",
+        "2 tablespoons bourbon"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "title": "Prepare the bread",
+      "text": "Heat the oven to 350°F. Butter a 9-inch square baking dish and spread the bread cubes in it.",
+      "group": "bread pudding"
+    },
+    {
+      "title": "Soak the bread",
+      "text": "Whisk the eggs, milk, cream, brown sugar, vanilla, cinnamon, nutmeg, and salt until smooth. Pour the custard over the bread and gently press down any dry pieces. Soak for 20 minutes.",
+      "group": "bread pudding"
+    },
+    {
+      "title": "Bake until set",
+      "text": "Bake for 40–50 minutes, until the top is golden and the center is set and registers at least 160°F. Let the pudding rest for 10 minutes before cutting."
+    },
+    {
+      "title": "Make the sauce",
+      "text": "Combine the butter, brown sugar, cream, and salt in a small saucepan. Bring to a gentle simmer over medium heat and stir for 3–4 minutes, until smooth and slightly thickened. Take the pan off the heat before stirring in the bourbon.",
+      "group": "sauce"
+    },
+    {
+      "title": "Serve warm",
+      "text": "Cut the pudding into squares and spoon the warm bourbon sauce over each serving. The sauce contains alcohol."
+    }
+  ],
+  "source": {
+    "name": "Arnaud’s Restaurant bread pudding",
+    "url": "https://www.arnaudsrestaurant.com/2012/01/1559/"
+  }
+}

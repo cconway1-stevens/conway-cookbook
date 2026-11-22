@@ -1,0 +1,76 @@
+{
+  "title": "Hershey’s Cocoa-Box Chocolate Cake",
+  "description": "Two layers of dark cocoa cake filled and covered with the classic chocolate frosting.",
+  "category": "Desserts",
+  "meal": [
+    "Dessert"
+  ],
+  "cuisine": [
+    "American"
+  ],
+  "tags": [
+    "Baking"
+  ],
+  "date": "2026-11-22",
+  "time": "About 2 hours, including cooling",
+  "minutes": 120,
+  "servings": "12",
+  "image": "images/hersheys-chocolate-cake.webp",
+  "imageAlt": "Slice of two-layer chocolate cake with swirled chocolate frosting",
+  "ingredients": [
+    {
+      "group": "For the cake",
+      "items": [
+        "2 cups granulated sugar",
+        "1¾ cups all-purpose flour",
+        "¾ cup Hershey’s unsweetened cocoa powder",
+        "1½ teaspoons baking powder",
+        "1½ teaspoons baking soda",
+        "1 teaspoon fine salt",
+        "2 large eggs",
+        "1 cup milk",
+        "½ cup neutral vegetable oil",
+        "2 teaspoons vanilla extract",
+        "1 cup boiling water"
+      ]
+    },
+    {
+      "group": "For the chocolate frosting",
+      "items": [
+        "½ cup unsalted butter",
+        "⅔ cup Hershey’s unsweetened cocoa powder",
+        "3 cups powdered sugar",
+        "⅓ cup milk, plus more if needed",
+        "1 teaspoon vanilla extract"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "title": "Prepare the pans",
+      "text": "Heat the oven to 350°F. Grease and flour two 9-inch round cake pans."
+    },
+    {
+      "title": "Mix the batter",
+      "text": "Whisk the sugar, flour, cocoa powder, baking powder, baking soda, and salt together. Add the eggs, milk, oil, and vanilla and beat on medium speed for 2 minutes. Carefully stir in the boiling water. The batter will be thin.",
+      "group": "cake"
+    },
+    {
+      "title": "Bake and cool",
+      "text": "Divide the batter evenly between the pans. Bake for 30–35 minutes, until a toothpick comes out clean. Cool in the pans for 10 minutes, then turn the layers onto racks and let them cool completely."
+    },
+    {
+      "title": "Make the frosting",
+      "text": "Melt the butter and whisk in the cocoa. Beat in the powdered sugar and milk in alternating additions, then beat in the vanilla. Add a splash more milk if the frosting is too stiff to spread.",
+      "group": "frosting"
+    },
+    {
+      "title": "Frost the layers",
+      "text": "Set one cooled layer on a plate and spread frosting across the top. Add the second layer, then cover the top and sides with the remaining frosting."
+    }
+  ],
+  "source": {
+    "name": "Hershey’s Perfectly Chocolate Cake and Frosting",
+    "url": "https://www.hersheyland.com/recipes/hersheys-perfectly-chocolate-chocolate-cake.html"
+  }
+}

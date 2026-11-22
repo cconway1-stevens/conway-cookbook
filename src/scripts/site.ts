@@ -1,3 +1,4 @@
+import './to-cook';
 import { load, toggle, toast } from './menu-store';
 import { number, replay } from './motion';
 

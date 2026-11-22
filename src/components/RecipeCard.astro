@@ -21,7 +21,7 @@ const Heading = level;
     <div class="card-foot">
       <ul class="tapes" aria-label="Cuisine">{data.cuisine.map((c: string) => <li class="tape">{c}</li>)}</ul>
       <div class="card-go">
-        <span class="card-view" aria-hidden="true">View recipe</span>
+        <button type="button" class="to-cook-button" data-to-cook={id} data-title={data.title} hidden>To cook</button>
         <button type="button" class="add" data-add={id} data-title={data.title} hidden>Add to menu</button>
       </div>
     </div>

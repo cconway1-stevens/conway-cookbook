@@ -65,6 +65,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
           <div class="recipe-actions">
             <button type="button" class="button" data-cook hidden>Start cooking</button>
             <button type="button" class="button quiet print-button" hidden>Print recipe</button>
+            <button type="button" class="button quiet to-cook-button" data-to-cook={recipe.id} data-title={data.title} hidden>To cook</button>
             <button type="button" class="button quiet" data-add={recipe.id} data-title={data.title} hidden>Add to menu</button>
           </div>
 <details class="recipe-more"><summary>Recipe details &amp; sharing</summary>          <ul class="tapes">

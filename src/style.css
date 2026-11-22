@@ -567,3 +567,36 @@ input[role=switch]:disabled { opacity: .4; cursor: not-allowed; }
     body.include-notes .recipe #notes:has(.family-notes) { display: block !important; }
   }
 }
+
+@media screen {
+  .box .box-heading {
+    align-items: center;
+    gap: .85rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+  .box-heading h1 { font-size: clamp(2.5rem, 5.5vw, 4.7rem); }
+  .box-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem 1rem; }
+  .box .filters { padding: clamp(.8rem, 2vw, 1.25rem); border: 1px solid var(--line); border-radius: .85rem; }
+  .box .search input { min-height: 44px; border-radius: .55rem; }
+  .box .meal-filters { row-gap: .4rem; }
+  .box .more-filters summary { width: fit-content; padding-block: .55rem; }
+  .to-cook-button:not(.button) {
+    position: relative;
+    z-index: 1;
+    min-height: 44px;
+    padding: .3rem .65rem;
+    border: 1px solid var(--line);
+    border-radius: .45rem;
+    background: var(--card);
+    color: var(--ink);
+    font: inherit;
+    cursor: pointer;
+  }
+  .box-queue[aria-pressed=true], .to-cook-button[aria-pressed=true] {
+    background: var(--highlight);
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+}

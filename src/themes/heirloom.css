@@ -30,7 +30,6 @@
   .footer::before { content: ''; display: block; height: 26px; background: var(--marble); border-block: 2px solid #b8964c; }
   .footer .wordmark { color: var(--gold); } .footer span { color: #f6ead0; }
   .wordmark { font: 400 1.6rem/1.1 var(--display); color: var(--second); }
-  #mark :is(img, svg) { border-color: #b8964c; }
   nav { font-weight: 400; } nav a:hover, nav a[aria-current] { border-color: #b8964c; }
 
   .print::after { content: ''; position: absolute; inset: -7px; pointer-events: none; background: var(--corners); background-size: 34px 34px; background-repeat: no-repeat; }

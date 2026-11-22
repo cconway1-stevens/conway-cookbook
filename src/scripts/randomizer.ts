@@ -24,7 +24,7 @@ if (rolodex && current && button && status && tabs) {
     card.querySelector('img')?.removeAttribute('fetchpriority');
     current.replaceChildren(card);
     status.textContent = card.querySelector('h3')?.textContent ?? '';
-    setIcon(card.dataset.thumb, card.querySelector('svg'));
+    setIcon(card.dataset.thumb);
     animation?.cancel();
     if (!calm()) {
       animation = card.animate([

@@ -38,12 +38,12 @@ const bars = Object.fromEntries(book.themes.map((t) => [t.id, t.bar]));
     } catch { /* storage blocked: keep the first theme */ }
   </script>
   <meta name="description" content={description} />
-  {thumbs[0] && <link rel="icon" type="image/jpeg" href={thumbs[0]} />}
+  {thumbs[0] && <link rel="icon" type="image/jpeg" href={thumbs[0]} data-thumbs={JSON.stringify(thumbs)} />}
   <title>{title ? `${title} | ${book.title}` : book.title}</title>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <SiteHeader current={current} thumbs={thumbs} names={names} showSearch={showHeaderSearch} />
+  <SiteHeader current={current} names={names} showSearch={showHeaderSearch} />
   <main id="main"><slot /></main>
   <footer class="footer">
     <div class="wrap footer-inner">

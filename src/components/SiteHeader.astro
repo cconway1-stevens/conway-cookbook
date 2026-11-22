@@ -2,7 +2,7 @@
 import { base } from '../lib/recipes';
 import { book } from '../lib/cookbook';
 
-const { current, thumbs, names = [], showSearch = true }: { current: string; thumbs: string[]; names?: string[]; showSearch?: boolean } = Astro.props;
+const { current, names = [], showSearch = true }: { current: string; names?: string[]; showSearch?: boolean } = Astro.props;
 const groups = [
   {
     name: 'Recipes',
@@ -26,7 +26,7 @@ const groups = [
 <header class="masthead" data-site-header>
   <div class="wrap site-header-inner">
     <a href={base} class="wordmark">
-      <span id="mark" aria-hidden="true" data-thumbs={JSON.stringify(thumbs)}>{thumbs[0] && <img src={thumbs[0]} alt="" width="40" height="40" />}</span>{book.title}
+      <span class="family-monogram" aria-hidden="true">C</span>{book.title}
     </a>
     <nav class="site-nav" aria-label="Main navigation">
       <ul class="site-nav-items">
@@ -87,6 +87,20 @@ const groups = [
 </script>
 
 <style>
+  .family-monogram {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    padding: .25em .12em 0 0;
+    border: 3px double var(--second);
+    border-radius: 50%;
+    background: var(--card);
+    color: var(--second);
+    font: 400 1.65rem/1 "Homemade Apple", cursive;
+  }
+
   .masthead { position: relative; z-index: 5; }
   .site-header-inner {
     display: flex;

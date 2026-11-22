@@ -37,8 +37,6 @@ h3 { font-size: 1.2rem; line-height: 1.2; }
 .masthead { background: var(--card); border-bottom: 1px solid var(--line); }
 .footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .35rem 1.5rem; padding-block: .7rem; }
 .wordmark { display: inline-flex; align-items: center; gap: .6rem; font: 400 1.55rem/1 var(--display); color: var(--second); text-decoration: none; }
-#mark:empty { display: none; }
-#mark :is(img, svg) { width: 2.5rem; height: 2.5rem; padding: 0; border-radius: 50%; border: 2px solid var(--second); object-fit: cover; background: var(--card); }
 nav { display: flex; flex-wrap: wrap; gap: .2rem 1.5rem; font-weight: 600; }
 nav a { color: var(--ink); text-decoration: none; padding-block: .4rem; border-bottom: 3px solid transparent; }
 nav a:hover, nav a[aria-current] { border-color: var(--accent); }

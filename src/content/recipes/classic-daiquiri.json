@@ -20,5 +20,7 @@
     "Cocktail",
     "Rum",
     "Lime"
-  ]
+  ],
+  "image": "images/classic-daiquiri.jpg",
+  "imageAlt": "Pale lime daiquiri in a stemmed coupe with a cut lime nearby"
 }

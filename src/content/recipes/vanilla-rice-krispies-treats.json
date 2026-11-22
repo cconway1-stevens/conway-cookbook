@@ -25,5 +25,7 @@
   ],
   "meal": [
     "Dessert"
-  ]
+  ],
+  "image": "images/vanilla-rice-krispies-treats.jpg",
+  "imageAlt": "Stacked vanilla marshmallow cereal squares on a cream plate"
 }

@@ -1,0 +1,66 @@
+---
+import Cookbook from '../../layouts/Cookbook.astro';
+import RecipeCards from '../../components/RecipeCards.astro';
+import Chapters from '../../components/Chapters.astro';
+import { getCategories, getRecipes } from '../../lib/recipes';
+const recipes = await getRecipes();
+---
+<Cookbook title="Recipe Box | The Conway Cookbook">
+  <section class="wrap collection">
+    <h1>The recipe box</h1>
+    <form id="recipe-search" role="search" hidden>
+      <label for="query">Search recipes</label>
+      <input type="search" name="q" id="query" placeholder="Try apple, oats, or dinner" autocomplete="off" />
+      <button class="button" type="submit">Search</button>
+    </form>
+    <Chapters categories={getCategories(recipes)} />
+    <p id="matches" class="recipe-time" role="status"></p>
+    <RecipeCards recipes={recipes} />
+    <p id="no-matches" hidden>Try a different recipe name, ingredient, or category.</p>
+  </section>
+</Cookbook>
+<script>
+  const form = document.querySelector<HTMLFormElement>('#recipe-search')!;
+  const input = document.querySelector<HTMLInputElement>('#query')!;
+  const status = document.querySelector('#matches')!;
+  const empty = document.querySelector<HTMLElement>('#no-matches')!;
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-recipe]')];
+  const normalize = (value: string) => value.normalize('NFKD').toLowerCase()
+    .replace(/\p{M}/gu, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+  const entries = cards.map((card) => ({ card, text: normalize(card.dataset.search ?? '') }));
+
+  function updateResults() {
+    const terms = normalize(input.value).split(' ').filter(Boolean);
+    let count = 0;
+    for (const { card, text } of entries) {
+      const matches = terms.every((term) => text.includes(term));
+      card.hidden = !matches;
+      count += Number(matches);
+    }
+    status.textContent = count + (count === 1 ? ' recipe' : ' recipes');
+    empty.hidden = count !== 0;
+  }
+
+  function restoreQuery() {
+    input.value = new URL(location.href).searchParams.get('q') ?? '';
+    updateResults();
+  }
+
+  function saveQuery() {
+    const url = new URL(location.href);
+    const query = input.value.trim();
+    if (query) url.searchParams.set('q', query);
+    else url.searchParams.delete('q');
+    history.replaceState(history.state, '', url);
+    updateResults();
+  }
+
+  form.hidden = false;
+  restoreQuery();
+  input.addEventListener('input', saveQuery);
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    saveQuery();
+  });
+  window.addEventListener('popstate', restoreQuery);
+</script>

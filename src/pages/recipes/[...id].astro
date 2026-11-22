@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Cookbook from '../../layouts/Cookbook.astro';
+import { categoryUrl } from '../../lib/recipes';
 
 export async function getStaticPaths() {
   return (await getCollection('recipes')).map((recipe) => ({
@@ -16,7 +17,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
 ---
 <Cookbook title={data.title + ' | The Conway Cookbook'} description={data.description}>
   <article class="wrap recipe">
-    <a href={base + '#recipes'} class="index-link">Recipe index</a>
+    <nav class="breadcrumbs index-link" aria-label="Breadcrumb"><a href={base + 'recipes/'}>Recipe box</a><span aria-hidden="true">/</span><a href={categoryUrl(data.category)}>{data.category}</a></nav>
     <header class="recipe-heading">
       <div>
         <p class="category">{data.category}</p>

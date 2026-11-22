@@ -16,7 +16,7 @@ const home = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
   <header class="masthead">
     <div class="wrap header-inner">
       <a href={home} class="wordmark">The Conway Cookbook</a>
-      <nav aria-label="Main navigation"><a href={home + '#recipes'}>Recipe index</a></nav>
+      <nav class="main-nav" aria-label="Main navigation"><a href={home}>Home</a><a href={home + 'recipes/'}>Recipe box</a></nav>
     </div>
   </header>
   <main id="main"><slot /></main>

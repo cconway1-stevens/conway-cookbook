@@ -9,6 +9,10 @@ A public, read-only family cookbook built with Astro and Markdown.
 3. To add a photo, put it in `public/images/` and add `image: images/your-photo.jpg` and `imageAlt: A description of the photo` to the fields at the top. Optional fields also include `author`, `difficulty`, and a `source` with `name` and `url`.
 4. Commit to `main` when ready to publish. You can edit Markdown directly on GitHub with repository write access.
 
+## Browse the cookbook
+
+The welcome page links to the recipe box at `/recipes/`. The recipe box searches titles, ingredients, and recipe text in the browser and stores the query in the URL. Each category has its own page under `/recipes/categories/`, and every recipe has a permanent page under `/recipes/`. Adding a Markdown recipe automatically updates the index and its category page on the next build.
+
 ## Run locally
 
 Use Node.js 24. Run `npm ci`, then `npm run dev`. Run `npm run build` to generate the static site in `dist/`.

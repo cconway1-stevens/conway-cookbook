@@ -1,0 +1,23 @@
+---
+import Cookbook from '../../../layouts/Cookbook.astro';
+import RecipeCards from '../../../components/RecipeCards.astro';
+import Chapters from '../../../components/Chapters.astro';
+import { categoryId, getCategories, getRecipes } from '../../../lib/recipes';
+
+export async function getStaticPaths() {
+  const recipes = await getRecipes();
+  const categories = getCategories(recipes);
+  return categories.map((category) => ({
+    params: { category: categoryId(category) },
+    props: { category, categories, recipes: recipes.filter(({ data }) => data.category === category) },
+  }));
+}
+const { category, categories, recipes } = Astro.props;
+---
+<Cookbook title={category + ' | The Conway Cookbook'}>
+  <section class="wrap collection">
+    <h1>{category}</h1>
+    <Chapters categories={categories} current={category} />
+    <RecipeCards recipes={recipes} />
+  </section>
+</Cookbook>

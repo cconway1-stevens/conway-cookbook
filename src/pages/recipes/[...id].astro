@@ -105,6 +105,17 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
 </Cookbook>
 <script>
   import '../../scripts/ingredient-hover';
+
+  const back = document.querySelector<HTMLAnchorElement>('.index-link')!;
+  if (document.referrer) {
+    const previous = new URL(document.referrer);
+    const box = new URL(back.href);
+    if (previous.origin === box.origin && previous.pathname === box.pathname) {
+      box.search = previous.search;
+      back.href = box.href;
+    }
+  }
+
   const print = document.querySelector<HTMLButtonElement>('.print-button')!;
   print.hidden = false;
   print.addEventListener('click', () => window.print());

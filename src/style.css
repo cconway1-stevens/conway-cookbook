@@ -689,7 +689,7 @@ input[role=switch]:disabled { opacity: .4; cursor: not-allowed; }
   .reader-links a[aria-selected="true"] { background: var(--accent); color: white; }
   .recipe-view-tools { display: flex; justify-content: space-between; font-size: .88rem; margin-block: .45rem; }
   .recipe :is(#ingredients,#directions,#nutrition,#photos,#notes) { scroll-margin-top: 4rem; }
-  .recipe[data-view="recipe"] #details, .recipe[data-view="details"] #recipe { display: none; }
+  .recipe[data-view]:not([data-view="recipe"]) #recipe, .recipe[data-view]:not([data-view="nutrition"]) #nutrition, .recipe[data-view]:not([data-view="details"]) #details { display: none; }
   .recipe [role="tabpanel"] { scroll-margin-top: 3.8rem; }
   .recipe .ingredient-groups { columns: auto; }
   .recipe .sec-directions .inline-amount { display: none; }
@@ -716,3 +716,7 @@ input[role=switch]:disabled { opacity: .4; cursor: not-allowed; }
     .recipe :is(#ingredients,#directions) { scroll-margin-top: 6.75rem; }
   }
 }
+
+.nutrition-guide { max-width: 65ch; margin-block: 1rem; }
+.nutrition-guide p { margin-top: .6rem; }
+@media print { .recipe #nutrition { display: none; } }

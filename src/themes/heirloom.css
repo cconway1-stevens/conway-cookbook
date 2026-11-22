@@ -77,7 +77,7 @@
     .card:nth-child(3n+1):has(img.card-photo) { rotate: -.6deg; } .card:nth-child(3n):has(img.card-photo) { rotate: .7deg; } .card:is(:hover, :focus-within):has(img.card-photo) { rotate: 0deg; }
   }
   .work-tabs { border-bottom: 1px solid #a98c4f; } .work-tabs button { border-radius: 0; background: #f2e6ca; font: 400 1.0625rem/1.4 var(--body); } .work-tabs [aria-selected=true] { background: var(--second); color: #fff5e2; box-shadow: none; }
-  .filters, .work, .panel { border: 1px solid var(--line); border-radius: 2px; background: var(--fiber), #fffaf0; box-shadow: 0 1px 2px #4a2f1555, 0 8px 18px var(--shade); }
+  .filters, .builder .pane, .panel { border: 1px solid var(--line); border-radius: 2px; background: var(--fiber), #fffaf0; box-shadow: 0 1px 2px #4a2f1555, 0 8px 18px var(--shade); }
 
   /* A page of the book */
   .sheet { position: relative; padding: clamp(1.3rem, 4vw, 3.2rem); background: var(--fiber), #fffaf0; box-shadow: 0 1px 2px #4a2f1555, 6px 0 0 -2px #f3e7cb, 7px 0 0 -2px #cdb78d, 11px 0 0 -4px #f3e7cb, 12px 0 0 -4px #cdb78d, 0 14px 30px var(--shade); }

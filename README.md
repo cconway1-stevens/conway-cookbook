@@ -2,14 +2,14 @@
 
 A family recipe box for the dishes we make again, the notes we leave on the cards, and the meals we share.
 
-**[Open the cookbook](https://cconway1-stevens.github.io/conway-cookbook/)** · [Browse recipes](https://cconway1-stevens.github.io/conway-cookbook/recipes/) · [Add a recipe](#add-a-recipe)
+**[Open the cookbook](https://cconway1-stevens.github.io/conway-cookbook/)** · [Browse recipes](https://cconway1-stevens.github.io/conway-cookbook/recipes/) · [Browse menus](https://cconway1-stevens.github.io/conway-cookbook/menus/) · [Add a recipe](#add-a-recipe)
 
 <a href="https://cconway1-stevens.github.io/conway-cookbook/"><img src="public/images/cookbook-cover.jpg" width="320" alt="Illustrated cookbook cover with apple crumble pie, apple blossoms, and gingham"></a>
 
 ## Cook from the site
 
 - Search the recipe box by ingredient, cuisine, meal, or how much time you have.
-- Build a menu, print its shopping list, or share it as a link.
+- Open a complete meal from the menu library, or build your own. Print it, share it, or make a shopping list.
 - Follow a recipe step by step in cook mode, with read-aloud directions and timers.
 - Pick **Blue Plate** or **Heirloom** in Settings. Open the reading-help button for larger text, contrast controls, or less motion.
 
@@ -31,11 +31,22 @@ The importer reads [Schema.org Recipe data](https://schema.org/Recipe) from the 
 1. Copy [the recipe template](recipe-template.json) into [`src/content/recipes/`](src/content/recipes/) as `sunday-pot-roast.json`. The filename becomes the recipe’s URL.
 2. Fill in `title`, `description`, `category`, `time`, `servings`, `ingredients`, and `steps`. Delete optional fields you don’t use.
    - Use a course from [`src/data/cookbook.json`](src/data/cookbook.json), or a meal such as `Dinner`. Set `minutes` to include the recipe in the **Ready in** filter.
-   - Write ingredients as lines or groups with `group` and `items`. Write steps as plain text or objects with `title` and `text`.
+   - Write ingredients as lines or groups with `group` and `items`. Write steps as text or objects with `title`, `text`, and an optional `why` explanation.
 3. For a cover photo, add the file to [`public/images/`](public/images/) and set `image` (for example, `images/sunday-pot-roast.jpg`) and `imageAlt`.
 4. Open a pull request. If a recipe fails validation, fix the file before merging.
 
 You can also write a `.md` recipe with `## Ingredients` and numbered `## Directions`. [Sample recipes](src/content/recipes/samples/) fill out the demo collection. Moving one out of `samples/` keeps its URL.
+
+## Publish a menu from the builder
+
+Menus in the public library have their own pages. Each dish links back to its recipe.
+
+1. Open the [menu builder](https://cconway1-stevens.github.io/conway-cookbook/menu/), pick dishes, and name the menu under **Style**.
+2. On the **Menu** tab, choose **Copy share link**.
+3. With repository write access, open the [Publish a menu draft workflow](https://github.com/cconway1-stevens/conway-cookbook/actions/workflows/publish-menu.yml). Choose **Run workflow** on `main`, paste the link, and add a library description.
+4. Follow **Review draft and open a pull request** in the finished run. The menu joins the library after you merge the draft.
+
+The builder keeps your working menu in the browser. Only submit plans and notes you want to share publicly. You can also add menu files by hand in [`src/content/menus/`](src/content/menus/), using recipe filenames as dish IDs.
 
 ## Photos, video, and notes
 

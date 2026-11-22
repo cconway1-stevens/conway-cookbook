@@ -1,10 +1,10 @@
+import type { Menu } from '../lib/menu-link';
+
 // The menu lives in this browser only. No account, no server.
 
 // Menu sections, papers, and the starting title come from cookbook.json, by way of the page.
 export const book: { title: string; sections: { id: string; label: string }[]; papers: { id: string }[] } = JSON.parse(document.querySelector('#menu-book')!.textContent!);
 
-export interface MenuItem { id: string; section?: string }
-export interface Menu { title: string; note: string; paper: string; blurbs: boolean; items: MenuItem[] }
 export const blank = (): Menu => ({ title: book.title, note: '', paper: book.papers[0].id, blurbs: true, items: [] });
 
 const KEY = 'conway-menu';
@@ -40,17 +40,6 @@ export const toggle = (id: string) => {
   at < 0 ? menu.items.push({ id }) : menu.items.splice(at, 1);
   save(menu);
   return at < 0;
-};
-
-export const encode = (menu: Menu) => {
-  const bytes = new TextEncoder().encode(JSON.stringify(menu));
-  return btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-};
-export const decode = (text: string): Menu | null => {
-  try {
-    const bytes = Uint8Array.from(atob(text.replace(/-/g, '+').replace(/_/g, '/')), (c) => c.charCodeAt(0));
-    return clean(JSON.parse(new TextDecoder().decode(bytes)));
-  } catch { return null; }
 };
 
 export function toast(message: string, link?: { href: string; text: string }) {

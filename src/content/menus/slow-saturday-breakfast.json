@@ -1,0 +1,10 @@
+{
+  "title": "Slow Saturday Breakfast",
+  "description": "Buttermilk pancakes hot off the skillet and a cold pitcher of lemonade for a late summer breakfast.",
+  "note": "Make the lemonade first so you can pour it as the pancakes come off the skillet.",
+  "paper": "garden",
+  "items": [
+    { "id": "buttermilk-pancakes" },
+    { "id": "fresh-lemonade" }
+  ]
+}

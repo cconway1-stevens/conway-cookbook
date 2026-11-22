@@ -1,0 +1,47 @@
+---
+import { base } from '../../lib/recipes';
+import Cookbook from '../../layouts/Cookbook.astro';
+import { allMenus, menuUrl } from '../../lib/menus';
+
+const menus = await allMenus();
+const description = 'Browse complete meals from the cookbook, from slow breakfasts to Sunday supper.';
+---
+<Cookbook title="Menu library" description={description} current="menus">
+  <div class="wrap menu-library">
+    <header>
+      <div class="block-head">
+        <h1>Menu library</h1>
+        <a class="button quiet" href={base + 'menu/'}>Build a menu</a>
+      </div>
+      <p>{description}</p>
+    </header>
+    <ul class="menu-list" role="list">
+      {menus.map(({ id, data }) => (
+        <li>
+          <h2><a href={menuUrl(id)}>{data.title}</a></h2>
+          <p>{data.description}</p>
+          <p class="dish-count">{data.items.length} {data.items.length === 1 ? 'dish' : 'dishes'}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Cookbook>
+
+<style>
+  .menu-library { max-width: 48rem; padding-block: clamp(2rem, 5vw, 4rem); }
+  header { margin-block-end: 1.75rem; }
+  .block-head { gap: .8rem 1.25rem; }
+  header p { margin-block-start: .55rem; max-width: 48ch; }
+  .menu-list { display: grid; gap: 1rem; }
+  .menu-list li {
+    padding: clamp(1rem, 3vw, 1.7rem);
+    background: var(--card) var(--fiber, none);
+    border: 1px solid var(--line);
+    border-inline-start: 4px solid var(--second);
+    box-shadow: 0 3px 10px var(--shade);
+    overflow-wrap: anywhere;
+  }
+  h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+  .menu-list li p { margin-block-start: .5rem; }
+  .dish-count { color: var(--soft); font: 400 .9rem/1.4 var(--type); }
+</style>

@@ -45,6 +45,7 @@ const bars = Object.fromEntries(book.themes.map((t) => [t.id, t.bar]));
       <a href={base} class="wordmark"><span id="mark" aria-hidden="true" data-thumbs={JSON.stringify(thumbs)}>{thumbs[0] && <img src={thumbs[0]} alt="" width="40" height="40" />}</span>{book.title}</a>
       <nav aria-label="Main navigation">
         <a href={base + 'recipes/'} aria-current={current === 'recipes' ? 'page' : undefined}>Recipe box</a>
+        <a href={base + 'menus/'} aria-current={current === 'menus' ? 'page' : undefined}>Menu library</a>
         <a href={base + 'menu/'} id="menu-link" aria-current={current === 'menu' ? 'page' : undefined}>Menu builder <span id="menu-count" hidden>0</span></a>
         <a href={base + 'settings/'} aria-current={current === 'settings' ? 'page' : undefined}>Settings</a>
       </nav>

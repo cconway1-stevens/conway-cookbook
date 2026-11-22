@@ -1,0 +1,62 @@
+name: Publish a menu draft
+on:
+  workflow_dispatch:
+    inputs:
+      share_url:
+        description: HTTPS link from the menu builder's Copy share link button
+        required: true
+        type: string
+      description:
+        description: Description shown on the menu library card (up to 160 characters)
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  prepare:
+    name: Validate menu draft
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      file: ${{ steps.menu.outputs.file }}
+    steps:
+      - name: Check the source branch
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          if [[ "$GITHUB_REF_NAME" != "$DEFAULT_BRANCH" || "$GITHUB_REF_TYPE" != branch ]]; then
+            echo "::error::Run this workflow from the default branch."
+            exit 1
+          fi
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - name: Convert the shared menu
+        id: menu
+        env:
+          SHARE_URL: ${{ inputs.share_url }}
+          DESCRIPTION: ${{ inputs.description }}
+        run: |
+          path=$(node scripts/draft-menu.mjs --url "$SHARE_URL" --description "$DESCRIPTION")
+          [[ "$path" =~ ^src/content/menus/[a-z0-9-]+\.json$ && -f "$path" ]]
+          echo "file=${path##*/}" >> "$GITHUB_OUTPUT"
+      - run: npm ci --omit=dev
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cookbook-draft-${{ github.run_attempt }}
+          path: src/content/menus/${{ steps.menu.outputs.file }}
+          if-no-files-found: error
+          retention-days: 1
+  draft:
+    needs: prepare
+    permissions:
+      contents: write
+    uses: ./.github/workflows/create-review-branch.yml
+    with:
+      kind: menus
+      file: ${{ needs.prepare.outputs.file }}

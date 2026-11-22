@@ -1,0 +1,10 @@
+{
+  "title": "Sunday Supper",
+  "description": "A bowl of creamy tomato soup to start, skillet lemon-herb chicken, and apple crumble pie to finish.",
+  "note": "Bake the pie ahead and let it cool while you make supper.",
+  "items": [
+    { "id": "creamy-tomato-soup" },
+    { "id": "lemon-herb-chicken" },
+    { "id": "apple-crumble-pie" }
+  ]
+}

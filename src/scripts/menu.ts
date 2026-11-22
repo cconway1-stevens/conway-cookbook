@@ -1,5 +1,6 @@
 import { replay } from './motion';
-import { book, load, save, encode, decode, toast, type Menu, type MenuItem } from './menu-store';
+import { decodeMenuPayload, encodeMenu, type Menu, type MenuItem } from '../lib/menu-link';
+import { book, clean, load, save, toast } from './menu-store';
 
 interface Dish { id: string; title: string; description: string; url: string; section: string; ingredients: { name: string; items: string[] }[] }
 const SECTIONS = book.sections;
@@ -9,14 +10,18 @@ const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as 
 const el = (tag: string, className = '', text = '') => { const node = document.createElement(tag); if (className) node.className = className; if (text) node.textContent = text; return node; };
 
 // A shared menu opens for viewing and replaces yours only if you keep it.
-let shared: Menu | null = location.hash.startsWith('#m=') ? decode(location.hash.slice(3)) : null;
+function sharedMenu(): Menu | null {
+  if (!location.hash.startsWith('#m=')) return null;
+  try { return clean(decodeMenuPayload(location.hash.slice(3))); } catch { return null; }
+}
+let shared = sharedMenu();
 let menu: Menu = shared ?? load();
 const sectionOf = (item: MenuItem): string => item.section ?? byId.get(item.id)!.section;
 const listed = () => menu.items.filter((item) => byId.has(item.id));
 
 function commit(change: () => void) {
   change();
-  if (shared) { shared = menu; history.replaceState(null, '', '#m=' + encode(menu)); render(); } else save(menu);
+  if (shared) { shared = menu; history.replaceState(null, '', '#m=' + encodeMenu(menu)); render(); } else save(menu);
 }
 function place(id: string, section: string, before?: string) {
   if (id === before) return;
@@ -42,28 +47,45 @@ function nudge(id: string, by: 1 | -1) {
     const to = SECTIONS[SECTIONS.findIndex((s) => s.id === section) + by];
     if (to) place(id, to.id, by === 1 ? listed().find((i) => sectionOf(i) === to.id)?.id : undefined);
   }
-  document.querySelector<HTMLElement>(`[data-dish="${id}"] [data-by="${by}"]`)?.focus();
+  document.querySelector<HTMLElement>(`[data-dish="${CSS.escape(id)}"] [data-by="${by}"]`)?.focus();
 }
 
+const card = $('menu-card'), courses = $('menu-courses');
 let dragged = '', known = new Set(listed().map((i) => i.id)), paper = menu.paper;
+function endDrag() {
+  dragged = '';
+  card.classList.remove('lifting-any');
+  for (const node of courses.querySelectorAll('.over, .lifting')) node.classList.remove('over', 'lifting');
+}
 function render() {
   if (!shared) menu = load();
   $('shared').hidden = !shared;
   for (const [id, value] of [['m-title', menu.title], ['m-note', menu.note]] as const) if (document.activeElement !== $(id)) $<HTMLInputElement>(id).value = value;
   $<HTMLInputElement>('m-blurbs').checked = menu.blurbs;
   document.querySelectorAll<HTMLInputElement>('[name=paper]').forEach((r) => (r.checked = r.value === menu.paper));
-  const card = $('menu-card');
+  const items = listed();
+  $('menu-card-title').textContent = menu.title || 'Menu';
+  const note = $('menu-card-note');
+  note.hidden = !menu.note;
+  note.textContent = menu.note;
+  $('menu-empty').hidden = !!items.length;
+  $('browse-dishes').hidden = !items.length;
+  $('menu-hint').hidden = !items.length;
+  $<HTMLButtonElement>('empty').disabled = !menu.items.length;
   card.dataset.paper = menu.paper;
   if (paper !== menu.paper) { paper = menu.paper; replay(card, 'turned'); }
   let fresh = 0;
-  const head = el('header');
-  head.append(el('h2', '', menu.title || 'Menu'));
-  if (menu.note) head.append(el('p', '', menu.note));
-  card.replaceChildren(head);
-  card.classList.toggle('blank', !listed().length);
-  for (const s of SECTIONS) {
-    const items = listed().filter((i) => sectionOf(i) === s.id);
-    const section = el('section', items.length ? '' : 'bare');
+  const groups = new Map<string, MenuItem[]>();
+  for (const item of items) {
+    const section = sectionOf(item), group = groups.get(section);
+    if (group) group.push(item);
+    else groups.set(section, [item]);
+  }
+  const sections = document.createDocumentFragment();
+  for (const s of items.length ? SECTIONS : []) {
+    const group = groups.get(s.id) ?? [];
+    const section = el('section', group.length ? '' : 'bare');
+    section.dataset.course = s.id;
     section.append(el('h3', '', s.label));
     const list = el('ul');
     section.addEventListener('dragover', (event) => { if (dragged) { event.preventDefault(); section.classList.add('over'); } });
@@ -71,15 +93,26 @@ function render() {
     section.addEventListener('drop', (event) => {
       event.preventDefault();
       const target = (event.target as Element).closest<HTMLElement>('[data-dish]');
-      if (dragged) place(dragged, s.id, target?.dataset.dish);
+      const id = dragged;
+      endDrag();
+      if (id) place(id, s.id, target?.dataset.dish);
     });
-    if (!items.length) list.append(el('li', 'slot', 'Nothing here yet'));
-    for (const item of items) {
+    if (!group.length) list.append(el('li', 'slot', 'Drop a dish here'));
+    for (const item of group) {
       const dish = byId.get(item.id)!;
       const li = el('li', 'dish'); li.dataset.dish = item.id; li.draggable = true;
       if (!known.has(item.id)) { li.classList.add('fresh'); li.style.setProperty('--i', String(fresh++)); }
-      li.addEventListener('dragstart', (event) => { dragged = item.id; event.dataTransfer!.setData('text/plain', dish.title); li.classList.add('lifting'); setTimeout(() => card.classList.add('lifting-any')); });
-      li.addEventListener('dragend', () => { dragged = ''; card.classList.remove('lifting-any'); document.querySelectorAll('.over, .lifting').forEach((n) => n.classList.remove('over', 'lifting')); });
+      li.addEventListener('dragstart', (event) => {
+        dragged = item.id;
+        event.dataTransfer!.effectAllowed = 'move';
+        event.dataTransfer!.setData('text/plain', dish.title);
+        setTimeout(() => {
+          if (dragged !== item.id) return;
+          li.classList.add('lifting');
+          card.classList.add('lifting-any');
+        });
+      });
+      li.addEventListener('dragend', endDrag);
       const body = el('div'), link = el('a', 'dish-name', dish.title) as HTMLAnchorElement;
       link.href = dish.url; link.draggable = false; body.append(link);
       if (menu.blurbs) body.append(el('p', '', dish.description));
@@ -88,19 +121,25 @@ function render() {
         const b = el('button', '', text) as HTMLButtonElement; b.type = 'button'; b.dataset.by = String(by); b.setAttribute('aria-label', `${name}: ${dish.title}`);
         b.addEventListener('click', () => nudge(item.id, by)); tools.append(b);
       }
-      const x = el('button', '', '×') as HTMLButtonElement; x.type = 'button'; x.setAttribute('aria-label', `Take off the menu: ${dish.title}`);
-      x.addEventListener('click', () => commit(() => { menu.items = menu.items.filter((i) => i.id !== item.id); }));
+      const x = el('button', '', '×') as HTMLButtonElement; x.type = 'button'; x.dataset.remove = ''; x.setAttribute('aria-label', `Take off the menu: ${dish.title}`);
+      x.addEventListener('click', () => {
+        const rows = [...courses.querySelectorAll<HTMLElement>('[data-dish]')];
+        const at = rows.indexOf(li), neighbor = (rows[at + 1] ?? rows[at - 1])?.dataset.dish;
+        commit(() => { menu.items = menu.items.filter((i) => i.id !== item.id); });
+        if (neighbor) courses.querySelector<HTMLElement>(`[data-dish="${CSS.escape(neighbor)}"] [data-remove]`)?.focus();
+        else $('menu-pick').focus();
+      });
       tools.append(x); li.append(body, tools); list.append(li);
     }
-    section.append(list); card.append(section);
+    section.append(list); sections.append(section);
   }
-  known = new Set(listed().map((i) => i.id));
-  const n = listed().length;
-  for (const [id, label] of [['menu', 'Menu']] as const) $(`tab-${id}`).textContent = n ? `${label} (${n})` : label;
-  shopping();
+  courses.replaceChildren(sections);
+  known = new Set(items.map((i) => i.id));
+  $('tab-menu').textContent = items.length ? `Menu (${items.length})` : 'Menu';
+  shopping(items);
 }
-function shopping() {
-  const box = $('shop'), items = listed(), ticked = new Set([...box.querySelectorAll<HTMLInputElement>('input:checked')].map((i) => i.value));
+function shopping(items: MenuItem[]) {
+  const box = $('shop'), ticked = new Set([...box.querySelectorAll<HTMLInputElement>('input:checked')].map((i) => i.value));
   box.replaceChildren();
   if (!items.length) box.append(el('p', '', 'Add a dish and its ingredients will show up here.'));
   for (const item of items) {
@@ -118,28 +157,33 @@ function shopping() {
 }
 
 /* ---------- Tabs ---------- */
-const bench = $('bench'), tabs = [...document.querySelectorAll<HTMLButtonElement>('[role=tab]')];
+const tabs = [...$('bench').querySelectorAll<HTMLButtonElement>('[role=tab]')];
 function open(id: string, focus = false) {
-  bench.dataset.tab = id;
   for (const tab of tabs) {
     const on = tab.dataset.tab === id;
     tab.setAttribute('aria-selected', String(on)); tab.tabIndex = on ? 0 : -1;
-    const pane = document.getElementById(`pane-${tab.dataset.tab}`);
-    if (pane) pane.hidden = !on;
-    if (on && focus) tab.focus();
+    $(tab.getAttribute('aria-controls')!).hidden = !on;
   }
+  if (focus) $(`tab-${id}`).focus();
 }
 tabs.forEach((tab) => {
   tab.addEventListener('click', () => open(tab.dataset.tab!));
   tab.addEventListener('keydown', (event) => {
-    const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
-    if (!step) return;
-    const seen = tabs.filter((t) => t.offsetParent);
-    open(seen[(seen.indexOf(tab) + step + seen.length) % seen.length].dataset.tab!, true);
+    const at = tabs.indexOf(tab);
+    let next: number;
+    switch (event.key) {
+      case 'ArrowRight': next = (at + 1) % tabs.length; break;
+      case 'ArrowLeft': next = (at - 1 + tabs.length) % tabs.length; break;
+      case 'Home': next = 0; break;
+      case 'End': next = tabs.length - 1; break;
+      default: return;
+    }
+    event.preventDefault();
+    open(tabs[next].dataset.tab!, true);
   });
 });
-// The Menu tab exists only on small screens, where the menu isn't already beside you.
-matchMedia('(max-width: 900px)').addEventListener('change', (event) => { if (!event.matches && bench.dataset.tab === 'menu') open('dishes'); });
+for (const id of ['menu-pick', 'browse-dishes']) $(id).addEventListener('click', () => open('dishes', true));
+$('menu-share-jump').addEventListener('click', () => $('menu-share-title').focus());
 
 const filter = () => {
   const words = $<HTMLInputElement>('pick-q').value.toLowerCase().trim().split(/\s+/), meal = $<HTMLSelectElement>('pick-meal').value;
@@ -174,19 +218,32 @@ const replaceItems = (items: MenuItem[], message: string) => {
 $('deal').addEventListener('click', () => {
   const picks = SECTIONS.flatMap((s) => { const pool = dishes.filter((d) => d.section === s.id); return pool.length ? [{ id: pool[Math.floor(Math.random() * pool.length)].id }] : []; });
   replaceItems(picks, 'Dealt you a menu.');
-  if (matchMedia('(max-width: 900px)').matches) open('menu');
 });
-$('empty').addEventListener('click', () => replaceItems([], 'Menu cleared.'));
-$('keep').addEventListener('click', () => { const kept = menu; shared = null; history.replaceState(null, '', location.pathname); save(kept); toast('It’s your menu now.'); });
-$('mine').addEventListener('click', () => { shared = null; history.replaceState(null, '', location.pathname); document.dispatchEvent(new CustomEvent('menu:change')); });
+$('empty').addEventListener('click', () => { replaceItems([], 'Menu cleared.'); $('menu-pick').focus(); });
+$('keep').addEventListener('click', () => {
+  const kept = menu;
+  undo = null; shared = null;
+  history.replaceState(null, '', location.pathname);
+  save(kept);
+  tabs.find((tab) => tab.tabIndex === 0)?.focus();
+  toast('It’s your menu now.');
+});
+$('mine').addEventListener('click', () => {
+  undo = null; shared = null;
+  history.replaceState(null, '', location.pathname);
+  document.dispatchEvent(new CustomEvent('menu:change'));
+  tabs.find((tab) => tab.tabIndex === 0)?.focus();
+  toast('Back to your menu.');
+});
 
 const copy = async (text: string, ok: string) => {
   try { await navigator.clipboard.writeText(text); toast(ok); }
   catch { const area = el('textarea') as HTMLTextAreaElement; area.value = text; document.body.append(area); area.select(); const did = document.execCommand('copy'); area.remove(); toast(did ? ok : 'Couldn’t copy. Your browser blocked the clipboard.'); }
 };
-$('share').addEventListener('click', () => copy(location.origin + location.pathname + '#m=' + encode(menu), 'Link copied.'));
+$('share').addEventListener('click', () => copy(location.origin + location.pathname + '#m=' + encodeMenu(menu), 'Link copied.'));
 $('copy-shop').addEventListener('click', () => copy(listed().map((i) => byId.get(i.id)!).map((d) => `${d.title}\n${d.ingredients.flatMap((g) => g.items).map((x) => `- ${x}`).join('\n')}`).join('\n\n'), 'Shopping list copied.'));
-const print = (what: string) => { document.body.dataset.print = what; window.print(); delete document.body.dataset.print; };
+const print = (what: 'menu' | 'shop') => { document.body.dataset.print = what; window.print(); };
+window.addEventListener('afterprint', () => { delete document.body.dataset.print; });
 $('print-menu').addEventListener('click', () => print('menu'));
 $('print-shop').addEventListener('click', () => print('shop'));
 
@@ -198,5 +255,9 @@ document.addEventListener('click', (event) => {
 }, true);
 document.addEventListener('menu:change', render);
 window.addEventListener('storage', render);
-window.addEventListener('hashchange', () => { if (location.hash.startsWith('#m=')) { shared = decode(location.hash.slice(3)); menu = shared ?? load(); render(); } });
+window.addEventListener('hashchange', () => {
+  if (!location.hash.startsWith('#m=')) return;
+  undo = null; shared = sharedMenu(); menu = shared ?? load();
+  render();
+});
 render();

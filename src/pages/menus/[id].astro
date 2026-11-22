@@ -1,0 +1,82 @@
+---
+import Cookbook from '../../layouts/Cookbook.astro';
+import { allMenus } from '../../lib/menus';
+import { encodeMenu } from '../../lib/menu-link';
+import { base, recipeUrl } from '../../lib/recipes';
+
+export async function getStaticPaths() {
+  return (await allMenus()).map((menu) => ({ params: { id: menu.id }, props: { menu } }));
+}
+
+const { menu } = Astro.props;
+const { title, description, note, paper, blurbs, items } = menu.data;
+const builderUrl = `${base}menu/#m=${encodeMenu({ title, note, paper, blurbs, items })}`;
+---
+<Cookbook title={title} description={description} current="menus">
+  <article class="wrap published-menu">
+    <a href={base + 'menus/'} class="index-link">Back to the menu library</a>
+    <div class="menu-sheet">
+      <header class="menu-heading">
+        <h1>{title}</h1>
+        {note && <p class="menu-note">{note}</p>}
+        <p>{description}</p>
+        <div class="block-actions menu-actions">
+          <a class="button" href={builderUrl}>Use in builder</a>
+          <button class="button quiet" type="button" data-print-menu hidden>Print menu</button>
+        </div>
+      </header>
+      {menu.courses.map(({ id, label, dishes }) => (
+        <section class="menu-course" aria-labelledby={`course-${id}`}>
+          <h2 id={`course-${id}`}>{label}</h2>
+          <ul role="list">
+            {dishes.map(({ id, data }) => (
+              <li>
+                <h3><a href={recipeUrl(id)}>{data.title}</a></h3>
+                {blurbs && <p>{data.description}</p>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </article>
+</Cookbook>
+
+<script>
+  const print = document.querySelector<HTMLButtonElement>('[data-print-menu]');
+  if (print) {
+    print.addEventListener('click', () => window.print());
+    print.hidden = false;
+  }
+</script>
+
+<style>
+  .published-menu { max-width: 48rem; padding-block: 1.4rem 4rem; }
+  .menu-sheet {
+    padding: clamp(1.2rem, 5vw, 3.5rem);
+    background: var(--card) var(--fiber, none);
+    border: 1px solid var(--line);
+    border-block-start: 5px solid var(--second);
+    box-shadow: 0 4px 14px var(--shade);
+    overflow-wrap: anywhere;
+  }
+  .menu-heading { margin-block-end: 2rem; }
+  .menu-heading p { margin-block-start: .65rem; }
+  .menu-note { font-style: italic; color: var(--soft); }
+  .menu-actions { margin-block-start: 1.25rem; }
+  .menu-course { padding-block: 1.4rem; border-block-start: 1px solid var(--line); }
+  .menu-course:last-child { padding-block-end: 0; }
+  .menu-course h2 { color: var(--second); margin-block-end: .85rem; }
+  .menu-course li + li { margin-block-start: 1rem; }
+  .menu-course li p { margin-block-start: .3rem; }
+  @media print {
+    .published-menu { max-width: none; padding: 0; }
+    .menu-sheet { padding: 0; background: none; border: 0; box-shadow: none; }
+    .menu-heading { margin-block-end: 1rem; }
+    .menu-heading h1 { font-size: 30pt; }
+    .menu-actions { display: none; }
+    .menu-course { padding-block: .75rem; border-color: #aaa; }
+    .menu-course h2, .menu-course a, .menu-note { color: inherit; }
+    .menu-course a { text-decoration: none; }
+  }
+</style>

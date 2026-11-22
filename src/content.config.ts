@@ -53,4 +53,25 @@ const recipes = defineCollection({
   }),
 });
 
-export const collections = { recipes };
+const menus = defineCollection({
+  loader: glob({ pattern: '*.json', base: './src/content/menus' }),
+  schema: z.object({
+    title: z.string().min(1).max(60).refine((v) => v.trim().length > 0, 'should not be blank'),
+    description: z.string().min(1).max(160).refine((v) => v.trim().length > 0, 'should not be blank'),
+    note: z.string().max(120).default(''),
+    paper: list('menu paper', book.menu.papers.map((p) => p.id)).default(book.menu.papers[0].id),
+    blurbs: z.boolean().default(true),
+    items: z.array(z.object({
+      id: z.string().min(1),
+      section: list('menu section', book.menu.sections.map((s) => s.id)).optional(),
+    }).strict()).min(1).max(60),
+  }).strict().superRefine(({ items }, ctx) => {
+    const seen = new Set<string>();
+    items.forEach(({ id }, index) => {
+      if (seen.has(id)) ctx.addIssue({ code: 'custom', path: ['items', index, 'id'], message: `Recipe "${id}" appears more than once.` });
+      seen.add(id);
+    });
+  }),
+});
+
+export const collections = { recipes, menus };

@@ -4,7 +4,7 @@ import Cookbook from '../../layouts/Cookbook.astro';
 import RecipeCard from '../../components/RecipeCard.astro';
 import Spot from '../../components/Spot.astro';
 import CookMode from '../../components/CookMode.astro';
-import { allRecipes, base, directions, ingredients, isSample } from '../../lib/recipes';
+import { allRecipes, base, directions, ingredients, isSample, recipeUrl } from '../../lib/recipes';
 
 export async function getStaticPaths() {
   const recipes = await allRecipes();
@@ -23,6 +23,14 @@ export async function getStaticPaths() {
 
 const { recipe, pairs } = Astro.props;
 const { data } = recipe;
+const pin = Astro.site && new URL('https://www.pinterest.com/pin/create/button/');
+if (pin && Astro.site) {
+  pin.search = new URLSearchParams({
+    url: new URL(recipeUrl(recipe.id), Astro.site).href,
+    media: new URL(base + (data.image ?? 'images/cookbook-cover.jpg'), Astro.site).href,
+    description: `${data.title}. ${data.description}`.slice(0, 500),
+  }).toString();
+}
 const groups = data.ingredients ? ingredients(recipe) : null;
 const Content = groups ? null : (await render(recipe)).Content;
 const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURIComponent(value)}`;
@@ -51,6 +59,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
             <button type="button" class="button" data-cook hidden>Start cooking</button>
             <button type="button" class="button quiet" data-add={recipe.id} data-title={data.title} hidden>Add to menu</button>
             <button type="button" class="button quiet print-button" hidden>Print recipe</button>
+            {pin && <a class="button quiet" href={pin.href} target="_blank" rel="noopener noreferrer">Save on Pinterest</a>}
           </div>
           {isSample(recipe) && <p class="sample">Sample card. It’s here to fill the box until the family recipes are in.</p>}
         </div>

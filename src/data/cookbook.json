@@ -1,0 +1,46 @@
+{
+  "title": "The Conway Cookbook",
+  "cover": { "small": "The Conway", "large": "Cookbook", "image": "images/cookbook-cover.jpg", "imageAlt": "Illustrated cinnamon-oat crumble pie, apple blossoms, and gingham on cream paper" },
+  "tagline": "A place for the recipes we come back to and the stories that go with them.",
+  "description": "A collection of recipes worth keeping.",
+  "footer": "Recipes worth keeping.",
+  "meals": ["Breakfast", "Lunch", "Dinner", "Dessert"],
+  "courses": [
+    { "name": "Breakfast", "menu": "main", "art": "pancakes", "meal": "Breakfast" },
+    { "name": "Appetizers", "menu": "start", "art": "toast" },
+    { "name": "Soups & Salads", "menu": "start", "art": "bowl" },
+    { "name": "Mains", "menu": "main", "art": "cloche" },
+    { "name": "Sides", "menu": "side", "art": "pan" },
+    { "name": "Breads", "menu": "side", "art": "loaf" },
+    { "name": "Desserts", "menu": "sweet", "art": "pie", "meal": "Dessert" },
+    { "name": "Drinks", "menu": "drink", "art": "glass" }
+  ],
+  "courseForMeal": "Mains",
+  "menu": {
+    "title": "Sunday Supper",
+    "sections": [
+      { "id": "start", "label": "To start" },
+      { "id": "main", "label": "The main dish" },
+      { "id": "side", "label": "On the side" },
+      { "id": "sweet", "label": "Something sweet" },
+      { "id": "drink", "label": "To drink" }
+    ],
+    "papers": [
+      { "id": "diner", "label": "Diner" },
+      { "id": "trattoria", "label": "Trattoria" },
+      { "id": "garden", "label": "Garden" }
+    ]
+  },
+  "themes": [
+    { "id": "blue-plate", "name": "Blue Plate", "blurb": "A 1950s kitchen. Gingham, jadeite green, and index cards.", "bar": "#24407c" },
+    { "id": "heirloom", "name": "Heirloom", "blurb": "A family scrapbook. Gilt on green cloth, marbled paper, and photographs in paper corners.", "bar": "#1d382b" }
+  ],
+  "narration": {
+    "voice": "af_heart",
+    "gather": "Before you start, set out everything on the list.",
+    "unchecked": "Something here is not ticked yet. Finish it, or go on anyway.",
+    "timer": "Your timer is done.",
+    "finished": "That is the last step. Enjoy it.",
+    "sample": "Stir the sauce until it coats the back of a spoon."
+  }
+}

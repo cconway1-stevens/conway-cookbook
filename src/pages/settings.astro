@@ -1,0 +1,62 @@
+---
+import Cookbook from '../layouts/Cookbook.astro';
+import VoicePanel from '../components/VoicePanel.astro';
+import { book } from '../lib/cookbook';
+---
+<Cookbook title="Settings" description="Pick a look and a reading voice." current="settings">
+  <div class="wrap settings">
+    <h1>Settings</h1>
+    <section class="panel" aria-labelledby="look">
+      <h2 id="look">Look</h2>
+      <div class="themes" role="radiogroup" aria-labelledby="look">
+        {book.themes.map((t) => (
+          <label class="theme-card">
+            <input type="radio" name="theme" value={t.id} data-bar={t.bar} data-name={t.name} />
+            <span>
+              <span class="tp" data-theme={t.id} aria-hidden="true">
+                <span class="tp-top"><i>{book.cover.large}</i></span>
+                <span class="tp-cards"><i>Apple pie</i><i>Tomato soup</i></span>
+              </span>
+              <span class="theme-words"><b>{t.name}</b>{t.blurb}</span>
+            </span>
+          </label>))}
+      </div>
+    </section>
+    <section class="panel" aria-labelledby="reading">
+      <h2 id="reading">Easier to read</h2>
+      <p>Bigger text, stronger contrast, dyslexia-friendly fonts, a reading guide, less motion, and more. It’s also the round button in the corner of every page.</p>
+      <button type="button" class="button" data-reading-help hidden>Open reading help</button>
+    </section>
+    <section class="panel" aria-labelledby="voice">
+      <h2 id="voice">Reading voice</h2>
+      <VoicePanel />
+    </section>
+    <p class="settings-note">These choices are saved in this browser only.</p>
+  </div>
+</Cookbook>
+<script>
+  import { toast } from '../scripts/menu-store';
+  import { calm } from '../scripts/motion';
+  const root = document.documentElement;
+  const radios = [...document.querySelectorAll<HTMLInputElement>('[name=theme]')];
+  const sync = () => radios.forEach((r) => (r.checked = r.value === root.dataset.theme));
+  const wear = (radio: HTMLInputElement) => {
+    root.dataset.theme = radio.value;
+    document.querySelector('meta[name=theme-color]')?.setAttribute('content', radio.dataset.bar!);
+  };
+  radios.forEach((radio) => radio.addEventListener('change', () => {
+    let saved = true;
+    try { localStorage.setItem('conway-theme', radio.value); } catch { saved = false; }
+    if ('startViewTransition' in document && !calm()) {
+      // The new look spreads out from the card that was picked.
+      const box = radio.closest('.theme-card')!.getBoundingClientRect(), x = box.left + box.width / 2, y = box.top + box.height / 2;
+      root.classList.add('theme-swap');
+      const change = document.startViewTransition(() => wear(radio));
+      change.ready.then(() => root.animate({ clipPath: [`circle(0 at ${x}px ${y}px)`, `circle(${Math.hypot(innerWidth, innerHeight)}px at ${x}px ${y}px)`] }, { duration: 650, easing: 'ease-in-out', pseudoElement: '::view-transition-new(root)' })).catch(() => {});
+      change.finished.finally(() => root.classList.remove('theme-swap'));
+    } else wear(radio);
+    toast(saved ? `${radio.dataset.name} is on.` : `${radio.dataset.name} is on for this page. Your browser blocked saving it.`);
+  }));
+  window.addEventListener('pageshow', sync);
+  sync();
+</script>

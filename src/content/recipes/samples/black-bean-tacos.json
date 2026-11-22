@@ -1,0 +1,55 @@
+{
+  "title": "Black Bean Tacos",
+  "description": "Smoky beans, quick pickled onion, and warm corn tortillas.",
+  "category": "Mains",
+  "meal": [
+    "Lunch",
+    "Dinner"
+  ],
+  "cuisine": [
+    "Mexican"
+  ],
+  "tags": [
+    "Vegetarian",
+    "Quick",
+    "Gluten free"
+  ],
+  "date": "2026-11-22",
+  "time": "30 minutes",
+  "minutes": 30,
+  "servings": "4",
+  "difficulty": "Easy",
+  "ingredients": [
+    "1 small red onion, thinly sliced",
+    "3 tablespoons lime juice",
+    "1 tablespoon olive oil",
+    "2 garlic cloves, minced",
+    "1 teaspoon ground cumin",
+    "½ teaspoon smoked paprika",
+    "2 (15-ounce) cans black beans, drained",
+    "½ cup water",
+    "8 corn tortillas",
+    "1 avocado, sliced",
+    "½ cup crumbled cotija",
+    "Cilantro leaves",
+    "Kosher salt"
+  ],
+  "steps": [
+    {
+      "title": "Pickle the onion",
+      "text": "Toss the onion with the lime juice and a big pinch of salt. Let stand while you cook."
+    },
+    {
+      "title": "Cook the beans",
+      "text": "Warm the oil in a skillet over medium. Cook the garlic, cumin, and paprika for 30 seconds. Add the beans and water and simmer 10 minutes, mashing some."
+    },
+    {
+      "title": "Warm the tortillas",
+      "text": "Char the tortillas over a flame or in a dry pan."
+    },
+    {
+      "title": "Fill",
+      "text": "Spoon in the beans and top with avocado, cotija, onion, and cilantro."
+    }
+  ]
+}

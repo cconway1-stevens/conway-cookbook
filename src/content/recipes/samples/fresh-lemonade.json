@@ -1,0 +1,43 @@
+{
+  "title": "Fresh Lemonade",
+  "description": "Six lemons, a little sugar, and a lot of ice.",
+  "category": "Drinks",
+  "meal": [
+    "Lunch",
+    "Dinner"
+  ],
+  "cuisine": [
+    "American"
+  ],
+  "tags": [
+    "Vegetarian",
+    "Quick",
+    "Gluten free"
+  ],
+  "date": "2026-11-22",
+  "time": "15 minutes",
+  "minutes": 15,
+  "servings": "6",
+  "difficulty": "Easy",
+  "ingredients": [
+    "¾ cup sugar",
+    "5 cups cold water, divided",
+    "1 cup fresh lemon juice (about 6 lemons)",
+    "1 lemon, sliced",
+    "Ice"
+  ],
+  "steps": [
+    {
+      "title": "Make the syrup",
+      "text": "Heat the sugar with 1 cup of the water until dissolved. Cool."
+    },
+    {
+      "title": "Mix",
+      "text": "Stir the syrup, lemon juice, and remaining water together in a pitcher."
+    },
+    {
+      "title": "Serve",
+      "text": "Add the sliced lemon and pour over plenty of ice."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "title": "Tomato Bruschetta",
+  "description": "Grilled garlic toast heaped with ripe tomatoes and basil.",
+  "category": "Appetizers",
+  "meal": [
+    "Lunch",
+    "Dinner"
+  ],
+  "cuisine": [
+    "Italian"
+  ],
+  "tags": [
+    "Vegetarian",
+    "Quick"
+  ],
+  "date": "2026-11-22",
+  "time": "20 minutes",
+  "minutes": 20,
+  "servings": "4",
+  "difficulty": "Easy",
+  "ingredients": [
+    "1 pound ripe tomatoes, diced",
+    "¼ cup fresh basil, torn",
+    "3 tablespoons olive oil, plus more for brushing",
+    "1 teaspoon red wine vinegar",
+    "½ teaspoon kosher salt",
+    "8 slices country bread",
+    "1 garlic clove, halved"
+  ],
+  "steps": [
+    {
+      "title": "Dress the tomatoes",
+      "text": "Toss the tomatoes, basil, oil, vinegar, and salt. Let stand 10 minutes."
+    },
+    {
+      "title": "Toast the bread",
+      "text": "Brush the bread with oil and grill or broil until charred at the edges, 1 to 2 minutes per side."
+    },
+    {
+      "title": "Rub and top",
+      "text": "Rub the hot toast with the cut garlic, then spoon the tomatoes over and serve at once."
+    }
+  ]
+}

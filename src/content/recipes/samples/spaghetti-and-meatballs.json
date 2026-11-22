@@ -1,0 +1,79 @@
+{
+  "title": "Spaghetti & Meatballs",
+  "description": "Tender meatballs simmered in a simple tomato sauce.",
+  "category": "Mains",
+  "meal": [
+    "Dinner"
+  ],
+  "cuisine": [
+    "Italian",
+    "American"
+  ],
+  "tags": [
+    "Comfort food",
+    "Make ahead"
+  ],
+  "date": "2026-11-22",
+  "time": "1 hour 15 minutes",
+  "minutes": 75,
+  "servings": "6",
+  "difficulty": "Medium",
+  "ingredients": [
+    {
+      "group": "For the meatballs",
+      "items": [
+        "¾ cup fresh breadcrumbs",
+        "⅓ cup whole milk",
+        "1 pound ground beef",
+        "½ pound ground pork",
+        "½ cup grated Parmesan, plus more to serve",
+        "1 large egg",
+        "2 garlic cloves, minced",
+        "2 tablespoons chopped parsley",
+        "1½ teaspoons kosher salt"
+      ]
+    },
+    {
+      "group": "For the sauce",
+      "items": [
+        "3 tablespoons olive oil",
+        "3 garlic cloves, sliced",
+        "2 (28-ounce) cans crushed tomatoes",
+        "1 basil sprig",
+        "1 teaspoon kosher salt"
+      ]
+    },
+    {
+      "group": "To serve",
+      "items": [
+        "1 pound spaghetti"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "title": "Soak the crumbs",
+      "text": "Stir the breadcrumbs and milk together and leave 5 minutes."
+    },
+    {
+      "title": "Roll",
+      "text": "Mix the crumbs with the remaining meatball ingredients until just combined. Roll into 18 balls and set on a lined sheet."
+    },
+    {
+      "title": "Brown",
+      "text": "Bake at 425°F until browned, about 15 minutes."
+    },
+    {
+      "title": "Start the sauce",
+      "text": "Warm the oil and garlic in a wide pot over medium-low until fragrant. Add the tomatoes, basil, and salt and simmer 15 minutes."
+    },
+    {
+      "title": "Simmer together",
+      "text": "Add the meatballs and simmer gently for 20 minutes, until they reach 160°F."
+    },
+    {
+      "title": "Boil and toss",
+      "text": "Cook the spaghetti in salted water, drain, and toss with some sauce. Top with the meatballs and Parmesan."
+    }
+  ]
+}

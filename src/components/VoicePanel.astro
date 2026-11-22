@@ -1,0 +1,26 @@
+---
+// The voice controls, shared by cook mode and the settings page.
+import { clip, json } from '../lib/recipes';
+import { book } from '../lib/cookbook';
+const commands = [['next', 'Go to the next step'], ['back', 'Go back a step'], ['done', 'Tick this step and move on'], ['check', 'Tick one line, hear the next'], ['repeat', 'Read it again'], ['ingredients', 'See the ingredients'], ['start timer', 'Start this step’s timer'], ['step three', 'Jump to a step'], ['stop', 'Stop reading']];
+---
+<div class="voice-panel" id="voice-panel">
+  <label class="switch-row"><span><b>Read steps out loud</b><small>Starts by itself when a step opens.</small></span><input type="checkbox" role="switch" id="v-auto" /></label>
+  <fieldset>
+    <legend>Voice</legend>
+    <div class="voice-list" id="v-list"></div>
+    <button type="button" class="linkish" id="v-more" hidden></button>
+    <p id="v-tip" hidden>Want something more lifelike? Phones and computers have better voices you can download for free in their accessibility settings. Look for “Enhanced” or “Premium”, then come back here.</p>
+  </fieldset>
+  <fieldset><legend>Speed</legend>
+    <div class="seg">{[['0.85', 'Slower'], ['1', 'Normal'], ['1.2', 'Faster']].map(([v, t]) => <label><input type="radio" name="v-rate" value={v} /><span>{t}</span></label>)}</div>
+  </fieldset>
+  <section aria-labelledby="v-hands">
+    <h3 id="v-hands">Hands-free</h3>
+    <label class="switch-row"><span><b>Listen for my voice</b><small id="v-mic-note">Checking this browser…</small></span><input type="checkbox" role="switch" id="v-mic" disabled /></label>
+    <div id="v-commands" hidden><dl class="commands">{commands.map(([say, does]) => <div><dt>“{say}”</dt><dd>{does}</dd></div>)}</dl></div>
+    <p class="v-keys">Arrow keys, Page Up and Page Down, and Bluetooth page-turner pedals turn the steps too.</p>
+  </section>
+</div>
+<script type="application/json" id="voice-sample" set:html={json(clip(book.narration.sample))} />
+<script>import '../scripts/voice-panel';</script>

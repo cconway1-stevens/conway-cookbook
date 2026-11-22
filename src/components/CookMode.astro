@@ -1,0 +1,33 @@
+---
+import VoicePanel from './VoicePanel.astro';
+import { json, cookData } from '../lib/recipes';
+const { recipe } = Astro.props;
+---
+<dialog id="cook" aria-labelledby="cook-title">
+  <div class="cook-bar">
+    <p id="cook-title">{recipe.data.title}</p>
+    <div class="cook-timers" id="cook-timers" aria-label="Timers"></div>
+    <button type="button" class="button quiet help-inline acc-container" data-reading-help aria-label="Reading and accessibility help" title="Make this easier to read" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.2" r="2.2" /><path d="M4 8.2c3 1 5 1.3 8 1.3s5-.3 8-1.3M12 9.5v5M12 14.5l-3.2 7M12 14.5l3.2 7M9 9.4v5.1h6V9.4" /></svg></button>
+    <button type="button" class="button quiet" id="cook-voice-open" aria-expanded="false" aria-controls="cook-voice">Voice</button>
+    <button type="button" class="button quiet" id="cook-close">Close</button>
+  </div>
+  <ol class="cook-track" id="cook-track" aria-label="Steps"></ol>
+  <div class="cook-card" id="cook-card" tabindex="-1">
+    <p class="cook-count" id="cook-count"></p>
+    <h2 id="cook-heading"></h2>
+    <ul class="cook-lines" id="cook-lines"></ul>
+    <div class="cook-extra" id="cook-extra"></div>
+  </div>
+  <p class="cook-warn" id="cook-warn" role="status"></p>
+  <div class="cook-nav">
+    <button type="button" id="cook-back">Back</button>
+    <button type="button" id="cook-read">Read aloud</button>
+    <button type="button" id="cook-next">Next step</button>
+  </div>
+  <div class="cook-voice" id="cook-voice" role="region" aria-labelledby="cook-voice-title" hidden>
+    <div class="cook-voice-head"><h2 id="cook-voice-title">Voice</h2><button type="button" class="button quiet" id="cook-voice-close">Done</button></div>
+    <VoicePanel />
+  </div>
+</dialog>
+<script type="application/json" id="cook-data" set:html={json(cookData(recipe))} />
+<script>import '../scripts/cook';</script>

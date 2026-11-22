@@ -1,0 +1,29 @@
+---
+import Spot from './Spot.astro';
+import { base, recipeUrl, searchText, isSample } from '../lib/recipes';
+import { slug } from '../lib/cookbook';
+const { recipe, level = 'h3' } = Astro.props;
+const { id, data } = recipe;
+const Heading = level;
+---
+<li class="card" data-course={slug(data.category)} data-id={id} data-search={searchText(recipe)}
+  data-meal={data.meal.join('|')} data-cuisine={data.cuisine.join('|')} data-tags={data.tags.join('|')} data-minutes={data.minutes}>
+  <p class="card-tab">{data.category}</p>
+  <div class="card-face">
+    {data.image
+      ? <img class="card-photo" src={base + data.image} alt="" width="600" height="400" loading="lazy" />
+      : <div class="card-photo card-art"><Spot category={data.category} /></div>}
+    <div class="card-top">
+      <Heading class="card-title"><a href={recipeUrl(id)}>{data.title}</a></Heading>
+    </div>
+    <p class="card-desc">{data.description}</p>
+    <p class="card-meta">{data.time} · serves {data.servings}{isSample(recipe) && ' · sample'}</p>
+    <div class="card-foot">
+      <ul class="tapes" aria-label="Cuisine">{data.cuisine.map((c: string) => <li class="tape">{c}</li>)}</ul>
+      <div class="card-go">
+        <span class="card-view" aria-hidden="true">View recipe</span>
+        <button type="button" class="add" data-add={id} data-title={data.title} hidden>Add to menu</button>
+      </div>
+    </div>
+  </div>
+</li>

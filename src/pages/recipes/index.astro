@@ -1,66 +1,118 @@
 ---
 import Cookbook from '../../layouts/Cookbook.astro';
-import RecipeCards from '../../components/RecipeCards.astro';
-import Chapters from '../../components/Chapters.astro';
-import { getCategories, getRecipes } from '../../lib/recipes';
-const recipes = await getRecipes();
+import RecipeCard from '../../components/RecipeCard.astro';
+import { allRecipes, tally } from '../../lib/recipes';
+import { book } from '../../lib/cookbook';
+const recipes = await allRecipes();
+const meals = book.meals.filter((m) => recipes.some((r) => r.data.meal.includes(m)));
+const cuisines = tally(recipes.flatMap((r) => r.data.cuisine));
+const tags = tally(recipes.flatMap((r) => r.data.tags));
 ---
-<Cookbook title="Recipe Box | The Conway Cookbook">
-  <section class="wrap collection">
-    <h1>The recipe box</h1>
-    <form id="recipe-search" role="search" hidden>
-      <label for="query">Search recipes</label>
-      <input type="search" name="q" id="query" placeholder="Try apple, oats, or dinner" autocomplete="off" />
-      <button class="button" type="submit">Search</button>
+<Cookbook title="Recipe box" description="Search every recipe by meal, cuisine, time, or ingredient." current="recipes">
+  <div class="wrap box">
+    <div class="block-head"><h1>The recipe box</h1><button type="button" class="button quiet" data-pull hidden>Pull a card for me</button></div>
+    <form id="filters" class="filters" role="search" hidden>
+      <div class="search">
+        <label for="q">Search by dish, ingredient, or tag</label>
+        <input id="q" name="q" type="search" placeholder="Try “lemon” or “vegetarian”" autocomplete="off" />
+      </div>
+      <fieldset class="tabs"><legend class="vh">Meal</legend>
+        {['', ...meals].map((m) => <label><input type="radio" name="meal" value={m} checked={m === ''} /><span>{m || 'Everything'}</span></label>)}
+      </fieldset>
+      <details class="more" open><summary>Cuisine, tags, and time</summary><div class="drawer">
+        <fieldset><legend>Cuisine</legend><div class="tapes">
+          {cuisines.map(([c]) => <label class="tape-check"><input type="checkbox" name="cuisine" value={c} /><span class="tape">{c}</span></label>)}
+        </div></fieldset>
+        <fieldset><legend>Tags</legend><div class="chips">
+          {tags.map(([t]) => <label class="chip"><input type="checkbox" name="tag" value={t} /><span>{t}</span></label>)}
+        </div></fieldset>
+        <div class="ready"><label for="ready">Ready in</label>
+          <select id="ready" name="ready"><option value="">Any time</option><option value="20">20 minutes</option><option value="30">30 minutes</option><option value="60">1 hour</option><option value="90">1½ hours</option></select>
+        </div>
+      </div></details>
     </form>
-    <Chapters categories={getCategories(recipes)} />
-    <p id="matches" class="recipe-time" role="status"></p>
-    <RecipeCards recipes={recipes} />
-    <p id="no-matches" hidden>Try a different recipe name, ingredient, or category.</p>
-  </section>
+    <div class="results"><p id="count" role="status">{recipes.length} recipes</p><button type="button" id="clear" class="linkish" hidden>Clear all filters</button></div>
+    <ul class="cards">{recipes.map((recipe) => <RecipeCard recipe={recipe} level="h2" />)}</ul>
+    <div id="none" class="none" hidden>
+      <h2>No card for that yet</h2>
+      <p>Take off a filter, or try a shorter word.</p>
+      <button type="button" class="button" id="clear2">Show every recipe</button>
+    </div>
+  </div>
 </Cookbook>
 <script>
-  const form = document.querySelector<HTMLFormElement>('#recipe-search')!;
-  const input = document.querySelector<HTMLInputElement>('#query')!;
-  const status = document.querySelector('#matches')!;
-  const empty = document.querySelector<HTMLElement>('#no-matches')!;
-  const cards = [...document.querySelectorAll<HTMLElement>('[data-recipe]')];
-  const normalize = (value: string) => value.normalize('NFKD').toLowerCase()
-    .replace(/\p{M}/gu, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
-  const entries = cards.map((card) => ({ card, text: normalize(card.dataset.search ?? '') }));
+  import { replay } from '../../scripts/motion';
+  const form = document.querySelector<HTMLFormElement>('#filters')!;
+  const cards = [...document.querySelectorAll<HTMLElement>('.card')];
+  const count = document.querySelector('#count')!, clear = document.querySelector<HTMLElement>('#clear')!, none = document.querySelector<HTMLElement>('#none')!;
+  const fold = (text: string) => text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const index = cards.map((card) => ({
+    card, text: fold(card.dataset.search!), minutes: Number(card.dataset.minutes) || Infinity,
+    meal: card.dataset.meal!.split('|'), cuisine: card.dataset.cuisine!.split('|'), tags: card.dataset.tags!.split('|'),
+  }));
 
-  function updateResults() {
-    const terms = normalize(input.value).split(' ').filter(Boolean);
-    let count = 0;
-    for (const { card, text } of entries) {
-      const matches = terms.every((term) => text.includes(term));
-      card.hidden = !matches;
-      count += Number(matches);
-    }
-    status.textContent = count + (count === 1 ? ' recipe' : ' recipes');
-    empty.hidden = count !== 0;
+  const read = () => {
+    const data = new FormData(form);
+    return {
+      q: String(data.get('q') ?? '').trim(), meal: String(data.get('meal') ?? ''), ready: String(data.get('ready') ?? ''),
+      cuisine: data.getAll('cuisine').map(String), tag: data.getAll('tag').map(String),
+    };
+  };
+  type State = ReturnType<typeof read>;
+  const matches = (row: (typeof index)[number], s: State) =>
+    fold(s.q).split(/\s+/).every((word) => row.text.includes(word)) &&
+    (!s.meal || row.meal.includes(s.meal)) &&
+    (!s.cuisine.length || s.cuisine.some((c) => row.cuisine.includes(c))) &&
+    s.tag.every((t) => row.tags.includes(t)) &&
+    (!s.ready || row.minutes <= Number(s.ready));
+
+  function apply(writeUrl = true) {
+    const s = read();
+    const shown = index.filter((row) => {
+      const was = row.card.hidden;
+      row.card.hidden = !matches(row, s);
+      if (was && !row.card.hidden) replay(row.card, 'back');
+      return !row.card.hidden;
+    }).length;
+    const words = `${shown} ${shown === 1 ? 'recipe' : 'recipes'}`;
+    if (count.textContent !== words) { count.textContent = words; replay(count, 'bump'); }
+    none.hidden = shown > 0;
+    const active = !!(s.q || s.meal || s.ready || s.cuisine.length || s.tag.length);
+    clear.hidden = !active;
+    document.querySelectorAll<HTMLButtonElement>('[data-pull]').forEach((b) => (b.disabled = !shown));
+    // Grey out a filter that would leave nothing in the box.
+    form.querySelectorAll<HTMLInputElement>('input[type=checkbox]').forEach((input) => {
+      const next = input.name === 'cuisine' ? { ...s, cuisine: [input.value] } : { ...s, tag: [...new Set([...s.tag, input.value])] };
+      input.disabled = !input.checked && !index.some((row) => matches(row, next));
+    });
+    if (!writeUrl) return;
+    const params = new URLSearchParams();
+    if (s.q) params.set('q', s.q);
+    if (s.meal) params.set('meal', s.meal);
+    s.cuisine.forEach((c) => params.append('cuisine', c));
+    s.tag.forEach((t) => params.append('tag', t));
+    if (s.ready) params.set('ready', s.ready);
+    history.replaceState(null, '', params.size ? `?${params}` : location.pathname);
   }
-
-  function restoreQuery() {
-    input.value = new URL(location.href).searchParams.get('q') ?? '';
-    updateResults();
+  function fromUrl() {
+    const params = new URLSearchParams(location.search);
+    form.reset();
+    (form.elements.namedItem('q') as HTMLInputElement).value = params.get('q') ?? '';
+    (form.elements.namedItem('ready') as HTMLSelectElement).value = params.get('ready') ?? '';
+    form.querySelectorAll<HTMLInputElement>('input[type=radio], input[type=checkbox]').forEach((input) => {
+      if (params.has(input.name)) input.checked = params.getAll(input.name).includes(input.value);
+    });
+    if (!form.querySelector('[name=meal]:checked')) form.querySelector<HTMLInputElement>('[name=meal]')!.checked = true;
+    apply(false);
   }
-
-  function saveQuery() {
-    const url = new URL(location.href);
-    const query = input.value.trim();
-    if (query) url.searchParams.set('q', query);
-    else url.searchParams.delete('q');
-    history.replaceState(history.state, '', url);
-    updateResults();
-  }
-
+  const reset = () => { history.replaceState(null, '', location.pathname); fromUrl(); document.querySelector<HTMLInputElement>('#q')!.focus(); };
   form.hidden = false;
-  restoreQuery();
-  input.addEventListener('input', saveQuery);
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    saveQuery();
-  });
-  window.addEventListener('popstate', restoreQuery);
+  // On a phone, keep the cards in view unless a filter in the drawer is in use.
+  if (matchMedia('(max-width: 720px)').matches && !/cuisine|tag|ready/.test(location.search)) form.querySelector('details')!.open = false;
+  form.addEventListener('input', () => apply());
+  form.addEventListener('submit', (event) => event.preventDefault());
+  clear.addEventListener('click', reset);
+  document.querySelector('#clear2')!.addEventListener('click', reset);
+  window.addEventListener('pageshow', fromUrl);
+  fromUrl();
 </script>

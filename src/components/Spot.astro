@@ -1,0 +1,21 @@
+---
+// Two-color spot art, printed slightly out of register like an old cookbook.
+// Which drawing goes with which course is set in src/data/cookbook.json.
+import { courseOf } from '../lib/cookbook';
+const { category } = Astro.props;
+const art: Record<string, { fill: string; ink: string }> = {
+  pancakes: { fill: '<ellipse cx="32" cy="42" rx="24" ry="9"/><rect x="26" y="15" width="12" height="10"/>', ink: '<ellipse cx="32" cy="24" rx="20" ry="7"/><path d="M12 24v7c0 4 9 7 20 7s20-3 20-7v-7M12 31v7c0 4 9 7 20 7s20-3 20-7v-7M6 46c4 6 14 8 26 8s22-2 26-8M26 21v-7h12v7l-6 3z"/>' },
+  toast: { fill: '<path d="M10 24c0-9 8-13 22-13s22 4 22 13c0 4-2 6-4 7v20H14V31c-2-1-4-3-4-7z"/>', ink: '<path d="M10 24c0-9 8-13 22-13s22 4 22 13c0 4-2 6-4 7v20H14V31c-2-1-4-3-4-7z"/><circle cx="25" cy="27" r="5"/><circle cx="39" cy="31" r="5"/><circle cx="28" cy="41" r="5"/>' },
+  bowl: { fill: '<path d="M8 32h48c0 13-9 21-24 21S8 45 8 32z"/>', ink: '<path d="M6 32h52M9 32c0 13 9 20 23 20s23-7 23-20M24 52v5h16v-5M22 26c-4-5 4-8 0-14M32 26c-4-5 4-8 0-14M42 26c-4-5 4-8 0-14"/>' },
+  cloche: { fill: '<path d="M10 42a22 22 0 0 1 44 0z"/>', ink: '<path d="M10 42a22 22 0 0 1 44 0zM5 47h54M10 52h44M32 20v-4M18 37a15 15 0 0 1 9-10"/><circle cx="32" cy="13" r="3"/>' },
+  pan: { fill: '<circle cx="26" cy="36" r="18"/>', ink: '<circle cx="26" cy="36" r="20"/><circle cx="26" cy="36" r="14"/><path d="M41 23l14-12 4 5-14 12M20 38l12-6M19 32l9 8"/>' },
+  loaf: { fill: '<path d="M8 30c0-9 6-14 24-14s24 5 24 14c0 4-3 6-4 6v15H12V36c-1 0-4-2-4-6z"/>', ink: '<path d="M8 30c0-9 6-14 24-14s24 5 24 14c0 4-3 6-4 6v15H12V36c-1 0-4-2-4-6zM22 22l5 8M32 20l5 8M42 22l4 7"/>' },
+  pie: { fill: '<path d="M8 28 54 18v12L10 40z"/>', ink: '<path d="M7 29 50 14c5 1 7 5 6 9L8 38zM8 38l2 12 43-17 3-10M16 37l1 7M27 33l1 7M38 29l1 7"/>' },
+  glass: { fill: '<path d="M17 28h30l-4 26H21z"/>', ink: '<path d="M14 18h36l-5 37H19zM16 28h32M35 18l5-13h8"/><circle cx="26" cy="38" r="3"/><circle cx="36" cy="45" r="3"/>' },
+};
+const { fill, ink } = art[courseOf(category).art] ?? art.cloche;
+---
+<svg class="spot" viewBox="0 0 64 64" aria-hidden="true">
+  <g class="spot-fill" transform="translate(3 2.5)" set:html={fill} />
+  <g class="spot-ink" set:html={ink} />
+</svg>

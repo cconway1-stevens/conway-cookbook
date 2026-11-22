@@ -1,8 +1,0 @@
----
-import { base, categoryUrl } from '../lib/recipes';
-const { categories, current }: { categories: string[]; current?: string } = Astro.props;
----
-<nav class="chapters" aria-label="Recipe categories">
-  <a href={base + 'recipes/'} aria-current={current ? undefined : 'page'}>All recipes</a>
-  {categories.map((category) => <a href={categoryUrl(category)} aria-current={current === category ? 'page' : undefined}>{category}</a>)}
-</nav>

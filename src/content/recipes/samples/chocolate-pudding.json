@@ -1,0 +1,49 @@
+{
+  "title": "Stovetop Chocolate Pudding",
+  "description": "Silky, dark, and ready for the good glasses.",
+  "category": "Desserts",
+  "meal": [
+    "Dessert"
+  ],
+  "cuisine": [
+    "American"
+  ],
+  "tags": [
+    "Vegetarian",
+    "Make ahead",
+    "Gluten free"
+  ],
+  "date": "2026-11-22",
+  "time": "20 minutes, plus chilling",
+  "minutes": 20,
+  "servings": "4",
+  "difficulty": "Easy",
+  "ingredients": [
+    "½ cup sugar",
+    "¼ cup unsweetened cocoa powder",
+    "3 tablespoons cornstarch",
+    "¼ teaspoon kosher salt",
+    "2¾ cups whole milk",
+    "4 ounces dark chocolate, chopped",
+    "1 tablespoon unsalted butter",
+    "1 teaspoon vanilla extract"
+  ],
+  "steps": [
+    {
+      "title": "Whisk",
+      "text": "Whisk the sugar, cocoa, cornstarch, and salt in a saucepan. Gradually whisk in the milk until smooth."
+    },
+    {
+      "title": "Thicken",
+      "text": "Cook over medium heat, whisking constantly, until it bubbles and thickens, about 8 minutes."
+    },
+    {
+      "title": "Finish",
+      "text": "Off the heat, stir in the chocolate, butter, and vanilla until glossy."
+    },
+    {
+      "title": "Chill",
+      "text": "Divide among four glasses and chill at least 2 hours."
+    }
+  ]
+}

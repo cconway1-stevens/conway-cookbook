@@ -1,0 +1,36 @@
+{
+  "title": "Creamy Tomato Soup",
+  "description": "A pantry tomato soup with a swirl of cream and plenty of black pepper.",
+  "category": "Soups & Salads",
+  "meal": [
+    "Lunch"
+  ],
+  "cuisine": [
+    "American"
+  ],
+  "tags": [
+    "Vegetarian",
+    "One pot"
+  ],
+  "date": "2026-11-19",
+  "time": "35 minutes",
+  "minutes": 35,
+  "servings": "4",
+  "image": "images/creamy-tomato-soup.jpg",
+  "imageAlt": "Painted bowl of tomato soup with a swirl of cream and toast",
+  "ingredients": [
+    "2 tablespoons unsalted butter",
+    "1 small yellow onion, diced",
+    "2 garlic cloves, minced",
+    "1 tablespoon tomato paste",
+    "1 (28-ounce) can crushed tomatoes",
+    "1½ cups low-sodium vegetable broth",
+    "⅓ cup heavy cream",
+    "Kosher salt and black pepper, to taste"
+  ],
+  "steps": [
+    "Melt the butter in a pot over medium heat. Add the onion and cook until soft, about 6 minutes. Stir in the garlic and tomato paste and cook for 1 minute.",
+    "Add the tomatoes and broth. Bring to a gentle simmer and cook uncovered for 20 minutes, stirring occasionally.",
+    "Turn off the heat and blend with an immersion blender until smooth. Stir in the cream and season with salt and black pepper. Serve with buttery toast."
+  ]
+}

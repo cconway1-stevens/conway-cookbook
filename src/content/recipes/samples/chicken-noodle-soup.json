@@ -1,0 +1,56 @@
+{
+  "title": "Chicken Noodle Soup",
+  "description": "A clear, golden pot for sick days and snow days.",
+  "category": "Soups & Salads",
+  "meal": [
+    "Lunch",
+    "Dinner"
+  ],
+  "cuisine": [
+    "American"
+  ],
+  "tags": [
+    "One pot",
+    "Make ahead"
+  ],
+  "date": "2026-11-22",
+  "time": "1 hour",
+  "minutes": 60,
+  "servings": "6",
+  "difficulty": "Easy",
+  "ingredients": [
+    "1 tablespoon olive oil",
+    "1 yellow onion, diced",
+    "3 carrots, sliced",
+    "3 celery stalks, sliced",
+    "2 garlic cloves, minced",
+    "8 cups chicken stock",
+    "1½ pounds bone-in chicken thighs, skin removed",
+    "2 thyme sprigs",
+    "1 bay leaf",
+    "6 ounces egg noodles",
+    "2 tablespoons chopped parsley",
+    "Salt and black pepper"
+  ],
+  "steps": [
+    {
+      "title": "Soften the vegetables",
+      "text": "Heat the oil in a soup pot over medium. Cook the onion, carrots, and celery until tender, about 8 minutes. Stir in the garlic."
+    },
+    {
+      "title": "Simmer",
+      "text": "Add the stock, chicken, thyme, and bay. Bring to a boil, then simmer until the chicken reaches 165°F and pulls apart, about 30 minutes."
+    },
+    {
+      "title": "Shred",
+      "text": "Lift out the chicken, shred the meat, and discard the bones, thyme, and bay."
+    },
+    {
+      "title": "Add the noodles",
+      "text": "Boil the noodles in the broth until tender. Return the chicken, stir in the parsley, and season."
+    }
+  ],
+  "notes": {
+    "Notes": "The noodles drink up broth as they sit. Cook them separately if you plan on leftovers."
+  }
+}

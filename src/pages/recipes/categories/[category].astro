@@ -1,23 +1,22 @@
 ---
+// Keeps every published /recipes/categories/ link working, for courses and meals alike.
 import Cookbook from '../../../layouts/Cookbook.astro';
-import RecipeCards from '../../../components/RecipeCards.astro';
-import Chapters from '../../../components/Chapters.astro';
-import { categoryId, getCategories, getRecipes } from '../../../lib/recipes';
+import RecipeCard from '../../../components/RecipeCard.astro';
+import { allRecipes, base } from '../../../lib/recipes';
+import { book, courseNames, slug } from '../../../lib/cookbook';
 
 export async function getStaticPaths() {
-  const recipes = await getRecipes();
-  const categories = getCategories(recipes);
-  return categories.map((category) => ({
-    params: { category: categoryId(category) },
-    props: { category, categories, recipes: recipes.filter(({ data }) => data.category === category) },
-  }));
+  const recipes = await allRecipes();
+  return [...new Set([...book.meals, ...courseNames])]
+    .map((name) => ({ name, list: recipes.filter((r) => r.data.category === name || r.data.meal.includes(name)) }))
+    .filter(({ list }) => list.length)
+    .map(({ name, list }) => ({ params: { category: slug(name) }, props: { name, list } }));
 }
-const { category, categories, recipes } = Astro.props;
+const { name, list } = Astro.props;
 ---
-<Cookbook title={category + ' | The Conway Cookbook'}>
-  <section class="wrap collection">
-    <h1>{category}</h1>
-    <Chapters categories={categories} current={category} />
-    <RecipeCards recipes={recipes} />
+<Cookbook title={name} current="recipes">
+  <section class="wrap box">
+    <div class="block-head"><h1>{name}</h1><a class="button quiet" href={base + 'recipes/'}>Search the whole box</a></div>
+    <ul class="cards">{list.map((recipe) => <RecipeCard recipe={recipe} level="h2" />)}</ul>
   </section>
 </Cookbook>

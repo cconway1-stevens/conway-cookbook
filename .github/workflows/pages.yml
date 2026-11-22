@@ -25,6 +25,19 @@ jobs:
       - uses: actions/configure-pages@v5
         id: pages
       - run: npm ci
+      # Record the read-aloud voice. If this fails, the site still deploys and
+      # cook mode reads with a voice on the visitor's device instead.
+      - uses: actions/cache@v4
+        with:
+          path: public/audio
+          key: narration-${{ hashFiles('src/content/recipes/**', 'src/lib/narration.mjs', 'src/data/cookbook.json') }}
+          restore-keys: narration-
+      - name: Record recipe narration
+        continue-on-error: true
+        timeout-minutes: 20
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          npm run narrate
       - run: npm run build
         env:
           PAGES_ORIGIN: ${{ steps.pages.outputs.origin }}

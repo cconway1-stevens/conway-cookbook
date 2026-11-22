@@ -1,0 +1,50 @@
+/* Blue Plate: jadeite walls, gingham cloth, enamelware with a cobalt rim,
+   ruled index cards, and label-maker tags. */
+@layer base, theme, print;
+@layer theme {
+[data-theme=blue-plate] {
+  --page: #bcdcc6; --card: #fdfdf9; --tint: #f9eec6; --ink: #20262b; --soft: #4c565c; --line: #b4cfe3;
+  --accent: #b4232a; --accent-dark: #8a161c; --second: #24407c; --third: #1f5a48; --highlight: #f7d976; --blush: #f3a08c;
+  --shade: #1f5a4830;
+  --heading: 'Zilla Slab', Rockwell, Georgia, serif; --heading-weight: 700;
+  --display: 'Oleo Script', 'Brush Script MT', cursive;
+  --body: 'Zilla Slab', Rockwell, Georgia, serif;
+  --type: 'Courier Prime', 'Courier New', monospace;
+  --gingham: linear-gradient(90deg, rgb(190 32 40 / .58) 50%, transparent 50%) 0 0 / 44px 44px, linear-gradient(rgb(190 32 40 / .58) 50%, transparent 50%) 0 0 / 44px 44px, #fffdfb;
+  /* Cover colors for the preview on the settings page */
+  --cover: var(--gingham); --cover-label: var(--card); --cover-ink: var(--accent);
+}
+:where([data-theme=blue-plate]) {
+  .masthead { border-bottom: 7px solid var(--second); }
+  .footer { border-top: 7px solid var(--second); }
+  .hero {
+    background: var(--gingham);
+    mask: linear-gradient(#000 0 0) top / 100% calc(100% - 22px) no-repeat, radial-gradient(22px at 50% 0, #000 97%, transparent) bottom / 44px 22px repeat-x;
+  }
+  /* A white enamel plate with a cobalt rim */
+  .label { border: 7px solid var(--second); border-radius: 22px; overflow: hidden; box-shadow: 0 10px 24px #3a121540; }
+  .print { transform: rotate(2.2deg); }
+  .dish-link { border-top: 5px solid var(--second); }
+  .mini-menu { transform: rotate(-2deg); }
+  .dividers a { border: 0; border-bottom: 5px solid #0003; border-radius: 12px 12px 3px 3px; transition: transform .18s; }
+  .dividers a:hover { transform: translateY(-6px); }
+  .dividers li:nth-child(4n+1) a { background: var(--highlight); }
+  .dividers li:nth-child(4n+2) a { background: #f3b6a6; }
+  .dividers li:nth-child(4n+3) a { background: #a9c8e8; }
+  .dividers li:nth-child(4n) a { background: #f6f3ec; }
+  .tape {
+    padding: .22em .7em .14em; font: 700 .95rem/1.4 var(--type); letter-spacing: .09em; text-transform: uppercase; text-shadow: 0 0 1px #fff9;
+    border-radius: 2px; box-shadow: inset 0 1px 0 #ffffff55, inset 0 -2px 0 #00000038, 0 1px 2px #0005;
+  }
+  .tape-check .tape { padding: .45em .8em .35em; }
+  .card .tapes li:nth-child(2), .cuisine-row li:nth-child(3n+2) .tape { background: var(--second); }
+  .cuisine-row li:nth-child(3n) .tape { background: var(--third); }
+  .card-tab { border-radius: 9px 9px 0 0; }
+  [data-course=breakfast] .card-tab, [data-course=drinks] .card-tab { background: #a9c8e8; }
+  [data-course=mains] .card-tab, [data-course=desserts] .card-tab { background: #f3b6a6; }
+  [data-course=sides] .card-tab, [data-course=soups-salads] .card-tab { background: #e3efad; }
+  .card:nth-child(3n+2) > .card-tab { margin-left: min(6.5rem, 28%); }
+  .card-desc, .card-meta { line-height: 1.9rem; background: repeating-linear-gradient(transparent 0 calc(1.9rem - 1px), var(--line) calc(1.9rem - 1px) 1.9rem); }
+  .card-art { background: repeating-conic-gradient(#f4e3a6 0 25%, #f9eec6 0 50%) 0 0 / 28px 28px; }
+}
+}

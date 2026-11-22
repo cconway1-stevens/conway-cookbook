@@ -1,0 +1,48 @@
+{
+  "title": "Village Greek Salad",
+  "description": "Cucumber, tomato, and olives under a thick slab of feta.",
+  "category": "Soups & Salads",
+  "meal": [
+    "Lunch",
+    "Dinner"
+  ],
+  "cuisine": [
+    "Greek"
+  ],
+  "tags": [
+    "Vegetarian",
+    "Quick",
+    "Gluten free"
+  ],
+  "date": "2026-11-22",
+  "time": "15 minutes",
+  "minutes": 15,
+  "servings": "4",
+  "difficulty": "Easy",
+  "ingredients": [
+    "4 ripe tomatoes, cut into wedges",
+    "1 English cucumber, thickly sliced",
+    "1 green bell pepper, sliced into rings",
+    "½ small red onion, thinly sliced",
+    "½ cup Kalamata olives",
+    "7 ounces feta, in one block",
+    "¼ cup olive oil",
+    "1 tablespoon red wine vinegar",
+    "1 teaspoon dried oregano",
+    "Kosher salt"
+  ],
+  "steps": [
+    {
+      "title": "Build the salad",
+      "text": "Combine the tomatoes, cucumber, pepper, onion, and olives in a wide bowl. Season lightly with salt."
+    },
+    {
+      "title": "Dress",
+      "text": "Pour the oil and vinegar over the vegetables and toss."
+    },
+    {
+      "title": "Finish",
+      "text": "Set the feta on top, scatter with oregano, and add a last thread of oil."
+    }
+  ]
+}

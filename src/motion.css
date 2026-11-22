@@ -1,0 +1,96 @@
+/* Motion, page by page. Everything is readable without it. The reduced-motion rule in
+   style.css and "Pause motion" in the reading helper both switch it off.
+   Keyframes use translate, rotate, and scale, so they never fight a theme's transforms. */
+@layer base, theme, print;
+@layer base {
+@keyframes rise { from { opacity: 0; translate: 0 26px; } }
+@keyframes deal { from { opacity: 0; translate: -70px 50px; rotate: -9deg; } }
+@keyframes stamp { from { opacity: 0; scale: 1.9; rotate: -8deg; } 70% { scale: .94; } }
+@keyframes pop { 40% { scale: 1.28; } }
+@keyframes wobble { 25% { rotate: -2.2deg; } 60% { rotate: 1.6deg; } }
+@keyframes wipe { from { clip-path: inset(-20% 100% -20% -5%); } to { clip-path: inset(-20% -5% -20% -5%); } }
+@keyframes drift { from { scale: 1; } to { scale: 1.09; translate: -1% -1.5%; } }
+@keyframes nudge { 0%, 88%, 100% { rotate: 0deg; } 90% { rotate: -3deg; } 93% { rotate: 3deg; } 96% { rotate: -2deg; } }
+@keyframes rattle { 25% { translate: -2px 1px; } 75% { translate: 2px -1px; } }
+@keyframes sway { from { rotate: -3.2deg; } to { rotate: -.8deg; } }
+@keyframes glow { 50% { box-shadow: 0 3px 0 var(--accent-dark), 0 0 0 9px color-mix(in srgb, var(--accent) 22%, transparent); } }
+@keyframes from-right { from { opacity: 0; translate: 70px 0; rotate: 1.2deg; } }
+@keyframes from-left { from { opacity: 0; translate: -70px 0; rotate: -1.2deg; } }
+@keyframes drop { from { opacity: 0; translate: 0 -38px; scale: 1.06; } 70% { translate: 0 4px; } }
+@keyframes sweep { from { background-size: 0 100%; } to { background-size: 100% 100%; } }
+@keyframes bars { 50% { scale: 1 .25; } }
+@keyframes fall { from { opacity: 1; translate: 0 -12vh; rotate: 0deg; } to { opacity: 1; translate: var(--x) 112vh; rotate: var(--r); } }
+@keyframes flip { from { rotate: y 75deg; opacity: .2; } }
+@keyframes look { 30% { rotate: -16deg; scale: 1.12; } 65% { rotate: 12deg; } }
+
+/* ---- Hero: 1 the title is written in, 2 the search types, 3 the dish drifts,
+   4 the surprise button fidgets and rattles when held, 5 the magnifier looks around ---- */
+.label h1 { animation: wipe 1.1s .1s cubic-bezier(.5, 0, .2, 1) backwards; }
+.hero-head p { animation: rise .6s .7s backwards; }
+.hero .slide > img { animation: drift 14s ease-out both; }
+.spinning .slide > img { animation: shuffle .16s linear infinite; }
+.find-surprise { animation: nudge 7s 3s 4; } .find-surprise.held { animation: rattle .12s infinite; }
+.find-bar.typing .find-go svg { animation: look 1.1s ease-in-out; }
+.find-box { animation: rise .6s .9s backwards; }
+
+/* ---- Home: 1 tabs rise out of the tin, 2 tabs wobble, 3 cards are dealt,
+   4 labels are stamped, 5 the sample menu sways and fills in ---- */
+@supports (animation-timeline: view()) {
+  .dividers li, .block > h2, .invite, .pairs .card { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 75%; }
+  .cuisine-row li { animation: stamp linear both; animation-timeline: view(); animation-range: entry 10% entry 90%; }
+  main > .wrap .block:not(.pairs) > .cards .card { animation: deal linear both; animation-timeline: view(); animation-range: entry 0% entry 55%; }
+  .mini-menu span { animation: rise linear both; animation-timeline: view(); animation-range: entry 20% cover 32%; }
+  /* Recipe page: numerals pop and rules draw as you scroll down to them */
+  .sec-directions li::before { animation: stamp linear both; animation-timeline: view(); animation-range: entry 0% entry 90%; }
+  .sec-ingredients li { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+}
+.dividers a:hover { animation: wobble .45s; }
+.mini-menu { animation: sway 3.4s ease-in-out 4 alternate both; }
+.card-photo { transition: scale .5s; } .card:hover .card-photo { scale: 1.035; }
+.card-photo { transform-origin: 50% 100%; }
+
+/* ---- Recipe box: 1 cards are dealt, 2 matches pop back in, 3 the count bumps,
+   4 the picked tab hops, 5 a ticked tag bounces (and no match shakes its head) ---- */
+.box > .cards .card { animation: deal .5s cubic-bezier(.2, .9, .3, 1.1) backwards; animation-delay: calc(min(var(--i, 0), 9) * 55ms); }
+.box > .cards .card.back { animation: pop .35s; }
+#count.bump { animation: pop .35s; transform-origin: left; }
+#count { display: inline-block; }
+.tabs :checked + span { animation: rise .25s; }
+:is(.chip, .tape-check) :checked + span { animation: pop .3s; }
+.none h2 { animation: wobble .4s 2; }
+
+/* ---- Recipe: 1 the card is pulled up, 2 the photo lands, 3 tape is stamped,
+   4 Start cooking glows, 5 numerals and ingredients arrive (above) ---- */
+.sheet { animation: rise .6s cubic-bezier(.2, .9, .3, 1) backwards; }
+.recipe-heading .print, .recipe-heading > .spot { animation: drop .7s .25s backwards; }
+.recipe-heading .tapes li { animation: stamp .35s backwards; animation-delay: calc(.45s + var(--i, 0) * 70ms); }
+[data-cook] { animation: glow 2.2s 1.2s 3; }
+
+/* ---- Cook mode: 1 the card slides the way you went, 2 lines arrive in turn, 3 a tick pops,
+   4 the line being read fills with color, 5 finished tabs pop (and the end gets confetti) ---- */
+.cook-card.next { animation: from-right .38s cubic-bezier(.2, .9, .3, 1); } .cook-card.back { animation: from-left .38s cubic-bezier(.2, .9, .3, 1); }
+.cook-lines li { animation: rise .35s backwards; animation-delay: calc(min(var(--i, 0), 8) * 50ms + 80ms); }
+.cook-lines input:checked { animation: pop .3s; }
+.cook-lines .now label { background: linear-gradient(var(--highlight), var(--highlight)) 0 0 / 100% 100% no-repeat; animation: sweep .45s ease-out; }
+.cook-track button.just { animation: pop .4s; }
+.confetti { position: fixed; z-index: 5; inset: 0; overflow: hidden; pointer-events: none; }
+.confetti i { position: absolute; top: 0; opacity: 0; width: 12px; height: 18px; border-radius: 2px; animation: fall 2.6s cubic-bezier(.3, .2, .6, 1) both; }
+
+/* ---- Menu builder: 1 a new dish drops onto the menu, 2 panes slide, 3 the paper flips,
+   4 Add pops, 5 the count jumps ---- */
+.dish.fresh { animation: drop .5s backwards; animation-delay: calc(var(--i, 0) * 110ms); }
+.pane { animation: from-left .28s; }
+.menu-card.turned { animation: flip .5s cubic-bezier(.2, .9, .3, 1); }
+.add.just { animation: pop .3s; }
+#menu-count.bump { animation: pop .45s; }
+
+/* ---- Settings: 1 panels rise, 2 theme cards lift, 3 the new theme spreads from your click,
+   4 the switch squashes, 5 a voice shows its level while it talks ---- */
+.panel { animation: rise .5s backwards; animation-delay: calc(var(--i, 0) * 110ms); }
+.theme-card > span { transition: translate .2s, rotate .2s, box-shadow .2s; } .theme-card:hover > span { translate: 0 -6px; rotate: -.6deg; box-shadow: 0 12px 22px var(--shade); }
+input[role=switch]:active::before { scale: 1.25 .85; } input[role=switch]::before { transition: translate .15s, scale .15s; }
+.voice-row button.playing::before { content: ''; display: inline-block; width: 18px; height: 16px; margin-right: 6px; vertical-align: -2px; background: linear-gradient(currentColor 0 0) 0 / 4px 100% no-repeat, linear-gradient(currentColor 0 0) 50% / 4px 70% no-repeat, linear-gradient(currentColor 0 0) 100% / 4px 90% no-repeat; animation: bars .5s infinite; }
+.theme-swap::view-transition-old(root), .theme-swap::view-transition-new(root) { animation: none !important; mix-blend-mode: normal; }
+.help-button { animation: pop .5s 1.4s; }
+}
+@layer print { @media print { *, ::before, ::after { animation: none !important; } } }

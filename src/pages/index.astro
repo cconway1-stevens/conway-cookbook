@@ -1,39 +1,92 @@
 ---
 import Cookbook from '../layouts/Cookbook.astro';
-import RecipeCards from '../components/RecipeCards.astro';
-import { base, categoryUrl, getCategories, getRecipes } from '../lib/recipes';
-const recipes = await getRecipes();
-const chapters = getCategories(recipes).map((name) => ({
-  name,
-  count: recipes.filter(({ data }) => data.category === name).length,
-}));
-const featured = recipes.find(({ id }) => id === 'apple-crumble-pie');
-const picks = [...new Set([featured, ...recipes])].filter((recipe) => recipe !== undefined).slice(0, 4);
+import RecipeCard from '../components/RecipeCard.astro';
+import Spot from '../components/Spot.astro';
+import { allRecipes, base, recipeUrl, tally } from '../lib/recipes';
+import { book, courseOf } from '../lib/cookbook';
+const recipes = await allRecipes();
+const meals = book.meals.map((m) => [m, recipes.filter((r) => r.data.meal.includes(m)).length] as const).filter(([, n]) => n);
+const cuisines = tally(recipes.flatMap((r) => r.data.cuisine));
+const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURIComponent(value)}`;
 ---
 <Cookbook>
-  <section class="welcome">
-    <div class="wrap welcome-inner">
-      <div class="cover-copy">
-        <p class="category">From the Conway kitchen</p>
-        <h1>The Conway<br /><em>Cookbook</em></h1>
-        <p>A place for the recipes we come back to and the stories that go with them.</p>
-        <a class="button" href={base + 'recipes/'}>Open the recipe box</a>
+  <section class="hero" aria-labelledby="cover-title">
+    <div class="wrap">
+      <div class="label">
+        <div class="hero-copy hero-head">
+          <h1 id="cover-title"><span>{book.cover.small}</span> {book.cover.large}</h1>
+          <p>{book.tagline}</p>
+        </div>
+        <div class="hero-actions">
+          <form id="spin" action={base + 'recipes/'} role="search">
+            <fieldset class="spin">
+              <legend>What are we making?</legend>
+              <div class="find-box">
+              <div class="spin-meals">
+                {['', ...meals.map(([m]) => m)].map((m) => <label><input type="radio" name="meal" value={m} checked={m === ''} /><span>{m || 'Any'}</span></label>)}
+              </div>
+              <div class="find-bar">
+                <label class="vh" for="home-q">Search recipes</label>
+                <input id="home-q" name="q" type="search" placeholder="Search recipes" autocomplete="off" enterkeyhint="search" />
+                <button class="find-go" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 5 5" /></svg></button>
+                <button type="button" class="find-surprise" id="surprise" title="Tap for a surprise, or hold to keep shuffling" hidden>Surprise me</button>
+              </div>
+              </div>
+            </fieldset>
+          </form>
+          <a class="hero-all" href={base + 'recipes/'}>See all {recipes.length} recipes</a>
+        </div>
+        <figure id="dish">
+          <div class="slides">
+            <noscript><img src={base + book.cover.image} alt={book.cover.imageAlt} width="960" height="1200" /></noscript>
+            {recipes.map(({ id, data }) => (
+              <div class="slide" hidden data-id={id} data-title={data.title} data-url={recipeUrl(id)} data-meal={data.meal.join('|')} data-thumb={data.image && `${base}thumbs/${id}.jpg`}>
+                {data.image
+                  ? <img src={base + data.image} alt={data.imageAlt ?? data.title} width="1200" height="800" loading="lazy" />
+                  : <div class="card-art"><Spot category={data.category} /></div>}
+              </div>))}
+          </div>
+          <figcaption><a class="dish-link" href={base + 'recipes/'}><span>Open the recipe box</span><b>Make this</b></a></figcaption>
+        </figure>
+        <p id="dish-said" class="vh" role="status"></p>
       </div>
-      <figure class="cover-art">
-        <img src={base + 'images/cookbook-cover.jpg?v=crumb-top'} width="960" height="1200" alt="Illustrated cinnamon-oat crumble pie, apple blossoms, and gingham on cream paper" fetchpriority="high" />
-      </figure>
     </div>
   </section>
-  <div class="wrap home-sections">
-    <section aria-labelledby="chapters">
-      <h2 id="chapters">Browse by chapter</h2>
-      <ul class="chapter-grid">
-        {chapters.map(({ name, count }) => <li><a href={categoryUrl(name)}><span>{name}</span><small>{count} {count === 1 ? 'recipe' : 'recipes'}</small></a></li>)}
+
+  <div class="wrap">
+    <section class="block" aria-labelledby="meals-title">
+      <h2 id="meals-title">Find it by the meal</h2>
+      <ul class="dividers">
+        {meals.map(([meal, n]) => <li><a href={q('meal', meal)}><span>{meal}</span><small>{n} {n === 1 ? 'card' : 'cards'}</small></a></li>)}
       </ul>
+      <div class="cuisine-row">
+        <h3>Or by the kitchen</h3>
+        <ul class="tapes">{cuisines.map(([c]) => <li><a class="tape" href={q('cuisine', c)}>{c}</a></li>)}</ul>
+      </div>
     </section>
-    <section aria-labelledby="recipe-picks">
-      <div class="section-heading"><h2 id="recipe-picks">From the recipe box</h2><a href={base + 'recipes/'}>View all recipes</a></div>
-      <RecipeCards recipes={picks} nested />
+
+    <section class="block" aria-labelledby="box-title">
+      <div class="block-head">
+        <h2 id="box-title">From the recipe box</h2>
+        <div class="block-actions">
+          <button type="button" class="button quiet" data-pull hidden>Pull a card for me</button>
+          <a class="button" href={base + 'recipes/'}>Open the whole box</a>
+        </div>
+      </div>
+      <ul class="cards">{recipes.slice(0, 6).map((recipe) => <RecipeCard recipe={recipe} />)}</ul>
+    </section>
+
+    <section class="invite" aria-labelledby="invite-title">
+      <div>
+        <h2 id="invite-title">Put a menu together</h2>
+        <p>Pick dishes from the box, choose a paper, and print a menu for the table. Your shopping list writes itself.</p>
+        <a class="button" href={base + 'menu/'}>Build a menu</a>
+      </div>
+      <div class="mini-menu" aria-hidden="true">
+        <b>{book.menu.title}</b>
+        {book.menu.sections.map((sec) => recipes.find((r) => courseOf(r.data.category).menu === sec.id)).filter((r) => r !== undefined).slice(0, 4).map((r) => <span>{r.data.title}</span>)}
+      </div>
     </section>
   </div>
 </Cookbook>
+<script>import '../scripts/randomizer';</script>

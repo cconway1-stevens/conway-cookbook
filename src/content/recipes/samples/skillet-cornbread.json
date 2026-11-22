@@ -1,0 +1,45 @@
+{
+  "title": "Skillet Cornbread",
+  "description": "Crisp-bottomed cornbread from a hot iron pan.",
+  "category": "Breads",
+  "meal": [
+    "Lunch",
+    "Dinner"
+  ],
+  "cuisine": [
+    "American"
+  ],
+  "tags": [
+    "Vegetarian",
+    "Baking"
+  ],
+  "date": "2026-11-22",
+  "time": "35 minutes",
+  "minutes": 35,
+  "servings": "8",
+  "difficulty": "Easy",
+  "ingredients": [
+    "1½ cups yellow cornmeal",
+    "½ cup all-purpose flour",
+    "2 teaspoons baking powder",
+    "½ teaspoon baking soda",
+    "1 teaspoon kosher salt",
+    "1½ cups buttermilk",
+    "2 large eggs",
+    "6 tablespoons unsalted butter, divided"
+  ],
+  "steps": [
+    {
+      "title": "Heat the pan",
+      "text": "Put a 10-inch iron skillet in the oven and heat to 425°F."
+    },
+    {
+      "title": "Make the batter",
+      "text": "Whisk the dry ingredients. Melt 4 tablespoons of the butter and stir it in with the buttermilk and eggs."
+    },
+    {
+      "title": "Bake",
+      "text": "Melt the remaining butter in the hot skillet, pour in the batter, and bake until golden and set, 18 to 20 minutes."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Recipe name",
+  "description": "A short description for the recipe card.",
+  "category": "Mains",
+  "meal": ["Dinner"],
+  "cuisine": ["Italian", "American"],
+  "tags": ["Comfort food", "Make ahead"],
+  "author": "Optional. Whose recipe it is.",
+  "date": "2026-11-22",
+  "time": "45 minutes",
+  "minutes": 45,
+  "servings": "6",
+  "difficulty": "Easy",
+  "story": "Optional. Where this recipe came from or when your family makes it.",
+  "ingredients": [
+    { "group": "For the sauce", "items": ["1 can crushed tomatoes", "2 garlic cloves"] },
+    { "group": "To serve", "items": ["1 pound spaghetti"] }
+  ],
+  "steps": [
+    { "title": "Warm the oven", "text": "Heat the oven to 425°F. Line a baking sheet." },
+    "A step can also be plain text, with no title."
+  ],
+  "notes": {
+    "Make ahead": "Optional. Add as many of these as you like."
+  }
+}

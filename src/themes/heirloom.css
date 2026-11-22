@@ -1,0 +1,179 @@
+/* Heirloom: a home cookbook from about 1907 that became the family scrapbook.
+   Outside, green cloth blocked in gilt, with marbled paper. Inside, album pages:
+   photographs held by paper corners, clippings under tape, captions in a steady hand. */
+@layer base, theme, print;
+@layer theme {
+[data-theme=heirloom] {
+  --page: #eee2c8; --card: #fffaf0; --tint: #f2e6ca; --ink: #2b2118; --soft: #5a4837; --line: #c9b48c;
+  --accent: #7d2430; --accent-dark: #5a1520; --second: #1f3a2d; --third: #355541; --highlight: #ecd197; --blush: #d39c82;
+  --shade: #4a2f1538; --gold: #e3c679; --corner: #33271d;
+  --heading: 'Libre Caslon Text', Caslon, Georgia, serif; --heading-weight: 400;
+  --display: 'Libre Caslon Display', 'Libre Caslon Text', Caslon, Georgia, serif;
+  --body: 'Libre Caslon Text', Caslon, Georgia, serif;
+  --type: 'Libre Caslon Text', Caslon, Georgia, serif;
+  --hand: 'Homemade Apple', 'Snell Roundhand', cursive;
+  --marble: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27720%27 height=%27240%27%3E%3Cfilter color-interpolation-filters=%27sRGB%27 id=%27m%27 x=%270%27 y=%270%27 width=%27100%25%27 height=%27100%25%27%3E%3CfeTurbulence type=%27turbulence%27 baseFrequency=%27.007 .03%27 numOctaves=%273%27 seed=%2711%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%273 0 0 0 0 3 0 0 0 0 3 0 0 0 0 0 0 0 0 1%27/%3E%3CfeComponentTransfer%3E%3CfeFuncR type=%27table%27 tableValues=%27.36 .78 .93 .13 .5 .89 .3 .83%27/%3E%3CfeFuncG type=%27table%27 tableValues=%27.09 .6 .87 .24 .14 .8 .2 .66%27/%3E%3CfeFuncB type=%27table%27 tableValues=%27.13 .32 .74 .19 .18 .62 .2 .38%27/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23m)%27/%3E%3C/svg%3E");
+  --fiber: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27220%27 height=%27220%27%3E%3Cfilter color-interpolation-filters=%27sRGB%27 id=%27f%27 x=%270%27 y=%270%27 width=%27100%25%27 height=%27100%25%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.8%27 numOctaves=%273%27 seed=%274%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .12 0 0 0 .11 0%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23f)%27/%3E%3C/svg%3E");
+  --cloth: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Cfilter color-interpolation-filters=%27sRGB%27 id=%27c%27 x=%270%27 y=%270%27 width=%27100%25%27 height=%27100%25%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.9 .35%27 numOctaves=%272%27 seed=%277%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 1 0 0 0 0 .95 0 0 0 0 .8 0 0 0 .13 -.02%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23c)%27/%3E%3C/svg%3E"), radial-gradient(ellipse at 30% 0, #35604b, transparent 70%), #1d382b;
+  --corners: linear-gradient(135deg, var(--corner) 50%, transparent 51%) top left, linear-gradient(225deg, var(--corner) 50%, transparent 51%) top right, linear-gradient(45deg, var(--corner) 50%, transparent 51%) bottom left, linear-gradient(315deg, var(--corner) 50%, transparent 51%) bottom right;
+  --cover: var(--cloth); --cover-label: transparent; --cover-ink: #e3c679;
+}
+:where([data-theme=heirloom]) {
+  & { font-size: calc(1.0625rem * var(--read-scale, 1)); line-height: 1.7; }
+  body { background: var(--fiber), radial-gradient(ellipse at 50% 30%, #f7eeda, transparent 70%), var(--page); }
+  h1, h2 { line-height: 1.2; }
+
+  /* Boards: cloth head and tail with marbled paper showing at the hinge */
+  .masthead { background: var(--card); border: 0; }
+  .masthead::after { content: ''; display: block; height: 12px; background: var(--marble); border-block: 2px solid #b8964c; }
+  .footer { border: 0; background: var(--cloth); color: #f6ead0; }
+  .footer::before { content: ''; display: block; height: 26px; background: var(--marble); border-block: 2px solid #b8964c; }
+  .footer .wordmark { color: var(--gold); } .footer span { color: #f6ead0; }
+  .wordmark { font: 400 1.6rem/1.1 var(--display); color: var(--second); }
+  #mark :is(img, svg) { border-color: #b8964c; }
+  nav { font-weight: 400; } nav a:hover, nav a[aria-current] { border-color: #b8964c; }
+
+  /* The cover */
+  .hero { background: var(--cloth); color: #f9eed6; padding-block: clamp(1rem, 2.6vw, 2.2rem); }
+  .label { position: relative; background: none; align-items: center; padding: clamp(.6rem, 2vw, 1.6rem); }
+  .label::before { content: ''; position: absolute; inset: 0; border: 2px solid var(--gold); outline: 1px solid var(--gold); outline-offset: -8px; pointer-events: none; }
+  .label::after { content: ''; position: absolute; inset: 12px; pointer-events: none; background: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2764%27 height=%2764%27%3E%3Cg fill=%27none%27 stroke=%27%23d9b866%27 stroke-width=%271.6%27 stroke-linecap=%27round%27%3E%3Cpath d=%27M4 60V18C4 10 10 4 18 4h42%27/%3E%3Cpath d=%27M12 52V24c0-7 5-12 12-12h28%27/%3E%3Cpath d=%27M12 24c9 1 13 6 14 14 8-1 11-6 9-12M24 12c1 9 6 13 14 14-1 8-6 11-12 9%27/%3E%3C/g%3E%3Cg fill=%27%23d9b866%27%3E%3Cpath d=%27M26 26c9-3 15 1 17 9-8 3-15 0-17-9z%27/%3E%3Cpath d=%27M26 26c-3 9 1 15 9 17 3-8 0-15-9-17z%27/%3E%3Ccircle cx=%2720%27 cy=%2720%27 r=%272.6%27/%3E%3Ccircle cx=%2756%27 cy=%2712%27 r=%271.8%27/%3E%3Ccircle cx=%2712%27 cy=%2756%27 r=%271.8%27/%3E%3C/g%3E%3C/svg%3E") top left / 58px no-repeat, url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2764%27 height=%2764%27%3E%3Cg transform=%27matrix(1 0 0 -1 0 64)%27%3E%3Cg fill=%27none%27 stroke=%27%23d9b866%27 stroke-width=%271.6%27 stroke-linecap=%27round%27%3E%3Cpath d=%27M4 60V18C4 10 10 4 18 4h42%27/%3E%3Cpath d=%27M12 52V24c0-7 5-12 12-12h28%27/%3E%3Cpath d=%27M12 24c9 1 13 6 14 14 8-1 11-6 9-12M24 12c1 9 6 13 14 14-1 8-6 11-12 9%27/%3E%3C/g%3E%3Cg fill=%27%23d9b866%27%3E%3Cpath d=%27M26 26c9-3 15 1 17 9-8 3-15 0-17-9z%27/%3E%3Cpath d=%27M26 26c-3 9 1 15 9 17 3-8 0-15-9-17z%27/%3E%3Ccircle cx=%2720%27 cy=%2720%27 r=%272.6%27/%3E%3Ccircle cx=%2756%27 cy=%2712%27 r=%271.8%27/%3E%3Ccircle cx=%2712%27 cy=%2756%27 r=%271.8%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") bottom left / 58px no-repeat; }
+  .label h1 { color: var(--gold); letter-spacing: .005em; line-height: 1; text-shadow: 0 1px 0 #0d1c15, 0 -1px 0 #f5e4ad55; }
+  .label h1 span { color: #f9eed6; font: 400 .5em/1.3 var(--body); font-style: italic; text-shadow: none; }
+  .hero-head { position: relative; padding-top: calc(var(--pad) + .6rem); }
+  .spin { --edge: #b8964c; }
+  .find-box { gap: 1px; border-width: 1px; border-radius: 3px; } .spin-meals { gap: 1px; } .spin-meals span { background: #fffaf0; font-weight: 400; }
+  .spin-meals :checked + span, .spin-meals label:hover span { background: #f0dda8; }
+  .find-bar { gap: 1px; } .find-bar #home-q { border: 0; border-radius: 0; }
+  .find-go { background: var(--accent); } .find-surprise { border-radius: 0; background: linear-gradient(#f3dfa4, #d9b866); color: #2a2110; }
+  .find-surprise:hover { background: #f7e7b8; } .find-surprise.held { background: #2a2110; color: #f3dfa4; }
+  .find-bar :focus-visible { outline-color: var(--second); } .find-go:focus-visible { outline-color: #fff2d6; }
+  .hero-all { color: #f9eed6; font-style: italic; font-weight: 400; }
+  .hero-actions { border-top: 0; }
+  .hero :focus-visible { outline-color: #fff2d6; }
+  /* The dish, mounted on an album leaf */
+  #dish { position: relative; z-index: 1; padding: clamp(.6rem, 1.4vw, 1rem) clamp(.6rem, 1.4vw, 1rem) 0; background: var(--fiber), #f7eedb; box-shadow: 0 1px 0 #fff, 0 12px 26px #07120c99; }
+  .slides { border: 7px solid #fffdf7; box-shadow: 0 1px 4px #4a2f1566; }
+  .slides::after, .print::after { content: ''; position: absolute; inset: -7px; pointer-events: none; background: var(--corners); background-size: 34px 34px; background-repeat: no-repeat; }
+  .slides { overflow: visible; } .slide { overflow: hidden; }
+  .dish-link { padding-inline: .4rem; } .dish-link:hover { background: none; }
+  .dish-link span { font: 400 clamp(1.15rem, 1.7vw, 1.45rem)/1.7 var(--hand); color: #2c3a57; }
+  .dish-link b { border-radius: 3px; background: var(--accent); font: 400 1.05rem/1 var(--body); } .dish-link:hover b { background: var(--accent-dark); }
+  .landed { animation: mounted .7s cubic-bezier(.2, .9, .3, 1.15); } .landed .slide > * { animation: none; }
+  @keyframes mounted { from { transform: translateY(-26px) rotate(-4deg) scale(1.05); box-shadow: 0 34px 50px #07120c; } }
+
+  /* Headings, set like a chapter opening */
+  .block > h2, .block > .block-head, .box > .block-head, .builder > .block-head, .settings > h1 { padding-bottom: .7rem; border-bottom: 4px double #a98c4f; }
+  .button, .add, .card-view, .card-go .add { border-radius: 3px; box-shadow: none; font: 400 1.0625rem/1.4 var(--body); }
+  .button { background: var(--accent); } .button:active { transform: none; box-shadow: none; }
+  .button.quiet { border: 1px solid #a98c4f; background: #fffaf0; box-shadow: none; }
+  .recipe-actions .button, .recipe-actions .add { border-width: 1px; }
+  .recipe-actions [data-cook] { font-size: 1.3rem; }
+  .add, .card-go .add { border: 1px solid #8a7650; color: var(--second); }
+  .add[aria-pressed=true], .card-go .add[aria-pressed=true], .recipe-actions .add[aria-pressed=true] { background: var(--second); border-color: var(--second); color: #fff5e2; }
+  .recipe-actions .add { color: var(--ink); }
+  input:not([type=checkbox], [type=radio]), select { border: 1px solid #8a7650; border-radius: 3px; background-color: #fffdf6; }
+
+  /* Chapters: index dividers with a handwritten tab */
+  .dividers a { position: relative; border: 1px solid var(--line); border-top: 0; background: var(--fiber), #fff8e8; padding: 1.3rem 1.2rem 1.1rem; box-shadow: 0 3px 8px var(--shade); transition: transform .2s; }
+  .dividers a::before { content: ''; position: absolute; inset: 0 0 auto; height: 10px; background: var(--marble); }
+  .dividers li:nth-child(4n+2) a::before { background-position: 190px 60px; } .dividers li:nth-child(4n+3) a::before { background-position: 380px 120px; } .dividers li:nth-child(4n) a::before { background-position: 90px 180px; }
+  .dividers a:hover { transform: translateY(-4px); }
+  .dividers span { font: 400 1.65rem/1.3 var(--heading); } .dividers small { font: italic 400 1.05rem/1.4 var(--body); color: var(--soft); }
+  .tape { border-radius: 0; background: #fff8e8; color: var(--second); font: italic 400 1.02rem/1.5 var(--body); box-shadow: inset 0 0 0 1px var(--line); }
+  .tape-check :checked + .tape { background: var(--second); color: #fff5e2; }
+  .chip span { border: 1px solid #a98c4f; border-radius: 0; background: #fff8e8; color: var(--second); }
+  .chip :checked + span { background: var(--second); border-color: var(--second); color: #fff5e2; }
+  .tabs { border: 0; border-bottom: 1px solid #a98c4f; }
+  .tabs span { background: #f2e6ca; border: 1px solid var(--line); border-bottom: 0; border-radius: 4px 4px 0 0; font-weight: 400; }
+  .tabs :checked + span { background: var(--second); color: #fff5e2; box-shadow: none; }
+  .tabs label:hover :not(:checked) + span { background: var(--highlight); }
+
+  /* Album leaves */
+  .card { background: none; }
+  .card-face { position: relative; padding: 14px 18px 18px; border-radius: 2px; background: var(--fiber), #fffaf0; box-shadow: 0 1px 2px #4a2f1555, 0 8px 18px var(--shade); }
+  .card-photo { width: 100%; margin: 0 0 .6rem; border-radius: 0; border: 6px solid #fffdf7; box-shadow: 0 1px 4px #4a2f1577; }
+  .card-face:has(img.card-photo)::before { content: ''; position: absolute; z-index: 1; top: 14px; left: 18px; right: 18px; aspect-ratio: 3 / 2; pointer-events: none; background: var(--corners); background-size: 26px 26px; background-repeat: no-repeat; }
+  .card-face:has(.card-art)::before { content: ''; position: absolute; z-index: 1; top: -11px; left: 50%; width: 108px; height: 27px; translate: -50%; rotate: -2deg; background: #e9d9a6cc; box-shadow: 0 1px 2px #4a2f1540; clip-path: polygon(0 0, 2% 18%, 0 36%, 2% 54%, 0 72%, 2% 100%, 98% 100%, 100% 80%, 98% 60%, 100% 40%, 98% 20%, 100% 0); }
+  .card-art { border: 0; box-shadow: none; background: linear-gradient(#b5505a, #b5505a) 0 18% / 100% 1px no-repeat, repeating-linear-gradient(#fffdf4 0 25px, #cfdbe0 25px 26px); }
+  .card-art .spot, .slide .card-art .spot { background: none; } .spot-ink { stroke: #3a3226; stroke-width: 1.5; }
+  .card > .card-tab { position: absolute; z-index: 2; left: 12px; top: 26px; margin: 0; padding: .15rem .8rem; background: #fffdf4; box-shadow: 0 1px 3px #4a2f1566; font: italic 400 1rem/1.5 var(--body); color: var(--accent); rotate: -2deg; }
+  .card-top { min-height: 0; border: 0; padding: 0; }
+  .card-title { font: 400 1.45rem/1.3 var(--heading); }
+  .card-desc { font: 400 1.05rem/1.6 var(--body); } .card-meta { font: italic 400 1.02rem/1.6 var(--body); }
+  @media (min-width: 721px) {
+    .card:nth-child(3n+1):has(img.card-photo) { rotate: -.6deg; } .card:nth-child(3n):has(img.card-photo) { rotate: .7deg; } .card:is(:hover, :focus-within):has(img.card-photo) { rotate: 0deg; }
+  }
+  .work-tabs { border-bottom: 1px solid #a98c4f; } .work-tabs button { border-radius: 0; background: #f2e6ca; font: 400 1.0625rem/1.4 var(--body); } .work-tabs [aria-selected=true] { background: var(--second); color: #fff5e2; box-shadow: none; }
+  .filters, .work, .panel { border: 1px solid var(--line); border-radius: 2px; background: var(--fiber), #fffaf0; box-shadow: 0 1px 2px #4a2f1555, 0 8px 18px var(--shade); }
+
+  /* A page of the book */
+  .sheet { position: relative; padding: clamp(1.3rem, 4vw, 3.2rem); background: var(--fiber), #fffaf0; box-shadow: 0 1px 2px #4a2f1555, 6px 0 0 -2px #f3e7cb, 7px 0 0 -2px #cdb78d, 11px 0 0 -4px #f3e7cb, 12px 0 0 -4px #cdb78d, 0 14px 30px var(--shade); }
+  .sheet::after { content: ''; position: absolute; right: 4%; bottom: 3%; width: 168px; aspect-ratio: 1; border-radius: 50%; pointer-events: none; background: radial-gradient(closest-side, transparent 80%, #8a5a2233 83%, #8a5a2212 88%, #8a5a222b 92%, transparent 95%); }
+  .sheet > :not(.card-tab) { background: none; padding-inline: 0; }
+  .sheet > .card-tab { margin: 0; padding: 0; background: none; font: italic 400 1.2rem/1.4 var(--body); color: var(--accent); }
+  .recipe-heading { padding-top: .6rem; border-radius: 0; border-bottom: 4px double #a98c4f; }
+  .recipe-heading .print { position: relative; padding: 0; border: 9px solid #fffdf7; background: none; rotate: 1.4deg; box-shadow: 0 1px 4px #4a2f1577, 0 10px 20px var(--shade); }
+  .print::after { inset: -9px; background-size: 42px 42px; }
+  .recipe-heading > .spot { padding: 1.4rem; background: #fffdf4; box-shadow: 0 1px 4px #4a2f1577; rotate: 2deg; }
+  .description { font-style: italic; }
+  .credit { font: 400 1.15rem/1.9 var(--hand); color: #2c3a57; } .credit a { color: inherit; }
+  .sample { font-style: italic; }
+  .facts dt { font-style: italic; } .facts dd { font: 400 1.15rem/1.4 var(--body); }
+  .sec h3 { font: italic 400 1.2rem/1.4 var(--body); color: var(--accent); }
+  .sec-ingredients li { font: 400 1.06rem/1.5 var(--body); border-bottom: 1px dotted #a98c4f; }
+  .sec-directions li::before { font: 400 2.5rem/1 var(--display); color: var(--accent); }
+  .sec-directions li strong { font-weight: 700; }
+
+  .invite { position: relative; border-radius: 0; background: var(--cloth); outline: 2px solid var(--gold); outline-offset: -12px; padding: clamp(2rem, 5vw, 3.6rem); color: #f9eed6; }
+  .invite h2 { color: var(--gold); } .invite .button { background: linear-gradient(#f3dfa4, #d9b866); border-color: #d9b866; color: #2a2110; }
+  .mini-menu { rotate: 2deg; background: var(--fiber), #fffaf0; outline: 4px double #a98c4f; outline-offset: -14px; } .mini-menu b { font: 400 1.9rem/1.2 var(--display); color: var(--accent); } .mini-menu span { font-style: italic; }
+
+  /* Menu builder */
+  .menu-card { box-shadow: 0 1px 2px #4a2f1555, 0 14px 30px var(--shade); }
+  .menu-card h2 { font-family: var(--display); } .menu-card h3 { font: italic 400 1.4rem/1.4 var(--body); }
+  .dish-name { font: 400 1.3rem/1.4 var(--body); } .dish p { font-style: italic; } .dish-tools button { border-color: var(--line); }
+  .pick-group h3 { font: 400 1.35rem/1.4 var(--heading); border-bottom: 4px double #a98c4f; }
+  .pick-group b { font-weight: 400; font-size: 1.1rem; } .pick-group small { font: italic 400 1rem/1.5 var(--body); }
+  .shopping li label { font: 400 1.05rem/1.5 var(--body); } .shopping li input:checked + span { color: var(--soft); }
+  .notice { border-radius: 0; background: var(--highlight); }
+
+  /* Settings and voice */
+  .theme-card > span, .voice-row, .seg { border-radius: 2px; }
+  .tp-top { outline: 1px solid #b8964c; outline-offset: -6px; } .tp-cards i { font-style: italic; }
+  .seg { border: 1px solid #8a7650; } .seg label + label span { border-left: 1px solid #8a7650; }
+  .seg :checked + span { background: var(--second); color: #fff5e2; }
+  .voice-row { border: 1px solid var(--line); background: #fffdf6; } .voice-row button { border-left: 1px solid var(--line); }
+  .voice-row:has(:checked) { border-color: var(--second); background: #f3e2b6; }
+
+  /* Cook mode: the book propped open on the counter */
+  #cook { background: var(--cloth); }
+  .cook-bar p { font: 400 1.5rem/1.3 var(--display); color: var(--gold); }
+  .cook-card { border-radius: 1px; background: var(--fiber), #fffaf0; box-shadow: 0 0 0 1px #b8964c, 5px 5px 0 -1px #f3e7cb, 6px 6px 0 -1px #a98c4f, 0 14px 30px #07120c99; }
+  .cook-card h2 { border-bottom: 4px double #a98c4f; }
+  .cook-count { font: italic 400 1.15rem/1.4 var(--body); color: var(--accent); }
+  .cook-track button { border: 1px solid #b8964c; border-radius: 4px 4px 0 0; background: #142a20; color: #f6ead0; font-weight: 400; }
+  .cook-track .done { background: #4d6d5a; color: white; } .cook-track [aria-current] { background: var(--gold); color: #2a2110; }
+  .cook-lines .now label { background: #f3e2b6; }
+  .cook-nav button { border: 1px solid #b8964c; border-radius: 3px; background: #fffaf0; font-weight: 400; }
+  #cook-next { background: linear-gradient(#f3dfa4, #d9b866); border-color: #d9b866; color: #2a2110; font-weight: 700; } #cook-next:hover { background: #f7e7b8; }
+  #cook :focus-visible { outline-color: #fff2d6; } .cook-card :focus-visible, .cook-voice :focus-visible { outline-color: var(--second) !important; }
+  .cook-voice-head { border-bottom: 4px double #a98c4f; }
+  #toast { border-radius: 2px; }
+
+  @media (max-width: 900px) { .label h1 { font-size: min(6.9vw, 4.2rem); } .hero-actions { padding: .6rem var(--pad) 1rem; position: relative; z-index: 1; } }
+  @media (max-width: 600px) {
+    .label { padding: .5rem; } .label h1 { font-size: 17vw; } .label h1 span { padding-left: .9em; }
+    .hero-head { padding: 1.3rem 1.2rem .8rem; } #dish { margin-inline: .7rem; } .label::after { background-size: 38px; } .hero-head { padding-left: 1.5rem; } .dish-link span { font-size: 1.1rem; }
+    .slides::after { background-size: 26px 26px; }
+    .sheet { box-shadow: 0 1px 2px #4a2f1555, 0 10px 22px var(--shade); } .sheet::after { width: 120px; }
+  }
+}
+/* Turning a page, where the browser can */
+@media (prefers-reduced-motion: no-preference) {
+  [data-theme=heirloom]::view-transition-old(root) { transform-origin: left; animation: leaf-out .42s ease-in both; }
+  [data-theme=heirloom]::view-transition-new(root) { animation: leaf-in .42s ease-out both; }
+  @keyframes leaf-out { to { transform: perspective(1800px) rotateY(-24deg); opacity: 0; } }
+  @keyframes leaf-in { from { opacity: 0; } }
+}
+}

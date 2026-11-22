@@ -1,0 +1,202 @@
+---
+import { base } from '../lib/recipes';
+import { book } from '../lib/cookbook';
+
+const { current, thumbs }: { current: string; thumbs: string[] } = Astro.props;
+const groups = [
+  {
+    name: 'Recipes',
+    active: ['recipes', 'add-recipe'].includes(current),
+    links: [
+      { label: 'Recipe Box', path: 'recipes/', key: 'recipes' },
+      { label: 'Add Recipe', path: 'recipes/add/', key: 'add-recipe' },
+    ],
+  },
+  {
+    name: 'Menu',
+    active: ['menu', 'menus'].includes(current),
+    links: [
+      { label: 'Menu Builder', path: 'menu/', key: 'menu' },
+      { label: 'Menu Library', path: 'menus/', key: 'menus' },
+    ],
+  },
+];
+---
+<header class="masthead" data-site-header>
+  <div class="wrap site-header-inner">
+    <a href={base} class="wordmark">
+      <span id="mark" aria-hidden="true" data-thumbs={JSON.stringify(thumbs)}>{thumbs[0] && <img src={thumbs[0]} alt="" width="40" height="40" />}</span>{book.title}
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <ul class="site-nav-items">
+        {groups.map((group) => (
+          <li>
+            <details class="nav-group" data-nav-group>
+              <summary class:list={['nav-top', { 'section-current': group.active }]}>
+                {group.name}
+                {group.name === 'Menu' && <span id="menu-count" hidden>0</span>}
+              </summary>
+              <ul class="nav-dropdown">
+                {group.links.map(({ label, path, key }) => (
+                  <li><a href={base + path} id={key === 'menu' ? 'menu-link' : undefined} aria-current={current === key ? 'page' : undefined}>{label}</a></li>
+                ))}
+              </ul>
+            </details>
+          </li>
+        ))}
+        <li><a class="nav-top" href={base + 'settings/'} aria-current={current === 'settings' ? 'page' : undefined}>Settings</a></li>
+      </ul>
+    </nav>
+    <form class="header-search" action={base + 'recipes/'} role="search" aria-label="Recipe search">
+      <label class="vh" for="nav-query">Search recipes</label>
+      <input id="nav-query" type="search" name="q" placeholder="Search recipes" enterkeyhint="search" />
+      <button type="submit" aria-label="Search"><span aria-hidden="true"></span></button>
+    </form>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector('[data-site-header]');
+  const groups = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-nav-group]'));
+
+  for (const group of groups) {
+    group.addEventListener('toggle', () => {
+      if (group.open) for (const other of groups) if (other !== group) other.open = false;
+    });
+    group.addEventListener('focusout', (event) => {
+      if (event.relatedTarget instanceof Node && !group.contains(event.relatedTarget)) group.open = false;
+    });
+    group.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || !group.open) return;
+      event.preventDefault();
+      group.open = false;
+      group.querySelector('summary')?.focus();
+    });
+  }
+
+  document.addEventListener('click', (event) => {
+    if (event.target instanceof Node && !header?.contains(event.target)) {
+      for (const group of groups) group.open = false;
+    }
+  });
+</script>
+
+<style>
+  .masthead { position: relative; z-index: 5; }
+  .site-header-inner {
+    display: grid;
+    grid-template-columns: auto auto minmax(9rem, 15rem);
+    justify-content: space-between;
+    align-items: center;
+    gap: .35rem clamp(.5rem, 2vw, 1.6rem);
+    padding-block: .5rem;
+  }
+  .site-nav { display: block; font: inherit; }
+  .site-nav-items { display: flex; align-items: center; gap: clamp(.05rem, .65vw, .6rem); }
+  .nav-group { position: relative; }
+  .nav-top {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+    min-height: 44px;
+    padding: .3rem clamp(.25rem, .8vw, .8rem);
+    color: var(--ink);
+    font: 600 1rem/1.15 var(--body);
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+  }
+  summary.nav-top { cursor: pointer; list-style: none; }
+  summary.nav-top::-webkit-details-marker { display: none; }
+  summary.nav-top::after {
+    content: '';
+    width: .36em;
+    height: .36em;
+    border-inline-end: 2px solid currentColor;
+    border-block-end: 2px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+  }
+  .nav-group[open] summary.nav-top::after { transform: rotate(225deg) translateY(-2px); }
+  .nav-top:hover, .nav-top[aria-current], .nav-top.section-current, .nav-group[open] .nav-top {
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+  }
+  .nav-dropdown {
+    position: absolute;
+    inset: calc(100% + .3rem) auto auto 0;
+    min-width: max(100%, 9.5rem);
+    padding: .25rem;
+    background: var(--fiber, none), var(--card);
+    border: 1px solid var(--line);
+    border-radius: .35rem;
+    box-shadow: 0 8px 20px var(--shade);
+  }
+  .nav-dropdown a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: .35rem .65rem;
+    border: 0;
+    border-radius: .2rem;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+  .nav-dropdown a:hover, .nav-dropdown [aria-current] { background: var(--tint); color: var(--accent); }
+  .header-search {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    align-items: stretch;
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--tint);
+  }
+  .header-search input[type=search] {
+    min-width: 0;
+    min-height: 44px;
+    padding: .3rem .2rem .3rem .8rem;
+    border: 0;
+    border-radius: 999px 0 0 999px;
+    background: transparent;
+    font: 1rem/1.2 var(--body);
+  }
+  .header-search input[type=search]::placeholder { color: var(--soft); }
+  .header-search button {
+    display: grid;
+    place-items: center;
+    padding: 0;
+    color: var(--second);
+    border: 0;
+    border-radius: 0 999px 999px 0;
+    background: transparent;
+  }
+  .header-search button:hover { color: var(--accent); background: var(--card); }
+  .header-search button span {
+    position: relative;
+    width: .85rem;
+    height: .85rem;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    transform: translate(-2px, -2px);
+  }
+  .header-search button span::after {
+    content: '';
+    position: absolute;
+    width: .42rem;
+    height: 2px;
+    background: currentColor;
+    top: .65rem;
+    left: .56rem;
+    transform-origin: left;
+    transform: rotate(45deg);
+  }
+  @media (max-width: 760px) {
+    .site-header-inner { grid-template-columns: auto minmax(0, 1fr); gap: .2rem .45rem; }
+    .site-header-inner > .wordmark { grid-column: 1 / -1; }
+    .header-search { justify-self: end; width: min(100%, 15rem); }
+  }
+  @media (max-width: 355px) {
+    .site-header-inner { grid-template-columns: 1fr; }
+    .header-search { justify-self: stretch; width: 100%; }
+  }
+</style>

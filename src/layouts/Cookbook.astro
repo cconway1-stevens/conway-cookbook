@@ -16,6 +16,7 @@ import '../style.css';
 import '../themes';
 import '../motion.css';
 import { allRecipes, base, json } from '../lib/recipes';
+import SiteHeader from '../components/SiteHeader.astro';
 import { book } from '../lib/cookbook';
 const thumbs = (await allRecipes()).filter((r) => r.data.image).map((r) => `${base}thumbs/${r.id}.jpg`);
 const { title, description = book.description, current = '' } = Astro.props;
@@ -40,27 +41,7 @@ const bars = Object.fromEntries(book.themes.map((t) => [t.id, t.bar]));
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <header class="masthead">
-    <div class="wrap header-inner">
-      <a href={base} class="wordmark"><span id="mark" aria-hidden="true" data-thumbs={JSON.stringify(thumbs)}>{thumbs[0] && <img src={thumbs[0]} alt="" width="40" height="40" />}</span>{book.title}</a>
-      <nav aria-label="Main navigation">
-        <a href={base + 'recipes/'} aria-current={current === 'recipes' ? 'page' : undefined}>Recipe box</a>
-        <a href={base + 'menus/'} aria-current={current === 'menus' ? 'page' : undefined}>Menu library</a>
-        <a href={base + 'menu/'} id="menu-link" aria-current={current === 'menu' ? 'page' : undefined}>Menu builder <span id="menu-count" hidden>0</span></a>
-        <a href={base + 'settings/'} aria-current={current === 'settings' ? 'page' : undefined}>Settings</a>
-      </nav>
-      <form class="nav-search" action={base + 'recipes/'} role="search" aria-label="Recipe search">
-        <label class="vh" for="nav-query">Search recipes</label>
-        <input id="nav-query" type="search" name="q" placeholder="Search recipes" enterkeyhint="search" />
-        <label class="vh" for="nav-meal">Meal</label>
-        <select id="nav-meal" name="meal">
-          <option value="">Any meal</option>
-          {book.meals.map((meal) => <option value={meal}>{meal}</option>)}
-        </select>
-        <button type="submit">Search</button>
-      </form>
-    </div>
-  </header>
+  <SiteHeader current={current} thumbs={thumbs} />
   <main id="main"><slot /></main>
   <footer class="footer">
     <div class="wrap footer-inner">

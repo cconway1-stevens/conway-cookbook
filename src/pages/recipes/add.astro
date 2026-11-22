@@ -1,0 +1,33 @@
+---
+import Cookbook from '../../layouts/Cookbook.astro';
+import { book } from '../../lib/cookbook';
+import { base } from '../../lib/recipes';
+
+const repository = book.repo && 'https://github.com/' + book.repo;
+---
+<Cookbook title="Add Recipe" current="add-recipe">
+  <section class="wrap settings">
+    <h1>Add a recipe</h1>
+    <p>Cookbook contributors can add a recipe through GitHub. Merge the reviewed change into main to publish it in the Recipe Box.</p>
+    {repository && <>
+      <section class="panel" aria-labelledby="write-recipe">
+        <h2 id="write-recipe">Write a recipe</h2>
+        <p>Copy the recipe template, fill in your ingredients and directions, and save it as a new JSON file in the recipes folder.</p>
+        <div class="block-actions recipe-add-actions">
+          <a class="button" href={repository + '/blob/main/recipe-template.json'}>Open recipe template</a>
+          <a class="button quiet" href={repository + '/new/main/src/content/recipes'}>Create recipe file</a>
+        </div>
+      </section>
+      <section class="panel" aria-labelledby="import-recipe">
+        <h2 id="import-recipe">Import from a recipe URL</h2>
+        <p>The GitHub workflow imports recipes you have permission to share and opens a draft branch for review.</p>
+        <div class="block-actions recipe-add-actions">
+          <a class="button" href={repository + '/actions/workflows/import-recipe.yml'}>Open recipe importer</a>
+          <a href={repository + '#add-a-recipe'}>Read the contributor guide</a>
+        </div>
+      </section>
+    </>}
+    <p class="settings-note"><a href={base + 'recipes/'}>Back to the Recipe Box</a></p>
+  </section>
+</Cookbook>
+<style>.recipe-add-actions { margin-top: 1rem; }</style>

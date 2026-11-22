@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d5a15289ee557b5b7291a8e387fca0356edf90b52af572eb1b68bb54fde528f8",
+  "rows": [
+    {
+      "name": "Calories",
+      "amount": 5946.1,
+      "unit": "kcal"
+    },
+    {
+      "name": "Protein",
+      "amount": 66.32,
+      "unit": "g"
+    },
+    {
+      "name": "Carbohydrates",
+      "amount": 708.64,
+      "unit": "g"
+    },
+    {
+      "name": "Fat",
+      "amount": 320.29,
+      "unit": "g"
+    },
+    {
+      "name": "Fiber",
+      "amount": 30.89,
+      "unit": "g"
+    },
+    {
+      "name": "Sugar",
+      "amount": 433.9,
+      "unit": "g"
+    },
+    {
+      "name": "Sodium",
+      "amount": 2599.29,
+      "unit": "mg"
+    }
+  ],
+  "note": "Recovered prior whole-batch analysis. The same butter quantity is divided for browning; one tablespoon of water restores lost moisture."
+}

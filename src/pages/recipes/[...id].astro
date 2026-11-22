@@ -87,6 +87,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
       {skills.length > 0 && <details id="skills" class="technique-help"><summary>Technique help</summary>
         <ul>{skills.map(skill => <li><a href={base + 'academy/#' + skill.id}>{skill.title}</a></li>)}</ul>
       </details>}
+      {!groups && <UnitChoice />}
       <div class="recipe-body">
         {Content && <Content />}
         {groups && <>

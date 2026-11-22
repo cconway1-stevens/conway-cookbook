@@ -25,7 +25,7 @@
   },
   "ingredients": [
     {
-      "group": "For the crumble",
+      "group": "Crumble",
       "items": [
         "1 cup all-purpose flour",
         "1 cup old-fashioned rolled oats (not quick cooking)",
@@ -35,26 +35,33 @@
         "½ teaspoon kosher salt",
         "10 tablespoons unsalted butter, chilled and cut into ½-inch pieces",
         "1 cup walnuts, shelled and chopped"
+      ],
+      "aka": [
+        "crumble"
       ]
     },
     {
-      "group": "For the fruit (3 parts Granny Smith, 2 parts red apple, 1 part pear)",
+      "group": "Crust",
+      "items": [
+        "1 frozen pie dough, thawed to room temperature (enough for one crust)",
+        "Cooking spray, for the pie pan"
+      ]
+    },
+    {
+      "group": "Fruit filling",
+      "aka": [
+        "fruit",
+        "filling"
+      ],
       "items": [
         "6 small Granny Smith apples (about 2 pounds)",
         "3 large red apples, such as Honeycrisp or Fuji (about 1½ pounds)",
-        "2 firm pears (about ¾ pound)"
-      ]
-    },
-    {
-      "group": "For the pie",
-      "items": [
-        "1 frozen pie dough, thawed to room temperature (enough for one crust)",
-        "Cooking spray, for the pie pan",
+        "2 firm pears (about ¾ pound)",
+        "2 teaspoons apple cider vinegar or lemon juice, or a mix of both (just enough to coat the fruit)",
         "½ cup packed light brown sugar",
         "3 tablespoons cornstarch",
         "2 teaspoons ground cinnamon",
         "¼ teaspoon ground nutmeg",
-        "2 teaspoons apple cider vinegar or lemon juice, or a mix of both (just enough to coat the fruit)",
         "½ teaspoon kosher salt",
         "2 tablespoons unsalted butter, chilled and cut into ½-inch pieces"
       ]
@@ -62,44 +69,42 @@
   ],
   "steps": [
     {
-      "title": "Make the crumble",
-      "text": "Mix the flour, oats, brown sugar, cinnamon, nutmeg, and salt. Rub in the butter with your fingertips until no dry flour remains and the mixture clumps when squeezed. Stir in the walnuts. Cover and refrigerate.",
-      "why": "Cold butter is what keeps a crumble crunchy. If it melts into the flour, the topping bakes up flat and greasy, so chill it again after your fingers have warmed it."
+      "title": "Make and chill the crumble",
+      "text": "Mix the flour, oats, brown sugar, cinnamon, nutmeg, and salt. Rub in the butter until no dry flour remains and the mixture holds together when squeezed. Stir in the walnuts, cover, and refrigerate.",
+      "why": "Chilling firms up the butter again after mixing, helping the topping stay crisp and crumbly.",
+      "group": "Crumble"
     },
     {
-      "title": "Heat the oven",
-      "text": "Place a rack in the lower third and preheat to 425°F. Line a rimmed baking sheet with foil or a silicone mat.",
-      "why": "A rack in the lower third puts the bottom crust closest to the heat, so it bakes through instead of staying pale. The sheet catches any juices that bubble over."
+      "title": "Set up the oven",
+      "text": "Set a rack in the lower third and preheat to 425°F. Line a rimmed baking sheet with foil or a silicone mat.",
+      "why": "The lower rack helps the bottom crust brown. The lined sheet catches any juices that bubble over."
     },
     {
-      "title": "Prepare the crust",
-      "text": "Let the frozen pie dough thaw on the counter until it is soft and at room temperature. Lightly spray the pie pan with cooking spray, then roll the dough directly onto the pan.",
-      "why": "Dough at room temperature bends without cracking, and rolling it straight onto the pan means less handling, which keeps the crust tender. The spray keeps it from sticking, so slices lift out cleanly."
+      "title": "Shape and freeze the crust",
+      "text": "Thaw the pie dough until soft and at room temperature. Lightly coat the pie dish with cooking spray and unroll the dough into it. Press it into the base and sides. Trim to a ½-inch overhang, fold it under, and crimp. Freeze uncovered while you prepare the filling.",
+      "why": "Thawed dough bends without cracking. Freezing the shaped crust firms it back up so the crimped edge holds its shape as it bakes."
     },
     {
-      "title": "Line the pie dish",
-      "text": "Press the dough into the base and sides of the dish. Trim to a ½-inch overhang, fold it under, and crimp the edge. Freeze the crust uncovered while you mix the filling.",
-      "why": "Freezing firms up the dough again, so the edge holds its shape instead of slumping in the oven."
+      "title": "Slice and season the fruit",
+      "text": "Peel and core the apples and pears. Cut about three-quarters into very thin slices and the rest into ½-inch wedges. Toss with just enough cider vinegar or lemon juice to coat lightly. Add the brown sugar, cornstarch, cinnamon, nutmeg, and salt. Toss until evenly coated.",
+      "why": "The thin slices soften into the filling and the wedges give it some texture. The acid slows browning, and cornstarch thickens the juices as the pie bakes.",
+      "group": "Fruit filling"
     },
     {
-      "title": "Cut the fruit",
-      "text": "Peel and core the apples and pears. Cut about three-quarters of them into very thin slices and the rest into ½-inch wedges.",
-      "why": "Mix your cuts the way you marble chocolate into cookies. The thin slices soften into the filling and the thicker wedges stay tender, so every bite feels a little different."
+      "title": "Fill the crust and add the crumble",
+      "text": "Pack about a quarter of the fruit across the bottom. Mound the rest and its juices in the center and press gently. Dot with the butter. Scatter the chilled crumble over the top, breaking up large clumps.",
+      "why": "Packing the fruit cuts down on gaps as it softens. Smaller crumble clumps crisp more evenly.",
+      "group": "Fruit filling"
     },
     {
-      "title": "Mix the filling",
-      "text": "Toss the fruit with the vinegar or lemon juice, just enough to lightly coat it. Add the brown sugar, cornstarch, cinnamon, nutmeg, and salt and toss until evenly coated.",
-      "why": "The acid keeps the cut fruit from browning, but keep it light. Wet fruit melts the sugar into a runny syrup, and a runny filling makes a soggy pie. The cornstarch thickens whatever juice the fruit gives off."
+      "title": "Bake the pie",
+      "text": "Set the pie dish on the lined sheet. Bake at 425°F for 15 minutes. Lower the oven to 350°F and bake 60–75 minutes more, until the crust is golden and the filling bubbles. If the topping darkens early, loosely tent the center with foil.",
+      "why": "The initial high heat sets the crust. The lower temperature gives the fruit time to cook through and helps keep the crumble from burning."
     },
     {
-      "title": "Fill the shell",
-      "text": "Fit about a quarter of the fruit snugly across the bottom. Mound the rest in the center with any juices from the bowl, pressing gently to compact it. Dot with the butter, then scatter the chilled crumble over the top, breaking up large clumps.",
-      "why": "Packing the fruit snugly and mounding it high leaves fewer air pockets, so the pie doesn't sink as the fruit softens. Breaking up big clumps lets the topping bake evenly crisp."
-    },
-    {
-      "title": "Bake and cool",
-      "text": "Set the pie dish on the lined sheet and bake for 15 minutes. Lower the oven to 350°F and bake another 60–75 minutes, until the crust is golden and the filling bubbles. If the topping darkens early, loosely tent the center with foil. Cool completely before slicing.",
-      "why": "The first 15 minutes at high heat set the crust. Lowering to 350°F cooks the fruit through without burning the crumble. Cooling completely lets the thickened juices set. Slice too soon and the filling runs out."
+      "title": "Cool the pie",
+      "text": "Let the pie cool completely before cutting it.",
+      "why": "The filling sets as it cools, so it holds together when sliced."
     }
   ],
   "notes": {

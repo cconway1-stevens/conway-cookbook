@@ -45,6 +45,13 @@ nav a:hover, nav a[aria-current] { border-color: var(--accent); }
 #menu-count { display: inline-grid; place-items: center; min-width: 1.5em; padding-inline: .35em; border-radius: 1em; background: var(--accent); color: white; font-size: .82rem; }
 .footer { background: var(--card); border-top: 1px solid var(--line); }
 .footer span { color: var(--soft); }
+.footer-inner { gap: .7rem 1.5rem; overflow-wrap: anywhere; }
+.footer-brand { display: grid; justify-items: start; gap: .2rem; min-width: 0; line-height: 1.3; }
+.footer-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .75rem; min-width: 0; font: 400 .95rem/1.35 'Courier Prime', 'Courier New', monospace; }
+.footer-source { display: inline-flex; align-items: center; gap: .35em; min-height: 1.75rem; padding: .15em .5em; border: 1px solid currentColor; border-radius: 3px; color: var(--gold, var(--accent-dark)); font-weight: 700; text-decoration: none; }
+.footer-source:hover { text-decoration: underline; }
+.footer-source svg { width: 1em; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.footer a:focus-visible { outline-color: currentColor; }
 
 .button, .linkish, .add { font-weight: 600; }
 .button { display: inline-block; padding: .75rem 1.35rem; font-size: 1.125rem; background: var(--accent); color: white; border: 2px solid var(--accent); border-radius: 4px; text-decoration: none; line-height: 1.3; box-shadow: 0 3px 0 var(--accent-dark); }
@@ -315,7 +322,7 @@ a.tape:hover { filter: brightness(1.15); }
 :is(.help-button, .help-inline) path { fill: none; }
 .help-inline { display: grid; place-items: center; padding: .45rem .7rem; }
 [aria-busy=true][data-reading-help] { opacity: .6; }
-.footer-inner { padding-right: 4.5rem; }
+.footer-inner { padding-inline-end: max(4.5rem, calc(3.5rem + env(safe-area-inset-right, 0px))); }
 
 /* Voice panel: in cook mode and on the settings page */
 .voice-panel { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.6rem; }

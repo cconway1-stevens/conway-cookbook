@@ -51,7 +51,23 @@ const bars = Object.fromEntries(book.themes.map((t) => [t.id, t.bar]));
     </div>
   </header>
   <main id="main"><slot /></main>
-  <footer class="footer"><div class="wrap footer-inner"><a href={base} class="wordmark">{book.title}</a><span>{book.footer}</span></div></footer>
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <a href={base} class="wordmark">{book.title}</a>
+        <span>{book.footer}</span>
+      </div>
+      <div class="footer-meta">
+        <span>Made by Cameron Conway</span>
+        {book.repo && (
+          <a class="footer-source" href={`https://github.com/${book.repo}`}>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m8 6-6 6 6 6m8-12 6 6-6 6" /></svg>
+            GitHub
+          </a>
+        )}
+      </div>
+    </div>
+  </footer>
   <script is:inline type="application/json" id="menu-book" set:html={json(book.menu)} />
   <script is:inline type="application/json" id="theme-bars" set:html={json(bars)} />
   <button type="button" class="help-button acc-container" data-reading-help aria-label="Reading and accessibility help" title="Make this easier to read" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.2" r="2.2" /><path d="M4 8.2c3 1 5 1.3 8 1.3s5-.3 8-1.3M12 9.5v5M12 14.5l-3.2 7M12 14.5l3.2 7M9 9.4v5.1h6V9.4" /></svg></button>

@@ -1,0 +1,29 @@
+{
+  "title": "Vanilla Rice Krispies Treats",
+  "description": "Chewy marshmallow squares with real vanilla and a pinch of salt.",
+  "category": "Desserts",
+  "time": "45 minutes",
+  "minutes": 45,
+  "servings": "16",
+  "difficulty": "Easy",
+  "ingredients": [
+    "4 tablespoons unsalted butter, plus more for the pan",
+    "10 ounces mini marshmallows",
+    "2 teaspoons vanilla extract",
+    "¼ teaspoon fine salt",
+    "6 cups Rice Krispies cereal"
+  ],
+  "steps": [
+    "Butter a 9-by-13-inch pan.",
+    "Melt the butter over low heat in a large pot. Add the marshmallows and stir until just melted.",
+    "Remove from the heat. Stir in the vanilla and salt, then fold in the cereal until coated.",
+    "Transfer to the pan and lightly press into an even layer with a buttered spatula. Cool for 30 minutes before cutting into squares."
+  ],
+  "tags": [
+    "No bake",
+    "Vanilla"
+  ],
+  "meal": [
+    "Dessert"
+  ]
+}

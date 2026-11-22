@@ -1,0 +1,24 @@
+{
+  "title": "Cranberry Orange Spritz",
+  "description": "Tart cranberry and sweet orange with a splash of sparkling water.",
+  "category": "Drinks",
+  "time": "5 minutes",
+  "minutes": 5,
+  "servings": "2",
+  "difficulty": "Easy",
+  "ingredients": [
+    "½ cup unsweetened cranberry juice",
+    "½ cup orange juice",
+    "1 cup chilled sparkling water",
+    "2 orange slices",
+    "Ice"
+  ],
+  "steps": [
+    "Divide the cranberry and orange juices between two ice-filled glasses.",
+    "Top with sparkling water, stir gently, and garnish each glass with an orange slice."
+  ],
+  "tags": [
+    "Alcohol-free",
+    "Cranberry"
+  ]
+}

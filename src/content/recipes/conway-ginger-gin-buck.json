@@ -1,0 +1,25 @@
+{
+  "title": "Conway Ginger Gin Buck",
+  "description": "Dry gin, spicy ginger beer, and fresh lime over ice.",
+  "category": "Cocktails",
+  "time": "5 minutes",
+  "minutes": 5,
+  "servings": "1",
+  "difficulty": "Easy",
+  "ingredients": [
+    "2 fluid ounces London dry gin",
+    "½ fluid ounce fresh lime juice",
+    "4 fluid ounces ginger beer, chilled",
+    "1 lime wedge",
+    "Ice"
+  ],
+  "steps": [
+    "Fill a tall glass with ice. Add the gin and lime juice.",
+    "Top with ginger beer and stir once gently. Garnish with the lime wedge."
+  ],
+  "tags": [
+    "Gin",
+    "Ginger",
+    "Lime"
+  ]
+}

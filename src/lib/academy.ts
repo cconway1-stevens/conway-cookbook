@@ -1,6 +1,8 @@
 import { directions, ingredients, type Recipe } from './recipes';
 
 export const lessons = [
+  { id: 'scale', title: 'Scale a recipe by yield', match: /cups? (?:all-purpose )?flour/i,
+    steps: ['Write down the original and desired yields in the same units. Divide desired yield by original yield.', 'Multiply each measured ingredient by that factor. Keep the original units or convert to a known weight before scaling.', 'Select pans that maintain a similar depth. Check doneness as you cook and adjust seasoning to taste.'] },
   { id: 'onion-strips', title: 'Slice an onion into fine strips', match: /(?:thinly sliced|sliced|julienned).*onion|onion[^.\n]*(?:thinly sliced|julienned)/i,
     steps: ['Halve the onion through the root and stem. Peel it and trim the ends. Rest one half cut-side down on a steady board.', 'Curl your fingertips inward and work from one side of the half to the other. Make closely spaced lengthwise cuts following the grain.', 'Separate the layers with your fingers. Aim for even widths so the strips soften together.'] },
   { id: 'dice', title: 'Dice vegetables evenly', match: /\bdic(?:e|ed|ing)\b/i,

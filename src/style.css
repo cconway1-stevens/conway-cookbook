@@ -217,8 +217,11 @@ a.tape:hover { filter: brightness(1.15); }
 .sec h3 { margin: 1.1rem 0 .3rem; }
 .sec p + p { margin-top: .7rem; }
 .sec-ingredients li { padding: .55rem 0 .48rem; border-bottom: 1px solid var(--line); font: 1.0625rem/1.45 var(--type); }
-.sec-directions ol { list-style: none; counter-reset: step; display: grid; gap: 1.6rem; }
-.sec-directions li { counter-increment: step; position: relative; padding-left: 3.3rem; max-width: 62ch; }
+.sec-directions ol { list-style: none; counter-reset: step; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.6rem; }
+.sec-directions li { counter-increment: step; position: relative; min-width: 0; padding-left: 3.3rem; max-width: 62ch; overflow-wrap: anywhere; }
+.why { overflow-wrap: anywhere; margin-top: .7rem; padding: .6rem .95rem; border-left: 4px solid var(--second); background: var(--tint); color: var(--ink); font-size: .96rem; line-height: 1.5; }
+.why b { margin-right: .35rem; color: var(--second); font: 700 .85rem/1 var(--type); letter-spacing: .08em; text-transform: uppercase; }
+#cook-why { margin-top: 1.1rem; font-size: clamp(1.05rem, 2.2vw, 1.3rem); }
 .sec-directions li::before { content: counter(step); position: absolute; left: 0; top: -.25rem; font: 400 2.5rem/1 var(--display); color: var(--accent); }
 .source { padding-bottom: 2rem; }
 .credit { color: var(--soft); margin-top: .4rem; }

@@ -21,7 +21,7 @@ export async function allRecipes() {
 // "## Ingredients" as groups, for search and the shopping list.
 export const ingredients = (recipe: Recipe): { name: string; items: string[] }[] => ingredientGroups(recipe.data, recipe.body);
 
-export const directions = (recipe: Recipe): { title: string; text: string; lines: string[] }[] => steps(recipe.data, recipe.body);
+export const directions = (recipe: Recipe): { title: string; text: string; lines: string[]; why?: string }[] => steps(recipe.data, recipe.body);
 
 // Cook mode: every line with its recorded clip, when one has been made.
 export const clip = (text: string) => {
@@ -32,7 +32,7 @@ export const cookData = (recipe: Recipe) => ({
   id: recipe.id,
   title: recipe.data.title,
   groups: ingredients(recipe).map((g) => ({ name: g.name, lines: g.items.map(clip) })),
-  steps: steps(recipe.data, recipe.body).map((step: { title: string; lines: string[] }, i: number) => ({ title: step.title, heading: clip(heading(step, i)), lines: step.lines.map(clip) })),
+  steps: steps(recipe.data, recipe.body).map((step: { title: string; lines: string[]; why?: string }, i: number) => ({ title: step.title, heading: clip(heading(step, i)), lines: step.lines.map(clip), why: step.why ? clip(step.why) : undefined })),
   phrases: Object.fromEntries(Object.entries(PHRASES).map(([key, text]) => [key, clip(text as string)])),
 });
 

@@ -33,7 +33,7 @@ const recipes = defineCollection({
     // JSON recipes carry these. Markdown recipes have them in the text.
     story: z.string().optional(),
     ingredients: z.array(z.union([z.string(), z.object({ group: z.string(), items: z.array(z.string()) })])).min(1).optional(),
-    steps: z.array(z.union([z.string(), z.object({ title: z.string().optional(), text: z.string() })])).min(1).optional(),
+    steps: z.array(z.union([z.string(), z.object({ title: z.string().optional(), text: z.string(), why: z.string().optional() })])).min(1).optional(),
     notes: z.record(z.string(), z.string()).optional(),
     // What people have added. See README.
     familyNotes: z.array(z.union([z.string().transform((text) => ({ text })), z.object({ text: z.string(), by: z.string().optional(), date: z.coerce.date().optional() })])).optional(),

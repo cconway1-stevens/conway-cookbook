@@ -17,7 +17,7 @@
     { "group": "To serve", "items": ["1 pound spaghetti"] }
   ],
   "steps": [
-    { "title": "Warm the oven", "text": "Heat the oven to 425°F. Line a baking sheet." },
+    { "title": "Warm the oven", "text": "Heat the oven to 425°F. Line a baking sheet.", "why": "Optional. A short reason for this step. It shows under the step and is read aloud." },
     "A step can also be plain text, with no title."
   ],
   "notes": {

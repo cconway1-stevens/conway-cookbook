@@ -2,15 +2,15 @@
 import { confetti, number, replay } from './motion';
 import { listen, prefs, quiet, speak, type Line } from './voice';
 
-interface Data { id: string; title: string; groups: { name: string; lines: Line[] }[]; steps: { title: string; heading: Line; lines: Line[] }[]; phrases: Record<string, Line> }
+interface Data { id: string; title: string; groups: { name: string; lines: Line[] }[]; steps: { title: string; heading: Line; lines: Line[]; why?: Line }[]; phrases: Record<string, Line> }
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const data: Data = JSON.parse($('cook-data').textContent!);
 const dialog = $<HTMLDialogElement>('cook');
 // Page 0 is the ingredients; pages 1..n are the directions.
 const pages = [
-  { title: 'Set everything out', heading: data.phrases.gather, lines: data.groups.flatMap((g) => g.lines.map((line) => ({ line, group: g.name }))) },
-  ...data.steps.map((s) => ({ title: s.title, heading: s.heading, lines: s.lines.map((line) => ({ line, group: '' })) })),
+  { title: 'Set everything out', heading: data.phrases.gather, why: undefined as Line | undefined, lines: data.groups.flatMap((g) => g.lines.map((line) => ({ line, group: g.name }))) },
+  ...data.steps.map((s) => ({ title: s.title, heading: s.heading, why: s.why, lines: s.lines.map((line) => ({ line, group: '' })) })),
 ];
 const KEY = `conway-cook-${data.id}`;
 let page = 0, warned = false, openedFrom: HTMLElement | null = null;
@@ -45,7 +45,7 @@ async function say(lines: { line: Line; row?: number }[]) {
   }
   if (mine === run) hush();
 }
-const readPage = () => say([{ line: pages[page].heading }, ...pages[page].lines.map(({ line }, row) => ({ line, row }))]);
+const readPage = () => say([{ line: pages[page].heading }, ...pages[page].lines.map(({ line }, row) => ({ line, row })), ...(pages[page].why ? [{ line: pages[page].why! }] : [])]);
 
 /* ---------- Timers ---------- */
 const timers: { label: string; end: number; el: HTMLElement; done: boolean }[] = [];
@@ -98,6 +98,9 @@ function draw(focus = true) {
     return [head, li];
   }));
   number($('cook-lines').children);
+  const why = $('cook-why');
+  why.hidden = !p.why; why.replaceChildren();
+  if (p.why) { const label = document.createElement('b'); label.textContent = 'Why'; why.append(label, ' ' + p.why.text); }
   $('cook-extra').replaceChildren();
   if (!page) {
     const all = document.createElement('button'); all.type = 'button'; all.className = 'button quiet'; all.textContent = 'I have everything';
@@ -150,7 +153,7 @@ function next() {
     return;
   }
   $('cook-count').textContent = 'All done'; $('cook-heading').textContent = 'Enjoy it.';
-  $('cook-lines').replaceChildren(); $('cook-extra').replaceChildren();
+  $('cook-lines').replaceChildren(); $('cook-extra').replaceChildren(); $('cook-why').hidden = true;
   const again = document.createElement('button'); again.type = 'button'; again.className = 'button quiet'; again.textContent = 'Start over';
   again.addEventListener('click', () => { ticks = pages.map((p) => p.lines.map(() => false)); go(0); });
   const share = document.createElement('button'); share.type = 'button'; share.className = 'button'; share.textContent = 'Add a photo or a note';

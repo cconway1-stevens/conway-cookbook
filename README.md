@@ -8,7 +8,7 @@ A public, read-only family cookbook built with Astro. Each recipe is one file. D
 2. Fill it in. Required: `title`, `description`, `category`, `time`, `servings`, `ingredients`, `steps`. Delete any other line you don't need.
    - `category` is a course: Breakfast, Appetizers, Soups & Salads, Mains, Sides, Breads, Desserts, or Drinks. A meal such as `Dinner` works too.
    - `meal` is any of Breakfast, Lunch, Dinner, Dessert. `cuisine` and `tags` are free text. A new one becomes a filter by itself.
-   - `ingredients` is a list of lines, or of groups with a `group` name and `items`. `steps` is a list of text, or of a `title` and `text`.
+   - `ingredients` is a list of lines, or of groups with a `group` name and `items`. `steps` is a list of text, or of a `title` and `text`, and an optional `why` that explains the step in a sentence or two.
    - `minutes` is the time as a number, for the "Ready in" filter.
 3. For a photo, put it in `public/images/` and add `"image": "images/your-photo.jpg"` and `"imageAlt"`.
 4. Commit to `main` to publish. You can do all of this on GitHub's website. If something is wrong, the build stops, names the file, and the live site stays as it was.

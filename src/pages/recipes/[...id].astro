@@ -74,7 +74,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
             {groups.map((g) => <>{g.name && <h3>{g.name}</h3>}<ul>{g.items.map((item) => <li>{item}</li>)}</ul></>)}
           </section>
           <section class="sec sec-directions"><h2>Directions</h2>
-            <ol>{directions(recipe).map((step) => <li>{step.title && <strong>{step.title}.</strong>} {step.text}</li>)}</ol>
+            <ol>{directions(recipe).map((step) => <li>{step.title && <strong>{step.title}.</strong>} {step.text}{step.why && <p class="why"><b>Why</b> {step.why}</p>}</li>)}</ol>
           </section>
           {Object.entries(data.notes ?? {}).map(([title, text]) => <section class="sec"><h2>{title}</h2><p>{text}</p></section>)}
         </>}

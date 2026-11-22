@@ -62,8 +62,8 @@ export function ingredientGroups(data, body) {
 export function steps(data, body) {
   if (!data?.steps) return bodySteps(body);
   return data.steps.map((step) => {
-    const { title = '', text } = typeof step === 'string' ? { text: step } : step;
-    return { title: title.replace(/[.:]$/, ''), text: text.trim(), lines: sentences(text.trim()) };
+    const { title = '', text, why } = typeof step === 'string' ? { text: step } : step;
+    return { title: title.replace(/[.:]$/, ''), text: text.trim(), lines: sentences(text.trim()), why: why?.trim() || undefined };
   });
 }
 
@@ -81,5 +81,5 @@ export const clipName = (text) => createHash('sha1').update(`${VOICE}|${spoken(t
 
 export const script = (data, body) => [
   ...ingredientGroups(data, body).flatMap((g) => g.items),
-  ...steps(data, body).flatMap((step, i) => [heading(step, i), ...step.lines]),
+  ...steps(data, body).flatMap((step, i) => [heading(step, i), ...step.lines, ...(step.why ? [step.why] : [])]),
 ];

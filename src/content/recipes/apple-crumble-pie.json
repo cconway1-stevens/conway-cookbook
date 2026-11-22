@@ -1,6 +1,6 @@
 {
   "title": "Cameron’s Cozy Apple Crumble Pie",
-  "description": "Tart Granny Smith apples beneath a buttery cinnamon-oat crumble, tucked into a flaky pie crust.",
+  "description": "A mix of tart Granny Smith, sweet red apples, and pear under a buttery cinnamon-oat walnut crumble, in a flaky pie crust.",
   "category": "Desserts",
   "meal": [
     "Dessert"
@@ -29,22 +29,32 @@
       "items": [
         "1 cup all-purpose flour",
         "1 cup old-fashioned rolled oats (not quick cooking)",
-        "⅓ cup packed light brown sugar (65 g)",
+        "½ cup packed light brown sugar",
         "1 teaspoon ground cinnamon",
+        "¼ teaspoon ground nutmeg",
         "½ teaspoon kosher salt",
-        "10 tablespoons unsalted butter, chilled and cut into ½-inch pieces"
+        "10 tablespoons unsalted butter, chilled and cut into ½-inch pieces",
+        "1 cup walnuts, shelled and chopped"
+      ]
+    },
+    {
+      "group": "For the fruit (3 parts Granny Smith, 2 parts red apple, 1 part pear)",
+      "items": [
+        "6 small Granny Smith apples (about 2 pounds)",
+        "3 large red apples, such as Honeycrisp or Fuji (about 1½ pounds)",
+        "2 firm pears (about ¾ pound)"
       ]
     },
     {
       "group": "For the pie",
       "items": [
-        "1 recipe chilled homemade pie dough (enough for one crust)",
-        "All-purpose flour, for rolling",
-        "3 pounds Granny Smith apples, peeled, cored, and cut into ½-inch wedges",
+        "1 frozen pie dough, thawed to room temperature (enough for one crust)",
+        "Cooking spray, for the pie pan",
         "½ cup packed light brown sugar",
         "3 tablespoons cornstarch",
         "2 teaspoons ground cinnamon",
-        "2 teaspoons apple cider vinegar",
+        "¼ teaspoon ground nutmeg",
+        "2 teaspoons apple cider vinegar or lemon juice, or a mix of both (just enough to coat the fruit)",
         "½ teaspoon kosher salt",
         "2 tablespoons unsalted butter, chilled and cut into ½-inch pieces"
       ]
@@ -53,34 +63,47 @@
   "steps": [
     {
       "title": "Make the crumble",
-      "text": "Mix the flour, oats, sugar, cinnamon, and salt. Rub in the butter with your fingertips until no dry flour remains and the mixture clumps when squeezed. Cover and refrigerate."
+      "text": "Mix the flour, oats, brown sugar, cinnamon, nutmeg, and salt. Rub in the butter with your fingertips until no dry flour remains and the mixture clumps when squeezed. Stir in the walnuts. Cover and refrigerate.",
+      "why": "Cold butter is what keeps a crumble crunchy. If it melts into the flour, the topping bakes up flat and greasy, so chill it again after your fingers have warmed it."
     },
     {
       "title": "Heat the oven",
-      "text": "Place a rack in the lower third and preheat to 425°F. Line a rimmed baking sheet with foil or a silicone mat."
+      "text": "Place a rack in the lower third and preheat to 425°F. Line a rimmed baking sheet with foil or a silicone mat.",
+      "why": "A rack in the lower third puts the bottom crust closest to the heat, so it bakes through instead of staying pale. The sheet catches any juices that bubble over."
     },
     {
-      "title": "Roll out the crust",
-      "text": "Let the dough soften for a minute or two, then roll it on a floured surface into a 13-inch circle about ⅛ inch thick."
+      "title": "Prepare the crust",
+      "text": "Let the frozen pie dough thaw on the counter until it is soft and at room temperature. Lightly spray the pie pan with cooking spray, then roll the dough directly onto the pan.",
+      "why": "Dough at room temperature bends without cracking, and rolling it straight onto the pan means less handling, which keeps the crust tender. The spray keeps it from sticking, so slices lift out cleanly."
     },
     {
       "title": "Line the pie dish",
-      "text": "Press the dough into the base and sides of the dish. Trim to a ½-inch overhang, fold it under, and crimp the edge. Freeze the crust uncovered while you mix the filling."
+      "text": "Press the dough into the base and sides of the dish. Trim to a ½-inch overhang, fold it under, and crimp the edge. Freeze the crust uncovered while you mix the filling.",
+      "why": "Freezing firms the butter in the crust again, so the edge holds its shape instead of slumping in the oven."
+    },
+    {
+      "title": "Cut the fruit",
+      "text": "Peel and core the apples and pears. Cut about three-quarters of them into very thin slices and the rest into ½-inch wedges.",
+      "why": "Mix your cuts the way you marble chocolate into cookies. The thin slices soften into the filling and the thicker wedges stay tender, so every bite feels a little different."
     },
     {
       "title": "Mix the filling",
-      "text": "Toss the apple wedges with brown sugar, cornstarch, cinnamon, vinegar, and salt until evenly coated."
+      "text": "Toss the fruit with the vinegar or lemon juice, just enough to lightly coat it. Add the brown sugar, cornstarch, cinnamon, nutmeg, and salt and toss until evenly coated.",
+      "why": "The acid keeps the cut fruit from browning, but keep it light. Wet fruit melts the sugar into a runny syrup, and a runny filling makes a soggy pie. The cornstarch thickens whatever juice the fruit gives off."
     },
     {
       "title": "Fill the shell",
-      "text": "Fit about a quarter of the apples snugly across the bottom. Mound the rest in the center with any juices from the bowl, pressing gently to compact them. Dot with the butter, then scatter the chilled crumble over the top, breaking up large clumps."
+      "text": "Fit about a quarter of the fruit snugly across the bottom. Mound the rest in the center with any juices from the bowl, pressing gently to compact it. Dot with the butter, then scatter the chilled crumble over the top, breaking up large clumps.",
+      "why": "Packing the fruit snugly and mounding it high leaves fewer air pockets, so the pie doesn't sink as the fruit softens. Breaking up big clumps lets the topping bake evenly crisp."
     },
     {
       "title": "Bake and cool",
-      "text": "Set the pie dish on the lined sheet and bake for 15 minutes. Lower the oven to 350°F and bake another 60–75 minutes, until the crust is golden and the filling bubbles. If the topping darkens early, loosely tent the center with foil. Cool completely before slicing."
+      "text": "Set the pie dish on the lined sheet and bake for 15 minutes. Lower the oven to 350°F and bake another 60–75 minutes, until the crust is golden and the filling bubbles. If the topping darkens early, loosely tent the center with foil. Cool completely before slicing.",
+      "why": "The first 15 minutes at high heat set the crust. Lowering to 350°F cooks the fruit through without burning the crumble. Cooling completely lets the thickened juices set. Slice too soon and the filling runs out."
     }
   ],
   "notes": {
+    "Choosing the fruit": "Use 3 parts Granny Smith, 2 parts red apple, and 1 part pear. Granny Smith stays firm and tart, red apples add sweetness, and pears add softness and a mellow flavor. Today's pie used 6 small Granny Smiths, 3 large red apples, and 2 pears, about 4 pounds before peeling. Keeping it simple? All Granny Smith is also very good.",
     "Make ahead": "Store the cooled pie loosely covered at room temperature for up to four days. The crust is crispest on the first two days."
   }
 }

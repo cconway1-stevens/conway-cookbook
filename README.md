@@ -82,3 +82,7 @@ Made by Cameron Conway.
 ### Shopping quantities
 
 A recipe can optionally list `shoppingMeasures` for quantities that are safe to add across dishes. Each record matches the original ingredient line exactly. For example, the tomato soup supplies `{ "line": "2 garlic cloves, minced", "ingredient": "garlic", "unit": "cloves", "quantity": 2 }`. Only identical ingredient and unit names combine. Other lines stay under their dish, with the author's wording intact.
+
+Cooking Academy lessons are in `src/lib/academy.ts`. Ingredient and direction matches link recipe cards to lessons on the static Academy page.
+
+For automatic recipe nutrition, set the Actions secret `SPOONACULAR_API_KEY` and run the Pages deployment. Each build submits recipe ingredient lines and yield to Spoonacular's Analyze Recipe endpoint. Numeric yields display per serving. Ranges and descriptive yields display whole-recipe totals. Missing credentials, unmatched ingredients, incomplete results and provider errors omit the panel. Provider values are calculated from ingredient data and can differ from the finished dish.

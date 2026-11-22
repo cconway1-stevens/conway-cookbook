@@ -627,3 +627,4 @@ input[role=switch]:disabled { opacity: .4; cursor: not-allowed; }
 @media print {
   #converter, .convert-ingredient { display: none !important; }
 }
+@media print { .recipe #skills, .recipe #nutrition { display: none; } }

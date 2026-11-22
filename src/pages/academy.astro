@@ -1,0 +1,28 @@
+---
+import Cookbook from '../layouts/Cookbook.astro';
+import { allRecipes, base, recipeUrl } from '../lib/recipes';
+import { lessons, skillsFor } from '../lib/academy';
+const recipes = await allRecipes();
+---
+<Cookbook title="Cooking Academy" current="academy">
+  <div class="wrap academy"><h1>Cooking Academy</h1>
+    <nav aria-label="Choose a skill">{lessons.map(l => <a href={'#' + l.id}>{l.title}</a>)}</nav>
+    {lessons.map(l => {
+      const practice = recipes.filter(r => skillsFor(r).includes(l));
+      return <section id={l.id}><h2>{l.title}</h2>
+        {l.id === 'onion-strips' && <video controls playsinline preload="none" width="640" height="300" aria-label="Silent diagram of cutting an onion lengthwise. The instructions follow below." src={base+'academy/onion-strips.mp4'} />}
+        <ol>{l.steps.map(s => <li>{s}</li>)}</ol>
+        {['dice','onion-strips'].includes(l.id) && <p><a href="https://food.unl.edu/article/how-use-chefs-knife/">Knife grip and guiding hand · Nebraska Extension</a></p>}
+        {practice.length > 0 && <p><strong>Practice with </strong>{practice.map((r,i) => <>{i > 0 && ' · '}<a href={recipeUrl(r.id)}>{r.data.title}</a></>)}</p>}
+      </section>;
+    })}
+  </div>
+</Cookbook>
+<style>
+.academy { padding-block: 2rem; max-width: 60rem; }
+.academy nav { display:flex; flex-wrap:wrap; gap:.6rem 1rem; margin:1rem 0; }
+.academy section { padding:clamp(1rem,3vw,2rem); background:var(--card); border-top:3px solid var(--accent); margin:1rem 0; }
+.academy li,.academy section p { margin-top:.65rem; }
+.academy ol { padding-left:1.5rem; list-style:decimal; }
+.academy video { width:100%; height:auto; margin-top:.8rem; }
+</style>

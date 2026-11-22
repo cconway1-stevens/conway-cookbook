@@ -6,9 +6,10 @@ const { current, thumbs, names = [], showSearch = true }: { current: string; thu
 const groups = [
   {
     name: 'Recipes',
-    active: ['recipes', 'add-recipe'].includes(current),
+    active: ['recipes', 'academy', 'add-recipe'].includes(current),
     links: [
       { label: 'Recipe Box', path: 'recipes/', key: 'recipes' },
+      { label: 'Cooking Academy', path: 'academy/', key: 'academy' },
       { label: 'Add Recipe', path: 'recipes/add/', key: 'add-recipe' },
     ],
   },

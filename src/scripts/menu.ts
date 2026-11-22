@@ -150,7 +150,7 @@ const details = new Map<string, Promise<Detail>>();
 function detail(id: string) {
   let pending = details.get(id);
   if (!pending) {
-    pending = fetch(new URL('../dish-data/' + encodeURIComponent(id) + '.json', location.href)).then(response => {
+    pending = fetch(`${import.meta.env.BASE_URL.replace(/\/$/, '')}/dish-data/${encodeURIComponent(id)}.json`).then(response => {
       if (!response.ok) throw Error('Ingredient list unavailable');
       return response.json() as Promise<Detail>;
     }).catch(error => { details.delete(id); throw error; });
@@ -160,10 +160,10 @@ function detail(id: string) {
 }
 let shoppingRevision = 0;
 let shoppingText = '';
+const checkedShoppingLines = new Set<string>();
 async function shopping(items: MenuItem[]) {
   const revision = ++shoppingRevision;
   const box = $('shop');
-  const ticked = new Set([...box.querySelectorAll<HTMLInputElement>('input:checked')].map(input => input.value));
   const buttons = ['print-shop', 'copy-shop'].map(id => $<HTMLButtonElement>(id));
   buttons.forEach(button => button.disabled = true);
   box.textContent = items.length ? 'Gathering ingredients…' : 'Add a dish to start your shopping list.';
@@ -190,7 +190,7 @@ async function shopping(items: MenuItem[]) {
     });
     const sections = [...groups].map(([id, rows]) => ({ title: byId.get(id)!.title, rows }));
     if (combined.size) sections.unshift({ title: 'Measured ingredients', rows: [...combined].map(([key, m]) => ({
-      key, text: `${Number(m.quantity.toFixed(4))} ${m.unit} ${m.ingredient} (${[...m.dishes].join(', ')})`,
+      key: JSON.stringify([key, m.quantity, [...m.dishes]]), text: `${Number(m.quantity.toFixed(4))} ${m.unit} ${m.ingredient} (${[...m.dishes].join(', ')})`,
     })) });
     shoppingText = sections.map(s => [s.title, ...s.rows.map(row => '- ' + row.text)].join('\n')).join('\n\n');
     for (const section of sections) {
@@ -198,7 +198,11 @@ async function shopping(items: MenuItem[]) {
       const ul = el('ul');
       for (const row of section.rows) {
         const li = el('li'), label = el('label'), input = document.createElement('input');
-        input.type = 'checkbox'; input.value = row.key; input.checked = ticked.has(row.key);
+        input.type = 'checkbox'; input.value = row.key; input.checked = checkedShoppingLines.has(row.key);
+        input.addEventListener('change', () => {
+          if (input.checked) checkedShoppingLines.add(row.key);
+          else checkedShoppingLines.delete(row.key);
+        });
         label.append(input, el('span', '', row.text)); li.append(label); ul.append(li);
       }
       box.append(ul);

@@ -1,6 +1,6 @@
 ---
 import Cookbook from '../../layouts/Cookbook.astro';
-import RecipeCard from '../../components/RecipeCard.astro';
+import RecipeSections from '../../components/RecipeSections.astro';
 import { allRecipes, tally } from '../../lib/recipes';
 import { book, slug } from '../../lib/cookbook';
 const recipes = await allRecipes();
@@ -57,7 +57,7 @@ import '../../catalog.css';
     <ul class="cards" id="catalog-sorted" hidden></ul>
     {drawers.map(drawer => <section class="catalog-drawer" id={'drawer-' + drawer.id} data-drawer={drawer.id} aria-labelledby={'label-' + drawer.id}>
       <h2 id={'label-' + drawer.id}><span>{drawer.name}</span></h2>
-      <ul class="cards">{drawer.recipes.map(recipe => <RecipeCard recipe={recipe} level="h3" />)}</ul>
+      <RecipeSections name={drawer.name} recipes={drawer.recipes} level="h3" />
     </section>)}
     <dialog id="catalog-deal" aria-labelledby="deal-title"><form method="dialog">
       <h2 id="deal-title">Your card</h2>
@@ -153,8 +153,11 @@ import '../../catalog.css';
     pick.disabled = !shown;
     sorted.hidden = !sort.value;
     for (const drawer of drawers) {
-      const rows = index.filter(row => row.shelf.parentElement === drawer);
+      const rows = index.filter(row => drawer.contains(row.shelf));
       const total = rows.filter(row => !row.card.hidden).length;
+      for (const section of drawer.querySelectorAll<HTMLElement>('[data-recipe-section]')) {
+        section.hidden = !rows.some(row => section.contains(row.shelf) && !row.card.hidden);
+      }
       const link = box.querySelector<HTMLAnchorElement>(`[data-drawer-link="${drawer.dataset.drawer}"]`)!;
       link.querySelector('small')!.textContent = String(total);
       drawer.hidden = link.hidden = !!sort.value || !total;

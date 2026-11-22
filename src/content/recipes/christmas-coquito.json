@@ -1,7 +1,7 @@
 {
   "title": "Puerto Rican Christmas Coquito",
   "description": "A chilled coconut and white rum drink with cinnamon and vanilla for Christmas.",
-  "category": "Cocktails",
+  "category": "Drinks",
   "time": "250 minutes",
   "minutes": 250,
   "servings": "12",
@@ -21,6 +21,7 @@
     "Stir well before serving. Pour into small glasses and dust with cinnamon. Keep refrigerated between servings."
   ],
   "tags": [
+    "Cocktail",
     "Christmas",
     "Coconut",
     "Make ahead",

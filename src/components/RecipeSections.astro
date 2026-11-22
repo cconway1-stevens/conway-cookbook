@@ -1,0 +1,19 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import RecipeCard from './RecipeCard.astro';
+
+const { name, recipes, level }: { name: string; recipes: CollectionEntry<'recipes'>[]; level: 'h2' | 'h3' } = Astro.props;
+const cocktails = name === 'Drinks' ? recipes.filter(recipe => recipe.data.tags.includes('Cocktail')) : [];
+const drinks = cocktails.length ? recipes.filter(recipe => !recipe.data.tags.includes('Cocktail')) : recipes;
+const Heading = level;
+---
+{drinks.length > 0 && <ul class="cards">{drinks.map(recipe => <RecipeCard recipe={recipe} level={level} />)}</ul>}
+{cocktails.length > 0 && <section class="cocktails" data-recipe-section aria-labelledby="cocktails">
+  <Heading id="cocktails">Cocktails</Heading>
+  <ul class="cards">{cocktails.map(recipe => <RecipeCard recipe={recipe} level={level === 'h2' ? 'h3' : 'h4'} />)}</ul>
+</section>}
+
+<style>
+  .cocktails { margin-block-start: 1.5rem; }
+  .cocktails > :first-child { margin-block-end: .75rem; }
+</style>

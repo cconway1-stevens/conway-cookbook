@@ -8,7 +8,7 @@ const chapters = getCategories(recipes).map((name) => ({
   count: recipes.filter(({ data }) => data.category === name).length,
 }));
 const featured = recipes.find(({ id }) => id === 'apple-crumble-pie');
-const picks = [...new Set([featured, ...recipes])].filter((recipe) => recipe !== undefined).slice(0, 3);
+const picks = [...new Set([featured, ...recipes])].filter((recipe) => recipe !== undefined).slice(0, 4);
 ---
 <Cookbook>
   <section class="welcome">
@@ -20,7 +20,7 @@ const picks = [...new Set([featured, ...recipes])].filter((recipe) => recipe !==
         <a class="button" href={base + 'recipes/'}>Open the recipe box</a>
       </div>
       <figure class="cover-art">
-        <img src={base + 'images/cookbook-cover.jpg'} width="960" height="1200" alt="Illustrated apple pie, blossoms, and gingham on cream paper" fetchpriority="high" />
+        <img src={base + 'images/cookbook-cover.jpg?v=crumb-top'} width="960" height="1200" alt="Illustrated cinnamon-oat crumble pie, apple blossoms, and gingham on cream paper" fetchpriority="high" />
       </figure>
     </div>
   </section>

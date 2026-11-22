@@ -9,6 +9,7 @@ export default function rehypeSections() {
     for (const node of tree.children) {
       if (node.type === 'element' && node.tagName === 'h2') {
         const name = text(node).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        node.properties.id ??= name;
         section = { type: 'element', tagName: 'section', properties: { className: ['sec', `sec-${name}`] }, children: [] };
         out.push(section);
       }

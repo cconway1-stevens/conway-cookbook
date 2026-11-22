@@ -15,44 +15,24 @@ const courses = courseNames.map((c) => ({ c, list: recipes.filter((r) => r.data.
     <div id="shared" class="notice" hidden><p>Someone shared this menu with you.</p><button type="button" class="button" id="keep">Keep it as my menu</button><button type="button" class="button quiet" id="mine">Go back to mine</button></div>
     <div class="bench" id="bench">
       <div class="work-tabs" role="tablist" aria-label="Menu builder">
-        {[['menu', 'Menu'], ['dishes', 'Dishes'], ['style', 'Style'], ['shop', 'Shopping']].map(([id, label], i) => <button type="button" role="tab" id={`tab-${id}`} data-tab={id} aria-controls={`pane-${id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{label}</button>)}
+        {[['menu', 'Menu'], ['dishes', 'Dishes'], ['style', 'Print & share'], ['shop', 'Shopping list']].map(([id, label], i) => <button type="button" role="tab" id={`tab-${id}`} data-tab={id} aria-controls={`pane-${id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{label}</button>)}
       </div>
       <section class="table" id="pane-menu" role="tabpanel" aria-labelledby="tab-menu" tabindex="0">
-        <div class="menu-toolbar">
-          <div class="block-actions">
-            <button type="button" class="button" id="browse-dishes" hidden>Pick dishes</button>
-            <button type="button" class="button quiet" id="deal">Deal me a menu</button>
-            <button type="button" class="linkish" id="empty" disabled>Clear the menu</button>
-          </div>
-          <div class="block-actions">
-            <button type="button" class="button quiet" id="print-menu">Print menu</button>
-            <button type="button" class="linkish" id="menu-share-jump">Share menu</button>
-          </div>
-        </div>
+        <div class="menu-toolbar"><button class="button" id="browse-dishes" hidden>Add a dish</button><button class="linkish" id="deal">Suggest a menu</button><button class="linkish" id="empty" disabled>Clear menu</button></div>
+        <p id="missing-dishes" role="status" hidden></p>
         <p class="hint" id="menu-hint" hidden>Drag dishes or use the arrows to reorder them and move them between courses.</p>
         <article id="menu-card" class="menu-card" data-paper={book.menu.papers[0].id}>
           <header>
-            <h2 id="menu-card-title">{book.menu.title}</h2>
+            <label class="menu-title-edit">Menu name<input id="m-title" maxlength="60" /></label><h2 id="menu-card-title">{book.menu.title}</h2>
             <p id="menu-card-note" hidden></p>
           </header>
           <div class="menu-empty" id="menu-empty">
-            <p>Nothing on the menu yet. Pick a few dishes to get started.</p>
-            <button type="button" class="button" id="menu-pick">Pick dishes</button>
+            <p>Choose the first dish for your table.</p>
+            <button type="button" class="button" id="menu-pick">Add a dish</button>
           </div>
           <div id="menu-courses"></div>
         </article>
-        <section class="menu-share" aria-labelledby="menu-share-title">
-          <h2 id="menu-share-title" tabindex="-1">Share this menu</h2>
-          <p>Anyone with the link can open a copy of this menu. It won’t appear in the library automatically.</p>
-          <div class="block-actions"><button type="button" class="button" id="share">Copy share link</button></div>
-          {book.repo && (
-            <div class="menu-publish">
-              <h3>Publish to the menu library</h3>
-              <p>If you have repository write access, paste the share link into the GitHub workflow. Its run summary links to a draft branch. Open a pull request and merge it to publish your menu.</p>
-              <a id="publish-menu" href={`https://github.com/${book.repo}/actions/workflows/publish-menu.yml`}>Open the menu draft workflow on GitHub</a>
-            </div>
-          )}
-        </section>
+
       </section>
       <section class="pane picker" id="pane-dishes" role="tabpanel" aria-labelledby="tab-dishes" tabindex="0" hidden>
         <h2 class="vh">Pick dishes</h2>
@@ -69,15 +49,28 @@ const courses = courseNames.map((c) => ({ c, list: recipes.filter((r) => r.data.
                 <button type="button" class="add" data-add={r.id} data-title={r.data.title} data-short hidden>Add</button>
               </li>))}</ul>
           </div>))}
+        <button type="button" class="button picker-done" id="picker-done">Done</button>
         <p id="pick-none" hidden>No dish matches. Try a shorter word.</p>
       </section>
       <section class="pane style-pane" id="pane-style" role="tabpanel" aria-labelledby="tab-style" tabindex="0" hidden>
-        <label>Name <input id="m-title" maxlength="60" /></label>
-        <label>Line underneath <input id="m-note" maxlength="120" placeholder="Sunday at six" /></label>
+        <h2>Table menu</h2><label>Line underneath <input id="m-note" maxlength="120" placeholder="Sunday at six" /></label>
         <fieldset class="papers"><legend>Paper</legend>
           {book.menu.papers.map((p) => <label class="chip"><input type="radio" name="paper" value={p.id} /><span>{p.label}</span></label>)}
         </fieldset>
         <label class="switch-row inline"><span><b>Show descriptions</b></span><input type="checkbox" role="switch" id="m-blurbs" /></label>
+        <button class="button" id="print-menu">Print table menu</button>
+        <section class="menu-share" aria-labelledby="menu-share-title">
+          <h2 id="menu-share-title" tabindex="-1">Share this menu</h2>
+          <p>Anyone with the link can open a copy of this menu. It won’t appear in the library automatically.</p>
+          <div class="block-actions"><button type="button" class="button" id="share">Copy share link</button></div>
+          {book.repo && (
+            <details class="menu-publish">
+              <summary>Publish to the menu library</summary>
+              <p>If you have repository write access, paste the share link into the GitHub workflow. Its run summary links to a draft branch. Open a pull request and merge it to publish your menu.</p>
+              <a id="publish-menu" href={`https://github.com/${book.repo}/actions/workflows/publish-menu.yml`}>Open the menu draft workflow on GitHub</a>
+            </details>
+          )}
+        </section>
       </section>
       <section class="pane shopping" id="pane-shop" role="tabpanel" aria-labelledby="tab-shop" tabindex="0" hidden>
         <h2>Shopping list</h2>

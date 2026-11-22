@@ -12,7 +12,7 @@ const { recipes }: { recipes: Recipe[] } = Astro.props;
       <div class="book-title-leaf">
         <h1 id="cover-title"><span>{book.cover.small}</span> {book.cover.large}</h1>
         <p>{book.tagline}</p>
-        <a class="button" href={base + 'recipes/'}>Open the recipe box</a>
+        <div class="cover-actions"><a class="button" href={base + 'recipes/'}>Find a recipe</a><a class="button quiet" href={base + 'menu/'}>Build a menu</a></div>
       </div>
       <RecipeRolodex recipes={recipes} />
     </div>

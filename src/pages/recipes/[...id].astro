@@ -40,6 +40,13 @@ const Content = groups ? null : (await render(recipe)).Content;
 const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURIComponent(value)}`;
 ---
 <Cookbook title={data.title} description={data.description} current="recipes">
+  <script type="application/ld+json" set:html={json({
+    '@context': 'https://schema.org', '@type': 'Recipe', name: data.title, description: data.description,
+    recipeYield: data.servings, totalTime: data.minutes ? `PT${data.minutes}M` : undefined,
+    recipeCategory: data.category, recipeCuisine: data.cuisine, recipeIngredient: ingredients(recipe).flatMap(g => g.items),
+    recipeInstructions: directions(recipe).map(step => ({ '@type': 'HowToStep', text: step.text })),
+    image: data.image && Astro.site ? new URL(base + data.image, Astro.site).href : undefined,
+  })} />
   <article class="wrap recipe">
     <a href={base + 'recipes/'} class="index-link">Back to the recipe box</a>
     <div class="sheet">
@@ -54,25 +61,22 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
             <div><dt>Serves</dt><dd>{data.servings}</dd></div>
             {data.difficulty && <div><dt>Difficulty</dt><dd>{data.difficulty}</dd></div>}
           </dl>
-          <ul class="tapes">
-            {data.meal.map((m) => <li><a class="tape blue" href={q('meal', m)}>{m}</a></li>)}
-            {data.cuisine.map((c) => <li><a class="tape" href={q('cuisine', c)}>{c}</a></li>)}
-            {data.tags.map((t) => <li><a class="tape green" href={q('tag', t)}>{t}</a></li>)}
-          </ul>
+
           <div class="recipe-actions">
             <button type="button" class="button" data-cook hidden>Start cooking</button>
             <button type="button" class="button quiet print-button" hidden>Print recipe</button>
             <button type="button" class="button quiet" data-add={recipe.id} data-title={data.title} hidden>Add to menu</button>
-            {pin && <a class="button quiet" href={pin.href} target="_blank" rel="noopener noreferrer">Save on Pinterest</a>}
           </div>
+<details class="recipe-more"><summary>Recipe details &amp; sharing</summary>          <ul class="tapes">
+            {data.meal.map((m) => <li><a class="tape blue" href={q('meal', m)}>{m}</a></li>)}
+            {data.cuisine.map((c) => <li><a class="tape" href={q('cuisine', c)}>{c}</a></li>)}
+            {data.tags.map((t) => <li><a class="tape green" href={q('tag', t)}>{t}</a></li>)}
+          </ul>            {pin && <a class="button quiet" href={pin.href} target="_blank" rel="noopener noreferrer">Save on Pinterest</a>}</details>
           {isSample(recipe) && <p class="sample">Sample card. It’s here to fill the box until the family recipes are in.</p>}
         </div>
-        {data.image ? <figure class="print"><img src={base + data.image} alt={data.imageAlt ?? data.title} width="1200" height="800" /></figure> : <Spot category={data.category} />}
+        {data.image ? <figure class="print"><img src={base + data.image} srcset={`${base}card-images/${recipe.id}/360.webp 360w, ${base}card-images/${recipe.id}/720.webp 720w`} sizes="(max-width:720px) 86vw, 440px" alt={data.imageAlt ?? data.title} width="1200" height="800" /></figure> : <Spot category={data.category} />}
       </header>
-      {groups && <nav class="recipe-jumps" aria-label="On this recipe">
-        <a href="#ingredients">Jump to ingredients</a>
-        <a href="#directions">Jump to directions</a>
-      </nav>}
+      <nav class="reader-links" aria-label="Recipe sections"><a href="#ingredients">Ingredients</a><a href="#directions">Directions</a><a href="#notes">Notes</a><a href="#photos">Gallery</a></nav>
       <div class="recipe-body">
         {Content && <Content />}
         {groups && <>
@@ -83,7 +87,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
             <p class="ing-hint" id="ing-help">Tap or hover over a marked ingredient to see its amount. Use the arrow keys to move between ingredients.</p>
             <ol role="list">{steps.map((step, si) => (
               <li>
-                <p class="step-text">{step.title && <strong class="step-title">{step.title}</strong>}{' '}<Parts parts={link!.steps[si].parts} emphasizeTiming /></p>
+                <p class="step-text">{step.title && <strong class="step-title">{step.title}</strong>}{' '}<Parts parts={link!.steps[si].parts} entries={link!.data.entries} emphasizeTiming /></p>
                 {step.why && <details class="why">
                   <summary><span class="why-mark" aria-hidden="true">?</span>Why?<span class="vh"> (step {si + 1})</span></summary>
                   <p><Parts parts={link!.steps[si].whyParts} /></p>
@@ -98,6 +102,10 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
       </div>
       {data.source && <p class="credit source">Adapted from <a href={data.source.url}>{data.source.name}</a>.</p>}
     </div>
+    <dialog id="recipe-print"><form method="dialog"><h2>Print recipe</h2><p>Choose what to include on your recipe sheet.</p>
+      {data.image && <label><input type="checkbox" id="print-photo" /> Recipe photo</label>}
+      {!!data.familyNotes?.length && <label><input type="checkbox" id="print-notes" /> Family notes</label>}
+      <div class="block-actions"><button value="print" class="button">Print</button><button value="cancel" class="button quiet">Cancel</button></div></form></dialog>
     <RecipeExtras recipe={recipe} />
     {pairs.length > 0 && <section class="block pairs" aria-labelledby="pairs-title"><h2 id="pairs-title">Goes well with</h2><ul class="cards">{pairs.map((r) => <RecipeCard recipe={r} />)}</ul></section>}
   </article>
@@ -118,5 +126,11 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
 
   const print = document.querySelector<HTMLButtonElement>('.print-button')!;
   print.hidden = false;
-  print.addEventListener('click', () => window.print());
+  const options = document.querySelector<HTMLDialogElement>('#recipe-print')!;
+  print.addEventListener('click', () => { options.returnValue = ''; options.showModal(); });
+  options.addEventListener('close', () => {
+    if (options.returnValue !== 'print') return;
+    for (const key of ['photo', 'notes']) document.body.classList.toggle('include-' + key, !!document.querySelector<HTMLInputElement>('#print-' + key)?.checked);
+    window.print();
+  });
 </script>

@@ -7,7 +7,7 @@ const { recipe, featured = false }: { recipe: Recipe; featured?: boolean } = Ast
 <a class="rolodex-card" href={recipeUrl(recipe.id)} data-filters={JSON.stringify(['course:' + recipe.data.category, ...recipe.data.meal.map((meal) => 'meal:' + meal)])} data-thumb={recipe.data.image ? base + 'thumbs/' + recipe.id + '.jpg' : undefined}>
   <div class="rolodex-art">
     {recipe.data.image
-      ? <img src={base + recipe.data.image} alt="" width="1200" height="800" fetchpriority={featured ? 'high' : undefined} />
+      ? <img src={base + `card-images/${recipe.id}/720.webp`} srcset={`${base}card-images/${recipe.id}/360.webp 360w, ${base}card-images/${recipe.id}/720.webp 720w`} sizes="(max-width: 720px) 85vw, 450px" alt="" width="1200" height="800" fetchpriority={featured ? 'high' : undefined} />
       : <Spot category={recipe.data.category} />}
   </div>
   <div class="rolodex-caption">

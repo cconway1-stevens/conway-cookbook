@@ -28,6 +28,7 @@
     "1 lemon, half juiced and half thinly sliced",
     "4 sprigs fresh thyme"
   ],
+  "shoppingMeasures": [{ "line": "3 garlic cloves, lightly crushed", "ingredient": "garlic", "unit": "cloves", "quantity": 3 }],
   "steps": [
     "Heat the oven to 425°F. Pat the chicken dry and season all over with salt and pepper.",
     "Heat the oil in an oven-safe skillet over medium heat. Add the thighs skin-side down and cook until the skin is deep golden, about 8–10 minutes. Flip the thighs.",

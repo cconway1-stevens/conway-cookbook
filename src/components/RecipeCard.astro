@@ -11,7 +11,7 @@ const Heading = level;
   <p class="card-tab">{data.category}</p>
   <div class="card-face">
     {data.image
-      ? <img class="card-photo" src={base + data.image} alt="" width="600" height="400" loading="lazy" />
+      ? <img class="card-photo" src={base + `card-images/${id}/360.webp`} srcset={`${base}card-images/${id}/360.webp 360w, ${base}card-images/${id}/720.webp 720w`} sizes="(max-width: 600px) 90vw, 360px" alt="" width="600" height="400" loading="lazy" />
       : <div class="card-photo card-art"><Spot category={data.category} /></div>}
     <div class="card-top">
       <Heading class="card-title"><a href={recipeUrl(id)}>{data.title}</a></Heading>

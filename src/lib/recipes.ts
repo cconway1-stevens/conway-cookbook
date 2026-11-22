@@ -55,7 +55,6 @@ export const menuData = (recipe: Recipe) => ({
   description: recipe.data.description,
   url: recipeUrl(recipe.id),
   section: courseOf(recipe.data.category).menu,
-  ingredients: ingredients(recipe),
 });
 
 export const indexEntry = (recipe: Recipe) => {

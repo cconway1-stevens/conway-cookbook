@@ -42,8 +42,8 @@ You can also write a `.md` recipe with `## Ingredients` and numbered `## Directi
 
 Menus in the public library have their own pages. Each dish links back to its recipe.
 
-1. Open the [menu builder](https://cconway1-stevens.github.io/conway-cookbook/menu/), pick dishes, and name the menu under **Style**.
-2. On the **Menu** tab, choose **Copy share link**.
+1. Open the [menu builder](https://cconway1-stevens.github.io/conway-cookbook/menu/), choose **Add a dish**, and edit **Menu name** on the menu itself.
+2. Under **Print & share**, choose **Copy share link**.
 3. With repository write access, open the [Publish a menu draft workflow](https://github.com/cconway1-stevens/conway-cookbook/actions/workflows/publish-menu.yml). Choose **Run workflow** on `main`, paste the link, and add a library description.
 4. Follow **Review draft and open a pull request** in the finished run. The menu joins the library after you merge the draft.
 
@@ -78,3 +78,7 @@ The deploy can record narration with Kokoro. If recording fails, cook mode uses 
 Reading help uses the [AccessibleWeb Widget](https://github.com/ifrederico/accessible-web-widget). Voice commands use on-device speech recognition when the browser supports it.
 
 Made by Cameron Conway.
+
+### Shopping quantities
+
+A recipe can optionally list `shoppingMeasures` for quantities that are safe to add across dishes. Each record matches the original ingredient line exactly. For example, the tomato soup supplies `{ "line": "2 garlic cloves, minced", "ingredient": "garlic", "unit": "cloves", "quantity": 2 }`. Only identical ingredient and unit names combine. Other lines stay under their dish, with the author's wording intact.

@@ -89,11 +89,12 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
         </div>
         {data.image ? <figure class="print"><img src={base + data.image} srcset={`${base}card-images/${recipe.id}/360.webp 360w, ${base}card-images/${recipe.id}/720.webp 720w`} sizes="(max-width:720px) 86vw, 440px" alt={data.imageAlt ?? data.title} width="1200" height="800" /></figure> : <Spot category={data.category} />}
       </header>
-      <nav class="reader-links" aria-label="Recipe sections"><a href="#ingredients" data-card-link="recipe">Recipe</a>{nutrition && <a href="#nutrition" data-card-link="nutrition">Nutrition</a>}<a href="#notes" data-card-link="notes">Notes</a><a href="#photos" data-card-link="photos">Gallery</a></nav>
+      <nav class="reader-links" role="tablist" aria-label="Recipe card">
+        <a id="tab-recipe" href="#recipe" role="tab" aria-controls="recipe" aria-selected="true" data-card-link="recipe">Recipe</a>
+        <a id="tab-details" href="#details" role="tab" aria-controls="details" aria-selected="false" data-card-link="details">Details</a>
+      </nav>
+      <div id="recipe" role="tabpanel" aria-labelledby="tab-recipe">
       <div class="recipe-view-tools"><a class="ingredients-shortcut" href="#ingredients">Ingredients</a><a href="#directions">Directions ↓</a><button class="linkish" type="button" id="convert-open" hidden>Convert units</button></div>
-      {skills.length > 0 && <details id="skills" class="technique-help"><summary>Technique help</summary>
-        <ul>{skills.map(skill => <li><a href={base + 'academy/#' + skill.id}>{skill.title}</a></li>)}</ul>
-      </details>}
       {!groups && <UnitChoice />}
       <div class="recipe-body">
         {Content && <Content />}
@@ -116,19 +117,25 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
           <script type="application/json" id="ing-data" set:html={json(link!.data)} />
         </>}
       </div>
-      {data.source && <p class="credit source">Adapted from <a href={data.source.url}>{data.source.name}</a>.</p>}
+      </div>
     <dialog id="recipe-print"><form method="dialog"><h2>Print recipe</h2><p>Choose what to include on your recipe sheet.</p>
       {data.image && <label><input type="checkbox" id="print-photo" /> Recipe photo</label>}
       {!!data.familyNotes?.length && <label><input type="checkbox" id="print-notes" /> Family notes</label>}
       <div class="block-actions"><button value="print" class="button">Print</button><button value="cancel" class="button quiet">Cancel</button></div></form></dialog>
 
+    <div id="details" role="tabpanel" aria-labelledby="tab-details">
+      {skills.length > 0 && <details id="skills" class="technique-help"><summary>Technique help</summary>
+        <ul>{skills.map(skill => <li><a href={base + 'academy/#' + skill.id}>{skill.title}</a></li>)}</ul>
+      </details>}
+      {data.source && <p class="credit source">Adapted from <a href={data.source.url}>{data.source.name}</a>.</p>}
     {nutrition && <section class="nutrition-label" id="nutrition" aria-labelledby="nutrition-title"><h2 id="nutrition-title">Nutrition facts</h2><p class="nutrition-basis">{nutrition.basis}{nutrition.basis === 'Whole recipe' && ` · Recipe serves ${data.servings}`}</p><dl>{nutrition.rows.map(n => <div class:list={[{ calories: n.name === 'Calories' }]}><dt>{n.name}</dt><dd>{Math.round(n.amount).toLocaleString('en-US')} {n.unit}</dd></div>)}</dl><p class="nutrition-note"><strong>Recipe estimate.</strong> Calculated by <a href="https://spoonacular.com/food-api">Spoonacular</a> from the listed ingredients. Brands, preparation and portion size affect the actual values.</p></section>}
     <RecipeExtras recipe={recipe}>
       {groups && Object.entries(data.notes ?? {}).map(([title, text]) => <section class="sec recipe-note"><h3>{title}</h3><p>{text}</p></section>)}
       {data.story && groups && <section class="recipe-note"><h3>The story</h3><p>{data.story}</p></section>}
     </RecipeExtras>
-    </div>
     {pairs.length > 0 && <section class="block pairs" aria-labelledby="pairs-title"><h2 id="pairs-title">Goes well with</h2><ul class="cards">{pairs.map((r) => <RecipeCard recipe={r} />)}</ul></section>}
+    </div>
+    </div>
   </article>
   <Converter />
   <CookMode recipe={recipe} />
@@ -139,13 +146,24 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
   const viewLinks = card.querySelectorAll<HTMLAnchorElement>('[data-card-link]');
   function showSection() {
     const target = document.getElementById(location.hash.slice(1));
-    const view = target?.closest('#nutrition, #notes, #photos')?.id ?? 'recipe';
+    const view = target?.closest('[role="tabpanel"]')?.id ?? 'recipe';
     card.dataset.view = view;
     for (const link of viewLinks) {
-      if (link.dataset.cardLink === view) link.setAttribute('aria-current', 'location');
-      else link.removeAttribute('aria-current');
+      const active = link.dataset.cardLink === view;
+      link.setAttribute('aria-selected', String(active));
+      link.tabIndex = active ? 0 : -1;
     }
     if (target && card.contains(target)) target.scrollIntoView({block: 'start'});
+  }
+  for (const [index, link] of viewLinks.entries()) {
+    link.addEventListener('keydown', event => {
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? 1 :
+        ['ArrowRight', 'ArrowLeft'].includes(event.key) ? 1 - index : -1;
+      if (next < 0) return;
+      event.preventDefault();
+      viewLinks[next].focus();
+      viewLinks[next].click();
+    });
   }
   showSection();
   window.addEventListener('hashchange', showSection);

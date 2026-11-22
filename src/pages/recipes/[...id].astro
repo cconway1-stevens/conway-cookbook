@@ -1,5 +1,7 @@
 ---
 import { render } from 'astro:content';
+import Converter from '../../components/Converter.astro';
+import UnitChoice from '../../components/UnitChoice.astro';
 import Cookbook from '../../layouts/Cookbook.astro';
 import RecipeCard from '../../components/RecipeCard.astro';
 import Spot from '../../components/Spot.astro';
@@ -28,7 +30,7 @@ export async function getStaticPaths() {
 const { recipe, pairs } = Astro.props;
 const { data } = recipe;
 const skills = academyLinksFor(recipe);
-const nutrition = await nutritionFor(recipe);
+const nutrition = nutritionFor(recipe);
 const pin = Astro.site && new URL('https://www.pinterest.com/pin/create/button/');
 if (pin && Astro.site) {
   pin.search = new URLSearchParams({
@@ -88,7 +90,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
       <div class="recipe-body">
         {Content && <Content />}
         {groups && <>
-          <section class="sec sec-ingredients" id="ingredients" role="group" aria-describedby="ing-help"><h2>Ingredients</h2><p class="ingredient-progress" id="ingredient-progress" role="status" hidden></p>
+          <section class="sec sec-ingredients" id="ingredients" role="group" aria-describedby="ing-help"><h2>Ingredients</h2><UnitChoice /><p class="ingredient-progress" id="ingredient-progress" role="status" hidden></p>
             {groups.map((g, gi) => <>{g.name && <h3>{g.name}</h3>}<ul>{g.items.map((item, ii) => <li class="ing-line" data-e={link!.ids[gi][ii]}><input type="checkbox" class="ingredient-tick" aria-label={`Gathered: ${item}`} hidden />{item}</li>)}</ul></>)}
           </section>
           <section class="sec sec-directions" id="directions" role="group" aria-describedby="ing-help"><h2>Directions</h2>
@@ -119,25 +121,11 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
     <RecipeExtras recipe={recipe} />
     {pairs.length > 0 && <section class="block pairs" aria-labelledby="pairs-title"><h2 id="pairs-title">Goes well with</h2><ul class="cards">{pairs.map((r) => <RecipeCard recipe={r} />)}</ul></section>}
   </article>
-  <dialog id="converter" aria-labelledby="converter-title">
-    <form method="dialog">
-      <h2 id="converter-title">Kitchen converter</h2>
-      <p id="convert-source"></p>
-      <div class="converter-fields">
-        <label>Amount <input id="convert-amount" type="number" step="any" inputmode="decimal" /></label>
-        <label>From <select id="convert-from"></select></label>
-        <label>To <select id="convert-to"></select></label>
-      </div>
-      <output aria-live="polite"></output>
-      <p>Volume uses US measures. Converting between volume and weight requires an ingredient-specific density.</p>
-      <button class="button quiet">Close</button>
-    </form>
-  </dialog>
+  <Converter />
   <CookMode recipe={recipe} />
 </Cookbook>
 <script>
   import '../../scripts/ingredient-hover';
-  import '../../scripts/converter';
   const progress = document.querySelector<HTMLElement>('#ingredient-progress');
   const ticks = [...document.querySelectorAll<HTMLInputElement>('.ingredient-tick')];
   if (progress && ticks.length) {

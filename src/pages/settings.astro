@@ -1,4 +1,6 @@
 ---
+import Converter from '../components/Converter.astro';
+import UnitChoice from '../components/UnitChoice.astro';
 import Cookbook from '../layouts/Cookbook.astro';
 import VoicePanel from '../components/VoicePanel.astro';
 import { book } from '../lib/cookbook';
@@ -6,6 +8,8 @@ import { book } from '../lib/cookbook';
 <Cookbook title="Settings" description="Pick a look and a reading voice." current="settings">
   <div class="wrap settings">
     <h1>Settings</h1>
+    <section class="panel"><h2>Kitchen measurements</h2><UnitChoice /><button type="button" id="convert-open" class="linkish" hidden>Open kitchen converter</button></section>
+    <Converter />
     <section class="panel" aria-labelledby="look">
       <h2 id="look">Look</h2>
       <div class="themes" role="radiogroup" aria-labelledby="look">

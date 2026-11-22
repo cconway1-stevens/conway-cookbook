@@ -19,7 +19,7 @@ function measure(text: string) {
       const [a, b = '1'] = part.split('/');
       return sum + Number(a) / Number(b);
     }, 0);
-  if (unit && Number.isFinite(amount) && amount > 0) return { amount, unit };
+  if (unit && Number.isFinite(amount) && amount > 0) return { amount, unit, prefix: match[0] };
 }
 
 const dialog = document.querySelector<HTMLDialogElement>('#converter')!;
@@ -64,15 +64,61 @@ dialog.addEventListener('change', update);
 const launch = document.querySelector<HTMLButtonElement>('#convert-open')!;
 launch.hidden = false;
 launch.addEventListener('click', () => open());
-document.querySelectorAll<HTMLElement>('.sec-ingredients .ing-line').forEach(line => {
+const picker = document.querySelector<HTMLSelectElement>('[data-unit-choice]');
+const preferenceKey = 'cookbook-ingredient-units';
+const rows = [...document.querySelectorAll<HTMLElement>('.sec-ingredients li')].flatMap(line => {
+  // Preserve rich Markdown when a contributor has formatted an ingredient.
+  if ([...line.children].some(child => !child.matches('.ingredient-tick'))) return [];
   const text = line.textContent?.trim() ?? '';
   const parsed = measure(text);
-  if (!parsed) return;
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'linkish convert-ingredient';
-  button.textContent = 'Convert';
-  button.setAttribute('aria-label', `Convert ${text}`);
-  button.addEventListener('click', event => { event.stopPropagation(); open(text, parsed); });
-  line.append(' ', button);
+  const prefix = parsed?.prefix ?? text.match(/^(?:[\d¼½¾⅓⅔⅛⅜⅝⅞]+(?:[./–-][\d]+)?(?:\s+\d+\/\d+)?)(?=\s)/)?.[0] ?? '';
+  const quantity = document.createElement(parsed ? 'button' : 'span');
+  quantity.className = 'measure-quantity';
+  quantity.textContent = prefix;
+  if (quantity instanceof HTMLButtonElement && parsed) {
+    quantity.type = 'button';
+    quantity.classList.add('convert-ingredient');
+    quantity.title = 'Convert ' + text;
+    quantity.setAttribute('aria-label', quantity.title);
+    quantity.addEventListener('click', event => { event.stopPropagation(); open(text, parsed); });
+  }
+  const name = document.createElement('span');
+  name.className = 'measure-name';
+  name.textContent = text.slice(prefix.length).trim();
+  const tick = line.querySelector('.ingredient-tick');
+  line.replaceChildren(...(tick ? [tick] : []), quantity, ' ', name);
+  line.classList.add('measure-row');
+  return [{ quantity, parsed, prefix }];
 });
+
+function applyUnits(system: string) {
+  if (picker) picker.value = system;
+  for (const { quantity, parsed, prefix } of rows) {
+    quantity.textContent = prefix;
+    if (!parsed || system === 'original') continue;
+    const volume = Object.hasOwn(volumes, parsed.unit);
+    const factors: Record<string, number> = volume ? volumes : weights;
+    const baseAmount = parsed.amount * factors[parsed.unit];
+    if (system === 'metric' && ['mL','L','g','kg'].includes(parsed.unit)) continue;
+    if (system === 'us' && !['mL','L','g','kg'].includes(parsed.unit)) continue;
+    const target = system === 'metric'
+      ? (volume ? (baseAmount >= 1000 ? 'L' : 'mL') : (baseAmount >= 1000 ? 'kg' : 'g'))
+      : (volume ? (baseAmount < 15 ? 'US tsp' : baseAmount < 60 ? 'US tbsp' : 'US cup') : (baseAmount >= weights.lb ? 'lb' : 'oz'));
+    quantity.textContent = '≈ ' + format.format(baseAmount / factors[target]) + ' ' + target;
+  }
+}
+function restoreUnits() {
+  let system = 'original';
+  try { system = localStorage.getItem(preferenceKey) ?? system; } catch {}
+  applyUnits(['metric','us'].includes(system) ? system : 'original');
+}
+if (picker) {
+  picker.parentElement!.hidden = false;
+  picker.addEventListener('change', () => {
+    applyUnits(picker.value);
+    try { localStorage.setItem(preferenceKey, picker.value); } catch {}
+  });
+}
+restoreUnits();
+window.addEventListener('pageshow', restoreUnits);
+window.addEventListener('storage', event => { if (!event.key || event.key === preferenceKey) restoreUnits(); });

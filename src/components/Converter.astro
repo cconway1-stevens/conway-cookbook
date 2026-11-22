@@ -1,0 +1,15 @@
+  <dialog id="converter" aria-labelledby="converter-title">
+    <form method="dialog">
+      <h2 id="converter-title">Kitchen converter</h2>
+      <p id="convert-source"></p>
+      <div class="converter-fields">
+        <label>Amount <input id="convert-amount" type="number" step="any" inputmode="decimal" /></label>
+        <label>From <select id="convert-from"></select></label>
+        <label>To <select id="convert-to"></select></label>
+      </div>
+      <output aria-live="polite"></output>
+      <p>Volume uses US measures. Converting between volume and weight requires an ingredient-specific density.</p>
+      <button class="button quiet">Close</button>
+    </form>
+  </dialog>
+<script>import '../scripts/converter';</script>

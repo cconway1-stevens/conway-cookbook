@@ -1,0 +1,41 @@
+name: Save recipe nutrition
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['src/content/recipes/**']
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: recipe-nutrition
+  cancel-in-progress: false
+jobs:
+  save:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --omit=dev
+      - run: npm run build
+      - run: node scripts/save-nutrition.mjs
+        env:
+          SPOONACULAR_API_KEY: ${{ secrets.SPOONACULAR_API_KEY }}
+      - name: Save completed results and publish
+        if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -d src/data/nutrition ]; then git add src/data/nutrition; fi
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m "Save calculated recipe nutrition"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          gh workflow run pages.yml --ref main

@@ -85,6 +85,6 @@ A recipe can optionally list `shoppingMeasures` for quantities that are safe to 
 
 Cooking Academy lessons are in `src/lib/academy.ts`. Ingredient and direction matches link recipe cards to lessons on the static Academy page.
 
-For automatic recipe nutrition, set the Actions secret `SPOONACULAR_API_KEY` and run the Pages deployment. Each build submits recipe ingredient lines and yield to Spoonacular's Analyze Recipe endpoint. Numeric yields display per serving. Ranges and descriptive yields display whole-recipe totals. Missing credentials, unmatched ingredients, incomplete results and provider errors omit the panel. Provider values are calculated from ingredient data and can differ from the finished dish.
+Recipe changes trigger **Save recipe nutrition**, which stores Spoonacular results in `src/data/nutrition/<recipe-id>.json`. Recipe views and Pages deployments read those files locally. The workflow skips previously analyzed ingredient lists and yields, including incomplete matches. After an API error it saves completed results and stops. Run the workflow manually to resume after quota resets. To retry an incomplete match, correct the ingredients or remove its snapshot and run the workflow. The key is used only by the nutrition workflow.
 
 To curate a recipe’s collapsed **Technique help**, set `academyLinks` to lesson or module IDs, for example `["dice", "prep-school"]`. Omit the field for automatic skill matches, or use an empty list to hide the control. Unknown IDs fail the build.

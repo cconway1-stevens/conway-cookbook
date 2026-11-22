@@ -35,6 +35,7 @@ if (pin && Astro.site) {
 }
 const groups = data.ingredients ? ingredients(recipe) : null;
 const link = groups ? linkOf(recipe) : null;
+const steps = groups ? directions(recipe) : [];
 const Content = groups ? null : (await render(recipe)).Content;
 const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURIComponent(value)}`;
 ---
@@ -63,9 +64,8 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
 
           <div class="recipe-actions">
             <button type="button" class="button" data-cook hidden>Start cooking</button>
-            <button type="button" class="button quiet" data-add={recipe.id} data-title={data.title} hidden>Add to menu</button>
             <button type="button" class="button quiet print-button" hidden>Print recipe</button>
-
+            <button type="button" class="button quiet" data-add={recipe.id} data-title={data.title} hidden>Add to menu</button>
           </div>
 <details class="recipe-more"><summary>Recipe details &amp; sharing</summary>          <ul class="tapes">
             {data.meal.map((m) => <li><a class="tape blue" href={q('meal', m)}>{m}</a></li>)}
@@ -80,18 +80,25 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
       <div class="recipe-body">
         {Content && <Content />}
         {groups && <>
-
-          <section class="sec sec-ingredients" role="group" aria-describedby="ing-help"><h2 id="ingredients">Ingredients</h2>
+          <section class="sec sec-ingredients" id="ingredients" role="group" aria-describedby="ing-help"><h2>Ingredients</h2>
             {groups.map((g, gi) => <>{g.name && <h3>{g.name}</h3>}<ul>{g.items.map((item, ii) => <li class="ing-line" data-e={link!.ids[gi][ii]}>{item}</li>)}</ul></>)}
           </section>
-          <section class="sec sec-directions" role="group" aria-describedby="ing-help"><h2 id="directions">Directions</h2>
-            <p class="ing-hint" id="ing-help">Tap an underlined ingredient for its recipe quantity and uses.</p>
-            <ol>{directions(recipe).map((step, si) => <li>{step.title && <strong>{step.title}.</strong>} <Parts parts={link!.steps[si].parts} entries={link!.data.entries} />{step.why && <details class="why"><summary><span class="why-mark" aria-hidden="true">?</span>Why?</summary><p><Parts parts={link!.steps[si].whyParts} /></p></details>}</li>)}</ol>
+          <section class="sec sec-directions" id="directions" role="group" aria-describedby="ing-help"><h2>Directions</h2>
+            <p class="ing-hint" id="ing-help">Tap or hover over a marked ingredient to see its amount. Use the arrow keys to move between ingredients.</p>
+            <ol role="list">{steps.map((step, si) => (
+              <li>
+                <p class="step-text">{step.title && <strong class="step-title">{step.title}</strong>}{' '}<Parts parts={link!.steps[si].parts} entries={link!.data.entries} emphasizeTiming /></p>
+                {step.why && <details class="why">
+                  <summary><span class="why-mark" aria-hidden="true">?</span>Why?<span class="vh"> (step {si + 1})</span></summary>
+                  <p><Parts parts={link!.steps[si].whyParts} /></p>
+                </details>}
+              </li>
+            ))}</ol>
           </section>
           <script type="application/json" id="ing-data" set:html={json(link!.data)} />
-          {data.story && <section class="sec"><h2>The story</h2><p>{data.story}</p></section>}
-          {Object.entries(data.notes ?? {}).map(([title, text]) => <section class="sec"><h2>{title}</h2><p>{text}</p></section>)}
+          {Object.entries(data.notes ?? {}).map(([title, text]) => <section class="sec recipe-note"><h2>{title}</h2><p>{text}</p></section>)}
         </>}
+        {data.story && groups && <section class="sec recipe-note"><h2>The story</h2><p>{data.story}</p></section>}
       </div>
       {data.source && <p class="credit source">Adapted from <a href={data.source.url}>{data.source.name}</a>.</p>}
     </div>
@@ -106,6 +113,17 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
 </Cookbook>
 <script>
   import '../../scripts/ingredient-hover';
+
+  const back = document.querySelector<HTMLAnchorElement>('.index-link')!;
+  if (document.referrer) {
+    const previous = new URL(document.referrer);
+    const box = new URL(back.href);
+    if (previous.origin === box.origin && previous.pathname === box.pathname) {
+      box.search = previous.search;
+      back.href = box.href;
+    }
+  }
+
   const print = document.querySelector<HTMLButtonElement>('.print-button')!;
   print.hidden = false;
   const options = document.querySelector<HTMLDialogElement>('#recipe-print')!;

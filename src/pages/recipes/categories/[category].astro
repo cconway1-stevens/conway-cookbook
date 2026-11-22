@@ -1,7 +1,7 @@
 ---
 // Keeps every published /recipes/categories/ link working, for courses and meals alike.
 import Cookbook from '../../../layouts/Cookbook.astro';
-import RecipeCard from '../../../components/RecipeCard.astro';
+import RecipeSections from '../../../components/RecipeSections.astro';
 import { allRecipes, base } from '../../../lib/recipes';
 import { book, courseNames, slug } from '../../../lib/cookbook';
 
@@ -17,6 +17,6 @@ const { name, list } = Astro.props;
 <Cookbook title={name} current="recipes">
   <section class="wrap box">
     <div class="block-head"><h1>{name}</h1><a class="button quiet" href={base + 'recipes/'}>Search the whole box</a></div>
-    <ul class="cards">{list.map((recipe) => <RecipeCard recipe={recipe} level="h2" />)}</ul>
+    <RecipeSections name={name} recipes={list} level="h2" />
   </section>
 </Cookbook>

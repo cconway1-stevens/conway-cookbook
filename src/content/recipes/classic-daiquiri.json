@@ -1,7 +1,7 @@
 {
   "title": "Classic Daiquiri",
   "description": "White rum and fresh lime shaken with simple syrup.",
-  "category": "Cocktails",
+  "category": "Drinks",
   "time": "5 minutes",
   "minutes": 5,
   "servings": "1",
@@ -17,6 +17,7 @@
     "Shake for about 12 seconds and strain into a chilled coupe."
   ],
   "tags": [
+    "Cocktail",
     "Rum",
     "Lime"
   ]

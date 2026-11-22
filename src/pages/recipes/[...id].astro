@@ -81,8 +81,8 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
       <div class="recipe-body">
         {Content && <Content />}
         {groups && <>
-          <section class="sec sec-ingredients" id="ingredients" role="group" aria-describedby="ing-help"><h2>Ingredients</h2>
-            {groups.map((g, gi) => <>{g.name && <h3>{g.name}</h3>}<ul>{g.items.map((item, ii) => <li class="ing-line" data-e={link!.ids[gi][ii]}>{item}</li>)}</ul></>)}
+          <section class="sec sec-ingredients" id="ingredients" role="group" aria-describedby="ing-help"><h2>Ingredients</h2><p class="ingredient-progress" id="ingredient-progress" role="status" hidden></p>
+            {groups.map((g, gi) => <>{g.name && <h3>{g.name}</h3>}<ul>{g.items.map((item, ii) => <li class="ing-line" data-e={link!.ids[gi][ii]}><input type="checkbox" class="ingredient-tick" aria-label={`Gathered: ${item}`} hidden />{item}</li>)}</ul></>)}
           </section>
           <section class="sec sec-directions" id="directions" role="group" aria-describedby="ing-help"><h2>Directions</h2>
             <p class="ing-hint" id="ing-help">Tap or hover over a marked ingredient to see its amount. Use the arrow keys to move between ingredients.</p>
@@ -114,6 +114,21 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
 </Cookbook>
 <script>
   import '../../scripts/ingredient-hover';
+  const progress = document.querySelector<HTMLElement>('#ingredient-progress');
+  const ticks = [...document.querySelectorAll<HTMLInputElement>('.ingredient-tick')];
+  if (progress && ticks.length) {
+    const updateProgress = () => {
+      const checked = ticks.filter(tick => tick.checked).length;
+      progress.textContent = checked === ticks.length ? 'Everything’s on the counter!' : `${checked} of ${ticks.length} ingredients gathered`;
+    };
+    for (const tick of ticks) {
+      tick.hidden = false;
+      tick.addEventListener('change', updateProgress);
+    }
+    progress.hidden = false;
+    updateProgress();
+    window.addEventListener('pageshow', updateProgress);
+  }
 
   const back = document.querySelector<HTMLAnchorElement>('.index-link')!;
   if (document.referrer) {

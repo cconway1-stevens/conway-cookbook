@@ -1,0 +1,56 @@
+@media screen {
+  .box .filters { padding: .65rem .85rem; }
+  .catalog-toolbar { display: flex; flex-wrap: wrap; gap: .55rem 1rem; align-items: start; }
+  .catalog-toolbar .search { flex: 0 1 25rem; min-width: min(100%, 15rem); }
+  .catalog-toolbar .search input { margin: 0; padding-block: .4rem; }
+  .catalog-toolbar .more-filters { flex: 1 1 8rem; margin: 0; border: 0; padding: 0; }
+  .catalog-toolbar .more-filters[open] { flex-basis: 100%; }
+  .box .meal-filters { margin-block: .5rem 0; }
+  .drawer-index { display: flex; flex-wrap: wrap; gap: .4rem; margin-block: 1rem; }
+  .drawer-index a, .catalog-drawer h2 span {
+    border: 1px solid var(--line);
+    border-radius: .55rem .55rem .12rem .12rem;
+    background: var(--tint);
+    color: var(--ink);
+    padding: .4rem .75rem;
+    text-decoration: none;
+  }
+  .drawer-index a { min-height: 44px; display: inline-flex; gap: .45rem; align-items: center; font-weight: 600; }
+  .drawer-index a:hover, .drawer-index a:focus-visible { background: var(--highlight); }
+  .drawer-index small { font: inherit; color: var(--soft); font-size: .8em; }
+  .catalog-drawer { margin-top: 1.25rem; scroll-margin-top: 1rem; }
+  .catalog-drawer h2 { font-size: 1.4rem; margin-bottom: 1rem; border-bottom: 1px solid var(--line); }
+  .catalog-drawer h2 span { display: inline-block; }
+  .catalog-drawer .card-tab { display: none; }
+  .catalog-drawer .card-face { border-top: 3px solid var(--accent); }
+  .catalog-results, .catalog-options { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem 1rem; }
+  .catalog-options label { display: flex; align-items: center; gap: .45rem; }
+  .catalog-options select { min-height: 44px; max-width: 100%; }
+  #catalog-layout { min-height: 44px; }
+  .box[data-layout=compact] .cards { grid-template-columns: minmax(0, 1fr); }
+  .box[data-layout=compact] .card-face { display: grid; grid-template-columns: minmax(4rem, 7rem) minmax(0, 1fr); gap: .3rem .85rem; }
+  .box[data-layout=compact] .card-photo { grid-row: 1 / span 3; align-self: start; margin: 0; }
+  .box[data-layout=compact] .card-desc, .box[data-layout=compact] .card-foot .tapes { display: none; }
+  .box[data-layout=compact] .card-foot { grid-column: 2; margin: 0; }
+  .box[data-layout=compact] .card-title { font-size: clamp(1rem, 3vw, 1.4rem); }
+  .box[data-layout=compact] .card-go { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .cookie-note { background: var(--highlight); border: 1px dashed var(--accent); padding: .65rem 1rem; border-radius: .4rem; }
+  #catalog-deal { margin: auto; width: min(90vw, 30rem); background: var(--card); color: var(--ink); border: 1px solid var(--line); border-top: 6px solid var(--accent); border-radius: .65rem; padding: 1.5rem; box-shadow: 0 10px 30px var(--shade); }
+  #catalog-deal::backdrop { background: #14292199; }
+  #deal-recipe { margin-block: .65rem 1rem; font: 1.6rem var(--display); }
+  @media (prefers-reduced-motion: no-preference) {
+    .card-dealt { animation: card-dealt .25s ease-out both; }
+    @keyframes card-dealt { from { opacity: .5; transform: translateY(.7rem) rotate(-2deg); } }
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .box .box-heading { padding-bottom: .55rem; margin-bottom: .65rem; }
+  .box-actions .button { min-height: 44px; padding: .4rem .65rem; }
+  .catalog-toolbar .search { flex: 1 1 12rem; min-width: 0; }
+  .catalog-toolbar .more-filters:not([open]) { flex: 0 0 auto; }
+  .catalog-toolbar .more-filters summary { max-width: none; font-size: .92rem; }
+  .drawer-index { gap: .3rem; margin-block: .65rem; }
+  .drawer-index a { font-size: .88rem; padding-inline: .55rem; }
+  .catalog-drawer { margin-top: .65rem; }
+}

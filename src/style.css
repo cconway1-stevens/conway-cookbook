@@ -600,3 +600,12 @@ input[role=switch]:disabled { opacity: .4; cursor: not-allowed; }
     border-color: var(--ink);
   }
 }
+
+@media screen {
+  .ingredient-progress { margin-bottom: .5rem; color: var(--soft); font-size: .9rem; }
+  .ingredient-tick { inline-size: 1.15rem; block-size: 1.15rem; margin-inline-end: .6rem; vertical-align: text-bottom; accent-color: var(--accent); cursor: pointer; }
+  .ing-line:has(.ingredient-tick:checked) { background: var(--tint); }
+}
+@media print {
+  .ingredient-progress, .ingredient-tick { display: none !important; }
+}

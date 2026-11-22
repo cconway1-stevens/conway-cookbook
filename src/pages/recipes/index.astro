@@ -2,11 +2,13 @@
 import Cookbook from '../../layouts/Cookbook.astro';
 import RecipeCard from '../../components/RecipeCard.astro';
 import { allRecipes, tally } from '../../lib/recipes';
-import { book } from '../../lib/cookbook';
+import { book, slug } from '../../lib/cookbook';
 const recipes = await allRecipes();
 const meals = book.meals.filter((m) => recipes.some((r) => r.data.meal.includes(m)));
 const cuisines = tally(recipes.flatMap((r) => r.data.cuisine));
 const tags = tally(recipes.flatMap((r) => r.data.tags));
+const drawers = book.courses.map(({ name }) => ({ name, id: slug(name), recipes: recipes.filter(recipe => recipe.data.category === name) })).filter(drawer => drawer.recipes.length);
+import '../../catalog.css';
 ---
 <Cookbook title="Recipe box" description="Search every recipe by meal, cuisine, time, or ingredient." current="recipes" showHeaderSearch={false}>
   <div class="wrap box">
@@ -14,17 +16,15 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
       <h1>The recipe box</h1>
       <div class="box-actions">
         <button type="button" class="button quiet box-queue" id="queue" aria-pressed="false" hidden>To cook</button>
-        <button type="button" class="linkish box-surprise" data-pull hidden>Surprise me</button>
+        <button type="button" class="button quiet" id="catalog-pick" hidden>Deal a card</button>
       </div>
     </div>
     <form id="filters" class="filters" role="search" aria-label="Find recipes" hidden>
+      <div class="catalog-toolbar">
       <div class="search">
-        <label for="q">Search by dish, ingredient, or tag</label>
-        <input id="q" name="q" type="search" placeholder="Try “lemon” or “vegetarian”" autocomplete="off" enterkeyhint="search" />
+        <label class="vh" for="q">Search by dish, ingredient, or tag</label>
+        <input id="q" name="q" type="search" placeholder="Find a dish or ingredient" autocomplete="off" enterkeyhint="search" />
       </div>
-      <fieldset class="meal-filters"><legend class="vh">Meal</legend>
-        {['', ...meals].map((m) => <label><input type="radio" name="meal" value={m} checked={m === ''} /><span>{m || 'All recipes'}</span></label>)}
-      </fieldset>
       <details class="more-filters"><summary>More filters <span id="filter-count" hidden></span></summary><div class="filter-options">
         <fieldset><legend>Cuisine</legend><div class="filter-choices">
           {cuisines.map(([c]) => <label><input type="checkbox" name="cuisine" value={c} />{c}</label>)}
@@ -36,13 +36,34 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
           <select id="ready" name="ready"><option value="">Any time</option><option value="20">20 minutes or less</option><option value="30">30 minutes or less</option><option value="60">1 hour or less</option><option value="90">1½ hours or less</option></select>
         </div>
       </div></details>
+      </div>
+      <fieldset class="meal-filters"><legend class="vh">Meal</legend>
+        {['', ...meals].map((m) => <label><input type="radio" name="meal" value={m} checked={m === ''} /><span>{m || 'All recipes'}</span></label>)}
+      </fieldset>
     </form>
-    <div class="results">
+    <nav class="drawer-index" aria-label="Recipe categories">
+      {drawers.map(drawer => <a data-drawer-link={drawer.id} href={'#drawer-' + drawer.id}>{drawer.name} <small>{drawer.recipes.length}</small></a>)}
+    </nav>
+    <div class="results catalog-results">
       <p id="count" role="status">{recipes.length} recipes</p>
+      <div class="catalog-options" hidden>
+        <label>Sort <select id="catalog-sort"><option value="">By category</option><option value="quick">Quickest first</option><option value="az">Name A–Z</option></select></label>
+        <button type="button" class="linkish" id="catalog-layout" aria-pressed="false">Compact view</button>
+      </div>
       <button type="button" id="clear" class="linkish" hidden>Clear all</button>
     </div>
     <ul id="active-filters" class="active-filters" aria-label="Applied filters" role="list" hidden></ul>
-    <ul class="cards">{recipes.map((recipe) => <RecipeCard recipe={recipe} level="h2" />)}</ul>
+    <p id="cookie-jar" class="cookie-note" role="status" hidden>The cookie jar is open. There’s chocolate in that drawer.</p>
+    <ul class="cards" id="catalog-sorted" hidden></ul>
+    {drawers.map(drawer => <section class="catalog-drawer" id={'drawer-' + drawer.id} data-drawer={drawer.id} aria-labelledby={'label-' + drawer.id}>
+      <h2 id={'label-' + drawer.id}><span>{drawer.name}</span></h2>
+      <ul class="cards">{drawer.recipes.map(recipe => <RecipeCard recipe={recipe} level="h3" />)}</ul>
+    </section>)}
+    <dialog id="catalog-deal" aria-labelledby="deal-title"><form method="dialog">
+      <h2 id="deal-title">Your card</h2>
+      <p id="deal-recipe"></p>
+      <div class="block-actions"><a class="button" id="deal-link">Open recipe</a><button type="button" class="button quiet" id="deal-again">Deal again</button><button class="linkish">Close</button></div>
+    </form></dialog>
     <div id="none" class="none" hidden>
       <h2>No card for that yet</h2>
       <p id="none-help">Remove a filter or try a different ingredient or dish.</p>
@@ -57,6 +78,15 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
   const cards = [...document.querySelectorAll<HTMLElement>('.card')];
   const count = document.querySelector('#count')!, clear = document.querySelector<HTMLElement>('#clear')!, none = document.querySelector<HTMLElement>('#none')!;
   const queue = document.querySelector<HTMLButtonElement>('#queue')!;
+  const box = document.querySelector<HTMLElement>('.box')!;
+  const drawers = [...box.querySelectorAll<HTMLElement>('[data-drawer]')];
+  const sorted = document.querySelector<HTMLUListElement>('#catalog-sorted')!;
+  const sort = document.querySelector<HTMLSelectElement>('#catalog-sort')!;
+  const layout = document.querySelector<HTMLButtonElement>('#catalog-layout')!;
+  const deal = document.querySelector<HTMLDialogElement>('#catalog-deal')!;
+  const pick = document.querySelector<HTMLButtonElement>('#catalog-pick')!;
+  const cookie = document.querySelector<HTMLElement>('#cookie-jar')!;
+  let lastDeal: HTMLElement | undefined;
   const noneHelp = document.querySelector('#none-help')!;
   let queuedOnly = false;
   const search = form.querySelector<HTMLInputElement>('#q')!;
@@ -65,7 +95,7 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
   const filterCount = document.querySelector<HTMLElement>('#filter-count')!;
   const fold = (text: string) => text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   const index = cards.map((card) => ({
-    card, text: fold(card.dataset.search!), minutes: Number(card.dataset.minutes) || Infinity,
+    card, shelf: card.parentElement!, title: card.querySelector<HTMLAnchorElement>('.card-title a')!, text: fold(card.dataset.search!), minutes: Number(card.dataset.minutes) || Infinity,
     meal: card.dataset.meal!.split('|'), cuisine: card.dataset.cuisine!.split('|'), tags: card.dataset.tags!.split('|'),
   }));
 
@@ -105,7 +135,7 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
     filterCount.hidden = !advanced;
   }
   const matches = (row: (typeof index)[number], s: State) =>
-    fold(s.q).split(/\s+/).every((word) => row.text.includes(word)) &&
+    fold(fold(s.q) === 'cookie jar' ? 'cookie' : s.q).split(/\s+/).every((word) => row.text.includes(word)) &&
     (!s.meal || row.meal.includes(s.meal)) &&
     (!s.cuisine.length || s.cuisine.some((c) => row.cuisine.includes(c))) &&
     s.tag.every((t) => row.tags.includes(t)) &&
@@ -119,6 +149,16 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
       if (was && !row.card.hidden) replay(row.card, 'back');
       return !row.card.hidden;
     }).length;
+    cookie.hidden = fold(s.q) !== 'cookie jar' || !shown;
+    pick.disabled = !shown;
+    sorted.hidden = !sort.value;
+    for (const drawer of drawers) {
+      const rows = index.filter(row => row.shelf.parentElement === drawer);
+      const total = rows.filter(row => !row.card.hidden).length;
+      const link = box.querySelector<HTMLAnchorElement>(`[data-drawer-link="${drawer.dataset.drawer}"]`)!;
+      link.querySelector('small')!.textContent = String(total);
+      drawer.hidden = link.hidden = !!sort.value || !total;
+    }
     const words = `${shown} ${shown === 1 ? 'recipe' : 'recipes'}`;
     if (count.textContent !== words) { count.textContent = words; replay(count, 'bump'); }
     none.hidden = shown > 0;
@@ -137,13 +177,15 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
     });
     if (!writeUrl) return;
     const params = new URLSearchParams();
+    if (sort.value) params.set('sort', sort.value);
+    if (box.dataset.layout === 'compact') params.set('layout', 'compact');
     if (queuedOnly) params.set('view', 'to-cook');
     if (s.q) params.set('q', s.q);
     if (s.meal) params.set('meal', s.meal);
     s.cuisine.forEach((c) => params.append('cuisine', c));
     s.tag.forEach((t) => params.append('tag', t));
     if (s.ready) params.set('ready', s.ready);
-    history.replaceState(null, '', params.size ? `?${params}` : location.pathname);
+    history.replaceState(null, '', location.pathname + (params.size ? `?${params}` : ''));
   }
   function fromUrl() {
     const params = new URLSearchParams(location.search);
@@ -156,8 +198,52 @@ const tags = tally(recipes.flatMap((r) => r.data.tags));
       if (params.has(input.name)) input.checked = params.getAll(input.name).includes(input.value);
     });
     if (!form.querySelector('[name=meal]:checked')) form.querySelector<HTMLInputElement>('[name=meal]')!.checked = true;
+    sort.value = params.get('sort') === 'quick' ? 'quick' : params.get('sort') === 'az' ? 'az' : '';
+    box.dataset.layout = params.get('layout') === 'compact' ? 'compact' : '';
+    layout.setAttribute('aria-pressed', String(box.dataset.layout === 'compact'));
+    arrange();
     apply(false);
   }
+
+  function arrange() {
+    if (!sort.value) {
+      for (const { card, shelf } of index) shelf.append(card);
+      return;
+    }
+    const alphabetical = (a: typeof index[number], b: typeof index[number]) => a.title.textContent!.localeCompare(b.title.textContent!);
+    const ordered = [...index].sort((a, b) => sort.value === 'quick' ? (a.minutes - b.minutes || alphabetical(a, b)) : alphabetical(a, b));
+    sorted.append(...ordered.map(row => row.card));
+  }
+
+  function dealCard() {
+    const visible = index.filter(row => !row.card.hidden);
+    if (!visible.length) return;
+    const pool = visible.length > 1 ? visible.filter(row => row.card !== lastDeal) : visible;
+    const row = pool[Math.floor(Math.random() * pool.length)];
+    lastDeal = row.card;
+    document.querySelector('#deal-recipe')!.textContent = row.title.textContent;
+    document.querySelector<HTMLAnchorElement>('#deal-link')!.href = row.title.href;
+    if (!deal.open) deal.showModal();
+    replay(deal, 'card-dealt');
+  }
+
+  pick.hidden = false;
+  pick.addEventListener('click', dealCard);
+  document.querySelector('#deal-again')!.addEventListener('click', dealCard);
+  document.addEventListener('keydown', event => {
+    if (event.key !== '/' || event.ctrlKey || event.metaKey || event.altKey || deal.open ||
+        document.querySelector('dialog[open]') || (event.target instanceof Element && event.target.closest('input, textarea, select, [contenteditable]'))) return;
+    event.preventDefault();
+    search.focus();
+  });
+  box.querySelector<HTMLElement>('.catalog-options')!.hidden = false;
+  sort.addEventListener('change', () => { arrange(); apply(); });
+  layout.addEventListener('click', () => {
+    const compact = box.dataset.layout !== 'compact';
+    box.dataset.layout = compact ? 'compact' : '';
+    layout.setAttribute('aria-pressed', String(compact));
+    apply();
+  });
   const reset = () => { form.reset(); apply(); search.focus(); };
   form.hidden = false;
   queue.hidden = false;

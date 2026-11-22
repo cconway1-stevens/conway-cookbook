@@ -18,6 +18,8 @@
   "minutes": 20,
   "servings": "4",
   "difficulty": "Easy",
+  "image": "images/tomato-bruschetta.jpg",
+  "imageAlt": "Tomato and basil bruschetta on toasted bread",
   "ingredients": [
     "1 pound ripe tomatoes, diced",
     "¼ cup fresh basil, torn",

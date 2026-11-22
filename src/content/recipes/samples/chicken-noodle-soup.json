@@ -18,6 +18,8 @@
   "minutes": 60,
   "servings": "6",
   "difficulty": "Easy",
+  "image": "images/chicken-noodle-soup.jpg",
+  "imageAlt": "Chicken noodle soup with carrots and celery in a floral bowl",
   "ingredients": [
     "1 tablespoon olive oil",
     "1 yellow onion, diced",

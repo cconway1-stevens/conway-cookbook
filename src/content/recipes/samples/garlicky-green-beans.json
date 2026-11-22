@@ -18,6 +18,8 @@
   "minutes": 15,
   "servings": "4",
   "difficulty": "Easy",
+  "image": "images/garlicky-green-beans.jpg",
+  "imageAlt": "Green beans with golden garlic on a floral plate",
   "ingredients": [
     "1 pound green beans, trimmed",
     "2 tablespoons unsalted butter",

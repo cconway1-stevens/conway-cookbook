@@ -19,6 +19,8 @@
   "minutes": 15,
   "servings": "4",
   "difficulty": "Easy",
+  "image": "images/greek-salad.jpg",
+  "imageAlt": "Greek salad with tomatoes, cucumber, olives, and feta",
   "ingredients": [
     "4 ripe tomatoes, cut into wedges",
     "1 English cucumber, thickly sliced",

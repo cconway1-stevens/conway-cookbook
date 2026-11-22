@@ -18,6 +18,8 @@
   "minutes": 35,
   "servings": "8",
   "difficulty": "Easy",
+  "image": "images/skillet-cornbread.jpg",
+  "imageAlt": "Golden cornbread in a cast-iron skillet with a wedge cut out",
   "ingredients": [
     "1½ cups yellow cornmeal",
     "½ cup all-purpose flour",

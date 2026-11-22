@@ -18,6 +18,8 @@
   "minutes": 20,
   "servings": "4",
   "difficulty": "Easy",
+  "image": "images/chocolate-pudding.jpg",
+  "imageAlt": "Chocolate pudding served in vintage dessert cups",
   "ingredients": [
     "½ cup sugar",
     "¼ cup unsweetened cocoa powder",

@@ -19,6 +19,8 @@
   "minutes": 15,
   "servings": "6",
   "difficulty": "Easy",
+  "image": "images/fresh-lemonade.jpg",
+  "imageAlt": "Pitcher and glass of fresh lemonade with lemon slices",
   "ingredients": [
     "¾ cup sugar",
     "5 cups cold water, divided",

@@ -18,6 +18,8 @@
   "minutes": 75,
   "servings": "6",
   "difficulty": "Medium",
+  "image": "images/spaghetti-and-meatballs.jpg",
+  "imageAlt": "Spaghetti and meatballs in tomato sauce",
   "ingredients": [
     {
       "group": "For the meatballs",

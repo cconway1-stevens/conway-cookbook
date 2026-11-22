@@ -313,3 +313,15 @@
     .rolodex-caption { padding-block: .45rem .3rem; }
   }
 }
+
+@media screen {
+  .cookbook-hero { background: radial-gradient(ellipse at 75% 5%, #486456, transparent 70%), #193b32; padding-block: clamp(1.1rem,4vw,4rem); }
+  .book-spread { overflow: hidden; box-shadow: 0 1.5rem 3rem #10251e80; }
+  .book-title-leaf { position: relative; isolation: isolate; background: #faf3e6; color: #24382d; }
+  .book-title-leaf::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(95deg,#faf3e6 8%,#faf3e6ed 47%,#faf3e682), url('./assets/cover.webp') center/cover; }
+  .book-title-leaf h1 { text-wrap: balance; }
+  @media (prefers-reduced-motion: no-preference) {
+    .book-spread { animation: cover-arrive .45s ease-out both; }
+    @keyframes cover-arrive { from { opacity: .4; transform: translateY(.6rem); } }
+  }
+}

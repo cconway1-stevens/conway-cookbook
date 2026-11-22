@@ -458,3 +458,75 @@ input[role=switch]:disabled { opacity: .4; cursor: not-allowed; }
   .dish-name { text-decoration: none; }
 }
 }
+
+@media screen {
+  .cover-actions, .reader-links { display: flex; align-items: center; flex-wrap: wrap; gap: .65rem 1rem; }
+  .reader-links { border-block: 1px solid var(--line); padding-block: .75rem; font-weight: 600; }
+  .reader-links a { padding: .25rem 0; }
+  .recipe-heading h1 { text-wrap: balance; letter-spacing: -.035em; }
+  .recipe-heading .description { max-width: 46ch; }
+  .recipe-more { margin-top: 1rem; }
+  .recipe-more summary { cursor: pointer; font-size: .95rem; }
+  .recipe-more .tapes { margin-block: .8rem; }
+  .sec-directions li { line-height: 1.65; }
+  .sec-directions li strong:first-child { display: block; }
+  .inline-amount { font-size: .86em; font-weight: 600; }
+  .sec-ingredients { background: var(--tint); border-radius: .65rem; padding: 1.15rem; }
+  .recipe-body h2 { scroll-margin-top: 1rem; }
+  .menu-title-edit { display: grid; gap: .4rem; font-size: .85rem; }
+  .menu-title-edit input { width: 100%; text-align: center; font: inherit; font-family: var(--display); font-size: clamp(1.6rem,4vw,3rem); background: transparent; color: inherit; border: 0; border-bottom: 1px dashed currentColor; }
+  #menu-card-title { display: none; }
+  .picker-done { position: sticky; bottom: 1rem; margin-top: 1rem; }
+  .bench .work-tabs { display: flex; flex-wrap: wrap; }
+  .bench .work-tabs button { flex: 1 1 auto; }
+  #recipe-print { margin: auto; width: min(92vw, 28rem); color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 1rem; padding: 1.5rem; }
+  #recipe-print form { display: grid; gap: 1rem; }
+  #recipe-print::backdrop { background: rgb(18 22 22 / .58); }
+  @media (min-width: 900px) {
+    .bench:is([data-view=dishes],[data-view=style]) { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 1.4rem; align-items: start; }
+    .bench .work-tabs { grid-column: 1/-1; }
+    .bench:is([data-view=dishes],[data-view=style]) #pane-menu { grid-column: 2; grid-row: 2; }
+    .bench:is([data-view=dishes],[data-view=style]) #pane-menu :is(.menu-toolbar,.hint,.menu-empty .button) { display: none; }
+    .bench .pane { min-width: 0; }
+  }
+}
+@page { margin: 13mm; }
+@media print {
+  .reader-links, .recipe-more, .menu-title-edit, #recipe-print, .inline-amount, .why, .recipe .sec:has(h2):has(+ script) .ing-hint { display: none !important; }
+  body:not(.include-notes) .recipe #notes { display: none !important; }
+  body.include-photo .recipe-heading .print { max-width: 45mm; }
+  .recipe .sheet, .recipe .recipe-body, .recipe-heading, .recipe .sec { display: block; box-shadow: none; border: 0; }
+  .recipe .recipe-body { padding-block: 0; }
+  .recipe .sec { margin-block: 3mm; }
+  .recipe .sec h2 { font-size: 15pt; margin: 2mm 0; }
+  .recipe .sec h3 { font-size: 12pt; margin: 1.5mm 0; }
+  .recipe .sec, .recipe .description, .recipe .facts, .recipe .credit { font: 10.5pt/1.25 Georgia, serif; }
+  .recipe .sec-ingredients ul { columns: 2; column-gap: 7mm; }
+  .recipe .sec-directions ol { display: block; }
+  .recipe .sec li { margin: 0 0 1.2mm; }
+  .recipe .sec-directions li { max-width: none; padding-left: 6mm; }
+  .recipe .sec-directions li::before { top: 0; font: bold 11pt Georgia,serif; }
+  .bench .menu-card { min-height: 0; padding: 9mm; }
+  .shopping #shop ul { columns: 2; }
+}
+@media screen and (max-width: 899px) {
+  .bench[data-view=dishes] .picker { height: min(75dvh, 48rem); overflow-y: auto; overscroll-behavior: contain; }
+  .bench[data-view=dishes] .pick-find { position: sticky; top: 0; z-index: 1; background: var(--card); padding-block: .45rem; }
+  .bench[data-view=style] { display: flex; flex-direction: column; }
+  .bench[data-view=style] #pane-menu { order: 1; }
+  .bench[data-view=style] #pane-menu :is(.menu-toolbar,.hint,.menu-empty .button) { display: none; }
+}
+@media print {
+  .recipe .sheet { padding: 0; background: white; }
+  .recipe .sheet::after { display: none; }
+  .recipe .sec { max-width: none; }
+  .recipe .sec-ingredients li { font: inherit; padding: .35mm 0; border: 0; }
+  .recipe .facts { margin: 2mm 0; }
+  .recipe .facts dd { font: bold 10.5pt Georgia, serif; }
+  .recipe-heading .description { max-width: none; margin: 1mm 0; }
+  .recipe-heading { padding-block: 0; }
+  .recipe .sec-ingredients ul { columns: 2; }
+  .recipe .sec h3 { break-after: avoid; }
+}
+
+@layer print { @media print { body.include-photo .recipe-heading .print { display: block !important; } } }

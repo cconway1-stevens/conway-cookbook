@@ -2,7 +2,7 @@ import { replay } from './motion';
 import { decodeMenuPayload, encodeMenu, type Menu, type MenuItem } from '../lib/menu-link';
 import { book, clean, load, save, toast } from './menu-store';
 
-interface Dish { id: string; title: string; description: string; url: string; section: string; ingredients: { name: string; items: string[] }[] }
+interface Dish { id: string; title: string; description: string; url: string; section: string;  }
 const SECTIONS = book.sections;
 const dishes: Dish[] = JSON.parse(document.querySelector('#menu-data')!.textContent!);
 const byId = new Map(dishes.map((d) => [d.id, d]));
@@ -125,7 +125,7 @@ function render() {
       x.addEventListener('click', () => {
         const rows = [...courses.querySelectorAll<HTMLElement>('[data-dish]')];
         const at = rows.indexOf(li), neighbor = (rows[at + 1] ?? rows[at - 1])?.dataset.dish;
-        commit(() => { menu.items = menu.items.filter((i) => i.id !== item.id); });
+        replaceItems(menu.items.filter(i => i.id !== item.id), 'Dish removed.');
         if (neighbor) courses.querySelector<HTMLElement>(`[data-dish="${CSS.escape(neighbor)}"] [data-remove]`)?.focus();
         else $('menu-pick').focus();
       });
@@ -136,36 +136,98 @@ function render() {
   courses.replaceChildren(sections);
   known = new Set(items.map((i) => i.id));
   $('tab-menu').textContent = items.length ? `Menu (${items.length})` : 'Menu';
-  shopping(items);
+  $('picker-done').textContent = `Done · ${items.length} ${items.length === 1 ? 'dish' : 'dishes'}`;
+  const missing = menu.items.filter(item => !byId.has(item.id));
+  $('missing-dishes').hidden = !missing.length;
+  $('missing-dishes').textContent = missing.map(item => `Recipe unavailable: ${item.id}`).join(' · ');
+  if (!$('pane-shop').hidden) void shopping(items);
 }
-function shopping(items: MenuItem[]) {
-  const box = $('shop'), ticked = new Set([...box.querySelectorAll<HTMLInputElement>('input:checked')].map((i) => i.value));
-  box.replaceChildren();
-  if (!items.length) box.append(el('p', '', 'Add a dish and its ingredients will show up here.'));
-  for (const item of items) {
-    const dish = byId.get(item.id)!, lines = dish.ingredients.flatMap((g) => g.items);
-    if (!lines.length) continue;
-    box.append(el('h3', '', dish.title));
-    const ul = el('ul');
-    lines.forEach((line, i) => {
-      const li = el('li'), label = el('label'), input = el('input') as HTMLInputElement;
-      input.type = 'checkbox'; input.value = `${dish.id}:${i}`; input.checked = ticked.has(input.value);
-      label.append(input, el('span', '', line)); li.append(label); ul.append(li);
+interface Detail {
+  lines: string[];
+  measures: { line: string; ingredient: string; unit: string; quantity: number }[];
+}
+const details = new Map<string, Promise<Detail>>();
+function detail(id: string) {
+  let pending = details.get(id);
+  if (!pending) {
+    pending = fetch(new URL('../dish-data/' + encodeURIComponent(id) + '.json', location.href)).then(response => {
+      if (!response.ok) throw Error('Ingredient list unavailable');
+      return response.json() as Promise<Detail>;
+    }).catch(error => { details.delete(id); throw error; });
+    details.set(id, pending);
+  }
+  return pending;
+}
+let shoppingRevision = 0;
+let shoppingText = '';
+async function shopping(items: MenuItem[]) {
+  const revision = ++shoppingRevision;
+  const box = $('shop');
+  const ticked = new Set([...box.querySelectorAll<HTMLInputElement>('input:checked')].map(input => input.value));
+  const buttons = ['print-shop', 'copy-shop'].map(id => $<HTMLButtonElement>(id));
+  buttons.forEach(button => button.disabled = true);
+  box.textContent = items.length ? 'Gathering ingredients…' : 'Add a dish to start your shopping list.';
+  if (!items.length) return;
+  try {
+    const data = await Promise.all(items.map(item => detail(item.id)));
+    if (revision !== shoppingRevision) return;
+    box.replaceChildren();
+    const groups = new Map<string, { key: string; text: string }[]>();
+    const combined = new Map<string, { quantity: number; ingredient: string; unit: string; dishes: Set<string> }>();
+    data.forEach(({ lines, measures }, index) => {
+      const dish = byId.get(items[index].id)!;
+      const individual: { key: string; text: string }[] = [];
+      lines.forEach((text, line) => {
+        const measure = measures.find(m => m.line === text);
+        if (!measure) { individual.push({ key: dish.id + ':' + line, text }); return; }
+        const key = JSON.stringify([measure.ingredient, measure.unit]);
+        const entry = combined.get(key) ?? { ...measure, quantity: 0, dishes: new Set<string>() };
+        entry.quantity += measure.quantity;
+        entry.dishes.add(dish.title);
+        combined.set(key, entry);
+      });
+      if (individual.length) groups.set(dish.id, individual);
     });
-    box.append(ul);
+    const sections = [...groups].map(([id, rows]) => ({ title: byId.get(id)!.title, rows }));
+    if (combined.size) sections.unshift({ title: 'Measured ingredients', rows: [...combined].map(([key, m]) => ({
+      key, text: `${Number(m.quantity.toFixed(4))} ${m.unit} ${m.ingredient} (${[...m.dishes].join(', ')})`,
+    })) });
+    shoppingText = sections.map(s => [s.title, ...s.rows.map(row => '- ' + row.text)].join('\n')).join('\n\n');
+    for (const section of sections) {
+      box.append(el('h3', '', section.title));
+      const ul = el('ul');
+      for (const row of section.rows) {
+        const li = el('li'), label = el('label'), input = document.createElement('input');
+        input.type = 'checkbox'; input.value = row.key; input.checked = ticked.has(row.key);
+        label.append(input, el('span', '', row.text)); li.append(label); ul.append(li);
+      }
+      box.append(ul);
+    }
+    buttons.forEach(button => button.disabled = false);
+  } catch {
+    if (revision !== shoppingRevision) return;
+    box.textContent = 'Couldn’t load the ingredient list. ';
+    const retry = document.createElement('button');
+    retry.textContent = 'Try again'; retry.onclick = () => void shopping(listed()); box.append(retry);
   }
 }
 
 /* ---------- Tabs ---------- */
 const tabs = [...$('bench').querySelectorAll<HTMLButtonElement>('[role=tab]')];
+const wide = matchMedia('(min-width: 900px)');
 function open(id: string, focus = false) {
   for (const tab of tabs) {
     const on = tab.dataset.tab === id;
     tab.setAttribute('aria-selected', String(on)); tab.tabIndex = on ? 0 : -1;
     $(tab.getAttribute('aria-controls')!).hidden = !on;
   }
+  const preview = id === 'style' || (wide.matches && id === 'dishes');
+  if (preview) $('pane-menu').hidden = false;
+  $('bench').dataset.view = id;
+  if (id === 'shop') void shopping(listed());
   if (focus) $(`tab-${id}`).focus();
 }
+wide.addEventListener('change', () => open($('bench').dataset.view ?? 'menu'));
 tabs.forEach((tab) => {
   tab.addEventListener('click', () => open(tab.dataset.tab!));
   tab.addEventListener('keydown', (event) => {
@@ -183,7 +245,7 @@ tabs.forEach((tab) => {
   });
 });
 for (const id of ['menu-pick', 'browse-dishes']) $(id).addEventListener('click', () => open('dishes', true));
-$('menu-share-jump').addEventListener('click', () => $('menu-share-title').focus());
+$('picker-done').addEventListener('click', () => open('menu', true));
 
 const filter = () => {
   const words = $<HTMLInputElement>('pick-q').value.toLowerCase().trim().split(/\s+/), meal = $<HTMLSelectElement>('pick-meal').value;
@@ -241,7 +303,7 @@ const copy = async (text: string, ok: string) => {
   catch { const area = el('textarea') as HTMLTextAreaElement; area.value = text; document.body.append(area); area.select(); const did = document.execCommand('copy'); area.remove(); toast(did ? ok : 'Couldn’t copy. Your browser blocked the clipboard.'); }
 };
 $('share').addEventListener('click', () => copy(location.origin + location.pathname + '#m=' + encodeMenu(menu), 'Link copied.'));
-$('copy-shop').addEventListener('click', () => copy(listed().map((i) => byId.get(i.id)!).map((d) => `${d.title}\n${d.ingredients.flatMap((g) => g.items).map((x) => `- ${x}`).join('\n')}`).join('\n\n'), 'Shopping list copied.'));
+$('copy-shop').addEventListener('click', () => copy(shoppingText, 'Shopping list copied.'));
 const print = (what: 'menu' | 'shop') => { document.body.dataset.print = what; window.print(); };
 window.addEventListener('afterprint', () => { delete document.body.dataset.print; });
 $('print-menu').addEventListener('click', () => print('menu'));

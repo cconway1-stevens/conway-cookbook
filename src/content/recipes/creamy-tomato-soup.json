@@ -28,6 +28,7 @@
     "⅓ cup heavy cream",
     "Kosher salt and black pepper, to taste"
   ],
+  "shoppingMeasures": [{ "line": "2 garlic cloves, minced", "ingredient": "garlic", "unit": "cloves", "quantity": 2 }],
   "steps": [
     "Melt the butter in a pot over medium heat. Add the onion and cook until soft, about 6 minutes. Stir in the garlic and tomato paste and cook for 1 minute.",
     "Add the tomatoes and broth. Bring to a gentle simmer and cook uncovered for 20 minutes, stirring occasionally.",

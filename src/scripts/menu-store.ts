@@ -31,7 +31,7 @@ export const load = (): Menu => {
 };
 export const save = (menu: Menu) => {
   memory = menu;
-  try { localStorage.setItem(KEY, JSON.stringify(menu)); } catch { /* private window: keep it for this page */ }
+  try { localStorage.setItem(KEY, JSON.stringify({ ...menu, version: 1 })); } catch { /* private window: keep it for this page */ }
   document.dispatchEvent(new CustomEvent('menu:change'));
 };
 export const toggle = (id: string) => {

@@ -1,0 +1,21 @@
+name: Cookbook UI audit
+on: pull_request
+permissions:
+  contents: read
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --omit=dev
+      - run: npm run build
+      - run: npx --yes --package=@lhci/cli@0.15.1 lhci autorun
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cookbook-route-audits
+          path: .lighthouseci/

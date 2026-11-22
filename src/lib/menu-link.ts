@@ -2,7 +2,7 @@ export type MenuItem = { id: string; section?: string };
 export type Menu = { title: string; note: string; paper: string; blurbs: boolean; items: MenuItem[] };
 
 export function encodeMenu(menu: Menu): string {
-  const bytes = new TextEncoder().encode(JSON.stringify(menu));
+  const bytes = new TextEncoder().encode(JSON.stringify({ ...menu, version: 1 }));
   return btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 

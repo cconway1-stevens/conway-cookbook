@@ -131,15 +131,17 @@
   }
 
   .rolodex-art {
+    position: relative;
     display: grid;
     place-items: center;
+    width: 100%;
     aspect-ratio: 3 / 2;
     overflow: hidden;
     border-radius: .15rem;
     background: var(--tint);
   }
 
-  .rolodex-art img { width: 100%; height: 100%; object-fit: cover; }
+  .rolodex-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .rolodex-art .spot { width: min(50%, 13rem); height: auto; }
   .rolodex-caption { padding: .65rem .35rem .4rem; }
   .rolodex-meta { font: .88rem/1.25 var(--type); color: var(--soft); }
@@ -187,4 +189,84 @@
   [data-theme=heirloom] .cookbook-hero { background: var(--cloth); }
   [data-theme=heirloom] .book-spread { border-color: var(--gold); }
   [data-theme=heirloom] .rolodex-tray { background: var(--cloth); }
+}
+
+@layer base {
+  .cookbook-hero { padding-block: clamp(1rem, 2.4vw, 2.25rem); }
+  .book-title-leaf { padding: clamp(1.4rem, 4.2vw, 3.6rem); }
+  .rolodex { padding: clamp(.85rem, 2.3vw, 1.9rem); gap: .55rem; }
+  .rolodex-tabs {
+    display: flex;
+    gap: .3rem;
+    min-width: 0;
+    padding: .15rem .15rem .4rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+  }
+  .rolodex-tabs button {
+    flex: none;
+    min-height: 44px;
+    padding: .28rem .55rem;
+    border: 1px solid var(--line);
+    border-bottom-width: 2px;
+    border-radius: .4rem .4rem .12rem .12rem;
+    background: var(--tint);
+    color: var(--second);
+    font: .88rem/1.15 var(--type);
+    white-space: nowrap;
+  }
+  .rolodex-tabs button:hover { background: var(--highlight); }
+  .rolodex-tabs button:focus-visible { outline-offset: -3px; }
+  .rolodex-tabs button[aria-pressed=true] { background: var(--second); border-color: var(--second); color: white; }
+  .rolodex-flip:disabled { opacity: .55; cursor: default; }
+  .rolodex-flip:disabled:hover { background: var(--tint); }
+  .rolodex-art { max-height: 17rem; }
+  .rolodex-art img { min-height: 0; }
+  .cookbook-search { margin-top: clamp(1rem, 2.3vw, 1.7rem); padding-block: .7rem; }
+
+  @media (max-width: 730px) {
+    .rolodex-art { max-height: none; }
+  }
+}
+
+@layer theme {
+  [data-theme=blue-plate] .book-spread {
+    background: #fff9ed;
+    box-shadow: 0 4px 0 -1px #fcf5df, 0 5px 0 var(--second),
+      0 8px 0 -1px #e8dbc1, 0 9px 0 var(--second), 0 15px 28px var(--shade);
+  }
+  [data-theme=blue-plate] .book-title-leaf {
+    background: repeating-linear-gradient(0deg, transparent 0 27px, #6988b522 27px 28px);
+    border-inline-start: clamp(.3rem, 1.4vw, .95rem) double color-mix(in srgb, var(--accent) 50%, #fff9ed);
+  }
+  [data-theme=blue-plate] .rolodex-tabs button:nth-child(3n+1):not([aria-pressed=true]) { background: #f4dfa8; }
+  [data-theme=blue-plate] .rolodex-tabs button:nth-child(3n+2):not([aria-pressed=true]) { background: #dce9d5; }
+  [data-theme=blue-plate] .rolodex-tabs button:nth-child(3n):not([aria-pressed=true]) { background: #e0ebf7; }
+  [data-theme=blue-plate] .rolodex-card { background: #fffdf6; }
+  [data-theme=blue-plate] .rolodex-caption {
+    background: repeating-linear-gradient(0deg, transparent 0 21px, #7397ba25 21px 22px);
+  }
+  [data-theme=heirloom] .book-spread {
+    background: var(--fiber), radial-gradient(ellipse at 50% 40%, #fffcf2 30%, #eee1c4 100%);
+  }
+  [data-theme=heirloom] .book-title-leaf {
+    outline: 3px double color-mix(in srgb, var(--gold) 74%, var(--soft));
+    outline-offset: -.65rem;
+  }
+  [data-theme=heirloom] .rolodex-tabs button { border-radius: .2rem .2rem 0 0; }
+  [data-theme=heirloom] .rolodex-tray { border: 3px double color-mix(in srgb, var(--gold) 70%, var(--second)); }
+  [data-theme=heirloom] .rolodex-card { background: var(--fiber), #fff6df; }
+  [data-theme=heirloom] .rolodex-caption { border-top: 3px double var(--line); margin-top: .3rem; }
+}
+
+@layer base {
+  @media (min-width: 731px) and (max-height: 850px) {
+    .cookbook-hero { padding-block: .9rem 1.15rem; }
+    .rolodex { padding: .85rem clamp(.9rem, 2.1vw, 1.6rem); gap: .45rem; }
+    .rolodex-art { max-height: clamp(10.5rem, 25vh, 14.25rem); }
+    .rolodex-art img { object-position: center 44%; }
+    .cookbook-search { margin-top: .75rem; padding-block: .5rem; }
+    .rolodex-caption { padding-block: .45rem .3rem; }
+  }
 }

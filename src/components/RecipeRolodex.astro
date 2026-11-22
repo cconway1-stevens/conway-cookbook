@@ -1,10 +1,15 @@
 ---
 import RolodexCard from './RolodexCard.astro';
 import type { Recipe } from '../lib/recipes';
+import { book } from '../lib/cookbook';
 
 const { recipes }: { recipes: Recipe[] } = Astro.props;
 const featured = recipes.find(({ id }) => id === 'apple-crumble-pie') ??
   recipes.find(({ data }) => data.image) ?? recipes[0];
+const filters = [
+  ...book.meals.map((name) => ({ label: name, key: 'meal:' + name })),
+  ...book.courses.filter(({ meal }) => !meal).map(({ name }) => ({ label: name, key: 'course:' + name })),
+].filter(({ key }) => recipes.some(({ data }) => key === 'course:' + data.category || data.meal.some((meal) => key === 'meal:' + meal)));
 const others = recipes.filter(({ id }) => id !== featured?.id);
 ---
 {featured && (
@@ -13,6 +18,12 @@ const others = recipes.filter(({ id }) => id !== featured?.id);
       <h2 id="rolodex-title">From the recipe box</h2>
       <button type="button" class="rolodex-flip" data-flip hidden>Flip a card</button>
     </header>
+    <div class="rolodex-tabs" role="group" aria-label="Filter the recipe cards" data-rolodex-tabs hidden>
+      {filters.map(({ label, key }) => (
+        <button type="button" data-card-filter={key} aria-pressed="false">{label}</button>
+      ))}
+      <button type="button" data-card-filter="" aria-pressed="true">All recipes</button>
+    </div>
     <div class="rolodex-tray">
       <div class="rolodex-stack">
         <div class="rolodex-rings" aria-hidden="true"><i></i><i></i></div>

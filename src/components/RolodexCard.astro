@@ -4,7 +4,7 @@ import { base, recipeUrl, type Recipe } from '../lib/recipes';
 
 const { recipe, featured = false }: { recipe: Recipe; featured?: boolean } = Astro.props;
 ---
-<a class="rolodex-card" href={recipeUrl(recipe.id)} data-thumb={recipe.data.image ? base + 'thumbs/' + recipe.id + '.jpg' : undefined}>
+<a class="rolodex-card" href={recipeUrl(recipe.id)} data-filters={JSON.stringify(['course:' + recipe.data.category, ...recipe.data.meal.map((meal) => 'meal:' + meal)])} data-thumb={recipe.data.image ? base + 'thumbs/' + recipe.id + '.jpg' : undefined}>
   <div class="rolodex-art">
     {recipe.data.image
       ? <img src={base + recipe.data.image} alt="" width="1200" height="800" fetchpriority={featured ? 'high' : undefined} />

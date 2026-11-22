@@ -1,0 +1,47 @@
+---
+import { getCollection, render } from 'astro:content';
+import Cookbook from '../../layouts/Cookbook.astro';
+
+export async function getStaticPaths() {
+  return (await getCollection('recipes')).map((recipe) => ({
+    params: { id: recipe.id },
+    props: { recipe },
+  }));
+}
+
+const { recipe } = Astro.props;
+const { data } = recipe;
+const { Content } = await render(recipe);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
+---
+<Cookbook title={data.title + ' | The Conway Cookbook'} description={data.description}>
+  <article class="wrap recipe">
+    <a href={base + '#recipes'} class="index-link">Recipe index</a>
+    <header class="recipe-heading">
+      <div>
+        <p class="category">{data.category}</p>
+        <h1>{data.title}</h1>
+        <p class="description">{data.description}</p>
+        {data.author && <p class="credit">From the kitchen of {data.author}</p>}
+        <dl class="facts">
+          <div><dt>Time</dt><dd>{data.time}</dd></div>
+          <div><dt>Serves</dt><dd>{data.servings}</dd></div>
+          {data.difficulty && <div><dt>Difficulty</dt><dd>{data.difficulty}</dd></div>}
+        </dl>
+        <button type="button" class="button print" hidden>Print recipe</button>
+      </div>
+      {data.image && <img src={base + data.image} alt={data.imageAlt ?? data.title} width="960" height="640" />}
+    </header>
+    <div class="recipe-body">
+      <Content />
+      {data.source && <p class="credit">Adapted from <a href={data.source.url}>{data.source.name}</a>.</p>}
+    </div>
+  </article>
+</Cookbook>
+<script>
+  const printButton = document.querySelector<HTMLButtonElement>('.print');
+  if (printButton) {
+    printButton.hidden = false;
+    printButton.addEventListener('click', () => window.print());
+  }
+</script>

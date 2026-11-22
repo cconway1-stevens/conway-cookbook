@@ -1,0 +1,25 @@
+---
+import '../style.css';
+const { title = 'The Conway Cookbook', description = 'A collection of recipes worth keeping.' } = Astro.props;
+const home = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="wrap header-inner">
+      <a href={home} class="wordmark">The Conway Cookbook</a>
+      <nav aria-label="Main navigation"><a href={home + '#recipes'}>Recipe index</a></nav>
+    </div>
+  </header>
+  <main id="main"><slot /></main>
+  <footer class="wrap footer"><a href={home} class="wordmark">The Conway Cookbook</a><span>Recipes worth keeping.</span></footer>
+</body>
+</html>

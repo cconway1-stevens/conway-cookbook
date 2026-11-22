@@ -38,7 +38,7 @@ const when = (d?: Date) => d && d.toLocaleDateString('en-US', { year: 'numeric',
     </details>)}
 </section>
 <section class="extras" id="notes" aria-labelledby="notes-title">
-  <h2 id="notes-title">Notes</h2>
+  <h2 id="notes-title">Notes</h2><slot />
   {notes.length > 0 && <ul class="family-notes">{notes.map((n) => <li><p>{n.text}</p>{(n.by || n.date) && <small>{[n.by, when(n.date)].filter(Boolean).join(', ')}</small>}</li>)}</ul>}
   <div class="my-notes" hidden>
     <label for="my-notes">My notes</label>

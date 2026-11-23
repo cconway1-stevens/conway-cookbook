@@ -5,8 +5,31 @@
   .catalog-toolbar .search input { margin: 0; padding-block: .4rem; }
   .catalog-toolbar .more-filters { flex: 1 1 8rem; margin: 0; border: 0; padding: 0; }
   .catalog-toolbar .more-filters[open] { flex-basis: 100%; }
-  .box .meal-filters { margin-block: .5rem 0; }
-  .drawer-index { display: flex; flex-wrap: wrap; gap: .4rem; margin-block: 1rem; }
+  .box .meal-filters { margin: 0 0 .75rem; }
+  .box .meal-filters legend { width: 100%; }
+
+  /* Search and categories stay with you as you scroll. */
+  .catalog-bar {
+    position: sticky; top: 0; z-index: 5;
+    margin-inline: -.5rem; padding: .5rem .5rem 0;
+    background: var(--page);
+    border-bottom: 1px solid transparent;
+  }
+  .catalog-bar.stuck { border-bottom-color: var(--line); box-shadow: 0 6px 10px -8px var(--shade); }
+  /* An open filter panel can be taller than the screen, so let it scroll away. */
+  .catalog-bar:has(.more-filters[open]) { position: static; }
+  /* One row you swipe or scroll sideways, so the pinned bar stays short. */
+  .drawer-index {
+    display: flex; flex-wrap: nowrap; gap: .4rem; margin-block: .6rem;
+    margin-inline: -.5rem; padding-inline: .5rem;
+    overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+  }
+  .drawer-index a { flex: none; white-space: nowrap; }
+  /* Touch screens swipe; a mouse needs to see there is more to the right. */
+  @media (hover: hover) and (pointer: fine) {
+    .drawer-index { scrollbar-width: thin; padding-bottom: .3rem; }
+  }
+  .drawer-index a[aria-current] { background: var(--highlight); border-color: var(--ink); box-shadow: inset 0 -2px var(--ink); }
   .drawer-index a, .catalog-drawer h2 span {
     border: 1px solid var(--line);
     border-radius: .55rem .55rem .12rem .12rem;
@@ -18,7 +41,7 @@
   .drawer-index a { min-height: 44px; display: inline-flex; gap: .45rem; align-items: center; font-weight: 600; }
   .drawer-index a:hover, .drawer-index a:focus-visible { background: var(--highlight); }
   .drawer-index small { font: inherit; color: var(--soft); font-size: .8em; }
-  .catalog-drawer { margin-top: 1.25rem; scroll-margin-top: 1rem; }
+  .catalog-drawer { margin-top: 1.25rem; scroll-margin-top: calc(var(--catalog-bar, 0px) + .75rem); }
   .catalog-drawer h2 { font-size: 1.4rem; margin-bottom: 1rem; border-bottom: 1px solid var(--line); }
   .catalog-drawer h2 span { display: inline-block; }
   .catalog-drawer .card-tab { display: none; }
@@ -47,11 +70,15 @@
 @media screen and (max-width: 540px) {
   .box .box-heading { padding-bottom: .55rem; margin-bottom: .65rem; }
   .box-actions .button { min-height: 44px; padding: .4rem .65rem; }
-  .catalog-toolbar .search { flex: 1 1 12rem; min-width: 0; }
+  /* Search and More filters share one line while the panel is closed. */
+  .catalog-toolbar:has(.more-filters:not([open])) { flex-wrap: nowrap; align-items: center; }
+  .catalog-toolbar .search { flex: 1 1 8rem; min-width: 0; }
   .catalog-toolbar .more-filters:not([open]) { flex: 0 0 auto; }
   .catalog-toolbar .more-filters summary { max-width: none; font-size: .92rem; }
-  .drawer-index { gap: .3rem; margin-block: .65rem; }
+  .drawer-index { gap: .3rem; margin-block: .5rem; }
   .drawer-index a { font-size: .88rem; padding-inline: .55rem; }
+  .catalog-bar { padding-top: .35rem; }
+  .box .filters { padding: .5rem .6rem; }
   .catalog-drawer { margin-top: .65rem; }
 }
 

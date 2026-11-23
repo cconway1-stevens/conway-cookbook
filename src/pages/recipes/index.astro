@@ -19,6 +19,7 @@ import '../../catalog.css';
         <button type="button" class="button quiet" id="catalog-pick" hidden>Deal a card</button>
       </div>
     </div>
+    <div class="catalog-bar" id="catalog-bar">
     <form id="filters" class="filters" role="search" aria-label="Find recipes" hidden>
       <div class="catalog-toolbar">
       <div class="search">
@@ -26,6 +27,9 @@ import '../../catalog.css';
         <input id="q" name="q" type="search" placeholder="Find a dish or ingredient" autocomplete="off" enterkeyhint="search" />
       </div>
       <details class="more-filters"><summary>More filters <span id="filter-count" hidden></span></summary><div class="filter-options">
+        <fieldset class="meal-filters"><legend>Meal</legend>
+          {['', ...meals].map((m) => <label><input type="radio" name="meal" value={m} checked={m === ''} /><span>{m || 'Any meal'}</span></label>)}
+        </fieldset>
         <fieldset><legend>Cuisine</legend><div class="filter-choices">
           {cuisines.map(([c]) => <label><input type="checkbox" name="cuisine" value={c} />{c}</label>)}
         </div></fieldset>
@@ -37,13 +41,11 @@ import '../../catalog.css';
         </div>
       </div></details>
       </div>
-      <fieldset class="meal-filters"><legend class="vh">Meal</legend>
-        {['', ...meals].map((m) => <label><input type="radio" name="meal" value={m} checked={m === ''} /><span>{m || 'All recipes'}</span></label>)}
-      </fieldset>
     </form>
-    <nav class="drawer-index" aria-label="Recipe categories">
+    <nav class="drawer-index" aria-label="Jump to a category">
       {drawers.map(drawer => <a data-drawer-link={drawer.id} href={'#drawer-' + drawer.id}>{drawer.name} <small>{drawer.recipes.length}</small></a>)}
     </nav>
+    </div>
     <div class="results catalog-results">
       <p id="count" role="status">{recipes.length} recipes</p>
       <div class="catalog-options" hidden>
@@ -130,7 +132,7 @@ import '../../catalog.css';
       return li;
     }));
     activeFilters.hidden = clear.hidden = !selected.length;
-    const advanced = s.cuisine.length + s.tag.length + Number(Boolean(s.ready));
+    const advanced = Number(Boolean(s.meal)) + s.cuisine.length + s.tag.length + Number(Boolean(s.ready));
     filterCount.textContent = String(advanced);
     filterCount.hidden = !advanced;
   }
@@ -188,8 +190,58 @@ import '../../catalog.css';
     s.cuisine.forEach((c) => params.append('cuisine', c));
     s.tag.forEach((t) => params.append('tag', t));
     if (s.ready) params.set('ready', s.ready);
-    history.replaceState(null, '', location.pathname + (params.size ? `?${params}` : ''));
+    history.replaceState(null, '', location.pathname + (params.size ? `?${params}` : '') + location.hash);
+    markCurrent();
   }
+
+  // Keep the search and category row pinned, and tell the drawers how tall it is
+  // so a jump lands below it rather than underneath it.
+  const bar = document.querySelector<HTMLElement>('#catalog-bar')!;
+  const nav = bar.querySelector<HTMLElement>('.drawer-index')!;
+  const barHeight = () => bar.getBoundingClientRect().height;
+  const sizeBar = () => box.style.setProperty('--catalog-bar', `${Math.round(barHeight())}px`);
+  new ResizeObserver(sizeBar).observe(bar);
+
+  // Light up the category you are reading, and slide it into view on phones.
+  let current: HTMLAnchorElement | null = null;
+  function markCurrent() {
+    bar.classList.toggle('stuck', scrollY > 0 && bar.getBoundingClientRect().top <= 0);
+    const line = barHeight() + 64;
+    const open = drawers.filter((drawer) => !drawer.hidden);
+    const here = open.findLast((drawer) => drawer.getBoundingClientRect().top <= line) ?? null;
+    const link = here && box.querySelector<HTMLAnchorElement>(`[data-drawer-link="${here.dataset.drawer}"]`);
+    if (link === current) return;
+    current?.removeAttribute('aria-current');
+    current = link;
+    if (!link) { nav.scrollTo({ left: 0, behavior: 'smooth' }); return; }
+    link.setAttribute('aria-current', 'location');
+    if (nav.scrollWidth > nav.clientWidth) {
+      nav.scrollTo({ left: link.offsetLeft - (nav.clientWidth - link.offsetWidth) / 2, behavior: 'smooth' });
+    }
+  }
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { ticking = false; markCurrent(); });
+  }, { passive: true });
+
+  // A link like /recipes/#drawer-mains: the search bar appears and fonts settle
+  // after the browser has already jumped, so jump again once the layout is final.
+  // Skipped on Back and reload, where the browser restores your own place.
+  const arrival = (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined)?.type;
+  let touched = false;
+  for (const type of ['wheel', 'touchstart', 'keydown', 'pointerdown']) {
+    window.addEventListener(type, () => { touched = true; }, { once: true, passive: true });
+  }
+  const land = () => {
+    if (touched || arrival === 'back_forward' || arrival === 'reload' || !location.hash.startsWith('#drawer-')) return;
+    const drawer = document.getElementById(location.hash.slice(1));
+    if (!drawer || drawer.hidden) return;
+    sizeBar();
+    drawer.scrollIntoView({ block: 'start' });
+    markCurrent();
+  };
   function fromUrl() {
     const params = new URLSearchParams(location.search);
     form.reset();
@@ -275,4 +327,7 @@ import '../../catalog.css';
   document.querySelector('#clear2')!.addEventListener('click', () => { queuedOnly = false; reset(); });
   window.addEventListener('pageshow', fromUrl);
   fromUrl();
+  requestAnimationFrame(land);
+  document.fonts?.ready.then(land);
+  window.addEventListener('load', land, { once: true });
 </script>

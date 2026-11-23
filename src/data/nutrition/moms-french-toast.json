@@ -1,5 +1,6 @@
 {
   "fingerprint": "d8ce908aaf1f7bc4961f480a53bbee9ced3626a98d0ee95e129fe2e868ec87ff",
+  "version": 2,
   "rows": [
     {
       "name": "Calories",
@@ -65,6 +66,159 @@
       "name": "Potassium",
       "amount": 2153.66,
       "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 472.21,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 1.38,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0.13,
+      "unit": "%"
+    },
+    {
+      "name": "Manganese",
+      "amount": 12.2,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 7.29,
+      "unit": "mg"
+    },
+    {
+      "name": "Selenium",
+      "amount": 192.1,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 3.84,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 700.19,
+      "unit": "µg"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 1291.92,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 23.24,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 358.68,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 1.76,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 12.16,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 1.25,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 3112.58,
+      "unit": "IU"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 5.54,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B12",
+      "amount": 3,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 5,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 11.54,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 0.84,
+      "unit": "mg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 10.21,
+    "percentFat": 33.77,
+    "percentCarbs": 56.02
+  },
+  "ingredients": [
+    {
+      "name": "bread",
+      "calories": 1233.77
+    },
+    {
+      "name": "eggs",
+      "calories": 251.68
+    },
+    {
+      "name": "milk",
+      "calories": 146.4
+    },
+    {
+      "name": "sugar",
+      "calories": 46.2
+    },
+    {
+      "name": "vanilla",
+      "calories": 11.52
+    },
+    {
+      "name": "cinnamon",
+      "calories": 4.94
+    },
+    {
+      "name": "salt",
+      "calories": 0
+    },
+    {
+      "name": "butter",
+      "calories": 200.76
+    },
+    {
+      "name": "maple syrup",
+      "calories": 869.4
+    },
+    {
+      "name": "butter",
+      "calories": 301.14
+    },
+    {
+      "name": "walnuts",
+      "calories": 382.59
     }
   ]
 }

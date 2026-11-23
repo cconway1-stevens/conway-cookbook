@@ -1,5 +1,6 @@
 {
   "fingerprint": "21d12b0e5c40b233ef23abc71ac0a3ed2867a5da978018589fd66eff2d74c0a0",
+  "version": 2,
   "rows": [
     {
       "name": "Calories",
@@ -65,6 +66,151 @@
       "name": "Potassium",
       "amount": 6839.38,
       "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 300.17,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0,
+      "unit": "%"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 319.09,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 404.55,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 4.79,
+      "unit": "mg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 2.69,
+      "unit": "mg"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 969.47,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 378.05,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 1.82,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 1.32,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 16.83,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 277.81,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 10.14,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 5.09,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.57,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 5.05,
+      "unit": "mg"
+    },
+    {
+      "name": "Selenium",
+      "amount": 9.73,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B12",
+      "amount": 0.2,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 142.55,
+      "unit": "IU"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 4.45,
+    "percentFat": 52.4,
+    "percentCarbs": 43.15
+  },
+  "ingredients": [
+    {
+      "name": "yukon gold potatoes",
+      "calories": 1222.43
+    },
+    {
+      "name": "vegetable oil",
+      "calories": 481.78
+    },
+    {
+      "name": "sugar",
+      "calories": 192.5
+    },
+    {
+      "name": "water",
+      "calories": 0
+    },
+    {
+      "name": "vinegar",
+      "calories": 11.48
+    },
+    {
+      "name": "salt",
+      "calories": 0
+    },
+    {
+      "name": "pepper",
+      "calories": 5.92
+    },
+    {
+      "name": "onion",
+      "calories": 32
+    },
+    {
+      "name": "mayonnaise",
+      "calories": 1142.4
     }
   ],
   "assumptions": "The brine (oil, sugar, vinegar, and salt) is strained off before serving and only some of it stays on the potatoes, so the real fat, sugar, and sodium are lower than shown."

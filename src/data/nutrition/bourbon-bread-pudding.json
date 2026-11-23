@@ -1,5 +1,6 @@
 {
   "fingerprint": "db3f6f01ed20a0505d08dcb69cbc7bafb65f8d61cce84d39630abf0cf02bc6f9",
+  "version": 2,
   "rows": [
     {
       "name": "Calories",
@@ -7,18 +8,28 @@
       "unit": "kcal"
     },
     {
-      "name": "Protein",
-      "amount": 10.38,
+      "name": "Fat",
+      "amount": 28.42,
       "unit": "g"
+    },
+    {
+      "name": "Saturated Fat",
+      "amount": 16.88,
+      "unit": "g"
+    },
+    {
+      "name": "Cholesterol",
+      "amount": 169.56,
+      "unit": "mg"
+    },
+    {
+      "name": "Sodium",
+      "amount": 445,
+      "unit": "mg"
     },
     {
       "name": "Carbohydrates",
       "amount": 56.77,
-      "unit": "g"
-    },
-    {
-      "name": "Fat",
-      "amount": 28.42,
       "unit": "g"
     },
     {
@@ -32,9 +43,193 @@
       "unit": "g"
     },
     {
-      "name": "Sodium",
-      "amount": 445,
+      "name": "Protein",
+      "amount": 10.38,
+      "unit": "g"
+    },
+    {
+      "name": "Vitamin D",
+      "amount": 2.02,
+      "unit": "µg"
+    },
+    {
+      "name": "Calcium",
+      "amount": 170.36,
       "unit": "mg"
+    },
+    {
+      "name": "Iron",
+      "amount": 2.14,
+      "unit": "mg"
+    },
+    {
+      "name": "Potassium",
+      "amount": 260.56,
+      "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 55.85,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 1.6,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0.94,
+      "unit": "%"
+    },
+    {
+      "name": "Selenium",
+      "amount": 20.82,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.44,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 1109.27,
+      "unit": "IU"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.31,
+      "unit": "mg"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 178.18,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 57.79,
+      "unit": "µg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 0.27,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B12",
+      "amount": 0.64,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 1.87,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 0.9,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 0.15,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 1.08,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 28.44,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 0.99,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.1,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 2.62,
+      "unit": "µg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 7.91,
+    "percentFat": 48.78,
+    "percentCarbs": 43.31
+  },
+  "ingredients": [
+    {
+      "name": "butter",
+      "calories": 12.55
+    },
+    {
+      "name": "day-old bread",
+      "calories": 96.39
+    },
+    {
+      "name": "eggs",
+      "calories": 35.75
+    },
+    {
+      "name": "milk",
+      "calories": 36.6
+    },
+    {
+      "name": "heavy cream",
+      "calories": 101.15
+    },
+    {
+      "name": "brown sugar",
+      "calories": 78.38
+    },
+    {
+      "name": "vanilla extract",
+      "calories": 2.88
+    },
+    {
+      "name": "ground cinnamon",
+      "calories": 0.62
+    },
+    {
+      "name": "ground nutmeg",
+      "calories": 0.33
+    },
+    {
+      "name": "salt",
+      "calories": 0
+    },
+    {
+      "name": "butter",
+      "calories": 50.19
+    },
+    {
+      "name": "brown sugar",
+      "calories": 52.25
+    },
+    {
+      "name": "heavy cream",
+      "calories": 50.58
+    },
+    {
+      "name": "salt",
+      "calories": 0
+    },
+    {
+      "name": "bourbon",
+      "calories": 8.66
     }
   ]
 }

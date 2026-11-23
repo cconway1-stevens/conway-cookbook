@@ -1,5 +1,6 @@
 {
   "fingerprint": "e65aceb44b7e9b42bd2e0ffcda3636f7cb3a89665cf8369364698002a4d616e0",
+  "version": 2,
   "rows": [
     {
       "name": "Calories",
@@ -60,6 +61,130 @@
       "name": "Potassium",
       "amount": 377.19,
       "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 8.48,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0,
+      "unit": "%"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 185.42,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 2582.82,
+      "unit": "IU"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 0.58,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 3.19,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 20.76,
+      "unit": "µg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 0.24,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 44.82,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 1.54,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.12,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 25.04,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.09,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.11,
+      "unit": "mg"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 51.04,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 0.35,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 0.37,
+      "unit": "mg"
+    },
+    {
+      "name": "Selenium",
+      "amount": 0.72,
+      "unit": "µg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 5.17,
+    "percentFat": 68.36,
+    "percentCarbs": 26.47
+  },
+  "ingredients": [
+    {
+      "name": "long peppers",
+      "calories": 30.24
+    },
+    {
+      "name": "bell peppers",
+      "calories": 15.47
+    },
+    {
+      "name": "olive oil",
+      "calories": 106.08
+    },
+    {
+      "name": "garlic cloves",
+      "calories": 2.98
+    },
+    {
+      "name": "kosher salt",
+      "calories": 0
     }
   ]
 }

@@ -1,5 +1,6 @@
 {
   "fingerprint": "2fd95d5addd966962f201381882b0c4f953ad8279602f76d2f80c932e21ab9fa",
+  "version": 2,
   "rows": [
     {
       "name": "Calories",
@@ -60,6 +61,143 @@
       "name": "Potassium",
       "amount": 638.79,
       "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 68.06,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0,
+      "unit": "%"
+    },
+    {
+      "name": "Selenium",
+      "amount": 57.58,
+      "unit": "µg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 1.12,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 25.5,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 1523.67,
+      "unit": "IU"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 299.77,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 25.09,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 3.08,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.37,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 72.4,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 0.36,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 1.93,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 2.56,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 43.09,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.16,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.14,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 0.62,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B12",
+      "amount": 0.15,
+      "unit": "µg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 13.28,
+    "percentFat": 31.34,
+    "percentCarbs": 55.38
+  },
+  "ingredients": [
+    {
+      "name": "grape tomatoes",
+      "calories": 30.62
+    },
+    {
+      "name": "garlic",
+      "calories": 10.43
+    },
+    {
+      "name": "olive oil",
+      "calories": 119.34
+    },
+    {
+      "name": "oregano",
+      "calories": 1.33
+    },
+    {
+      "name": "kosher salt",
+      "calories": 0
+    },
+    {
+      "name": "spaghetti",
+      "calories": 315.53
+    },
+    {
+      "name": "parmigiano-reggiano",
+      "calories": 49
     }
   ]
 }

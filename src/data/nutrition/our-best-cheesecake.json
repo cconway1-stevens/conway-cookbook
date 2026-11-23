@@ -1,5 +1,6 @@
 {
   "fingerprint": "1eb7ec6189861e09170a89558b426052001f530e75efabc1ff1280aec4f27632",
+  "version": 2,
   "rows": [
     {
       "name": "Calories",
@@ -65,6 +66,151 @@
       "name": "Potassium",
       "amount": 143.86,
       "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 35.62,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0.17,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0.16,
+      "unit": "%"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 950.65,
+      "unit": "IU"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.19,
+      "unit": "mg"
+    },
+    {
+      "name": "Selenium",
+      "amount": 6.96,
+      "unit": "µg"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 98.02,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 0.44,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 0.65,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 0.57,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 14.48,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 14.33,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 0.07,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B12",
+      "amount": 0.2,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.05,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.05,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 0.46,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 1.48,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 1.13,
+      "unit": "µg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 0.02,
+      "unit": "mg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 5.21,
+    "percentFat": 55.81,
+    "percentCarbs": 38.98
+  },
+  "ingredients": [
+    {
+      "name": "honey maid graham cracker crumbs",
+      "calories": 38.96
+    },
+    {
+      "name": "margarine",
+      "calories": 34
+    },
+    {
+      "name": "sugar",
+      "calories": 12.03
+    },
+    {
+      "name": "philadelphia cream cheese",
+      "calories": 148.83
+    },
+    {
+      "name": "sugar",
+      "calories": 48.13
+    },
+    {
+      "name": "vanilla",
+      "calories": 1.44
+    },
+    {
+      "name": "eggs",
+      "calories": 11.8
+    },
+    {
+      "name": "knudsen cream",
+      "calories": 28.46
+    },
+    {
+      "name": "cherry pie filling",
+      "calories": 42.79
     }
   ]
 }

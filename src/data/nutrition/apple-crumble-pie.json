@@ -1,5 +1,6 @@
 {
   "fingerprint": "0308d5413187416b7661aa4afbc4accdc0c0935e687a2a233af4a55ae14c5c5a",
+  "version": 2,
   "rows": [
     {
       "name": "Calories",
@@ -7,18 +8,28 @@
       "unit": "kcal"
     },
     {
-      "name": "Protein",
-      "amount": 59.34,
+      "name": "Fat",
+      "amount": 267.11,
       "unit": "g"
+    },
+    {
+      "name": "Saturated Fat",
+      "amount": 109.25,
+      "unit": "g"
+    },
+    {
+      "name": "Cholesterol",
+      "amount": 361.2,
+      "unit": "mg"
+    },
+    {
+      "name": "Sodium",
+      "amount": 3133.25,
+      "unit": "mg"
     },
     {
       "name": "Carbohydrates",
       "amount": 761.95,
-      "unit": "g"
-    },
-    {
-      "name": "Fat",
-      "amount": 267.11,
       "unit": "g"
     },
     {
@@ -32,9 +43,218 @@
       "unit": "g"
     },
     {
-      "name": "Sodium",
-      "amount": 3133.25,
+      "name": "Protein",
+      "amount": 59.34,
+      "unit": "g"
+    },
+    {
+      "name": "Vitamin D",
+      "amount": 2.52,
+      "unit": "µg"
+    },
+    {
+      "name": "Calcium",
+      "amount": 620.94,
       "unit": "mg"
+    },
+    {
+      "name": "Iron",
+      "amount": 21.88,
+      "unit": "mg"
+    },
+    {
+      "name": "Potassium",
+      "amount": 3562.73,
+      "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 686.24,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0,
+      "unit": "%"
+    },
+    {
+      "name": "Manganese",
+      "amount": 10.55,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 2.55,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 3.37,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 568.05,
+      "unit": "µg"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 1270.89,
+      "unit": "mg"
+    },
+    {
+      "name": "Selenium",
+      "amount": 86.99,
+      "unit": "µg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 483.26,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 88.91,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 1.77,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 5178.33,
+      "unit": "IU"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 1.7,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 16.58,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 80.86,
+      "unit": "µg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 9.58,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 9.3,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 4.44,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B12",
+      "amount": 0.29,
+      "unit": "µg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 4.17,
+    "percentFat": 42.26,
+    "percentCarbs": 53.57
+  },
+  "ingredients": [
+    {
+      "name": "flour",
+      "calories": 455
+    },
+    {
+      "name": "old-fashioned rolled oats",
+      "calories": 310.09
+    },
+    {
+      "name": "brown sugar",
+      "calories": 418
+    },
+    {
+      "name": "ground cinnamon",
+      "calories": 4.94
+    },
+    {
+      "name": "ground nutmeg",
+      "calories": 2.63
+    },
+    {
+      "name": "kosher salt",
+      "calories": 0
+    },
+    {
+      "name": "butter",
+      "calories": 1003.8
+    },
+    {
+      "name": "walnuts",
+      "calories": 765.18
+    },
+    {
+      "name": "pie dough",
+      "calories": 776.9
+    },
+    {
+      "name": "cooking spray",
+      "calories": 0.79
+    },
+    {
+      "name": "granny smith apples",
+      "calories": 471.74
+    },
+    {
+      "name": "apples",
+      "calories": 347.88
+    },
+    {
+      "name": "pears",
+      "calories": 193.91
+    },
+    {
+      "name": "a mix of both",
+      "calories": 2.1
+    },
+    {
+      "name": "brown sugar",
+      "calories": 418
+    },
+    {
+      "name": "cornstarch",
+      "calories": 91.44
+    },
+    {
+      "name": "ground cinnamon",
+      "calories": 9.88
+    },
+    {
+      "name": "ground nutmeg",
+      "calories": 2.63
+    },
+    {
+      "name": "kosher salt",
+      "calories": 0
+    },
+    {
+      "name": "butter",
+      "calories": 200.76
     }
   ]
 }

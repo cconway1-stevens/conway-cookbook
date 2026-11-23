@@ -1,5 +1,6 @@
 {
   "fingerprint": "df7bccaf7d5704857314cc098d1f6c171dc9eca5ccb9d474791a73cf08dfbfef",
+  "version": 2,
   "rows": [
     {
       "name": "Calories",
@@ -65,6 +66,127 @@
       "name": "Potassium",
       "amount": 2891.26,
       "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 121.19,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0,
+      "unit": "%"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 4347.86,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 51.08,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 37.35,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 3.66,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 3.89,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B12",
+      "amount": 13.2,
+      "unit": "µg"
+    },
+    {
+      "name": "Selenium",
+      "amount": 141.42,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 3.22,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 5216.63,
+      "unit": "IU"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 9.55,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 328.99,
+      "unit": "µg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 294.05,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 1.03,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 5.35,
+      "unit": "mg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 0.7,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 26.18,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 6.89,
+      "unit": "mg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 19.28,
+    "percentFat": 71.34,
+    "percentCarbs": 9.38
+  },
+  "ingredients": [
+    {
+      "name": "breakfast sausage",
+      "calories": 2757.84
+    },
+    {
+      "name": "cheddar",
+      "calories": 1844.16
+    },
+    {
+      "name": "bisquick baking mix",
+      "calories": 770.4
     }
   ]
 }

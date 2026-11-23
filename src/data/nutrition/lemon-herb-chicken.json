@@ -1,5 +1,6 @@
 {
   "fingerprint": "76cbdc8134591b56bcf9f51cad4e9eb097d51abd971bb4804a7f89635cc24dbe",
+  "version": 2,
   "rows": [
     {
       "name": "Calories",
@@ -7,18 +8,28 @@
       "unit": "kcal"
     },
     {
-      "name": "Protein",
-      "amount": 24.58,
+      "name": "Fat",
+      "amount": 27.8,
       "unit": "g"
+    },
+    {
+      "name": "Saturated Fat",
+      "amount": 7.03,
+      "unit": "g"
+    },
+    {
+      "name": "Cholesterol",
+      "amount": 141.61,
+      "unit": "mg"
+    },
+    {
+      "name": "Sodium",
+      "amount": 702.62,
+      "unit": "mg"
     },
     {
       "name": "Carbohydrates",
       "amount": 4.38,
-      "unit": "g"
-    },
-    {
-      "name": "Fat",
-      "amount": 27.8,
       "unit": "g"
     },
     {
@@ -32,9 +43,165 @@
       "unit": "g"
     },
     {
-      "name": "Sodium",
-      "amount": 702.62,
+      "name": "Protein",
+      "amount": 24.58,
+      "unit": "g"
+    },
+    {
+      "name": "Calcium",
+      "amount": 29.39,
       "unit": "mg"
+    },
+    {
+      "name": "Iron",
+      "amount": 1.45,
+      "unit": "mg"
+    },
+    {
+      "name": "Potassium",
+      "amount": 377.45,
+      "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 3.37,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0,
+      "unit": "%"
+    },
+    {
+      "name": "Selenium",
+      "amount": 27.46,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 7.18,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 0.55,
+      "unit": "mg"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 246.38,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 16.61,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B12",
+      "amount": 0.95,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 1.54,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 1.9,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.21,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.12,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 32.51,
+      "unit": "mg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 0.12,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.11,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 0.85,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 5.59,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 167.73,
+      "unit": "IU"
+    },
+    {
+      "name": "Folate",
+      "amount": 7.86,
+      "unit": "µg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 26.86,
+    "percentFat": 68.35,
+    "percentCarbs": 4.79
+  },
+  "ingredients": [
+    {
+      "name": "skin-on chicken thighs",
+      "calories": 316.45
+    },
+    {
+      "name": "kosher salt",
+      "calories": 0
+    },
+    {
+      "name": "pepper",
+      "calories": 0.63
+    },
+    {
+      "name": "olive oil",
+      "calories": 30.94
+    },
+    {
+      "name": "garlic cloves",
+      "calories": 3.35
+    },
+    {
+      "name": "chicken broth",
+      "calories": 4.72
+    },
+    {
+      "name": "lemon",
+      "calories": 7.83
+    },
+    {
+      "name": "thyme",
+      "calories": 1.01
     }
   ]
 }

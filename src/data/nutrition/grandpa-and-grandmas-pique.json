@@ -1,5 +1,6 @@
 {
   "fingerprint": "c252cba5f10429c1452850019616f5d048d6fe3a6ef8c9f43cacfbd9d98cf757",
+  "version": 2,
   "rows": [
     {
       "name": "Calories",
@@ -60,6 +61,117 @@
       "name": "Potassium",
       "amount": 122.79,
       "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 4.8,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0,
+      "unit": "%"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 61.01,
+      "unit": "mg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 0.35,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 0.18,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 283.77,
+      "unit": "IU"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.08,
+      "unit": "mg"
+    },
+    {
+      "name": "Selenium",
+      "amount": 2.67,
+      "unit": "µg"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 35.01,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 3.59,
+      "unit": "µg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 10.8,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.04,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.03,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 0.29,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 5.79,
+      "unit": "µg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 0.2,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 0.17,
+      "unit": "mg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 15.91,
+    "percentFat": 3.16,
+    "percentCarbs": 80.93
+  },
+  "ingredients": [
+    {
+      "name": "chiles",
+      "calories": 9.6
+    },
+    {
+      "name": "garlic cloves",
+      "calories": 13.41
+    },
+    {
+      "name": "distilled vinegar",
+      "calories": 45.9
     }
   ]
 }

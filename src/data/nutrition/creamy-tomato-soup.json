@@ -1,5 +1,6 @@
 {
   "fingerprint": "6d8e9e0a765b1220a97e19d4108164fd301ed4f174238e9faeb52284c7e521fc",
+  "version": 2,
   "rows": [
     {
       "name": "Calories",
@@ -7,18 +8,28 @@
       "unit": "kcal"
     },
     {
-      "name": "Protein",
-      "amount": 4.72,
+      "name": "Fat",
+      "amount": 13.44,
       "unit": "g"
+    },
+    {
+      "name": "Saturated Fat",
+      "amount": 8.25,
+      "unit": "g"
+    },
+    {
+      "name": "Cholesterol",
+      "amount": 37.46,
+      "unit": "mg"
+    },
+    {
+      "name": "Sodium",
+      "amount": 494.42,
+      "unit": "mg"
     },
     {
       "name": "Carbohydrates",
       "amount": 19.05,
-      "unit": "g"
-    },
-    {
-      "name": "Fat",
-      "amount": 13.44,
       "unit": "g"
     },
     {
@@ -32,9 +43,165 @@
       "unit": "g"
     },
     {
-      "name": "Sodium",
-      "amount": 494.42,
+      "name": "Protein",
+      "amount": 4.72,
+      "unit": "g"
+    },
+    {
+      "name": "Vitamin D",
+      "amount": 0.42,
+      "unit": "µg"
+    },
+    {
+      "name": "Calcium",
+      "amount": 90.54,
       "unit": "mg"
+    },
+    {
+      "name": "Iron",
+      "amount": 2.78,
+      "unit": "mg"
+    },
+    {
+      "name": "Potassium",
+      "amount": 674.14,
+      "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 14.41,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0,
+      "unit": "%"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 21.02,
+      "unit": "mg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 0.42,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 3,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.39,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 954.63,
+      "unit": "IU"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 0.35,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 2.59,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 12.19,
+      "unit": "µg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 45.03,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.17,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.16,
+      "unit": "mg"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 87.38,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 30.65,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 0.65,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 0.66,
+      "unit": "mg"
+    },
+    {
+      "name": "Selenium",
+      "amount": 2.37,
+      "unit": "µg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 8.73,
+    "percentFat": 55.99,
+    "percentCarbs": 35.28
+  },
+  "ingredients": [
+    {
+      "name": "butter",
+      "calories": 50.19
+    },
+    {
+      "name": "onion",
+      "calories": 7
+    },
+    {
+      "name": "garlic cloves",
+      "calories": 2.23
+    },
+    {
+      "name": "tomato paste",
+      "calories": 3.28
+    },
+    {
+      "name": "canned tomatoes",
+      "calories": 63.5
+    },
+    {
+      "name": "vegetable broth",
+      "calories": 5.63
+    },
+    {
+      "name": "heavy cream",
+      "calories": 67.43
+    },
+    {
+      "name": "kosher salt and pepper",
+      "calories": 0
     }
   ]
 }

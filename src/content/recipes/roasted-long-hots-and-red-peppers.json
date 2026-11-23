@@ -10,6 +10,8 @@
   "minutes": 90,
   "servings": "6",
   "difficulty": "Easy",
+  "image": "images/roasted-long-hots-and-red-peppers.webp",
+  "imageAlt": "Whole roasted green long hots and red bell pepper strips on two separate plates.",
   "ingredients": [
     {
       "group": "Peppers",

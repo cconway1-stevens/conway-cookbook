@@ -12,6 +12,8 @@
   "servings": "About 8",
   "difficulty": "Easy",
   "story": "Frank’s recipe, written out by hand on a weekly planner card.",
+  "image": "images/franks-potato-salad.webp",
+  "imageAlt": "Thin slices of potato in creamy dressing in a floral bowl.",
   "ingredients": [
     {
       "group": "Potatoes",

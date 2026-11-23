@@ -125,12 +125,28 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
       <div class="block-actions"><button value="print" class="button">Print</button><button value="cancel" class="button quiet">Cancel</button></div></form></dialog>
 
     <div id="nutrition" role="tabpanel" aria-labelledby="tab-nutrition">
-      {nutrition ? <><section class="nutrition-label" aria-labelledby="nutrition-title"><h2 id="nutrition-title">Nutrition facts</h2><p class="nutrition-basis">{nutrition.basis}{nutrition.basis === 'Whole recipe' && ` · Recipe serves ${data.servings}`}</p><dl>{nutrition.rows.map(n => <div class:list={[{ calories: n.name === 'Calories' }]}><dt>{n.name}</dt><dd>{Math.round(n.amount).toLocaleString('en-US')} {n.unit}</dd></div>)}</dl><p class="nutrition-note"><strong>Recipe estimate.</strong> Calculated by <a href="https://spoonacular.com/food-api">Spoonacular</a> from the listed ingredients. Brands, preparation and portion size affect the actual values.</p></section>
-        <section class="nutrition-guide"><h3>How to read this estimate</h3>
-          <p>{nutrition.basis === 'Whole recipe' ? 'The label covers the entire batch. Divide each value by the number of equal portions you actually serve.' : 'The label covers one equal portion at the stated recipe yield. For two portions, double each value. For half a portion, halve each value.'}</p>
-          <p>Calories measure energy. Fat, protein and carbohydrates are listed in grams. Fiber and sugar are included in total carbohydrates. Sodium is listed in milligrams.</p>
-          <p>The cookbook displays a saved ingredient analysis rounded to whole units. Substitutions, optional toppings and differences in ingredient brands or serving sizes can change what ends up on your plate.</p>
-        </section></> : <section class="nutrition-guide"><h2>Nutrition facts</h2><p>A verified match to the current ingredient list and yield is unavailable. Opening this tab does not request a new analysis.</p></section>}
+      {nutrition ? <>
+        <section class="nutrition-label" aria-labelledby="nutrition-title">
+          <h2 id="nutrition-title">Nutrition Facts</h2>
+          <p class="nutrition-basis"><strong>Serving size</strong> {nutrition.serving}</p>
+          <p class="nutrition-estimate">Estimated amount per {nutrition.serving === 'Whole recipe' ? 'recipe' : 'serving'}</p>
+          <p class="nutrition-calories"><strong>Calories</strong> <strong>{nutrition.rows[0].value}</strong></p>
+          <table class="nutrition-table" aria-label="Estimated nutrients">
+            <thead><tr><th scope="col" class="vh">Nutrient</th><th scope="col" class="vh">Amount</th><th scope="col">% Daily Value</th></tr></thead>
+            <tbody>{nutrition.rows.slice(1).map(({ name, value, daily, indent }) => (
+              <tr class:list={{ 'nested-nutrient': indent, 'nutrient-divider': name === 'Vitamin D' }}>
+                <th scope="row">{name}</th><td>{value === '—' ? <><span aria-hidden="true">—</span><span class="vh">Not available</span></> : value}</td><td>{daily}</td>
+              </tr>
+            ))}</tbody>
+          </table>
+          <p class="nutrition-note">Daily Values use the FDA reference amounts for a 2,000-calorie diet. A dash means the estimate is unavailable.</p>
+        </section>
+        <section class="nutrition-guide"><h3>About this estimate</h3>
+          <p>Estimated from the listed ingredients and recipe yield. Brands, preparation, and portion size affect the actual values.</p>
+          {nutrition.assumptions && <p>{nutrition.assumptions}</p>}
+          <p>Data: {nutrition.sources ? nutrition.sources.map(({ name, url }, i) => <>{i > 0 && ' · '}<a href={url}>{name}</a></>) : <a href="https://spoonacular.com/food-api">Spoonacular</a>}.</p>
+        </section>
+      </> : <section class="nutrition-guide"><h2>Nutrition Facts</h2><p>An estimate for the current ingredients and yield is unavailable.</p></section>}
     </div>
     <div id="details" role="tabpanel" aria-labelledby="tab-details">
       {skills.length > 0 && <details id="skills" class="technique-help"><summary>Technique help</summary>

@@ -1,4 +1,46 @@
 {
   "fingerprint": "30a3675ebd1fe17dd449b888f645ee106d550854b89ff0689d089400d80fd5ca",
-  "rows": []
+  "rows": [
+    {
+      "name": "Calories",
+      "amount": 42.9,
+      "unit": "kcal"
+    },
+    {
+      "name": "Fat",
+      "amount": 0.124,
+      "unit": "g"
+    },
+    {
+      "name": "Carbohydrates",
+      "amount": 10.198,
+      "unit": "g"
+    },
+    {
+      "name": "Fiber",
+      "amount": 0.124,
+      "unit": "g"
+    },
+    {
+      "name": "Added Sugar",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Protein",
+      "amount": 0.434,
+      "unit": "g"
+    }
+  ],
+  "assumptions": "Per glass, using unsweetened cranberry juice and plain sparkling water. Orange slices are treated as garnish. Cranberry contribution to total carbohydrate is approximate, based on the juice’s energy.",
+  "sources": [
+    {
+      "name": "Ocean Spray pure cranberry juice",
+      "url": "https://www.oceanspray.com/products/pure-cranberry-32-oz"
+    },
+    {
+      "name": "USDA orange juice",
+      "url": "https://fdc.nal.usda.gov/food-details/169098/nutrients"
+    }
+  ]
 }

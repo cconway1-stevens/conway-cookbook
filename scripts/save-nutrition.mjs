@@ -1,8 +1,10 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { nutritionInput } from '../src/lib/nutrition-input.mjs';
+import { labelNutrients } from '../src/lib/nutrition-label.mjs';
 
 const folder = 'src/data/nutrition';
-const names = ['Calories', 'Protein', 'Carbohydrates', 'Fat', 'Fiber', 'Sugar', 'Sodium'];
+const required = ['Calories', 'Protein', 'Carbohydrates', 'Fat', 'Fiber', 'Sugar', 'Sodium'];
+const names = labelNutrients.map(({ name, source }) => source ?? name);
 const { recipes } = JSON.parse(await readFile('dist/cookbook.json', 'utf8'));
 await mkdir(folder, { recursive: true });
 for (const recipe of recipes) {
@@ -22,9 +24,10 @@ for (const recipe of recipes) {
   });
   if (!response.ok) throw Error(`Stopped at ${recipe.id}: HTTP ${response.status}`);
   const data = await response.json();
-  const rows = names.map(name => data.nutrition?.nutrients?.find(n => n.name === name));
+  const rows = names.map(name => data.nutrition?.nutrients?.find(n => n.name === name))
+    .filter(n => n && Number.isFinite(n.amount) && n.amount >= 0 && n.unit);
   const complete = data.extendedIngredients?.length === input.ingredients.length && data.extendedIngredients.every(i => i.id)
-    && rows.every(n => n && Number.isFinite(n.amount) && n.amount >= 0 && n.unit);
+    && required.every(name => rows.some(n => n.name === name));
   // Remember incomplete matches too, so unrelated edits cannot spend another point.
   const snapshot = { fingerprint: input.fingerprint, rows: complete ? rows.map(({ name, amount, unit }) => ({name, amount, unit})) : [] };
   await writeFile(path, JSON.stringify(snapshot, null, 2) + '\n');

@@ -4,8 +4,10 @@ import { labelNutrients } from '../src/lib/nutrition-label.mjs';
 
 const folder = 'src/data/nutrition';
 // Version 2 adds every nutrient, the protein/fat/carb split, and each ingredient's calories.
+// Version 3 builds the totals by adding up the ingredients: Spoonacular once returned a
+// recipe total that left out an ingredient its own breakdown counted.
 // Older snapshots are fetched once more to pick those up.
-const VERSION = 2;
+const VERSION = 3;
 const required = ['Calories', 'Protein', 'Carbohydrates', 'Fat', 'Fiber', 'Sugar', 'Sodium'];
 const names = labelNutrients.map(({ name, source }) => source ?? name);
 const { recipes } = JSON.parse(await readFile('dist/cookbook.json', 'utf8'));
@@ -27,15 +29,33 @@ for (const recipe of recipes) {
   });
   if (!response.ok) throw Error(`Stopped at ${recipe.id}: HTTP ${response.status}`);
   const data = await response.json();
-  const rows = names.map(name => data.nutrition?.nutrients?.find(n => n.name === name))
+  // Add up each nutrient across the ingredients, and use that sum in place of the
+  // recipe-level figure, so the label always agrees with the per-ingredient breakdown.
+  const parts = data.nutrition?.ingredients ?? [];
+  const summed = new Map();
+  for (const part of parts) for (const n of part.nutrients ?? []) {
+    if (!Number.isFinite(n.amount)) continue;
+    const key = `${n.name}|${n.unit}`;
+    summed.set(key, (summed.get(key) ?? 0) + n.amount);
+  }
+  const nutrients = (data.nutrition?.nutrients ?? []).map(n => {
+    const sum = summed.get(`${n.name}|${n.unit}`);
+    return parts.length && sum !== undefined ? { ...n, amount: Math.round(sum * 100) / 100 } : n;
+  });
+  const rows = names.map(name => nutrients.find(n => n.name === name))
     .filter(n => n && Number.isFinite(n.amount) && n.amount >= 0 && n.unit);
   const complete = data.extendedIngredients?.length === input.ingredients.length && data.extendedIngredients.every(i => i.id)
     && required.every(name => rows.some(n => n.name === name));
   const nutrient = ({ name, amount, unit }) => ({ name, amount, unit });
-  const breakdown = data.nutrition?.caloricBreakdown;
+  // Share of calories from each macronutrient, from the totals above (4, 9, and 4 kcal per gram).
+  const grams = name => nutrients.find(n => n.name === name)?.amount ?? 0;
+  const energy = { protein: grams('Protein') * 4, fat: grams('Fat') * 9, carbs: grams('Carbohydrates') * 4 };
+  const energyTotal = energy.protein + energy.fat + energy.carbs;
+  const percent = value => Math.round(value / energyTotal * 1000) / 10;
+  const breakdown = energyTotal > 0 ? { percentProtein: percent(energy.protein), percentFat: percent(energy.fat), percentCarbs: percent(energy.carbs) } : null;
   const extras = complete ? {
-    more: (data.nutrition?.nutrients ?? []).filter(n => !names.includes(n.name) && Number.isFinite(n.amount) && n.unit).map(nutrient),
-    ...(breakdown && { caloricBreakdown: { percentProtein: breakdown.percentProtein, percentFat: breakdown.percentFat, percentCarbs: breakdown.percentCarbs } }),
+    more: nutrients.filter(n => !names.includes(n.name) && Number.isFinite(n.amount) && n.unit).map(nutrient),
+    ...(breakdown && { caloricBreakdown: breakdown }),
     ingredients: (data.nutrition?.ingredients ?? []).map(i => ({ name: i.name, calories: i.nutrients?.find(n => n.name === 'Calories')?.amount ?? 0 })),
   } : {};
   // Remember incomplete matches too, so unrelated edits cannot spend another point.

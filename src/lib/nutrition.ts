@@ -63,13 +63,21 @@ export function nutritionFor(recipe: Recipe) {
 
   // Which ingredients bring the calories, biggest first, as a share of the recipe.
   const total = snapshot.ingredients?.reduce((sum, { calories }) => sum + (calories > 0 ? calories : 0), 0) ?? 0;
-  const calorieSources = total > 0 ? snapshot.ingredients!
-    .filter(({ calories }) => calories > 0)
+  // An ingredient used twice (cocoa in the cake and the frosting) is one row.
+  const byName = new Map<string, number>();
+  for (const { name, calories } of snapshot.ingredients ?? []) if (calories > 0) byName.set(name, (byName.get(name) ?? 0) + calories);
+  const calorieSources = total > 0 ? [...byName].map(([name, calories]) => ({ name, calories }))
     .sort((a, b) => b.calories - a.calories)
     .map(({ name, calories }) => ({ name, share: Math.round(calories / total * 100), calories: Math.round(calories / scale) })) : [];
 
+  // The label total should equal the ingredients added up. Say so plainly when it doesn't.
+  const labelCalories = snapshot.rows.find(({ name }) => name === 'Calories')?.amount ?? 0;
+  const mismatch = total > 0 && labelCalories > 0 && Math.abs(total - labelCalories) / labelCalories > .05
+    ? `The ingredients below add up to about ${Math.round(total / scale)} calories per serving, not the ${Math.round(labelCalories / scale)} on the label. The label will be recalculated from the ingredients the next time nutrition is saved.`
+    : '';
+
   return {
-    serving, rows, more, calorieSources,
+    serving, rows, more, calorieSources, mismatch,
     caloricBreakdown: snapshot.caloricBreakdown,
     // Package-style lines, estimated from the recipe itself.
     statement: ingredientStatement(lines),

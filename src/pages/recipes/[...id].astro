@@ -162,33 +162,42 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
           </table>
           <p class="nutrition-note">Daily Values use the FDA reference amounts for a 2,000-calorie diet. A dash means the estimate is unavailable.</p>
         </section>
-        <div class="box-copy">
-          <p class="box-ingredients"><strong>Ingredients:</strong> {nutrition.statement.join(', ')}.</p>
-          {nutrition.allergens.length > 0 && <p class="box-contains"><strong>Contains:</strong> {nutrition.allergens.join(', ')}.</p>}
-          <p class="box-fine">Ingredients are listed by estimated weight, most first. Allergens are found by ingredient name; check the labels on the brands you use.</p>
-          <p class="box-yield"><strong>Makes</strong> {data.servings}</p>
-          <svg class="box-barcode" viewBox={`0 0 ${barcode.width} 40`} preserveAspectRatio="none" aria-hidden="true">
-            {barcode.bars.map(([x, w]) => <rect x={x} y="0" width={w} height="40" />)}
-          </svg>
-          <p class="box-code" aria-hidden="true">{recipe.id}</p>
+        <div class="box-side">
+          <div class="box-panel box-copy">
+            <p class="box-ingredients"><strong>Ingredients:</strong> {nutrition.statement.join(', ')}.</p>
+            {nutrition.allergens.length > 0 && <p class="box-contains"><strong>Contains:</strong> {nutrition.allergens.join(', ')}.</p>}
+            <p class="box-fine">Ingredients are listed by estimated weight, most first. Allergens are found by ingredient name; check the labels on the brands you use.</p>
+          </div>
+          {(nutrition.caloricBreakdown || nutrition.calorieSources.length > 0) && <section class="box-panel nutrition-more" aria-labelledby="calories-title"><h3 id="calories-title">Where the calories come from</h3>
+            {nutrition.mismatch && <p class="notice">{nutrition.mismatch}</p>}
+            {nutrition.caloricBreakdown && <>
+              <p class="cal-split" role="img" aria-label={`Calories: ${Math.round(nutrition.caloricBreakdown.percentCarbs)}% from carbohydrate, ${Math.round(nutrition.caloricBreakdown.percentFat)}% from fat, ${Math.round(nutrition.caloricBreakdown.percentProtein)}% from protein`}>
+                <span class="cal-carbs" style={`flex: ${nutrition.caloricBreakdown.percentCarbs}`}></span><span class="cal-fat" style={`flex: ${nutrition.caloricBreakdown.percentFat}`}></span><span class="cal-protein" style={`flex: ${nutrition.caloricBreakdown.percentProtein}`}></span>
+              </p>
+              <p class="cal-key" aria-hidden="true"><span class="cal-carbs">Carbohydrate {Math.round(nutrition.caloricBreakdown.percentCarbs)}%</span> <span class="cal-fat">Fat {Math.round(nutrition.caloricBreakdown.percentFat)}%</span> <span class="cal-protein">Protein {Math.round(nutrition.caloricBreakdown.percentProtein)}%</span></p>
+            </>}
+            {nutrition.calorieSources.length > 0 && <table class="cal-sources">
+              <thead><tr><th scope="col">Ingredient</th><th scope="col">Calories</th><th scope="col">Share</th></tr></thead>
+              <tbody>{nutrition.calorieSources.map(({ name, calories, share }) => <tr><th scope="row">{name}</th><td>{calories}</td><td><span class="cal-bar" style={`--share: ${share}%`}>{share}%</span></td></tr>)}</tbody>
+            </table>}
+          </section>}
         </div>
-        </div>
-        </div>
-        {(nutrition.caloricBreakdown || nutrition.calorieSources.length > 0 || nutrition.more.length > 0) && <section class="nutrition-more"><h3>Where the calories come from</h3>
-          {nutrition.caloricBreakdown && <>
-            <p class="cal-split" role="img" aria-label={`Calories: ${Math.round(nutrition.caloricBreakdown.percentCarbs)}% from carbohydrate, ${Math.round(nutrition.caloricBreakdown.percentFat)}% from fat, ${Math.round(nutrition.caloricBreakdown.percentProtein)}% from protein`}>
-              <span class="cal-carbs" style={`flex: ${nutrition.caloricBreakdown.percentCarbs}`}></span><span class="cal-fat" style={`flex: ${nutrition.caloricBreakdown.percentFat}`}></span><span class="cal-protein" style={`flex: ${nutrition.caloricBreakdown.percentProtein}`}></span>
-            </p>
-            <p class="cal-key" aria-hidden="true"><span class="cal-carbs">Carbohydrate {Math.round(nutrition.caloricBreakdown.percentCarbs)}%</span> <span class="cal-fat">Fat {Math.round(nutrition.caloricBreakdown.percentFat)}%</span> <span class="cal-protein">Protein {Math.round(nutrition.caloricBreakdown.percentProtein)}%</span></p>
-          </>}
-          {nutrition.calorieSources.length > 0 && <table class="cal-sources">
-            <thead><tr><th scope="col">Ingredient</th><th scope="col">Calories per serving</th><th scope="col">Share</th></tr></thead>
-            <tbody>{nutrition.calorieSources.map(({ name, calories, share }) => <tr><th scope="row">{name}</th><td>{calories}</td><td><span class="cal-bar" style={`--share: ${share}%`}>{share}%</span></td></tr>)}</tbody>
-          </table>}
-          {nutrition.more.length > 0 && <details class="more-nutrients"><summary>More vitamins and minerals</summary>
+        {nutrition.more.length > 0 && <section class="box-panel more-nutrients nutrition-more" aria-labelledby="more-title"><h3 id="more-title">Vitamins &amp; minerals <small>per serving</small></h3>
             <dl>{nutrition.more.map(({ name, value }) => <><dt>{name}</dt><dd>{value}</dd></>)}</dl>
-          </details>}
-        </section>}
+          </section>}
+        </div>
+        {/* The bottom edge of the box: yield, a line of small print, and the barcode. */}
+        <div class="box-foot">
+          <p class="box-yield"><strong>Makes</strong> {data.servings}</p>
+          <p class="box-tag" aria-hidden="true">Made in the Conway kitchen · Recipes worth keeping</p>
+          <div class="box-code-wrap" aria-hidden="true">
+            <svg class="box-barcode" viewBox={`0 0 ${barcode.width} 40`} preserveAspectRatio="none">
+              {barcode.bars.map(([x, w]) => <rect x={x} y="0" width={w} height="40" />)}
+            </svg>
+            <p class="box-code">{recipe.id}</p>
+          </div>
+        </div>
+        </div>
         <section class="nutrition-guide"><h3>About this estimate</h3>
           <p>Estimated from the listed ingredients and recipe yield. Brands, preparation, and portion size affect the actual values.</p>
           {nutrition.assumptions && <p>{nutrition.assumptions}</p>}

@@ -1,0 +1,74 @@
+{
+  "title": "Our Best Cheesecake",
+  "description": "Classic Philadelphia cream cheese cheesecake with a graham cracker crust, sour cream, and optional cherry pie topping, transcribed from a vintage recipe clipping.",
+  "category": "Desserts",
+  "meal": [
+    "Dessert"
+  ],
+  "cuisine": [
+    "American"
+  ],
+  "tags": [
+    "Cheesecake",
+    "Baking",
+    "Make ahead",
+    "Vintage recipe"
+  ],
+  "date": "2026-11-22",
+  "time": "1 hour 10 minutes baking, plus at least 4 hours chilling",
+  "minutes": 325,
+  "servings": "16",
+  "difficulty": "Intermediate",
+  "ingredients": [
+    {
+      "group": "Graham cracker crust",
+      "items": [
+        "1¾ cups HONEY MAID Graham Cracker Crumbs",
+        "⅓ cup margarine or butter, melted",
+        "¼ cup sugar (from the 1¼ cups total)"
+      ]
+    },
+    {
+      "group": "Cheesecake filling",
+      "items": [
+        "3 packages (8 ounces each) PHILADELPHIA Cream Cheese, softened",
+        "1 cup sugar (remaining from the 1¼ cups total)",
+        "2 teaspoons vanilla",
+        "3 eggs",
+        "1 cup BREAKSTONE'S or KNUDSEN Sour Cream"
+      ]
+    },
+    {
+      "group": "Optional topping",
+      "items": [
+        "1 can (21 ounces) cherry pie filling"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "title": "Preheat the oven",
+      "text": "Preheat oven to 350°F for a silver 8- or 9-inch springform pan, or 325°F for a dark nonstick 8- or 9-inch springform pan."
+    },
+    {
+      "title": "Make the crust",
+      "text": "Mix graham cracker crumbs, melted margarine or butter, and ¼ cup of the sugar. Press firmly onto the bottom and 2½ inches up the sides of the springform pan. Set aside."
+    },
+    {
+      "title": "Beat the filling",
+      "text": "Beat softened cream cheese, the remaining 1 cup sugar, and vanilla in a large bowl with an electric mixer on high speed until well blended. Add eggs, one at a time, mixing on low speed after each addition just until blended. Add sour cream. Pour into crust."
+    },
+    {
+      "title": "Bake",
+      "text": "Bake 1 hour to 1 hour 10 minutes, or until the center is almost set. Turn off the oven. Leaving the door slightly ajar, leave the cheesecake in the oven for 1 hour."
+    },
+    {
+      "title": "Chill and serve",
+      "text": "Remove from oven and cool completely. Refrigerate 4 hours or overnight. Remove the side of the pan; top with cherry pie filling, if desired. Refrigerate leftover cheesecake."
+    }
+  ],
+  "notes": {
+    "Original clipping": "Prep: 15 minutes plus refrigerating. Bake: 1 hour 10 minutes. Makes 16 servings. The optional cherry pie filling is added after chilling.",
+    "Source": "Transcribed from the photographed 'OUR BEST CHEESECAKE' vintage Philadelphia cream cheese recipe clipping."
+  }
+}

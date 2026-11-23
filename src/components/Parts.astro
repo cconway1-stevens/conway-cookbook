@@ -1,9 +1,19 @@
 ---
-const { parts = [], entries, emphasizeTiming = false } = Astro.props;
 import { withStepAmounts, stepEmphasis } from '../lib/ingredient-links.mjs';
+
+// A step line split into plain text and linked ingredient words.
+type Part = string | { s: string; e?: string[]; o?: string[]; g?: string; gm?: string; amount?: string };
+
+interface Props {
+  parts?: Part[];
+  entries?: unknown;
+  emphasizeTiming?: boolean;
+}
+
+const { parts = [], entries, emphasizeTiming = false } = Astro.props;
 const [visibleParts] = entries ? withStepAmounts([parts], entries) : [parts];
 ---
-{visibleParts.map((part: string | { s: string; e?: string[]; o?: string[]; g?: string; gm?: string; amount?: string }) => {
+{visibleParts.map((part: Part) => {
   if (typeof part === 'string') return emphasizeTiming ? part.split(stepEmphasis).map((segment, index) => index % 2 ? <strong>{segment}</strong> : segment) : part;
   return <>
     <span class:list={['ing', { 'ing-group': part.gm }]} data-e={part.e?.join(' ')} data-o={part.o?.join(' ')} data-g={part.g} data-gm={part.gm}>{part.s}</span>{part.amount && <strong class="step-amount"> ({part.amount})</strong>}

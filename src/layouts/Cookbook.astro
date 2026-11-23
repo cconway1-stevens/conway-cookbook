@@ -21,6 +21,13 @@ import { book } from '../lib/cookbook';
 const everything = await allRecipes();
 const names = everything.map((r) => r.data.title).filter((t) => t.length <= 17);
 const thumbs = everything.filter((r) => r.data.image).map((r) => `${base}thumbs/${r.id}.jpg`);
+interface Props {
+  title?: string;
+  description?: string;
+  current?: string;
+  showHeaderSearch?: boolean;
+}
+
 const { title, description = book.description, current = '', showHeaderSearch = true } = Astro.props;
 const bars = Object.fromEntries(book.themes.map((t) => [t.id, t.bar]));
 ---

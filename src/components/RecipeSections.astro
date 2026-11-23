@@ -2,7 +2,13 @@
 import type { CollectionEntry } from 'astro:content';
 import RecipeCard from './RecipeCard.astro';
 
-const { name, recipes, level }: { name: string; recipes: CollectionEntry<'recipes'>[]; level: 'h2' | 'h3' } = Astro.props;
+interface Props {
+  name: string;
+  recipes: CollectionEntry<'recipes'>[];
+  level: 'h2' | 'h3';
+}
+
+const { name, recipes, level } = Astro.props;
 const cocktails = name === 'Drinks' ? recipes.filter(recipe => recipe.data.tags.includes('Cocktail')) : [];
 const drinks = cocktails.length ? recipes.filter(recipe => !recipe.data.tags.includes('Cocktail')) : recipes;
 const Heading = level;

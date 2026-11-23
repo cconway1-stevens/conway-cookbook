@@ -2,6 +2,10 @@
 // The voice controls, shared by cook mode and the settings page.
 import { clip, json } from '../lib/recipes';
 import { book } from '../lib/cookbook';
+interface Props {
+  recordedAvailable?: boolean;
+}
+
 const { recordedAvailable = true } = Astro.props;
 const commands = [['next', 'Go to the next step'], ['back', 'Go back a step'], ['done', 'Tick this step and move on'], ['check', 'Tick one line, hear the next'], ['repeat', 'Read it again'], ['why', 'Open and read the reason'], ['ingredients', 'See the ingredients'], ['start timer', 'Start this step’s suggested timer'], ['timer five minutes', 'Start a custom timer'], ['step three', 'Jump to a step'], ['stop', 'Stop reading']];
 ---

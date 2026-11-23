@@ -1,7 +1,13 @@
 ---
 import Spot from './Spot.astro';
-import { base, recipeUrl, searchText, isSample } from '../lib/recipes';
+import { base, recipeUrl, searchText, isSample, type Recipe } from '../lib/recipes';
 import { slug } from '../lib/cookbook';
+
+interface Props {
+  recipe: Recipe;
+  level?: 'h2' | 'h3' | 'h4';
+}
+
 const { recipe, level = 'h3' } = Astro.props;
 const { id, data } = recipe;
 const Heading = level;

@@ -1,4 +1,5 @@
 ---
+import type { InferGetStaticPropsType } from 'astro';
 import Cookbook from '../../layouts/Cookbook.astro';
 import { allMenus } from '../../lib/menus';
 import { encodeMenu } from '../../lib/menu-link';
@@ -7,6 +8,8 @@ import { base, recipeUrl } from '../../lib/recipes';
 export async function getStaticPaths() {
   return (await allMenus()).map((menu) => ({ params: { id: menu.id }, props: { menu } }));
 }
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { menu } = Astro.props;
 const { title, description, note, paper, blurbs, items } = menu.data;

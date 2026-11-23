@@ -1,7 +1,12 @@
 ---
 import KitchenTimers from './KitchenTimers.astro';
 import VoicePanel from './VoicePanel.astro';
-import { json, cookData } from '../lib/recipes';
+import { json, cookData, type Recipe } from '../lib/recipes';
+
+interface Props {
+  recipe: Recipe;
+}
+
 const { recipe } = Astro.props;
 const narration = cookData(recipe);
 ---

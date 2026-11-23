@@ -2,6 +2,10 @@
 // Two-color spot art, printed slightly out of register like an old cookbook.
 // Which drawing goes with which course is set in src/data/cookbook.json.
 import { courseOf } from '../lib/cookbook';
+interface Props {
+  category: string;
+}
+
 const { category } = Astro.props;
 const art: Record<string, { fill: string; ink: string }> = {
   pancakes: { fill: '<ellipse cx="32" cy="42" rx="24" ry="9"/><rect x="26" y="15" width="12" height="10"/>', ink: '<ellipse cx="32" cy="24" rx="20" ry="7"/><path d="M12 24v7c0 4 9 7 20 7s20-3 20-7v-7M12 31v7c0 4 9 7 20 7s20-3 20-7v-7M6 46c4 6 14 8 26 8s22-2 26-8M26 21v-7h12v7l-6 3z"/>' },

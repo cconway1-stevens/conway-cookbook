@@ -2,6 +2,12 @@
 // Photos, video, sound, and notes. The published ones come from the repo; the visitor's
 // own stay in their browser (scripts/gallery.ts).
 import { mediaFor, publishLinks } from '../lib/media';
+import type { Recipe } from '../lib/recipes';
+
+interface Props {
+  recipe: Recipe;
+}
+
 const { recipe } = Astro.props;
 const media = mediaFor(recipe);
 const links = publishLinks(recipe);

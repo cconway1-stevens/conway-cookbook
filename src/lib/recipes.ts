@@ -43,7 +43,7 @@ export const cookData = (recipe: Recipe) => {
     id: recipe.id,
     title: recipe.data.title,
     groups: ingredients(recipe).map((g) => ({ name: g.name, lines: g.items.map(clip) })),
-    steps: steps(recipe.data, recipe.body).map((step: { title: string; lines: string[]; why?: string }, i: number) => {
+    steps: directions(recipe).map((step, i) => {
       const linkedRecipe = linkOf(recipe);
       const link = linkedRecipe?.steps[i];
       const lineParts = link && linkedRecipe ? withStepAmounts(link.lineParts, linkedRecipe.data.entries) : undefined;

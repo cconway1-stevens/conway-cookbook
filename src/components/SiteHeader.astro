@@ -2,7 +2,13 @@
 import { base } from '../lib/recipes';
 import { book } from '../lib/cookbook';
 
-const { current, names = [], showSearch = true }: { current: string; names?: string[]; showSearch?: boolean } = Astro.props;
+interface Props {
+  current: string;
+  names?: string[];
+  showSearch?: boolean;
+}
+
+const { current, names = [], showSearch = true } = Astro.props;
 const groups = [
   {
     name: 'Recipes',

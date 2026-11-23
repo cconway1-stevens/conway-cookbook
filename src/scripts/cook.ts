@@ -2,7 +2,7 @@
 import { stepEmphasis } from '../lib/ingredient-links.mjs';
 import { setupKitchenTimers } from './kitchen-timers';
 import { confetti, number, replay } from './motion';
-import { listen, prefs, quiet, speak, type Line } from './voice';
+import { chosen, listen, prefs, quiet, speak, type Line, type Narrator } from './voice';
 
 // Ingredient words get the same hover as on the recipe page.
 function fill(el: HTMLElement, line: Line, emphasize = false) {
@@ -30,7 +30,7 @@ function fill(el: HTMLElement, line: Line, emphasize = false) {
   }));
 }
 
-interface Data { id: string; title: string; groups: { name: string; lines: Line[] }[]; steps: { title: string; heading: Line; lines: Line[]; why?: Line }[]; phrases: Record<string, Line> }
+interface Data { recorded: boolean; id: string; title: string; groups: { name: string; lines: Line[] }[]; steps: { title: string; heading: Line; lines: Line[]; why?: Line }[]; phrases: Record<string, Line> }
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const data: Data = JSON.parse($('cook-data').textContent!);
@@ -55,21 +55,28 @@ try {
 
 /* ---------- Voice ---------- */
 let run = 0, speaking = false;
+let narrator: Narrator | undefined;
+const recipeNarrator = () => narrator ??= !prefs.voice && data.recorded ? 'recorded' : chosen();
 function hush() {
   run++; speaking = false; quiet();
   document.querySelectorAll('.cook-lines .now').forEach((el) => el.classList.remove('now'));
   $('cook-read').textContent = 'Read aloud';
 }
-async function say(lines: { line: Line; row?: number; fallback?: Line }[]) {
+async function say(lines: { line: Line; row?: number }[], voice = recipeNarrator()) {
   hush();
   const mine = run; speaking = true;
   $('cook-read').textContent = 'Stop reading';
-  for (const { line, row, fallback } of lines) {
+  for (const { line, row } of lines) {
     document.querySelectorAll('.cook-lines .now').forEach((el) => el.classList.remove('now'));
     if (row !== undefined) $('cook-lines').querySelector(`[data-row="${row}"]`)?.classList.add('now');
-    const ok = await speak(line, () => mine === run) || (fallback && mine === run && await speak(fallback, () => mine === run));
+    const ok = await speak(line, voice);
     if (mine !== run) return;
-    if (!ok) { $('cook-warn').textContent = 'This browser has no on-device voice to read with.'; break; }
+    if (!ok) {
+      $('cook-warn').textContent = voice === 'recorded'
+        ? 'The recording could not play. Try Read aloud again or choose a device voice.'
+        : voice ? 'The selected voice could not play.' : 'This browser has no on-device voice to read with.';
+      break;
+    }
   }
   if (mine === run) hush();
 }
@@ -85,7 +92,11 @@ function whyNow() {
 /* ---------- Timers ---------- */
 const kitchenTimers = setupKitchenTimers({
   dialog,
-  announce: (text, expired) => say([{ line: { text, say: text }, fallback: expired ? data.phrases.timer : undefined }]),
+  announce: (text, expired) => {
+    const voice = recipeNarrator();
+    if (voice === 'recorded' && expired) return say([{ line: data.phrases.timer }], voice);
+    return say([{ line: { text, say: text } }], voice === 'recorded' ? chosen() : voice);
+  },
 });
 const startTimer = kitchenTimers.start;
 // "60–75 minutes" starts at 60, so you check early.
@@ -278,6 +289,10 @@ dialog.addEventListener('cancel', (event) => {
   if (!$('cook-voice').hidden) { event.preventDefault(); panel(false); } });
 document.addEventListener('voice:preview', hush);
 document.addEventListener('voice:change', (event) => {
+  if ((event as CustomEvent).detail === 'voice') {
+    hush();
+    narrator = undefined;
+  }
   if ((event as CustomEvent).detail === 'mic' && dialog.open) mic(prefs.mic);
   if ((event as CustomEvent).detail === 'auto' && !prefs.auto) hush();
 });

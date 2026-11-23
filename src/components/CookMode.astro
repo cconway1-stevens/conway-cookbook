@@ -3,6 +3,7 @@ import KitchenTimers from './KitchenTimers.astro';
 import VoicePanel from './VoicePanel.astro';
 import { json, cookData } from '../lib/recipes';
 const { recipe } = Astro.props;
+const narration = cookData(recipe);
 ---
 <div id="page-timer-mount"><KitchenTimers /></div>
 <dialog id="cook" aria-labelledby="cook-title">
@@ -40,8 +41,8 @@ const { recipe } = Astro.props;
   </div>
   <div class="cook-voice" id="cook-voice" role="region" aria-labelledby="cook-voice-title" hidden>
     <div class="cook-voice-head"><h2 id="cook-voice-title">Voice</h2><button type="button" class="button quiet" id="cook-voice-close">Done</button></div>
-    <VoicePanel />
+    <VoicePanel recordedAvailable={narration.recorded} />
   </div>
 </dialog>
-<script type="application/json" id="cook-data" set:html={json(cookData(recipe))} />
+<script type="application/json" id="cook-data" set:html={json(narration)} />
 <script>import '../scripts/cook';</script>

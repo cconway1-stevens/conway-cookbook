@@ -28,7 +28,7 @@ function row(name: string, from: string, grade: string, value: string, checked: 
 function draw() {
   const found = voices(), mine = chosen();
   const rows: HTMLElement[] = [];
-  const own = !!sample.audio;
+  const own = !!sample.audio && $('voice-panel').dataset.recorded === 'true';
   if (own) rows.push(row('The cookbook’s voice', 'Recorded', 'Most natural', '', !prefs.voice || !found.some((v) => v.voice.voiceURI === prefs.voice), 'recorded'));
   const shown = all ? found : found.filter((v, i) => i < 4 || (v === mine && prefs.voice));
   rows.push(...shown.map((v) => row(v.name, v.from, v.grade, v.voice.voiceURI, own ? prefs.voice === v.voice.voiceURI : v.voice.voiceURI === mine?.voice.voiceURI, v)));

@@ -1,4 +1,4 @@
-// Reading aloud: a recorded clip when there is one, otherwise a voice on this device.
+// Read with the selected recording or on-device voice.
 export interface Part { s: string; e?: string[]; o?: string[]; g?: string; gm?: string; amount?: string }
 export interface Line { text: string; say: string; audio?: string; parts?: (string | Part)[] }
 
@@ -37,18 +37,20 @@ const viaClip = (line: Line) => new Promise<boolean>((done) => {
   player.onended = () => done(true); player.onerror = () => done(false); player.onpause = () => { if (!player.ended) done(true); };
   player.play().catch(() => done(false));
 });
-const viaDevice = (line: Line, pick?: Voice) => new Promise<boolean>((done) => {
-  const voice = (pick ?? chosen())?.voice;
-  if (!synth || !voice) return done(false);
+const viaDevice = (line: Line, pick: Voice) => new Promise<boolean>((done) => {
+  if (!synth) return done(false);
+  const { voice } = pick;
   const u = new SpeechSynthesisUtterance(line.say);
   u.voice = voice; u.lang = voice.lang; u.rate = prefs.rate;
   u.onend = () => done(true); u.onerror = () => done(false);
   synth.speak(u);
 });
-// An empty prefs.voice means "the cookbook's own voice, if this line has been recorded".
-export const speak = async (line: Line, still: () => boolean = () => true) =>
-  (!prefs.voice && line.audio && (await viaClip(line))) || (still() && (await viaDevice(line)));
-export const preview = (line: Line, pick: Voice | 'recorded') => { quiet(); return pick === 'recorded' ? viaClip(line) : viaDevice(line, pick); };
+export type Narrator = Voice | 'recorded';
+export const speak = (line: Line, narrator?: Narrator) => {
+  if (narrator === 'recorded') return line.audio ? viaClip(line) : Promise.resolve(false);
+  return narrator ? viaDevice(line, narrator) : Promise.resolve(false);
+};
+export const preview = (line: Line, pick: Narrator) => { quiet(); return speak(line, pick); };
 
 /* ---------- Listening, on the device or not at all ---------- */
 const SR = (window as any).SpeechRecognition ?? (window as any).webkitSpeechRecognition;

@@ -38,18 +38,25 @@ export const clip = (text: string) => {
   const file = clipName(text);
   return { text, say: spoken(text), audio: existsSync(`public/audio/${file}`) ? `${base}audio/${file}` : undefined };
 };
-export const cookData = (recipe: Recipe) => ({
-  id: recipe.id,
-  title: recipe.data.title,
-  groups: ingredients(recipe).map((g) => ({ name: g.name, lines: g.items.map(clip) })),
-  steps: steps(recipe.data, recipe.body).map((step: { title: string; lines: string[]; why?: string }, i: number) => {
-    const linkedRecipe = linkOf(recipe);
-    const link = linkedRecipe?.steps[i];
-    const lineParts = link && linkedRecipe ? withStepAmounts(link.lineParts, linkedRecipe.data.entries) : undefined;
-    return { title: step.title, heading: clip(heading(step, i)), lines: step.lines.map((l, n) => withParts(clip(l), lineParts?.[n])), why: step.why ? withParts(clip(step.why), link?.whyParts) : undefined };
-  }),
-  phrases: Object.fromEntries(Object.entries(PHRASES).map(([key, text]) => [key, clip(text as string)])),
-});
+export const cookData = (recipe: Recipe) => {
+  const data = {
+    id: recipe.id,
+    title: recipe.data.title,
+    groups: ingredients(recipe).map((g) => ({ name: g.name, lines: g.items.map(clip) })),
+    steps: steps(recipe.data, recipe.body).map((step: { title: string; lines: string[]; why?: string }, i: number) => {
+      const linkedRecipe = linkOf(recipe);
+      const link = linkedRecipe?.steps[i];
+      const lineParts = link && linkedRecipe ? withStepAmounts(link.lineParts, linkedRecipe.data.entries) : undefined;
+      return { title: step.title, heading: clip(heading(step, i)), lines: step.lines.map((l, n) => withParts(clip(l), lineParts?.[n])), why: step.why ? withParts(clip(step.why), link?.whyParts) : undefined };
+    }),
+    phrases: Object.fromEntries(Object.entries(PHRASES).map(([key, text]) => [key, clip(text as string)])),
+  };
+  const recorded = [data.phrases.gather, data.phrases.finished, data.phrases.timer,
+    ...data.groups.flatMap(group => group.lines),
+    ...data.steps.flatMap(step => [step.heading, ...step.lines, ...(step.why ? [step.why] : [])]),
+  ].every(line => !!line.audio);
+  return { ...data, recorded };
+};
 
 export const menuData = (recipe: Recipe) => ({
   id: recipe.id,

@@ -13,6 +13,7 @@
   --type: 'Libre Caslon Text', Caslon, Georgia, serif;
   --hand: 'Homemade Apple', 'Snell Roundhand', cursive;
   --marble: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27720%27 height=%27240%27%3E%3Cfilter color-interpolation-filters=%27sRGB%27 id=%27m%27 x=%270%27 y=%270%27 width=%27100%25%27 height=%27100%25%27%3E%3CfeTurbulence type=%27turbulence%27 baseFrequency=%27.007 .03%27 numOctaves=%273%27 seed=%2711%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%273 0 0 0 0 3 0 0 0 0 3 0 0 0 0 0 0 0 0 1%27/%3E%3CfeComponentTransfer%3E%3CfeFuncR type=%27table%27 tableValues=%27.36 .78 .93 .13 .5 .89 .3 .83%27/%3E%3CfeFuncG type=%27table%27 tableValues=%27.09 .6 .87 .24 .14 .8 .2 .66%27/%3E%3CfeFuncB type=%27table%27 tableValues=%27.13 .32 .74 .19 .18 .62 .2 .38%27/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23m)%27/%3E%3C/svg%3E");
+  --marbled-trim: linear-gradient(#eee2c8b8, #eee2c8b8), var(--marble);
   --fiber: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27220%27 height=%27220%27%3E%3Cfilter color-interpolation-filters=%27sRGB%27 id=%27f%27 x=%270%27 y=%270%27 width=%27100%25%27 height=%27100%25%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.8%27 numOctaves=%273%27 seed=%274%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .12 0 0 0 .11 0%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23f)%27/%3E%3C/svg%3E");
   --cloth: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Cfilter color-interpolation-filters=%27sRGB%27 id=%27c%27 x=%270%27 y=%270%27 width=%27100%25%27 height=%27100%25%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.9 .35%27 numOctaves=%272%27 seed=%277%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 1 0 0 0 0 .95 0 0 0 0 .8 0 0 0 .13 -.02%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23c)%27/%3E%3C/svg%3E"), radial-gradient(ellipse at 30% 0, #35604b, transparent 70%), #1d382b;
   --corners: linear-gradient(135deg, var(--corner) 50%, transparent 51%) top left, linear-gradient(225deg, var(--corner) 50%, transparent 51%) top right, linear-gradient(45deg, var(--corner) 50%, transparent 51%) bottom left, linear-gradient(315deg, var(--corner) 50%, transparent 51%) bottom right;
@@ -24,14 +25,13 @@
     radial-gradient(circle at 67% 71%, #8a5a2224 0 1.5px, #8a5a220d 4px, transparent 10px),
     radial-gradient(circle at 27% 86%, #8a5a221a 0 4px, transparent 11px),
     radial-gradient(circle at 92% 58%, #8a5a2214 0 2px, transparent 6px);
-  /* Folders: older kraft stock, labeled by hand. */
+  /* Cream paper labels against kraft folder stock. */
   --folder: #e4cb93; --folder-back: #d3b277; --folder-edge: #98763c;
   --folder-wear: var(--foxing);
   --folder-label: #fffaf0;
-  --folder-label-ink: #2c3a57;
-  --folder-label-font: 400 1rem/1.9 var(--hand);
+  --folder-label-ink: var(--second);
+  --folder-label-font: 700 1rem/1.35 var(--body);
   --folder-label-case: none;
-  --folder-label-tilt: -1.5deg;
   /* Filter chips are squared off, like the rest of the album's labels. */
   --chip-radius: 3px;
 }
@@ -42,9 +42,9 @@
 
   /* Boards: cloth head and tail with marbled paper showing at the hinge */
   .masthead { background: var(--card); border: 0; }
-  .masthead::after { content: ''; display: block; height: 12px; background: var(--marble); border-block: 2px solid #b8964c; }
+  .masthead::after { content: ''; display: block; height: 6px; background: var(--marbled-trim); border-block: 2px solid #b8964c; }
   .footer { border: 0; background: var(--cloth); color: #f6ead0; }
-  .footer::before { content: ''; display: block; height: 26px; background: var(--marble); border-block: 2px solid #b8964c; }
+  .footer::before { content: ''; display: block; height: 10px; background: var(--marbled-trim); border-block: 2px solid #b8964c; }
   .footer .wordmark { color: var(--gold); } .footer span { color: #f6ead0; }
   .wordmark { font: 400 1.6rem/1.1 var(--display); color: var(--second); }
   nav { font-weight: 400; } nav a:hover, nav a[aria-current] { border-color: #b8964c; }
@@ -64,7 +64,7 @@
 
   /* Chapters: index dividers with a handwritten tab */
   .dividers a { position: relative; border: 1px solid var(--line); border-top: 0; background: var(--fiber), #fff8e8; padding: 1.3rem 1.2rem 1.1rem; box-shadow: 0 3px 8px var(--shade); transition: transform .2s; }
-  .dividers a::before { content: ''; position: absolute; inset: 0 0 auto; height: 10px; background: var(--marble); }
+  .dividers a::before { content: ''; position: absolute; inset: 0 0 auto; height: 6px; background: var(--marbled-trim); }
   .dividers li:nth-child(4n+2) a::before { background-position: 190px 60px; } .dividers li:nth-child(4n+3) a::before { background-position: 380px 120px; } .dividers li:nth-child(4n) a::before { background-position: 90px 180px; }
   .dividers a:hover { transform: translateY(-4px); }
   .dividers span { font: 400 1.65rem/1.3 var(--heading); } .dividers small { font: italic 400 1.05rem/1.4 var(--body); color: var(--soft); }

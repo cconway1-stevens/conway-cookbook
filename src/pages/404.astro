@@ -1,0 +1,66 @@
+---
+import Cookbook from '../layouts/Cookbook.astro';
+import { base } from '../lib/recipes';
+
+const variants = [
+  { title: 'This page crumbled.', message: 'All that’s left are a few crumbs and a very good apple pie.', image: 'apple-crumble-pie-illustration.jpg' },
+  { title: 'Well, flip.', message: 'That link landed butter-side down.', image: 'moms-french-toast.webp' },
+  { title: 'The plot thickens.', message: 'The soup turned out great. The link, less so.', image: 'creamy-tomato-soup.jpg' },
+  { title: 'We have a pasta problem.', message: 'The spaghetti is al dente. The address is overdone.', image: 'roasted-garlic-spaghetti-al-pomodoro.webp' },
+  { title: 'Somebody ate the evidence.', message: 'The cookie plate is the only clue we have.', image: 'marbled-chocolate-chip-cookies.webp' },
+  { title: 'A little too hot to handle.', message: 'The peppers made it to the table. This page didn’t.', image: 'roasted-long-hots-and-red-peppers.webp' },
+  { title: 'The page got pickled.', message: 'Grandpa says to give it another ten days. You can browse now.', image: 'grandpa-and-grandmas-pique.webp' },
+  { title: 'A short stack.', message: 'We came up one page short. There are still pancakes.', image: 'buttermilk-pancakes.jpg' },
+  { title: 'This link is toast.', message: 'At least the bruschetta is supposed to be crunchy.', image: 'tomato-bruschetta.jpg' },
+  { title: 'Gone in one bite.', message: 'Someone left the serving platter within reach.', image: 'ryan-seacrest-sausage-balls.webp' },
+  { title: 'An unsolved cake.', message: 'We can account for every slice except this one.', image: 'hersheys-chocolate-cake.webp' },
+  { title: 'The lime took a detour.', message: 'If this page turns up, we owe it a daiquiri.', image: 'classic-daiquiri.jpg' },
+  { title: 'The page didn’t set.', message: 'The cheesecake did, after four hours in the fridge.', image: 'our-best-cheesecake.webp' },
+  { title: 'That’s a sticky situation.', message: 'The marshmallows held together better than this link.', image: 'vanilla-rice-krispies-treats.jpg' },
+  { title: 'Hold the dressing.', message: 'We’re still looking for the address, but the salad is ready.', image: 'greek-salad.jpg' },
+  { title: 'We’re on a wild chicken chase.', message: 'The lemon-herb thighs are accounted for. The page is still missing.', image: 'lemon-herb-chicken.jpg' },
+].map(variant => ({ ...variant, image: `${base}images/${variant.image}` }));
+const first = variants[0];
+---
+<Cookbook title="Page not found" description="This page is missing from the Conway Cookbook.">
+  <section class="wrap missing" data-variants={JSON.stringify(variants)} aria-labelledby="missing-title">
+    <div class="missing-copy">
+      <p class="missing-code">404 · Page not found</p>
+      <h1 id="missing-title">{first.title}</h1>
+      <p id="missing-message">{first.message}</p>
+      <div class="missing-actions">
+        <a class="button" href={`${base}recipes/`}>Browse recipes</a>
+        <a href={base}>Cookbook home</a>
+      </div>
+    </div>
+    <img id="missing-art" src={first.image} width="720" height="480" alt="" />
+  </section>
+</Cookbook>
+
+<script>
+  const page = document.querySelector<HTMLElement>('.missing')!;
+  const variants: { title: string; message: string; image: string }[] = JSON.parse(page.dataset.variants!);
+  const key = 'conway-last-404';
+  let previous = -1;
+  try { previous = Number(sessionStorage.getItem(key) ?? '-1'); } catch { /* storage unavailable */ }
+  const hasPrevious = Number.isInteger(previous) && previous >= 0 && previous < variants.length;
+  let index = Math.floor(Math.random() * (variants.length - Number(hasPrevious)));
+  if (hasPrevious && index >= previous) index++;
+  try { sessionStorage.setItem(key, String(index)); } catch { /* storage unavailable */ }
+  const variant = variants[index];
+  document.getElementById('missing-title')!.textContent = variant.title;
+  document.getElementById('missing-message')!.textContent = variant.message;
+  document.querySelector<HTMLImageElement>('#missing-art')!.src = variant.image;
+</script>
+
+<style>
+  .missing { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: center; gap: clamp(1.25rem, 4vw, 3rem); margin-block: clamp(1.5rem, 6vw, 4rem); }
+  .missing-copy { padding: clamp(1.2rem, 4vw, 2.5rem); border: 1px solid var(--line); border-radius: .6rem; background: var(--card); }
+  .missing-code { font-size: .875rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+  .missing h1 { margin-block: .5rem; }
+  .missing-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.35rem; }
+  .missing img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border: 1px solid var(--line); border-radius: .6rem; }
+  @media (max-width: 700px) {
+    .missing { grid-template-columns: 1fr; }
+  }
+</style>

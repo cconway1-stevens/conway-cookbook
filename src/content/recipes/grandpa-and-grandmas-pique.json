@@ -1,5 +1,5 @@
 {
-  "title": "Grandpa’s Pique",
+  "title": "Grandpa and Grandma’s Pique",
   "description": "Puerto Rican table sauce made by steeping little multicolored hot chiles and garlic in clear white vinegar.",
   "category": "Sides",
   "meal": ["Lunch", "Dinner"],
@@ -9,9 +9,10 @@
   "time": "20 minutes, plus 10 days to steep",
   "servings": "48 servings (1 teaspoon each)",
   "difficulty": "Easy",
-  "image": "images/grandpas-pique.webp",
+  "image": "images/grandpa-and-grandmas-pique.webp",
   "imageAlt": "A glass bottle of clear pique with small red, orange, yellow, and green chiles and garlic.",
-  "story": "Grandpa made pique in a glass bottle with little multicolored hot peppers, garlic, and enough vinegar to cover everything. This recipe keeps that three-ingredient version.",
+  "author": "Grandpa and Grandma",
+  "story": "Grandpa used to make this pique for Grandma: a glass bottle of little multicolored hot peppers and garlic, with enough vinegar to cover everything. This recipe keeps their three-ingredient version.",
   "ingredients": [
     "8 to 10 small hot chiles, such as ají caballero or Thai chiles",
     "3 garlic cloves, peeled",

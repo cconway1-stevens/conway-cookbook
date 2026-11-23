@@ -13,6 +13,16 @@
   --gingham: linear-gradient(90deg, rgb(190 32 40 / .58) 50%, transparent 50%) 0 0 / 44px 44px, linear-gradient(rgb(190 32 40 / .58) 50%, transparent 50%) 0 0 / 44px 44px, #fffdfb;
   /* Cover colors for the preview on the settings page */
   --cover: var(--gingham); --cover-label: var(--card); --cover-ink: var(--accent);
+  /* Fine tooth of index card stock. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27180%27 height=%27180%27%3E%3Cfilter id=%27g%27 x=%270%27 y=%270%27 width=%27100%25%27 height=%27100%25%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%271.1%27 numOctaves=%272%27 seed=%279%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 .3 0 0 0 0 .32 0 0 0 0 .36 0 0 0 .09 0%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23g)%27/%3E%3C/svg%3E");
+  /* Clear cellophane tape, a little yellowed. */
+  --cello: linear-gradient(100deg, #ffffff66, #fff7d955 40%, #ffffff40);
+  /* Folder tabs carry label-maker tape: cobalt plastic, raised white letters. */
+  --folder-label: linear-gradient(#ffffff40 0 38%, #ffffff00 60%, #0000001a), var(--second);
+  --folder-label-ink: #fbfbf7;
+  --folder-label-emboss: 0 1px 0 #00000059, 0 -1px 0 #ffffff33;
+  --folder-label-font: 700 .95rem/1.4 var(--type);
+  --folder-label-radius: 3px;
 }
 :where([data-theme=blue-plate]) {
   .masthead { border-bottom: 7px solid var(--second); }
@@ -38,5 +48,48 @@
   .card:nth-child(3n+2) > .card-tab { margin-left: min(6.5rem, 28%); }
   .card-desc, .card-meta { line-height: 1.9rem; background: repeating-linear-gradient(transparent 0 calc(1.9rem - 1px), var(--line) calc(1.9rem - 1px) 1.9rem); }
   .card-art { background: repeating-conic-gradient(#f4e3a6 0 25%, #f9eec6 0 50%) 0 0 / 28px 28px; }
+
+  /* Jadeite wall: big glazed tiles with pale grout, lighter where the window light falls. */
+  body {
+    background:
+      linear-gradient(#ffffff2e 1px, transparent 1px) 0 0 / 64px 64px,
+      linear-gradient(90deg, #ffffff2e 1px, transparent 1px) 0 0 / 64px 64px,
+      radial-gradient(ellipse 80% 60% at 50% 0, #d6ecdd, transparent),
+      var(--page);
+  }
+  /* A strip of blue gingham under the header, like a shelf liner. */
+  .masthead { border-bottom: 0; }
+  .masthead::after {
+    content: ''; display: block; height: 12px; border-top: 4px solid var(--second);
+    background: linear-gradient(90deg, #24407c66 50%, transparent 50%) 0 0 / 14px 14px, linear-gradient(#24407c66 50%, transparent 50%) 0 0 / 14px 14px, #fdfdf9;
+  }
+
+  /* Everything written on is card stock with a tooth to it. */
+  .card-face, .filters, .panel, .extras, .cook-card, .sheet > :not(.card-tab) { background-image: var(--grain); }
+  @media (min-width: 721px) {
+    .cards > .card:nth-child(4n+1) { rotate: -.5deg; } .cards > .card:nth-child(4n+3) { rotate: .45deg; }
+    .cards > .card:is(:hover, :focus-within) { rotate: 0deg; }
+  }
+
+  /* The recipe is an index card taped to the cabinet, with the rest of the box behind it. */
+  .recipe .sheet {
+    position: relative; margin-top: 2.6rem;
+    box-shadow: 0 1px 2px #0000002e, 6px 6px 0 -1px #fdfdf9, 6px 6px 0 0 var(--line), 12px 12px 0 -1px #f7f6ef, 12px 12px 0 0 var(--line), 0 18px 34px var(--shade);
+  }
+  /* The course tab stands up from the card's top edge, so the stack and tape follow the card. */
+  .recipe .sheet > .card-tab { position: absolute; bottom: 100%; left: 0; }
+  .recipe .sheet::before, .recipe .sheet::after {
+    content: ''; position: absolute; z-index: 2; width: 112px; height: 30px; pointer-events: none;
+    background: var(--cello); box-shadow: 0 1px 2px #0000001f;
+    clip-path: polygon(0 4%, 4% 0, 8% 6%, 13% 0, 18% 5%, 100% 0, 97% 30%, 100% 55%, 96% 78%, 100% 100%, 0 100%, 3% 70%, 0 40%);
+  }
+  .recipe .sheet::before { top: -14px; right: -22px; rotate: 38deg; }
+  .recipe .sheet::after { bottom: -12px; left: -24px; rotate: 35deg; }
+
+  /* Label-maker tape: shiny plastic with the letters pressed up from behind. */
+  .tape {
+    background-image: linear-gradient(#ffffff3d 0 40%, #ffffff00 62%, #00000014);
+    text-shadow: 0 1px 0 #0000005c, 0 -1px 0 #ffffff2e;
+  }
 }
 }

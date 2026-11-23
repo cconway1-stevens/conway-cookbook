@@ -17,6 +17,21 @@
   --cloth: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Cfilter color-interpolation-filters=%27sRGB%27 id=%27c%27 x=%270%27 y=%270%27 width=%27100%25%27 height=%27100%25%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.9 .35%27 numOctaves=%272%27 seed=%277%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 1 0 0 0 0 .95 0 0 0 0 .8 0 0 0 .13 -.02%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23c)%27/%3E%3C/svg%3E"), radial-gradient(ellipse at 30% 0, #35604b, transparent 70%), #1d382b;
   --corners: linear-gradient(135deg, var(--corner) 50%, transparent 51%) top left, linear-gradient(225deg, var(--corner) 50%, transparent 51%) top right, linear-gradient(45deg, var(--corner) 50%, transparent 51%) bottom left, linear-gradient(315deg, var(--corner) 50%, transparent 51%) bottom right;
   --cover: var(--cloth); --cover-label: transparent; --cover-ink: #e3c679;
+  /* Foxing: the rust-brown age spots old paper picks up. */
+  --foxing:
+    radial-gradient(circle at 14% 22%, #8a5a2226 0 2px, #8a5a2210 4px, transparent 9px),
+    radial-gradient(circle at 81% 12%, #8a5a221c 0 3px, transparent 8px),
+    radial-gradient(circle at 67% 71%, #8a5a2224 0 1.5px, #8a5a220d 4px, transparent 10px),
+    radial-gradient(circle at 27% 86%, #8a5a221a 0 4px, transparent 11px),
+    radial-gradient(circle at 92% 58%, #8a5a2214 0 2px, transparent 6px);
+  /* Folders: older kraft stock, labeled by hand. */
+  --folder: #e4cb93; --folder-back: #d3b277; --folder-edge: #98763c;
+  --folder-wear: var(--foxing);
+  --folder-label: #fffaf0;
+  --folder-label-ink: #2c3a57;
+  --folder-label-font: 400 1rem/1.9 var(--hand);
+  --folder-label-case: none;
+  --folder-label-tilt: -1.5deg;
 }
 :where([data-theme=heirloom]) {
   & { font-size: calc(1.0625rem * var(--read-scale, 1)); line-height: 1.7; }
@@ -57,7 +72,7 @@
 
   /* Album leaves */
   .card { background: none; }
-  .card-face { position: relative; padding: 14px 18px 18px; border-radius: 2px; background: var(--fiber), #fffaf0; box-shadow: 0 1px 2px #4a2f1555, 0 8px 18px var(--shade); }
+  .card-face { position: relative; padding: 14px 18px 18px; border-radius: 2px; background: var(--foxing), var(--fiber), #fffaf0; box-shadow: inset 0 0 26px -8px #8a5a2224, 0 1px 2px #4a2f1555, 0 8px 18px var(--shade); }
   .card-photo { width: 100%; margin: 0 0 .6rem; border-radius: 0; border: 6px solid #fffdf7; box-shadow: 0 1px 4px #4a2f1577; }
   .card-face:has(img.card-photo)::before { content: ''; position: absolute; z-index: 1; top: 14px; left: 18px; right: 18px; aspect-ratio: 3 / 2; pointer-events: none; background: var(--corners); background-size: 26px 26px; background-repeat: no-repeat; }
   .card-face:has(.card-art)::before { content: ''; position: absolute; z-index: 1; top: -11px; left: 50%; width: 108px; height: 27px; translate: -50%; rotate: -2deg; background: #e9d9a6cc; box-shadow: 0 1px 2px #4a2f1540; clip-path: polygon(0 0, 2% 18%, 0 36%, 2% 54%, 0 72%, 2% 100%, 98% 100%, 100% 80%, 98% 60%, 100% 40%, 98% 20%, 100% 0); }
@@ -74,7 +89,8 @@
   .filters, .builder .pane, .panel { border: 1px solid var(--line); border-radius: 2px; background: var(--fiber), #fffaf0; box-shadow: 0 1px 2px #4a2f1555, 0 8px 18px var(--shade); }
 
   /* A page of the book */
-  .sheet { position: relative; padding: clamp(1.3rem, 4vw, 3.2rem); background: var(--fiber), #fffaf0; box-shadow: 0 1px 2px #4a2f1555, 6px 0 0 -2px #f3e7cb, 7px 0 0 -2px #cdb78d, 11px 0 0 -4px #f3e7cb, 12px 0 0 -4px #cdb78d, 0 14px 30px var(--shade); }
+  /* The page has browned at its edges and picked up a few age spots. */
+  .sheet { position: relative; padding: clamp(1.3rem, 4vw, 3.2rem); background: var(--foxing), var(--fiber), radial-gradient(ellipse 75% 70% at 50% 45%, #fffaf0 55%, #f1e2c2), #fffaf0; box-shadow: inset 0 0 50px -10px #8a5a2229, 0 1px 2px #4a2f1555, 6px 0 0 -2px #f3e7cb, 7px 0 0 -2px #cdb78d, 11px 0 0 -4px #f3e7cb, 12px 0 0 -4px #cdb78d, 0 14px 30px var(--shade); }
   .sheet::after { content: ''; position: absolute; right: 4%; bottom: 3%; width: 168px; aspect-ratio: 1; border-radius: 50%; pointer-events: none; background: radial-gradient(closest-side, transparent 80%, #8a5a2233 83%, #8a5a2212 88%, #8a5a222b 92%, transparent 95%); }
   .sheet > :not(.card-tab) { background: none; padding-inline: 0; }
   .sheet > .card-tab { margin: 0; padding: 0; background: none; font: italic 400 1.2rem/1.4 var(--body); color: var(--accent); }
@@ -139,7 +155,7 @@
   #toast { border-radius: 2px; }
 
   @media (max-width: 600px) {
-    .sheet { box-shadow: 0 1px 2px #4a2f1555, 0 10px 22px var(--shade); } .sheet::after { width: 120px; }
+    .sheet { box-shadow: inset 0 0 36px -10px #8a5a2229, 0 1px 2px #4a2f1555, 0 10px 22px var(--shade); } .sheet::after { width: 120px; }
   }
 }
 /* Turning a page, where the browser can */

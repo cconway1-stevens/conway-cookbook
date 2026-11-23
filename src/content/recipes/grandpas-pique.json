@@ -1,0 +1,47 @@
+{
+  "title": "Grandpa’s Pique",
+  "description": "Puerto Rican table sauce made by steeping little multicolored hot chiles and garlic in clear white vinegar.",
+  "category": "Sides",
+  "meal": ["Lunch", "Dinner"],
+  "cuisine": ["Puerto Rican"],
+  "tags": ["Condiment", "Hot sauce", "Make ahead", "Family recipe"],
+  "date": "2026-11-22",
+  "time": "20 minutes, plus 10 days to steep",
+  "servings": "48 servings (1 teaspoon each)",
+  "difficulty": "Easy",
+  "image": "images/grandpas-pique.webp",
+  "imageAlt": "A glass bottle of clear pique with small red, orange, yellow, and green chiles and garlic.",
+  "story": "Grandpa made pique in a glass bottle with little multicolored hot peppers, garlic, and enough vinegar to cover everything. This recipe keeps that three-ingredient version.",
+  "ingredients": [
+    "8 to 10 small hot chiles, such as ají caballero or Thai chiles",
+    "3 garlic cloves, peeled",
+    "1 cup distilled white vinegar (5% acidity), plus more if needed to cover"
+  ],
+  "steps": [
+    {
+      "title": "Prepare the bottle",
+      "text": "Wash a heatproof glass bottle or jar that holds 10 to 12 ounces. Boil the empty container for 10 minutes to sterilize it. Lift it out with clean canning tongs and set it upright on a dry towel. Wash the nonreactive lid according to the manufacturer’s instructions."
+    },
+    {
+      "title": "Add the chiles and garlic",
+      "text": "Rinse and dry 8 to 10 hot chiles. Wearing gloves, slit each chile lengthwise so the vinegar can get inside. Put the chiles and 3 peeled garlic cloves in the warm bottle."
+    },
+    {
+      "title": "Cover with vinegar",
+      "text": "Heat 1 cup distilled white vinegar to 190–195°F, just below boiling. Use a clean funnel to pour it over the chiles and garlic. If needed, heat a little more vinegar so the solids are fully covered, leaving ¼ inch of space at the top. Cap the bottle, let it cool briefly, and refrigerate.",
+      "why": "Distilled white vinegar keeps the heat and garlic flavors bright and lets the pepper colors show through the bottle."
+    },
+    {
+      "title": "Steep and serve",
+      "text": "Let the pique steep in the refrigerator for about 10 days, then taste a few drops. Give it more time in the fridge if you want a stronger kick. Shake a little over rice and beans, roast pork, or fried plantains."
+    }
+  ],
+  "notes": {
+    "Which little peppers?": "Ají caballero is a traditional Puerto Rican choice. Small Thai chiles also work, and a mix of ripe colors gives the bottle the look we remember. Grandpa’s exact pepper variety is still a family mystery.",
+    "Keep refrigerated": "Date the bottle and use within 3 months. Discard it without tasting if you see mold, unexplained bubbling, cloudiness, or sliminess."
+  },
+  "source": {
+    "name": "Recetarios de Aquí’s Puerto Rican pique",
+    "url": "https://recetariodeaqui.com/receta/pique"
+  }
+}

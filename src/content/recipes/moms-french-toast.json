@@ -1,0 +1,86 @@
+{
+  "title": "Mom’s French Toast with Maple-Butter Syrup",
+  "description": "Oval slices of French bread with crunchy crust edges, griddled golden, then topped with warm maple syrup with butter melted in and toasted walnuts or pecans.",
+  "category": "Breakfast",
+  "meal": [
+    "Breakfast"
+  ],
+  "cuisine": [
+    "American"
+  ],
+  "tags": [
+    "Family recipe",
+    "Vegetarian",
+    "Comfort food"
+  ],
+  "author": "Mom",
+  "date": "2026-11-22",
+  "time": "35 minutes",
+  "minutes": 35,
+  "servings": "4 to 6",
+  "difficulty": "Easy",
+  "story": "Mom makes this with a loaf of French bread cut on the diagonal into ovals, so every piece has a crunchy crust edge. She never skips the nuts on top, usually walnuts or pecans.",
+  "ingredients": [
+    {
+      "group": "French toast",
+      "items": [
+        "1 loaf French bread (about 1 pound), a day old if you have it",
+        "4 eggs",
+        "1 cup milk",
+        "1 tablespoon sugar",
+        "1 teaspoon vanilla",
+        "1 teaspoon cinnamon",
+        "Pinch of salt",
+        "2 to 3 tablespoons butter, for the griddle"
+      ]
+    },
+    {
+      "group": "Maple-butter syrup",
+      "items": [
+        "1 cup pure maple syrup",
+        "3 tablespoons butter"
+      ]
+    },
+    {
+      "group": "Nut topping",
+      "items": [
+        "½ cup walnuts or pecans, roughly chopped"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "title": "Cut the bread",
+      "text": "Slice the French bread on a sharp diagonal, about ¾ inch thick, to make long ovals.",
+      "why": "Cutting on the diagonal gives bigger slices, and every one keeps a strip of crust that turns crunchy on the griddle."
+    },
+    {
+      "title": "Toast the nuts",
+      "text": "Toast the walnuts or pecans in a dry skillet over medium heat, stirring, for 3 to 4 minutes, until fragrant. Tip them into a bowl."
+    },
+    {
+      "title": "Make the custard",
+      "text": "In a shallow dish, whisk the eggs, milk, sugar, vanilla, cinnamon, and salt until no streaks of egg remain."
+    },
+    {
+      "title": "Dip",
+      "text": "Lay a few slices in the custard for about 20 seconds a side, until soaked but not falling apart.",
+      "why": "French bread is dense, so it needs a short soak to take in custard. Too long and the middle turns soggy."
+    },
+    {
+      "title": "Griddle",
+      "text": "Melt a little butter on a griddle or large skillet over medium heat. Cook the slices 3 to 4 minutes a side, until deep golden and the crust edges are crisp. Add butter between batches, and keep finished slices warm in a 200°F oven.",
+      "group": "French toast"
+    },
+    {
+      "title": "Warm the syrup",
+      "text": "Warm the maple syrup and butter in a small saucepan over low heat until the butter melts. Stir and keep it warm.",
+      "why": "Warm syrup holds the melted butter in, and it soaks into the toast instead of sitting on top.",
+      "group": "syrup"
+    },
+    {
+      "title": "Serve",
+      "text": "Pour the maple-butter syrup over the French toast and scatter the toasted nuts on top."
+    }
+  ]
+}

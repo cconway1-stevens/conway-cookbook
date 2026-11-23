@@ -1,0 +1,48 @@
+{
+  "title": "Ryan Seacrest’s Sausage Balls",
+  "description": "Three-ingredient breakfast bites of sausage, sharp cheddar, and biscuit mix, baked until browned and crisp at the edges.",
+  "category": "Breakfast",
+  "meal": ["Breakfast"],
+  "cuisine": ["American"],
+  "tags": ["Make ahead", "Christmas", "Family favorite"],
+  "date": "2026-11-22",
+  "time": "About 45 minutes",
+  "minutes": 45,
+  "servings": "About 12",
+  "difficulty": "Easy",
+  "story": "Ryan Seacrest shared these on Live with Kelly and Ryan as his Christmas-morning breakfast. In our house they’re a breakfast food any time of year.",
+  "ingredients": [
+    "2 pounds raw breakfast sausage, such as Jimmy Dean",
+    "4 cups medium cheddar, freshly shredded from the block",
+    "1½ cups Bisquick baking mix"
+  ],
+  "steps": [
+    {
+      "title": "Heat the oven",
+      "text": "Heat the oven to 375°F. Line a baking sheet with parchment paper."
+    },
+    {
+      "title": "Mix",
+      "text": "Break up the sausage in a large bowl. Add the cheddar, then the baking mix, and work it together with your hands just until it holds and no dry mix is left.",
+      "why": "Bagged shredded cheese is coated in starch so it won’t clump, and that starch keeps the mix from binding. Stop as soon as it comes together; working it longer makes the balls tough."
+    },
+    {
+      "title": "Roll",
+      "text": "Roll the mixture into 1¼-inch balls and set them about an inch apart on the baking sheet."
+    },
+    {
+      "title": "Bake",
+      "text": "Bake for 20 to 30 minutes, until browned and cooked through. Small balls are done sooner. Serve warm.",
+      "why": "The sausage is raw, so bake until the centers are no longer pink and reach 160°F."
+    }
+  ],
+  "notes": {
+    "Use raw sausage": "Smoked or precooked sausage won’t hold the balls together.",
+    "Make ahead": "Roll the balls and refrigerate them, covered, for up to a day before baking. To freeze, set the unbaked balls on a sheet until firm, then bag them. Bake from frozen and add 5 to 10 minutes.",
+    "Yield": "The original recipe doesn’t give one. Rolled at 1¼ inches, the batch makes about 4 dozen."
+  },
+  "source": {
+    "name": "Live with Kelly and Ryan",
+    "url": "https://livewithkellyandmark.com/recipes/sausage-balls-recipe/"
+  }
+}

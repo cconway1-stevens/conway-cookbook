@@ -63,7 +63,7 @@ export const menuData = (recipe: Recipe) => ({
   title: recipe.data.title,
   description: recipe.data.description,
   url: recipeUrl(recipe.id),
-  section: courseOf(recipe.data.category).menu,
+  section: recipe.data.menuSection ?? courseOf(recipe.data.category).menu,
 });
 
 export const indexEntry = (recipe: Recipe) => {

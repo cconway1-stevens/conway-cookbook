@@ -13,11 +13,10 @@ on:
         default: Mains
         options:
           - Breakfast
-          - Appetizers
           - Soups & Salads
           - Mains
-          - Sides
-          - Breads
+          - Sides & Starters
+          - Sauces & Condiments
           - Desserts
           - Drinks
       permission_to_share:

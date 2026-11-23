@@ -33,3 +33,5 @@ export const book = result.data;
 export const courseNames = book.courses.map((c) => c.name);
 export const courseOf = (category: string) => book.courses.find((c) => c.name === category)!;
 export const slug = (text: string) => text.toLowerCase().trim().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '');
+
+export const courseAliases = { appetizers: 'Sides & Starters', sides: 'Sides & Starters', breads: 'Sides & Starters' };

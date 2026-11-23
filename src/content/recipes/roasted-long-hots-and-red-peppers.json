@@ -1,7 +1,8 @@
 {
   "title": "Roasted Long Hots and Red Peppers",
   "description": "Italian long hots and sweet red peppers charred until smoky, peeled, and dressed with olive oil, garlic, and salt.",
-  "category": "Appetizers",
+  "category": "Sides & Starters",
+  "menuSection": "start",
   "meal": ["Lunch", "Dinner"],
   "cuisine": ["Italian", "American"],
   "tags": ["Vegetarian", "Gluten free", "Make ahead"],

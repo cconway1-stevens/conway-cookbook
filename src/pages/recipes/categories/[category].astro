@@ -4,14 +4,19 @@ import type { InferGetStaticPropsType } from 'astro';
 import Cookbook from '../../../layouts/Cookbook.astro';
 import RecipeSections from '../../../components/RecipeSections.astro';
 import { allRecipes, base } from '../../../lib/recipes';
-import { book, courseNames, slug } from '../../../lib/cookbook';
+import { book, courseAliases, courseNames, slug } from '../../../lib/cookbook';
 
 export async function getStaticPaths() {
   const recipes = await allRecipes();
-  return [...new Set([...book.meals, ...courseNames])]
+  const pages = [...new Set([...book.meals, ...courseNames])]
     .map((name) => ({ name, list: recipes.filter((r) => r.data.category === name || r.data.meal.includes(name)) }))
     .filter(({ list }) => list.length)
     .map(({ name, list }) => ({ params: { category: slug(name) }, props: { name, list } }));
+  const aliases = Object.entries(courseAliases).flatMap(([category, name]) => {
+    const target = pages.find(page => page.props.name === name);
+    return target ? [{ params: { category }, props: target.props }] : [];
+  });
+  return [...pages, ...aliases];
 }
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 

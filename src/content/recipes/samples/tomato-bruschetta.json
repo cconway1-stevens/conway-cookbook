@@ -1,7 +1,8 @@
 {
   "title": "Tomato Bruschetta",
   "description": "Grilled garlic toast heaped with ripe tomatoes and basil.",
-  "category": "Appetizers",
+  "category": "Sides & Starters",
+  "menuSection": "start",
   "meal": [
     "Lunch",
     "Dinner"

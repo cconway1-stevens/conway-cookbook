@@ -19,6 +19,7 @@ const recipes = defineCollection({
     title: z.string(),
     description: z.string(),
     category: list('course', [...courseNames, ...book.meals]),
+    menuSection: list('menu section', book.menu.sections.map(({ id }) => id)).optional(),
     meal: z.array(list('meal', book.meals)).default([]),
     cuisine: z.array(z.string()).default([]),
     academyLinks: z.array(z.string()).optional(),

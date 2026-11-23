@@ -2,7 +2,7 @@
 import Cookbook from '../../layouts/Cookbook.astro';
 import RecipeSections from '../../components/RecipeSections.astro';
 import { allRecipes, tally } from '../../lib/recipes';
-import { book, slug } from '../../lib/cookbook';
+import { book, courseAliases, slug } from '../../lib/cookbook';
 const recipes = await allRecipes();
 const meals = book.meals.filter((m) => recipes.some((r) => r.data.meal.includes(m)));
 const cuisines = tally(recipes.flatMap((r) => r.data.cuisine));
@@ -11,10 +11,11 @@ const tags = tally(recipes.flatMap((r) => r.data.tags)).sort((a, b) => b[1] - a[
 const shortTags = 10;
 const times = [['', 'Any time'], ['20', '20 min'], ['30', '30 min'], ['60', '1 hour'], ['90', '1½ hours']];
 const drawers = book.courses.map(({ name }) => ({ name, id: slug(name), recipes: recipes.filter(recipe => recipe.data.category === name) })).filter(drawer => drawer.recipes.length);
+const drawerAliases = Object.fromEntries(Object.entries(courseAliases).map(([alias, name]) => [`drawer-${alias}`, `drawer-${slug(name)}`]));
 import '../../catalog.css';
 ---
 <Cookbook title="Recipe box" description="Search every recipe by meal, cuisine, time, or ingredient." current="recipes" showHeaderSearch={false}>
-  <div class="wrap box">
+  <div class="wrap box" data-drawer-aliases={JSON.stringify(drawerAliases)}>
     <div class="block-head box-heading">
       <h1>The recipe box</h1>
       <div class="box-actions">
@@ -90,6 +91,7 @@ import '../../catalog.css';
   const count = document.querySelector('#count')!, clear = document.querySelector<HTMLElement>('#clear')!, none = document.querySelector<HTMLElement>('#none')!;
   const queue = document.querySelector<HTMLButtonElement>('#queue')!;
   const box = document.querySelector<HTMLElement>('.box')!;
+  const drawerAliases: Record<string, string> = JSON.parse(box.dataset.drawerAliases!);
   const drawers = [...box.querySelectorAll<HTMLElement>('[data-drawer]')];
   const sorted = document.querySelector<HTMLUListElement>('#catalog-sorted')!;
   const sort = document.querySelector<HTMLSelectElement>('#catalog-sort')!;
@@ -254,7 +256,8 @@ import '../../catalog.css';
   }
   const land = () => {
     if (touched || arrival === 'back_forward' || arrival === 'reload' || !location.hash.startsWith('#drawer-')) return;
-    const drawer = document.getElementById(location.hash.slice(1));
+    const hash = location.hash.slice(1);
+    const drawer = document.getElementById(drawerAliases[hash] ?? hash);
     if (!drawer || drawer.hidden) return;
     sizeBar();
     drawer.scrollIntoView({ block: 'start' });

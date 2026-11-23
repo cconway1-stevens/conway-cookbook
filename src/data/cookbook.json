@@ -9,11 +9,10 @@
   "meals": ["Breakfast", "Lunch", "Dinner", "Dessert"],
   "courses": [
     { "name": "Breakfast", "menu": "main", "art": "pancakes", "meal": "Breakfast" },
-    { "name": "Appetizers", "menu": "start", "art": "toast" },
     { "name": "Soups & Salads", "menu": "start", "art": "bowl" },
     { "name": "Mains", "menu": "main", "art": "cloche" },
-    { "name": "Sides", "menu": "side", "art": "pan" },
-    { "name": "Breads", "menu": "side", "art": "loaf" },
+    { "name": "Sides & Starters", "menu": "side", "art": "pan" },
+    { "name": "Sauces & Condiments", "menu": "side", "art": "bowl" },
     { "name": "Desserts", "menu": "sweet", "art": "pie", "meal": "Dessert" },
     { "name": "Drinks", "menu": "drink", "art": "glass" }
   ],

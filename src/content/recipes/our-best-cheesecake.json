@@ -69,14 +69,9 @@
   ],
   "notes": {
     "Original clipping": "Prep: 15 minutes plus refrigerating. Bake: 1 hour 10 minutes. Makes 16 servings. The optional cherry pie filling is added after chilling.",
-    "Source": "Transcribed from the photographed 'OUR BEST CHEESECAKE' vintage Philadelphia cream cheese recipe clipping."
+    "Source": "Transcribed from the photographed 'OUR BEST CHEESECAKE' vintage Philadelphia cream cheese recipe clipping.",
+    "Original recipe card": "The photographed vintage recipe card is preserved in the original conversation; its repository gallery upload needs a valid JPEG replacement."
   },
   "image": "images/our-best-cheesecake.svg",
-  "imageAlt": "Vintage-style illustration of a cherry-topped cheesecake slice on a plate",
-  "media": [
-    {
-      "file": "original-recipe-card.jpg",
-      "caption": "Photograph of the vintage 'Our Best Cheesecake' recipe clipping (reduced-size gallery copy)."
-    }
-  ]
+  "imageAlt": "Vintage-style illustration of a cherry-topped cheesecake slice on a plate"
 }

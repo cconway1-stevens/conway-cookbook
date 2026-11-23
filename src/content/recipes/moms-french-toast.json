@@ -20,6 +20,8 @@
   "servings": "4 to 6",
   "difficulty": "Easy",
   "story": "Mom makes this with a loaf of French bread cut on the diagonal into ovals, so every piece has a crunchy crust edge. She never skips the nuts on top, usually walnuts or pecans.",
+  "image": "images/moms-french-toast.webp",
+  "imageAlt": "Golden French toast slices with maple-butter syrup and toasted walnuts on a floral plate.",
   "ingredients": [
     {
       "group": "French toast",

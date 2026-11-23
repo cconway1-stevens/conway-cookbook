@@ -1,5 +1,5 @@
 // Reading aloud: a recorded clip when there is one, otherwise a voice on this device.
-export interface Part { s: string; e?: string[]; o?: string[]; g?: string; gm?: string }
+export interface Part { s: string; e?: string[]; o?: string[]; g?: string; gm?: string; amount?: string }
 export interface Line { text: string; say: string; audio?: string; parts?: (string | Part)[] }
 
 export const prefs = { auto: true, rate: 1, voice: '', mic: false };

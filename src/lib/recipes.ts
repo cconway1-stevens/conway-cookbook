@@ -1,7 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { existsSync } from 'node:fs';
 import { courseOf } from './cookbook';
-import { linkRecipe } from './ingredient-links.mjs';
+import { linkRecipe, withStepAmounts } from './ingredient-links.mjs';
 import { PHRASES, clipName, heading, ingredientGroups, spoken, steps } from './narration.mjs';
 
 export type Recipe = CollectionEntry<'recipes'>;
@@ -43,8 +43,10 @@ export const cookData = (recipe: Recipe) => ({
   title: recipe.data.title,
   groups: ingredients(recipe).map((g) => ({ name: g.name, lines: g.items.map(clip) })),
   steps: steps(recipe.data, recipe.body).map((step: { title: string; lines: string[]; why?: string }, i: number) => {
-    const link = linkOf(recipe)?.steps[i];
-    return { title: step.title, heading: clip(heading(step, i)), lines: step.lines.map((l, n) => withParts(clip(l), link?.lineParts[n])), why: step.why ? withParts(clip(step.why), link?.whyParts) : undefined };
+    const linkedRecipe = linkOf(recipe);
+    const link = linkedRecipe?.steps[i];
+    const lineParts = link && linkedRecipe ? withStepAmounts(link.lineParts, linkedRecipe.data.entries) : undefined;
+    return { title: step.title, heading: clip(heading(step, i)), lines: step.lines.map((l, n) => withParts(clip(l), lineParts?.[n])), why: step.why ? withParts(clip(step.why), link?.whyParts) : undefined };
   }),
   phrases: Object.fromEntries(Object.entries(PHRASES).map(([key, text]) => [key, clip(text as string)])),
 });

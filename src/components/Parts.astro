@@ -1,11 +1,11 @@
 ---
 const { parts = [], entries, emphasizeTiming = false } = Astro.props;
-const timing = /(\b\d+(?:[–-]\d+)?\s*(?:°[FC]|minutes?\b|hours?\b|seconds?\b))/g;
+import { withStepAmounts, stepEmphasis } from '../lib/ingredient-links.mjs';
+const [visibleParts] = entries ? withStepAmounts([parts], entries) : [parts];
 ---
-{parts.map((part: string | { s: string; e?: string[]; o?: string[]; g?: string; gm?: string }) => {
-  if (typeof part === 'string') return emphasizeTiming ? part.split(timing).map((segment, index) => index % 2 ? <strong>{segment}</strong> : segment) : part;
-  const entry = part.e?.length === 1 && !part.o?.length && entries?.[part.e[0]];
+{visibleParts.map((part: string | { s: string; e?: string[]; o?: string[]; g?: string; gm?: string; amount?: string }) => {
+  if (typeof part === 'string') return emphasizeTiming ? part.split(stepEmphasis).map((segment, index) => index % 2 ? <strong>{segment}</strong> : segment) : part;
   return <>
-    <span class:list={['ing', { 'ing-group': part.gm }]} data-e={part.e?.join(' ')} data-o={part.o?.join(' ')} data-g={part.g} data-gm={part.gm}>{part.s}</span>{entry && entry.steps.length === 1 && <small class="inline-amount"> ({entry.line})</small>}
+    <span class:list={['ing', { 'ing-group': part.gm }]} data-e={part.e?.join(' ')} data-o={part.o?.join(' ')} data-g={part.g} data-gm={part.gm}>{part.s}</span>{part.amount && <strong class="step-amount"> ({part.amount})</strong>}
   </>;
 })}

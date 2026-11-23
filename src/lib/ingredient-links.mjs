@@ -4,7 +4,7 @@
 // already, and an optional "group" hint on the step.
 
 const FRACTIONS = '½⅓⅔¼¾⅛⅜⅝⅞';
-const UNIT = /^(?:cups?|tablespoons?|teaspoons?|tbsps?|tsps?|pounds?|lbs?|ounces?|oz|grams?|g|kg|ml|l|liters?|litres?|cans?|cloves?|sticks?|slices?|pinch(?:es)?|dash(?:es)?|sprigs?|bunch(?:es)?|heads?|packages?|jars?|bottles?|stalks?|pieces?)\b\.?\s*/i;
+const UNIT = /^(?:fluid ounces?|fl\.?\s*oz|cups?|tablespoons?|teaspoons?|tbsps?|tsps?|pounds?|lbs?|ounces?|oz|grams?|g|kg|ml|l|liters?|litres?|cans?|cloves?|sticks?|slices?|pinch(?:es)?|dash(?:es)?|sprigs?|bunch(?:es)?|heads?|packages?|jars?|bottles?|stalks?|pieces?)\b\.?\s*/i;
 const ADJECTIVE = /^(?:small|medium|large|extra-large|big|firm|ripe|fresh|frozen|chilled|cold|soft|hot|warm|whole|thick|thin|heaping|level|scant|good|packed|lightly|boneless|skinless)\b\s*/i;
 // One word that is not safe on its own: "spray" is also a verb, "juice" is a drink.
 const NOT_ALONE = new Set(['juice', 'zest', 'extract', 'powder', 'spray', 'sauce', 'paste', 'baking']);
@@ -159,3 +159,36 @@ export function linkRecipe(groups, steps) {
     },
   };
 }
+
+// Display only a confident, single-step quantity. Shared and divided amounts
+// belong in the recipe author's directions, where the split can be specified.
+const QUANTITY = new RegExp(`^(?:[0-9]+(?: [0-9]+/[0-9]+|/[0-9]+|\\.[0-9]+)? ?[${FRACTIONS}]?|[${FRACTIONS}])(?=\\s|$)`);
+const DIVIDED = /\b(?:half|quarter|third|part|remaining|reserve|reserved|rest|divided|some|portion|more|bit)\b/i;
+const EXPLICIT = /[0-9½⅓⅔¼¾⅛⅜⅝⅞]/;
+
+export function withStepAmounts(lines, entries) {
+  const shown = new Set();
+  return lines.map(parts => {
+    let prefix = '';
+    return parts.map(part => {
+      if (typeof part === 'string') {
+        prefix += part;
+        return part;
+      }
+      const id = part.e?.length === 1 && !part.o?.length ? part.e[0] : null;
+      const entry = id && entries[id];
+      const lead = prefix.split(/[.!?;,]\s*/).at(-1) ?? '';
+      prefix += part.s;
+      if (!entry || entry.steps.length !== 1 || shown.has(id)) return part;
+      shown.add(id);
+      if (DIVIDED.test(lead) || EXPLICIT.test(lead)) return part;
+      const number = QUANTITY.exec(entry.line)?.[0]?.trim();
+      if (!number || /\b(?:divided|as needed|to taste)\b/i.test(entry.line)) return part;
+      const unit = UNIT.exec(entry.line.slice(number.length).trimStart())?.[0]?.trim();
+      // Use only the quantity prefix so instructions don't repeat the complete ingredient line.
+      return unit ? { ...part, amount: `${number} ${unit}` } : part;
+    });
+  });
+}
+
+export const stepEmphasis = /([0-9]+(?:[–-][0-9]+|\.[0-9]+|\/[0-9]+)?[½⅓⅔¼¾⅛⅜⅝⅞]?\s*(?:°[FC]|(?:fluid ounces?|cups?|tablespoons?|teaspoons?|pounds?|ounces?|minutes?|hours?|seconds?)\b)|[½⅓⅔¼¾⅛⅜⅝⅞]\s*(?:cups?|tablespoons?|teaspoons?|pounds?|ounces?)\b)/g;

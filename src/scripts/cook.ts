@@ -1,20 +1,32 @@
 // Step-by-step cooking: tick each line, hear it read, keep your hands free.
+import { stepEmphasis } from '../lib/ingredient-links.mjs';
 import { setupKitchenTimers } from './kitchen-timers';
 import { confetti, number, replay } from './motion';
 import { listen, prefs, quiet, speak, type Line } from './voice';
 
 // Ingredient words get the same hover as on the recipe page.
-function fill(el: HTMLElement, line: Line) {
-  if (!line.parts) { el.textContent = line.text; return; }
-  el.replaceChildren(...line.parts.map((p) => {
-    if (typeof p === 'string') return document.createTextNode(p);
+function fill(el: HTMLElement, line: Line, emphasize = false) {
+  el.replaceChildren(...(line.parts ?? [line.text]).flatMap((p) => {
+    if (typeof p === 'string') {
+      if (!emphasize) return [document.createTextNode(p)];
+      return p.split(stepEmphasis).map((segment, index) => {
+        if (!(index % 2)) return document.createTextNode(segment);
+        const strong = document.createElement('strong');
+        strong.textContent = segment;
+        return strong;
+      });
+    }
     const word = document.createElement('span');
     word.className = p.gm ? 'ing ing-group' : 'ing'; word.textContent = p.s;
     if (p.e) word.dataset.e = p.e.join(' ');
     if (p.o) word.dataset.o = p.o.join(' ');
     if (p.g) word.dataset.g = p.g;
     if (p.gm) word.dataset.gm = p.gm;
-    return word;
+    if (!p.amount) return [word];
+    const amount = document.createElement('strong');
+    amount.className = 'step-amount';
+    amount.textContent = ` (${p.amount})`;
+    return [word, amount];
   }));
 }
 
@@ -93,7 +105,7 @@ function draw(focus = true) {
   $('cook-lines').replaceChildren(...p.lines.flatMap(({ line, group: g }, row) => {
     const li = document.createElement('li'); li.dataset.row = String(row);
     const label = document.createElement('label'), box = document.createElement('input'), text = document.createElement('span');
-    box.type = 'checkbox'; box.checked = ticks[page][row]; fill(text, line);
+    box.type = 'checkbox'; box.checked = ticks[page][row]; fill(text, line, page > 0);
     box.addEventListener('change', () => { ticks[page][row] = box.checked; store(); drawTrack(); });
     label.append(box, text); li.append(label);
     if (g === group) return [li];

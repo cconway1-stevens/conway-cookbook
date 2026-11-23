@@ -5,7 +5,7 @@ import UnitChoice from '../../components/UnitChoice.astro';
 import Cookbook from '../../layouts/Cookbook.astro';
 import RecipeCard from '../../components/RecipeCard.astro';
 import Spot from '../../components/Spot.astro';
-import { academyLinksFor } from '../../lib/academy';
+import { academyLinksFor, pantryHackLessonsUrl } from '../../lib/academy';
 import { nutritionFor } from '../../lib/nutrition';
 import RecipeExtras from '../../components/RecipeExtras.astro';
 import Parts from '../../components/Parts.astro';
@@ -150,7 +150,8 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
     </div>
     <div id="details" role="tabpanel" aria-labelledby="tab-details">
       {skills.length > 0 && <details id="skills" class="technique-help"><summary>Technique help</summary>
-        <ul>{skills.map(skill => <li><a href={base + 'academy/#' + skill.id}>{skill.title}</a></li>)}</ul>
+        <p>These links open the Pantry Hack sign-in page.</p>
+        <ul>{skills.map(skill => <li><a href={pantryHackLessonsUrl}>{skill.title}</a></li>)}</ul>
       </details>}
       {data.source && <p class="credit source">Adapted from <a href={data.source.url}>{data.source.name}</a>.</p>}
 

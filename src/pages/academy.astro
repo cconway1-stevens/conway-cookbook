@@ -1,39 +1,36 @@
 ---
 import Cookbook from '../layouts/Cookbook.astro';
-import { allRecipes, base, recipeUrl } from '../lib/recipes';
-import { lessons, skillsFor } from '../lib/academy';
-import { modules, labs } from '../lib/coursework';
-const recipes = await allRecipes();
+import { lessons, pantryHackLessonsUrl } from '../lib/academy';
+import { modules } from '../lib/coursework';
 ---
 <Cookbook title="Cooking Academy" current="academy">
-<div class="wrap academy"><header><h1>Cooking Academy</h1><p>Watch a technique, try it at the counter, then use it in a family recipe.</p><output id="progress" hidden></output></header>
-<nav aria-label="Course modules">{modules.map(m=><a href={'#'+m.id}>{m.title}</a>)}</nav>
-{modules.map(m=><section id={m.id}><h2>{m.title}</h2><p>{m.goal}</p>
-{m.ids.map(id=>{
- const lesson=lessons.find(l=>l.id===id)!;
- const [kit,lab,q,a]=labs[id];
- const practice=recipes.filter(r=>skillsFor(r).includes(lesson));
- return <article id={id}><h3>{lesson.title}</h3><div class="lesson">
- <div><video controls playsinline preload="none" width="640" height="300" aria-label={'Silent illustrated demonstration: '+lesson.title} src={base+'academy/'+id+'.mp4'}></video><p><b>Set out </b>{kit}</p></div>
- <div><ol>{lesson.steps.map(s=><li>{s}</li>)}</ol><h4>Counter practice</h4><p>{lab}</p><details><summary>{q}</summary><p>{a}</p></details>
- {id==='scale' && <p>Yield-factor exercise adapted from <a href="https://opentextbc.ca/basickitchenandfoodservicemanagement/chapter/convert-and-adjust-recipes-and-formulas/">Basic Kitchen and Food Service Management</a>, BC Cook Articulation Committee, BCcampus. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Quantities and practice questions adapted for this cookbook.</p>}
- {id==='dice' && <p><a href="https://food.unl.edu/article/how-use-chefs-knife/">Knife grip guide · Nebraska Extension</a></p>}
- {practice.length>0 && <p><b>Cook with this skill </b>{practice.map((r,j)=><>{j>0 && ' · '}<a href={recipeUrl(r.id)}>{r.data.title}</a></>)}</p>}
- <label class="completion" hidden><input type="checkbox" value={id}/> Practiced this skill</label></div></div></article>;
-})}</section>)}
-<footer><h2>Live classes</h2><p>The Institute of Culinary Education lists free instructor-led classes and registration details on its site. <a href="https://www.ice.edu/newyork/free-online-cooking-classes">Explore ICE classes</a></p></footer></div>
+  <div class="wrap academy">
+    <header>
+      <h1>Cooking Academy</h1>
+      <p>Sign in to Pantry Hack to access the core cooking lessons.</p>
+      <a class="button" href={pantryHackLessonsUrl}>Open Pantry Hack</a>
+    </header>
+    {modules.map(module => (
+      <section id={module.id} class="panel">
+        <h2>{module.title}</h2>
+        <ul>
+          {module.ids.map(id => {
+            const lesson = lessons.find(item => item.id === id)!;
+            return <li id={id}><a href={pantryHackLessonsUrl}>{lesson.title}</a></li>;
+          })}
+        </ul>
+      </section>
+    ))}
+    <section class="panel">
+      <h2>Live classes</h2>
+      <p>The Institute of Culinary Education lists free instructor-led classes and registration details on its site. <a href="https://www.ice.edu/newyork/free-online-cooking-classes">Explore ICE classes</a></p>
+    </section>
+  </div>
 </Cookbook>
-<script>
-const boxes=[...document.querySelectorAll<HTMLInputElement>('.completion input')];
-const progress=document.querySelector<HTMLOutputElement>('#progress')!;
-const update=()=>{progress.textContent=boxes.filter(b=>b.checked).length+' of '+boxes.length+' skills practiced';};
-for(const box of boxes){
- box.parentElement!.hidden=false;
- try {box.checked=localStorage.getItem('academy-practice:'+box.value)==='yes';}catch{}
- box.addEventListener('change',()=>{try{localStorage.setItem('academy-practice:'+box.value,box.checked?'yes':'no');}catch{} update();});
-}
-progress.hidden=false;update();
-</script>
+
 <style>
-.academy{padding-block:2rem;max-width:64rem}.academy header{background:#234238;color:#fff5df;padding:clamp(1rem,4vw,3rem);border-radius:.7rem}.academy header h1{color:inherit}.academy nav,.completion{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center}.academy nav{margin:1rem 0}.academy nav a,.completion{padding:.6rem .8rem;background:var(--tint);border-radius:.35rem}.academy section,.academy footer{margin:2rem 0}.academy article{padding:clamp(1rem,3vw,2rem);border-top:3px solid var(--accent);background:var(--card);margin-top:1rem;scroll-margin-top:1rem}.academy h3{font-size:1.65rem}.academy p,.academy details,.academy h4,.completion{margin-top:.8rem}.academy summary{cursor:pointer;font-weight:600}.academy ol{padding-left:1.5rem;list-style:decimal}.academy li+li{margin-top:.45rem}.lesson{display:grid;gap:1.4rem;grid-template-columns:minmax(0,1fr) minmax(0,1fr);margin-top:1rem}.academy video{width:100%;height:auto;display:block;background:#263e36}.academy output{display:block;margin-top:1rem}.completion[hidden]{display:none}@media(max-width:720px){.lesson{grid-template-columns:minmax(0,1fr)}}
+  .academy { max-width: 64rem; padding-block: 2rem 4rem; }
+  .academy header { padding: clamp(1.25rem, 4vw, 2.5rem); background: var(--card); border: 1px solid var(--line); border-radius: .6rem; }
+  .academy header .button { margin-top: 1rem; }
+  .academy li + li { margin-top: .45rem; }
 </style>

@@ -1,6 +1,8 @@
 import { modules } from './coursework';
 import { directions, ingredients, type Recipe } from './recipes';
 
+export const pantryHackLessonsUrl = 'https://mypantryhack.com/login/?redirect_to=https%3A%2F%2Fmypantryhack.com%2Fdashboard%2F';
+
 export const lessons = [
   { id: 'brown-butter', title: 'Brown butter by sight and smell', match: /brown (?:half the|the sauce) butter/i,
     steps: ['Cut unsalted butter into even pieces. Melt it in a light-colored pan over medium-low heat so the milk solids are visible against the bottom.', 'Stir with a heatproof spatula, sweeping the corners. The bubbling comes from escaping water. As the foam settles, look under it for little golden specks.', 'When the flecks turn hazelnut brown and smell nutty, scrape everything into a heatproof bowl immediately. Black flecks and an acrid smell mean the solids have burned; start again.'] },

@@ -1,12 +1,77 @@
 @media screen {
   .box .filters { padding: .65rem .85rem; }
-  .catalog-toolbar { display: flex; flex-wrap: wrap; gap: .55rem 1rem; align-items: start; }
+  .catalog-toolbar { position: relative; display: flex; flex-wrap: wrap; gap: .55rem 1rem; align-items: start; }
   .catalog-toolbar .search { flex: 0 1 25rem; min-width: min(100%, 15rem); }
   .catalog-toolbar .search input { margin: 0; padding-block: .4rem; }
   .catalog-toolbar .more-filters { flex: 1 1 8rem; margin: 0; border: 0; padding: 0; }
   .catalog-toolbar .more-filters[open] { flex-basis: 100%; }
-  .box .meal-filters { margin: 0 0 .75rem; }
-  .box .meal-filters legend { width: 100%; }
+
+  /* The Filters button: a pill with a sliders icon and a count of what's applied.
+     Open, it stays beside the search box and the panel takes the full width below. */
+  .catalog-toolbar .more-filters > summary {
+    list-style: none; display: inline-flex; align-items: center; gap: .4rem;
+    width: auto; min-height: 40px; padding: .3rem .85rem;
+    border: 1px solid var(--line); border-radius: var(--chip-radius, 999px);
+    background: var(--card); font-size: .95rem; font-weight: 600; cursor: pointer; user-select: none;
+  }
+  .catalog-toolbar .more-filters > summary::-webkit-details-marker { display: none; }
+  .catalog-toolbar .more-filters > summary:hover { border-color: var(--second); }
+  .catalog-toolbar .more-filters[open] > summary { position: absolute; top: 0; right: 0; background: var(--highlight); border-color: var(--ink); }
+  .catalog-toolbar:has(.more-filters[open]) .search { margin-right: 8.5rem; }
+  .fsliders { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+  .fsliders circle { fill: var(--card); }
+  #filter-count { margin: 0; min-width: 1.4em; text-align: center; }
+
+  /* The panel: one row per kind of filter, every choice a chip. */
+  .box .filter-options { display: grid; grid-template-columns: minmax(0, 1fr); gap: .55rem; margin-top: .55rem; padding-top: .65rem; border-top: 1px solid var(--line); }
+  .frow { min-width: 0; margin: 0; padding: 0; border: 0; }
+  /* A floated legend can sit beside the chips, which a fieldset's own legend can't. */
+  .frow > legend {
+    float: left; width: 6.5rem; padding: .45rem 0 0;
+    font-size: .78rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--soft);
+  }
+  .fchips { display: flex; flex-wrap: wrap; gap: .35rem; overflow: hidden; padding: 2px; }
+  .fchip { position: relative; }
+  .fchip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .fchip span {
+    display: inline-flex; align-items: center; gap: .35rem;
+    min-height: 36px; padding: .2rem .75rem;
+    border: 1px solid var(--line); border-radius: var(--chip-radius, 999px);
+    background: var(--card); color: var(--ink);
+    font-size: .9rem; font-weight: 600; white-space: nowrap; cursor: pointer;
+    transition: background-color .15s, border-color .15s, color .15s;
+  }
+  .fchip span:hover { border-color: var(--second); }
+  .fchip small { min-width: 1ch; font-size: .78em; font-weight: 600; color: var(--soft); font-variant-numeric: tabular-nums; }
+  .fchip :checked + span { background: var(--second); border-color: var(--second); color: #fffdf6; }
+  .fchip :checked + span::before { content: '✓'; font-size: .85em; }
+  .fchip :checked + span small { color: #fffdf6c7; }
+  .fchip :focus-visible + span { outline: 3px solid var(--second); outline-offset: 2px; }
+  .fchip :disabled + span { opacity: .42; cursor: not-allowed; }
+  .fchip :disabled + span:hover { border-color: var(--line); }
+  /* Ten tags to start; a picked tag always stays in view. */
+  #tag-chips[data-short] .fchip.extra:not(:has(:checked)) { display: none; }
+  .fchip-more {
+    min-height: 36px; padding: .2rem .75rem;
+    border: 1px dashed var(--soft); border-radius: var(--chip-radius, 999px);
+    background: none; color: var(--second); font: 600 .9rem/1 var(--body); cursor: pointer;
+  }
+  .fchip-more:hover { background: var(--tint); }
+  .ffoot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-top: .6rem; border-top: 1px solid var(--line); }
+  .ffoot .button { min-height: 44px; white-space: nowrap; }
+  #count { scroll-margin-top: calc(var(--catalog-bar, 0px) + .75rem); }
+  @media (max-width: 540px) {
+    .frow > legend { float: none; width: auto; padding: 0 0 .3rem; }
+    /* Short rows become one line you swipe; only tags wrap. */
+    .fchips:not(#tag-chips) {
+      flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+      margin-inline: -.6rem; padding-inline: .6rem;
+    }
+    .fchips:not(#tag-chips)::-webkit-scrollbar { display: none; }
+    .fchip { flex: none; }
+    .fchip span { min-height: 40px; }
+    .ffoot .button { flex: 1; }
+  }
 
   /* Search and categories stay with you as you scroll. */
   .catalog-bar {

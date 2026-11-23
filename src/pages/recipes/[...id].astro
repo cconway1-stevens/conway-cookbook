@@ -34,6 +34,19 @@ const { recipe, pairs } = Astro.props;
 const { data } = recipe;
 const skills = academyLinksFor(recipe);
 const nutrition = nutritionFor(recipe);
+// A decorative barcode for the box panel, the same for a recipe every time.
+const barcode = (() => {
+  const bars: [number, number][] = [];
+  let x = 0, seed = [...recipe.id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+  for (const guard of [0, 1]) { bars.push([x, 1]); x += 2; if (guard) break; }
+  for (let i = 0; i < 38; i++) {
+    seed = (seed * 1103515245 + 12345) >>> 0;
+    const w = 1 + (seed >>> 28) % 3;
+    bars.push([x, w]); x += w + 1 + (seed >>> 24) % 2;
+  }
+  bars.push([x, 1]); x += 2; bars.push([x, 1]);
+  return { bars, width: x + 1 };
+})();
 const pin = Astro.site && new URL('https://www.pinterest.com/pin/create/button/');
 if (pin && Astro.site) {
   pin.search = new URLSearchParams({
@@ -125,10 +138,15 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
     <dialog id="recipe-print"><form method="dialog"><h2>Print recipe</h2><p>Choose what to include on your recipe sheet.</p>
       {data.image && <label><input type="checkbox" id="print-photo" /> Recipe photo</label>}
       {!!data.familyNotes?.length && <label><input type="checkbox" id="print-notes" /> Family notes</label>}
+      {nutrition && <label><input type="checkbox" id="print-nutrition" /> Nutrition Facts</label>}
       <div class="block-actions"><button value="print" class="button">Print</button><button value="cancel" class="button quiet">Cancel</button></div></form></dialog>
 
     <div id="nutrition" role="tabpanel" aria-labelledby="tab-nutrition">
       {nutrition ? <>
+        {/* The label is printed on the side panel of a cardboard box, with the ingredients beside it. */}
+        <div class="nutrition-box">
+        <p class="box-brand" aria-hidden="true"><span>The Conway Cookbook</span><span>{data.title}</span></p>
+        <div class="box-print">
         <section class="nutrition-label" aria-labelledby="nutrition-title">
           <h2 id="nutrition-title">Nutrition Facts</h2>
           <p class="nutrition-basis"><strong>Serving size</strong> {nutrition.serving}</p>
@@ -144,6 +162,33 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
           </table>
           <p class="nutrition-note">Daily Values use the FDA reference amounts for a 2,000-calorie diet. A dash means the estimate is unavailable.</p>
         </section>
+        <div class="box-copy">
+          <p class="box-ingredients"><strong>Ingredients:</strong> {nutrition.statement.join(', ')}.</p>
+          {nutrition.allergens.length > 0 && <p class="box-contains"><strong>Contains:</strong> {nutrition.allergens.join(', ')}.</p>}
+          <p class="box-fine">Ingredients are listed by estimated weight, most first. Allergens are found by ingredient name; check the labels on the brands you use.</p>
+          <p class="box-yield"><strong>Makes</strong> {data.servings}</p>
+          <svg class="box-barcode" viewBox={`0 0 ${barcode.width} 40`} preserveAspectRatio="none" aria-hidden="true">
+            {barcode.bars.map(([x, w]) => <rect x={x} y="0" width={w} height="40" />)}
+          </svg>
+          <p class="box-code" aria-hidden="true">{recipe.id}</p>
+        </div>
+        </div>
+        </div>
+        {(nutrition.caloricBreakdown || nutrition.calorieSources.length > 0 || nutrition.more.length > 0) && <section class="nutrition-more"><h3>Where the calories come from</h3>
+          {nutrition.caloricBreakdown && <>
+            <p class="cal-split" role="img" aria-label={`Calories: ${Math.round(nutrition.caloricBreakdown.percentCarbs)}% from carbohydrate, ${Math.round(nutrition.caloricBreakdown.percentFat)}% from fat, ${Math.round(nutrition.caloricBreakdown.percentProtein)}% from protein`}>
+              <span class="cal-carbs" style={`flex: ${nutrition.caloricBreakdown.percentCarbs}`}></span><span class="cal-fat" style={`flex: ${nutrition.caloricBreakdown.percentFat}`}></span><span class="cal-protein" style={`flex: ${nutrition.caloricBreakdown.percentProtein}`}></span>
+            </p>
+            <p class="cal-key" aria-hidden="true"><span class="cal-carbs">Carbohydrate {Math.round(nutrition.caloricBreakdown.percentCarbs)}%</span> <span class="cal-fat">Fat {Math.round(nutrition.caloricBreakdown.percentFat)}%</span> <span class="cal-protein">Protein {Math.round(nutrition.caloricBreakdown.percentProtein)}%</span></p>
+          </>}
+          {nutrition.calorieSources.length > 0 && <table class="cal-sources">
+            <thead><tr><th scope="col">Ingredient</th><th scope="col">Calories per serving</th><th scope="col">Share</th></tr></thead>
+            <tbody>{nutrition.calorieSources.map(({ name, calories, share }) => <tr><th scope="row">{name}</th><td>{calories}</td><td><span class="cal-bar" style={`--share: ${share}%`}>{share}%</span></td></tr>)}</tbody>
+          </table>}
+          {nutrition.more.length > 0 && <details class="more-nutrients"><summary>More vitamins and minerals</summary>
+            <dl>{nutrition.more.map(({ name, value }) => <><dt>{name}</dt><dd>{value}</dd></>)}</dl>
+          </details>}
+        </section>}
         <section class="nutrition-guide"><h3>About this estimate</h3>
           <p>Estimated from the listed ingredients and recipe yield. Brands, preparation, and portion size affect the actual values.</p>
           {nutrition.assumptions && <p>{nutrition.assumptions}</p>}
@@ -243,7 +288,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
   print.addEventListener('click', () => { options.returnValue = ''; options.showModal(); });
   options.addEventListener('close', () => {
     if (options.returnValue !== 'print') return;
-    for (const key of ['photo', 'notes']) document.body.classList.toggle('include-' + key, !!document.querySelector<HTMLInputElement>('#print-' + key)?.checked);
+    for (const key of ['photo', 'notes', 'nutrition']) document.body.classList.toggle('include-' + key, !!document.querySelector<HTMLInputElement>('#print-' + key)?.checked);
     window.print();
   });
 </script>

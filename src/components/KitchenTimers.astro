@@ -1,0 +1,105 @@
+<section id="kitchen-timers" class="kitchen-timers" aria-label="Kitchen timers" hidden>
+  <div id="timer-list" class="timer-list"></div>
+  <p class="vh" id="timer-announcements" role="status"></p>
+</section>
+<template id="timer-card-template">
+  <article class="kitchen-timer">
+    <div class="timer-dial" aria-hidden="true"><span></span></div>
+    <div class="timer-info">
+      <p class="timer-name"></p>
+      <p class="timer-display" role="timer"></p>
+      <div class="timer-actions">
+        <button type="button" data-hear-timer>Read time</button>
+        <button type="button" data-end-timer>Cancel</button>
+      </div>
+    </div>
+  </article>
+</template>
+
+<style is:global>
+  .kitchen-timers { min-width: 0; }
+  #cook-timer-mount:not(:has(.kitchen-timers:not([hidden]))), #page-timer-mount:not(:has(.kitchen-timers:not([hidden]))) { display: none; }
+  #cook[open]:has(#cook-timer-mount .kitchen-timers:not([hidden])) { grid-template-rows: auto auto auto minmax(0, 1fr) auto auto; }
+  #page-timer-mount:has(.kitchen-timers:not([hidden])) {
+    position: fixed;
+    z-index: 9;
+    inset: auto auto 1rem 1rem;
+    width: min(22rem, calc(100% - 5.4rem));
+    padding: .35rem;
+  }
+  .timer-list { display: flex; gap: .55rem; overflow-x: auto; padding: .25rem; }
+  #page-timer-mount .timer-list { flex-direction: column; max-height: 42vh; overflow-y: auto; }
+  .kitchen-timer {
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0,1fr);
+    align-items: center;
+    gap: .65rem;
+    width: min(100%,16.5rem);
+    padding: .5rem .6rem;
+    border: 1px solid var(--line);
+    border-bottom: 3px solid var(--second);
+    border-radius: .55rem;
+    color: var(--ink);
+    background: var(--fiber, none), var(--card);
+    box-shadow: 0 2px 7px var(--shade);
+  }
+  #page-timer-mount .kitchen-timer { width: 100%; }
+  .timer-dial {
+    --hand: 360deg;
+    aspect-ratio: 1;
+    position: relative;
+    border: .28rem double var(--second);
+    border-radius: 50%;
+    background: repeating-conic-gradient(from -2deg, var(--soft) 0 3deg, transparent 3deg 30deg), var(--tint);
+  }
+  .timer-dial::before {
+    content: '';
+    position: absolute;
+    inset: .30rem;
+    border-radius: 50%;
+    background: var(--tint);
+  }
+  .timer-dial::after {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: .45rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    translate: -50% -50%;
+    background: var(--second);
+  }
+  .timer-dial span { position: absolute; inset: .25rem; rotate: var(--hand); }
+  .timer-dial span::before {
+    content: '';
+    position: absolute;
+    inset: 9% auto 50% 50%;
+    width: 3px;
+    translate: -50%;
+    border-radius: 3px;
+    background: var(--accent);
+  }
+  .timer-name { font-weight: 650; line-height: 1.2; overflow-wrap: anywhere; }
+  .timer-display { font: 700 1.25rem/1.4 var(--type); font-variant-numeric: tabular-nums; }
+  .timer-actions { display: flex; gap: .3rem; flex-wrap: wrap; }
+  .timer-actions button {
+    background: var(--tint);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: .22rem;
+    min-height: 44px;
+    padding: .25rem .45rem;
+    font: inherit;
+  }
+  .timer-actions button:hover { background: var(--highlight); }
+  .kitchen-timer[data-ringing] { border-color: var(--accent); }
+  .kitchen-timer[data-ringing] .timer-display { color: var(--accent); }
+  .kitchen-timer[data-ringing] [data-end-timer] { background: var(--accent); color: white; border-color: var(--accent); }
+  .kitchen-timer[data-ringing] .timer-dial { animation: timer-rattle .22s 3 alternate; }
+  @keyframes timer-rattle { from { rotate: -7deg; } to { rotate: 7deg; } }
+  .acc-pause-motion .kitchen-timer[data-ringing] .timer-dial { animation: none; }
+  .timer-help { margin-top: .35rem; color: var(--soft); font-size: .9rem; }
+  @media (prefers-reduced-motion: reduce) { .kitchen-timer[data-ringing] .timer-dial { animation: none; } }
+  @media print { #page-timer-mount { display: none; } }
+</style>

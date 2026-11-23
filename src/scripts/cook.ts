@@ -1,4 +1,5 @@
 // Step-by-step cooking: tick each line, hear it read, keep your hands free.
+import { setupKitchenTimers } from './kitchen-timers';
 import { confetti, number, replay } from './motion';
 import { listen, prefs, quiet, speak, type Line } from './voice';
 
@@ -47,14 +48,14 @@ function hush() {
   document.querySelectorAll('.cook-lines .now').forEach((el) => el.classList.remove('now'));
   $('cook-read').textContent = 'Read aloud';
 }
-async function say(lines: { line: Line; row?: number }[]) {
+async function say(lines: { line: Line; row?: number; fallback?: Line }[]) {
   hush();
   const mine = run; speaking = true;
   $('cook-read').textContent = 'Stop reading';
-  for (const { line, row } of lines) {
+  for (const { line, row, fallback } of lines) {
     document.querySelectorAll('.cook-lines .now').forEach((el) => el.classList.remove('now'));
     if (row !== undefined) $('cook-lines').querySelector(`[data-row="${row}"]`)?.classList.add('now');
-    const ok = await speak(line, () => mine === run);
+    const ok = await speak(line, () => mine === run) || (fallback && mine === run && await speak(fallback, () => mine === run));
     if (mine !== run) return;
     if (!ok) { $('cook-warn').textContent = 'This browser has no on-device voice to read with.'; break; }
   }
@@ -70,39 +71,11 @@ function whyNow() {
 }
 
 /* ---------- Timers ---------- */
-const timers: { label: string; end: number; el: HTMLElement; done: boolean }[] = [];
-let sound: AudioContext | undefined;
-function prepareSound() {
-  try {
-    sound ??= new AudioContext();
-    void sound.resume().catch(() => {});
-  } catch { /* The visible timer still runs. */ }
-}
-function chime() {
-  if (!sound) return;
-  [0, 0.35, 0.7].forEach((at) => {
-    const osc = sound!.createOscillator(), gain = sound!.createGain(), t = sound!.currentTime + at;
-    osc.frequency.value = 880; gain.gain.setValueAtTime(0.35, t); gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
-    osc.connect(gain).connect(sound!.destination); osc.start(t); osc.stop(t + 0.3);
-  });
-}
-function startTimer(minutes: number, label: string) {
-  prepareSound();
-  const el = document.createElement('button');
-  el.type = 'button'; el.className = 'timer';
-  const timer = { label, end: Date.now() + minutes * 60000, el, done: false };
-  el.addEventListener('click', () => { timers.splice(timers.indexOf(timer), 1); el.remove(); });
-  timers.push(timer); $('cook-timers').append(el); drawTimers();
-}
-function drawTimers() {
-  for (const t of timers) {
-    const left = Math.max(0, Math.ceil((t.end - Date.now()) / 1000));
-    t.el.textContent = left ? `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')} ${t.label}` : `Done: ${t.label}`;
-    t.el.setAttribute('aria-label', `${t.el.textContent}. Press to remove.`);
-    if (!left && !t.done) { t.done = true; t.el.classList.add('ring'); chime(); if (dialog.open && !speaking) say([{ line: data.phrases.timer }]); }
-  }
-}
-setInterval(drawTimers, 500);
+const kitchenTimers = setupKitchenTimers({
+  dialog,
+  announce: (text, expired) => say([{ line: { text, say: text }, fallback: expired ? data.phrases.timer : undefined }]),
+});
+const startTimer = kitchenTimers.start;
 // "60–75 minutes" starts at 60, so you check early.
 const times = (text: string) => [...text.matchAll(/(\d+)(?:\s*(?:–|-|to)\s*\d+)?\s*(minute|hour)s?/gi)].map((m) => ({ minutes: Number(m[1]) * (m[2].toLowerCase() === 'hour' ? 60 : 1), label: m[0] }));
 
@@ -242,10 +215,10 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 
 function open(from: HTMLElement) {
   openedFrom = from; dialog.showModal(); document.documentElement.classList.add('cooking');
-  prepareSound(); stayAwake(); draw(); if (prefs.mic) mic(true);
+  kitchenTimers.place(); stayAwake(); draw(); if (prefs.mic) mic(true);
 }
 dialog.addEventListener('close', () => {
-  hush(); mic(false); panel(false, false);
+  hush(); kitchenTimers.place(); mic(false); panel(false, false);
   lock?.release?.(); document.documentElement.classList.remove('cooking'); openedFrom?.focus(); label();
 });
 const starter = document.querySelector<HTMLButtonElement>('[data-cook]')!;
@@ -268,7 +241,7 @@ $('cook-back').addEventListener('click', () => go(page - 1));
 $('cook-next').addEventListener('click', next);
 $('cook-read').addEventListener('click', () => (speaking ? hush() : readPage()));
 dialog.addEventListener('keydown', (event) => {
-  if ((event.target as Element).closest('#cook-voice, #acc-widget-host, #custom-timer') || event.metaKey || event.ctrlKey || event.altKey) return;
+  if ((event.target as Element).closest('#cook-voice, #acc-widget-host, #custom-timer, #kitchen-timers') || event.metaKey || event.ctrlKey || event.altKey) return;
   if (event.key === 'ArrowRight' || event.key === 'PageDown') { event.preventDefault(); next(); }
   else if (event.key === 'ArrowLeft' || event.key === 'PageUp') { event.preventDefault(); go(page - 1); }
   else if (event.key.toLowerCase() === 'r') speaking ? hush() : readPage();

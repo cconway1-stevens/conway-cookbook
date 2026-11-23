@@ -341,11 +341,6 @@ a.tape:hover { filter: brightness(1.15); }
 #cook[open] { display: grid; grid-template: auto auto minmax(0, 1fr) auto auto / minmax(0, 62rem); justify-content: center; gap: .7rem; }
 .cook-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem .8rem; }
 .cook-bar p { flex: 1 1 12rem; min-width: 0; font: 700 1.3rem/1.2 var(--body); }
-.cook-timers:empty { display: none; }
-.cook-timers { display: flex; flex-wrap: wrap; gap: .4rem; }
-.timer { padding: .35rem .7rem; border: 2px solid var(--ink); border-radius: 4px; background: var(--highlight); font: 700 1rem var(--type); font-variant-numeric: tabular-nums; }
-.timer.ring { background: var(--accent); color: white; animation: ring .5s infinite alternate; }
-@keyframes ring { to { transform: rotate(-2deg) scale(1.05); } }
 .cook-track { display: flex; gap: .35rem; padding: 4px; margin: -4px; overflow-x: auto; list-style: none; }
 .cook-track li { flex: 1; }
 .cook-track button { width: 100%; min-width: 2.7rem; min-height: 2.5rem; border: 2px solid var(--ink); border-radius: 8px 8px 2px 2px; background: var(--card); font-weight: 600; }

@@ -1,16 +1,18 @@
 ---
+import KitchenTimers from './KitchenTimers.astro';
 import VoicePanel from './VoicePanel.astro';
 import { json, cookData } from '../lib/recipes';
 const { recipe } = Astro.props;
 ---
+<div id="page-timer-mount"><KitchenTimers /></div>
 <dialog id="cook" aria-labelledby="cook-title">
   <div class="cook-bar">
     <p id="cook-title">{recipe.data.title}</p>
-    <div class="cook-timers" id="cook-timers" aria-label="Timers"></div>
     <button type="button" class="button quiet help-inline acc-container" data-reading-help aria-label="Reading and accessibility help" title="Make this easier to read" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.2" r="2.2" /><path d="M4 8.2c3 1 5 1.3 8 1.3s5-.3 8-1.3M12 9.5v5M12 14.5l-3.2 7M12 14.5l3.2 7M9 9.4v5.1h6V9.4" /></svg></button>
     <button type="button" class="button quiet" id="cook-voice-open" aria-expanded="false" aria-controls="cook-voice">Voice</button>
     <button type="button" class="button quiet" id="cook-close">Close</button>
   </div>
+  <div id="cook-timer-mount"></div>
   <ol class="cook-track" id="cook-track" aria-label="Steps"></ol>
   <div class="cook-card" id="cook-card" tabindex="-1">
     <p class="cook-count" id="cook-count"></p>
@@ -25,7 +27,9 @@ const { recipe } = Astro.props;
         <label>Duration <input id="timer-duration" type="number" min="1" step="1" value="5" required /></label>
         <label>Unit <select id="timer-unit"><option value="minutes">Minutes</option><option value="seconds">Seconds</option></select></label>
         <button class="button quiet" type="submit">Start timer</button>
+
       </form>
+      <p class="timer-help">The bell repeats until you stop the alarm. Keep this page open for alerts.</p>
     </details>
   </div>
   <p class="cook-warn" id="cook-warn" role="status"></p>

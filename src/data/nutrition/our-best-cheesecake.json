@@ -1,0 +1,40 @@
+{
+  "fingerprint": "1eb7ec6189861e09170a89558b426052001f530e75efabc1ff1280aec4f27632",
+  "rows": [
+    {
+      "name": "Calories",
+      "amount": 366.44,
+      "unit": "kcal"
+    },
+    {
+      "name": "Protein",
+      "amount": 4.83,
+      "unit": "g"
+    },
+    {
+      "name": "Carbohydrates",
+      "amount": 36.16,
+      "unit": "g"
+    },
+    {
+      "name": "Fat",
+      "amount": 23,
+      "unit": "g"
+    },
+    {
+      "name": "Fiber",
+      "amount": 0.54,
+      "unit": "g"
+    },
+    {
+      "name": "Sugar",
+      "amount": 19.89,
+      "unit": "g"
+    },
+    {
+      "name": "Sodium",
+      "amount": 261.74,
+      "unit": "mg"
+    }
+  ]
+}

@@ -2,9 +2,18 @@
   "title": "Frank’s New York Style Potato Salad",
   "description": "Thin-sliced red or Yukon potatoes soaked for a day in a sweet-and-sour onion brine, then folded with mayonnaise, deli style.",
   "category": "Sides & Starters",
-  "meal": ["Lunch", "Dinner"],
-  "cuisine": ["American"],
-  "tags": ["Make ahead", "Vegetarian", "Family recipe"],
+  "meal": [
+    "Lunch",
+    "Dinner"
+  ],
+  "cuisine": [
+    "American"
+  ],
+  "tags": [
+    "Make ahead",
+    "Vegetarian",
+    "Family recipe"
+  ],
   "author": "Frank",
   "date": "2026-11-22",
   "time": "13 minutes cooking, plus 24 to 48 hours brining",
@@ -14,10 +23,18 @@
   "story": "Frank’s recipe, written out by hand on a weekly planner card.",
   "image": "images/franks-potato-salad.webp",
   "imageAlt": "Thin slices of potato in creamy dressing in a floral bowl.",
+  "nutritionAs": {
+    "¼ cup vegetable oil": "1 tablespoon vegetable oil",
+    "¼ cup sugar": "1 tablespoon sugar",
+    "3¼ teaspoons salt": "¾ teaspoon salt"
+  },
+  "nutritionNote": "The brine is strained off before the mayonnaise goes in, so only about a quarter of its oil, sugar, and salt is counted, for what the potatoes soak up. That share is an estimate.",
   "ingredients": [
     {
       "group": "Potatoes",
-      "items": ["3½ pounds red or Yukon Gold potatoes"]
+      "items": [
+        "3½ pounds red or Yukon Gold potatoes"
+      ]
     },
     {
       "group": "Brine",
@@ -33,7 +50,9 @@
     },
     {
       "group": "To finish",
-      "items": ["¾ cup mayonnaise"]
+      "items": [
+        "¾ cup mayonnaise"
+      ]
     }
   ],
   "steps": [
@@ -70,6 +89,9 @@
     "Source": "Transcribed from Frank’s handwritten card. A scan of the card is in the gallery."
   },
   "media": [
-    { "file": "franks-recipe-card.jpg", "caption": "Frank’s handwritten recipe card" }
+    {
+      "file": "franks-recipe-card.jpg",
+      "caption": "Frank’s handwritten recipe card"
+    }
   ]
 }

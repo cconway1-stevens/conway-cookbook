@@ -18,6 +18,11 @@
   "servings": "4",
   "image": "images/lemon-herb-chicken.jpg",
   "imageAlt": "Painted skillet of golden chicken thighs with lemon and thyme",
+  "nutritionAs": {
+    "4 bone-in, skin-on chicken thighs": "4 roasted chicken thighs with skin",
+    "1 tablespoon olive oil": "1 teaspoon olive oil"
+  },
+  "nutritionNote": "Skin-on thighs are rich: most of their calories come from fat. They lose a good part of it as they sear and roast, so they’re counted as roasted thighs, using USDA data for cooked chicken, and only a third of the oil, since the rest stays in the skillet. Leave the skin on the plate and the fat drops much further.",
   "ingredients": [
     "4 bone-in, skin-on chicken thighs",
     "1 teaspoon kosher salt",
@@ -28,7 +33,14 @@
     "1 lemon, half juiced and half thinly sliced",
     "4 sprigs fresh thyme"
   ],
-  "shoppingMeasures": [{ "line": "3 garlic cloves, lightly crushed", "ingredient": "garlic", "unit": "cloves", "quantity": 3 }],
+  "shoppingMeasures": [
+    {
+      "line": "3 garlic cloves, lightly crushed",
+      "ingredient": "garlic",
+      "unit": "cloves",
+      "quantity": 3
+    }
+  ],
   "steps": [
     "Heat the oven to 425°F. Pat the 4 chicken thighs dry and season all over with salt and pepper.",
     "Heat the oil in an oven-safe skillet over medium heat. Add the thighs skin-side down and cook until the skin is deep golden, about 8–10 minutes. Flip the thighs.",

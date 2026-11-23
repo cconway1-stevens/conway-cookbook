@@ -6,6 +6,9 @@
   "minutes": 5,
   "servings": "1",
   "difficulty": "Easy",
+  "nutritionAs": {
+    "2 fluid ounces London dry gin": "2 fluid ounces gin"
+  },
   "ingredients": [
     "2 fluid ounces London dry gin",
     "½ fluid ounce fresh lime juice",

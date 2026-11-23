@@ -23,6 +23,12 @@ const recipes = defineCollection({
     meal: z.array(list('meal', book.meals)).default([]),
     cuisine: z.array(z.string()).default([]),
     academyLinks: z.array(z.string()).optional(),
+    // What nutrition is calculated from, when it isn't the ingredient line as written:
+    // the cooked food ("roasted chicken thighs with skin"), the part that's eaten
+    // ("1 teaspoon olive oil" of a tablespoon left in the pan), or "" to leave a line out.
+    nutritionAs: z.record(z.string(), z.string()).optional(),
+    // Why, in a sentence or two, shown with the nutrition estimate.
+    nutritionNote: z.string().optional(),
     tags: z.array(z.string()).default([]),
     date: z.coerce.date().default(new Date(0)),
     author: z.string().optional(),

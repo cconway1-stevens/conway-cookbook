@@ -1,0 +1,245 @@
+---
+// How the Nutrition Facts on each recipe are worked out, with a worked example and
+// the automatic checks for every recipe, all read from the same saved data the labels use.
+import Cookbook from '../layouts/Cookbook.astro';
+import { allRecipes, base, recipeUrl } from '../lib/recipes';
+import { nutritionFor } from '../lib/nutrition';
+import { labelNutrients } from '../lib/nutrition-label.mjs';
+
+const recipes = await allRecipes();
+const audit = recipes.map((recipe) => ({ recipe, nutrition: nutritionFor(recipe) }));
+const checked = audit.filter(({ nutrition }) => nutrition);
+const count = (status: string) => checked.reduce((n, { nutrition }) => n + nutrition!.checks.filter((c) => c.status === status).length, 0);
+
+// Worked example: the sausage balls, from the saved analysis.
+const example = audit.find(({ recipe }) => recipe.id === 'sausage-balls');
+const exampleData = example?.nutrition;
+const exampleParts = exampleData?.calorieSources ?? [];
+const exampleTotal = exampleParts.reduce((n, { calories }) => n + calories, 0);
+const exampleServings = example ? Number(example.recipe.data.servings.match(/\d+/)?.[0] ?? 1) : 1;
+
+// USDA Table of Nutrient Retention Factors, Release 6: alcohol left after cooking.
+const alcohol = [
+  ['Stored overnight, no heat', 70], ['Stirred into a hot liquid, off the heat', 85], ['Flamed', 75],
+  ['Baked or simmered 15 minutes', 40], ['30 minutes', 35], ['1 hour', 25], ['1½ hours', 20], ['2 hours', 10], ['2½ hours', 5],
+  ['Baked 25 minutes, not stirred in', 45],
+] as const;
+const daily = labelNutrients.filter((n) => n.daily);
+---
+<Cookbook title="How nutrition is calculated" description="Where the Nutrition Facts on each recipe come from, how they're adjusted and rounded, and the checks that catch mistakes." current="recipes">
+<article class="wrap how">
+  <p class="how-kicker">The Nutrition Facts on our recipes</p>
+  <h1>How nutrition is calculated</h1>
+  <p class="how-lede">Every label in the cookbook is an <strong>estimate worked out from the ingredient list</strong>, the same way most recipe sites and many food companies do it. Nothing is sent to a lab. This page shows each step, what can go wrong, and the checks that run on every recipe so you don’t have to take the numbers on faith.</p>
+
+  <nav class="how-toc" aria-label="On this page">
+    <a href="#steps">The six steps</a><a href="#example">A worked example</a><a href="#usda">How USDA does it</a><a href="#adjust">What we adjust</a><a href="#rounding">Rounding</a><a href="#accuracy">How accurate?</a><a href="#checks">Automatic checks</a><a href="#yourself">Check it yourself</a>
+  </nav>
+
+  <section id="steps" aria-labelledby="steps-title">
+    <h2 id="steps-title">The six steps</h2>
+    <ol class="flow">
+      <li><b>1</b><h3>Read the recipe</h3><p>Each ingredient line, like <q>4 cups medium cheddar</q>, and the yield, like <q>About 12</q>.</p></li>
+      <li><b>2</b><h3>Match each food</h3><p><a href="https://spoonacular.com/food-api">Spoonacular</a> reads the amount, unit, and food, converts it to grams, and looks it up in nutrient data built on USDA’s food tables.</p></li>
+      <li><b>3</b><h3>Count what you eat</h3><p>Where cooking changes a food or some of it stays in the pan, the recipe says what to count instead. <a href="#adjust">See how.</a></p></li>
+      <li><b>4</b><h3>Add up the batch</h3><p>Every nutrient from every ingredient is added together for the whole recipe.</p></li>
+      <li><b>5</b><h3>Divide by servings</h3><p>The batch total is split by the yield. For a range like <q>6 to 8</q>, it uses 8, the smaller portion.</p></li>
+      <li><b>6</b><h3>Round like a label</h3><p>Values are rounded the way the FDA requires on a Nutrition Facts label, and % Daily Values use the FDA’s reference amounts.</p></li>
+    </ol>
+  </section>
+
+  {exampleData && exampleParts.length > 0 && <section id="example" aria-labelledby="example-title">
+    <h2 id="example-title">A worked example: <a href={recipeUrl('sausage-balls')}>Sausage Balls</a></h2>
+    <p>Three ingredients, matched and added up for the whole batch, then split {exampleServings} ways.</p>
+    <div class="sum" role="img" aria-label={`Calories per serving: ${exampleParts.map(({ name, calories }) => `${name} ${calories}`).join(', ')}, total ${exampleTotal}`}>
+      {exampleParts.map(({ name, calories, share }) => <div class="sum-part" style={`flex: ${share}`}><span>{name}</span><b>{calories}</b></div>)}
+    </div>
+    <p class="sum-eq">{exampleParts.map(({ calories }) => calories).join(' + ')} = <b>{exampleTotal} calories per serving</b>, which the label rounds to <b>{exampleData.rows[0].value}</b>.</p>
+    <p>The FDA rounds calories to the nearest 10 above 50, so {exampleTotal} shows as {exampleData.rows[0].value}.</p>
+  </section>}
+
+  <section id="usda" aria-labelledby="usda-title">
+    <h2 id="usda-title">How USDA does it</h2>
+    <p>USDA’s Nutrient Data Laboratory publishes the tables most food databases use to go from raw ingredients to a cooked dish. Two ideas matter most.</p>
+    <div class="how-cards">
+      <div class="how-card"><h3>Cooking yield: what the food weighs after cooking</h3>
+        <p class="formula">Yield % = 100 × cooked weight ÷ raw weight</p>
+        <p>Meat loses water and fat in the oven. USDA measured a roasted broiler-fryer chicken thigh at a <strong>69%</strong> yield: it keeps about 69% of its raw weight. USDA also measures how much of that change is water and how much is fat, with the same formula.</p>
+        <div class="yield" role="img" aria-label="A raw chicken thigh is 100 percent of its weight; roasted it is 69 percent"><span style="--w: 100%">Raw 100%</span><span style="--w: 69%">Roasted 69%</span></div>
+      </div>
+      <div class="how-card"><h3>Retention: how much of a nutrient survives</h3>
+        <p class="formula">Retention % = 100 × (nutrient per gram cooked × cooked grams) ÷ (nutrient per gram raw × raw grams)</p>
+        <p>USDA calls this <em>true retention</em>. Its own example: raw spinach has 28 mg of vitamin C per 100 g, and boiled greens keep 85% of it, so boiled spinach has about 23.8 mg.</p>
+      </div>
+    </div>
+    <h3>Alcohol in cooking</h3>
+    <p>Alcohol doesn’t all cook off. USDA’s retention table gives the share left:</p>
+    <ul class="bars" aria-label="Share of alcohol left after cooking">
+      {alcohol.map(([how, left]) => <li><span class="bar-label">{how}</span><span class="bar"><span style={`width: ${left}%`}></span></span><b>{left}%</b></li>)}
+    </ul>
+    <p class="how-small">Our bread puddings stir their bourbon or rum into the sauce off the heat, and the coquito is never heated, so their labels count all of it.</p>
+  </section>
+
+  <section id="adjust" aria-labelledby="adjust-title">
+    <h2 id="adjust-title">What we adjust</h2>
+    <p>Adding up raw ingredients counts everything that goes in the pan, including fat that cooks out and oil left behind. Where that matters, a recipe lists the line to count instead, and its Nutrition tab shows the change:</p>
+    <ul class="adjusted">
+      {recipes.filter((r) => r.data.nutritionAs).map((r) => <li><a href={recipeUrl(r.id)}>{r.data.title}</a>
+        <ul>{Object.entries(r.data.nutritionAs!).map(([line, as]) => <li>{line} → <strong>{as || 'left out'}</strong></li>)}</ul>
+      </li>)}
+    </ul>
+    <p>Where USDA has data for the cooked food, like roasted chicken thighs, we use that. Otherwise the share we count is an estimate, and the recipe says so.</p>
+  </section>
+
+  <section id="rounding" aria-labelledby="rounding-title">
+    <h2 id="rounding-title">Rounding</h2>
+    <p>Labels follow the FDA’s rounding rules for Nutrition Facts (21 CFR 101.9):</p>
+    <table class="how-table">
+      <thead><tr><th scope="col">Nutrient</th><th scope="col">Rounded to</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Calories</th><td>Nearest 5 up to 50; nearest 10 above</td></tr>
+        <tr><th scope="row">Total, saturated, and trans fat</th><td>0 below 0.5 g; nearest 0.5 g below 5 g; nearest gram above</td></tr>
+        <tr><th scope="row">Cholesterol</th><td>0 below 2 mg; “less than 5 mg” from 2 to 5; nearest 5 mg above</td></tr>
+        <tr><th scope="row">Sodium</th><td>0 below 5 mg; nearest 5 mg up to 140; nearest 10 mg above</td></tr>
+        <tr><th scope="row">Carbohydrate, fiber, sugars, protein</th><td>0 below 0.5 g; “less than 1 g” below 1 g; nearest gram</td></tr>
+        <tr><th scope="row">% Daily Value for vitamin D, calcium, iron, potassium</th><td>Nearest 2% up to 10%; 5% up to 50%; 10% above</td></tr>
+      </tbody>
+    </table>
+    <p>Daily Values are the FDA’s reference amounts for adults and children 4 and older:</p>
+    <ul class="dv">{daily.map(({ name, daily: dv, unit }) => <li><span>{name}</span><b>{dv?.toLocaleString('en-US')} {unit}</b></li>)}</ul>
+  </section>
+
+  <section id="accuracy" aria-labelledby="accuracy-title">
+    <h2 id="accuracy-title">How accurate is it?</h2>
+    <p>Close, not exact. Even packaged food isn’t exact: the FDA’s labeling rule treats calories, fat, sugars, and sodium as out of line only when the real amount is <strong>more than 20% above</strong> the label. A home recipe varies more than a factory product does. The biggest sources of error:</p>
+    <ul class="how-list">
+      <li><strong>A wrong match.</strong> The food is read as something else. We’ve caught “London dry gin” read as London broil, and “country bread” matched to a food with almost no carbohydrate. The checks below are built to catch these.</li>
+      <li><strong>Brands and sizes.</strong> One sausage is fattier than another; a “large” chicken thigh varies.</li>
+      <li><strong>Cooking.</strong> Fat and water cook out, and some ingredients stay behind. See <a href="#adjust">what we adjust</a>.</li>
+      <li><strong>Portions.</strong> A serving is the recipe divided evenly. Your slice may be bigger.</li>
+    </ul>
+    <p>When we checked the <a href={recipeUrl('hersheys-chocolate-cake')}>chocolate cake</a> against Hershey’s own label, carbohydrate, sugar, and protein matched within a gram, and the ingredients add up to 514 calories against Hershey’s 530, about 3% apart.</p>
+  </section>
+
+  <section id="checks" aria-labelledby="checks-title">
+    <h2 id="checks-title">Automatic checks</h2>
+    <p>Every label runs three checks, shown under <em>About this estimate</em> on its Nutrition tab.</p>
+    <div class="how-cards three">
+      <div class="how-card"><h3>Calories match the nutrients</h3><p>Protein and carbohydrate carry 4 calories a gram, fat 9, alcohol 7. Those should add up to the calories within 15%.</p>
+        <p class="atwater" aria-hidden="true"><span class="a-p">4</span><span class="a-c">4</span><span class="a-f">9</span><span class="a-a">7</span></p></div>
+      <div class="how-card"><h3>Label equals its ingredients</h3><p>The label is the sum of the ingredients, so the two must agree within 5%. This is how the cake’s missing oil came to light.</p></div>
+      <div class="how-card"><h3>Each ingredient looks right</h3><p>Each match is compared with typical calories for its estimated weight. A half cup of oil should be close to 960 calories; if it comes back at 16, it’s flagged.</p></div>
+    </div>
+    <p class="how-tally"><b class="t-pass">{count('pass')}</b> passed · <b class="t-flag">{count('flag')}</b> {count('flag') === 1 ? 'needs' : 'need'} a look · <b class="t-skip">{count('skip')}</b> waiting for the next nutrition run</p>
+    <div class="audit-wrap"><table class="how-table audit">
+      <thead><tr><th scope="col">Recipe</th><th scope="col">Calories per serving</th><th scope="col">Matches nutrients</th><th scope="col">Equals ingredients</th><th scope="col">Each ingredient</th></tr></thead>
+      <tbody>{audit.map(({ recipe, nutrition }) => <tr>
+        <th scope="row"><a href={recipeUrl(recipe.id) + '#nutrition'}>{recipe.data.title}</a></th>
+        {nutrition ? <>
+          <td>{nutrition.rows[0].value}</td>
+          {nutrition.checks.map(({ status, detail }) => <td class={`is-${status}`} title={detail}><span aria-hidden="true">{status === 'pass' ? '✓' : status === 'flag' ? '!' : '–'}</span><span class="vh">{status === 'pass' ? 'Passed' : status === 'flag' ? 'Needs a look' : 'Not checked yet'}: {detail}</span></td>)}
+        </> : <td colspan="4" class="is-skip">Being recalculated</td>}
+      </tr>)}</tbody>
+    </table></div>
+  </section>
+
+  <section id="yourself" aria-labelledby="yourself-title">
+    <h2 id="yourself-title">Check it yourself</h2>
+    <ol class="how-list">
+      <li>Open a recipe’s <strong>Nutrition</strong> tab and look at <em>Where the calories come from</em>. It lists each ingredient’s calories per serving.</li>
+      <li>Pick the biggest one and look it up on <a href="https://fdc.nal.usda.gov/">USDA FoodData Central</a>, the government’s free food database. Search for the food (for example “cheddar cheese”) and note calories per 100 g.</li>
+      <li>Work out the recipe’s amount in grams (a cup of shredded cheddar is about 113 g), multiply, and divide by the servings. If you land within about 20% of our number, the match is sound.</li>
+    </ol>
+    <p>Found one that’s off? Most problems come from how an ingredient line is worded, and rewording it fixes the match on the next nutrition run.</p>
+  </section>
+
+  <section class="how-sources" aria-labelledby="sources-title">
+    <h2 id="sources-title">Sources</h2>
+    <ul>
+      <li><a href="https://www.ars.usda.gov/ARSUserFiles/80400525/Data/retn/USDA_CookingYields_MeatPoultry.pdf">USDA Table of Cooking Yields for Meat and Poultry</a> (2012)</li>
+      <li><a href="https://www.ars.usda.gov/ARSUserFiles/80400525/Data/retn/retn06.pdf">USDA Table of Nutrient Retention Factors, Release 6</a> (2007)</li>
+      <li><a href="https://www.law.cornell.edu/cfr/text/21/101.9">21 CFR 101.9, Nutrition labeling of food</a></li>
+      <li><a href="https://www.fda.gov/food/nutrition-facts-label/daily-value-nutrition-and-supplement-facts-labels">FDA: Daily Value on the Nutrition and Supplement Facts labels</a></li>
+      <li><a href="https://fdc.nal.usda.gov/">USDA FoodData Central</a></li>
+      <li><a href="https://spoonacular.com/food-api/docs">Spoonacular food API</a></li>
+    </ul>
+  </section>
+</article>
+</Cookbook>
+
+<style>
+  .how { max-width: 62rem; padding-block: 2rem 3rem; }
+  .how-kicker { font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .8rem; color: var(--accent); }
+  .how-lede { max-width: 62ch; margin-top: .6rem; font-size: 1.1rem; }
+  .how h2 { margin-top: 2.6rem; padding-bottom: .35rem; border-bottom: 2px solid var(--line); }
+  .how h3 { margin-top: 1.2rem; }
+  .how section > p, .how-list { max-width: 68ch; margin-block: .7rem; }
+  .how-toc { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.2rem; }
+  .how-toc a { padding: .3rem .75rem; border: 1px solid var(--line); border-radius: 999px; background: var(--card); text-decoration: none; font-size: .9rem; font-weight: 600; color: var(--ink); }
+  .how-toc a:hover { border-color: var(--second); }
+
+  /* The six steps, as a flow that wraps to a column on narrow screens. */
+  .flow { list-style: none; margin: 1.2rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem 1.6rem; }
+  .flow li { position: relative; padding: 1rem 1rem 1.1rem; background: var(--card); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 4px 10px var(--shade); }
+  /* An arrow to the next step, except at the end of a row. */
+  .flow li:not(:nth-child(3n))::after { content: '→'; position: absolute; right: -1.35rem; top: 50%; translate: 0 -50%; font: 900 1.2rem/1 Arial, sans-serif; color: var(--accent); }
+  .flow b { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--second); color: white; font: 900 1rem/1 Arial, sans-serif; }
+  .flow h3 { margin: .55rem 0 .3rem; font-size: 1.1rem; }
+  .flow p { margin: 0; font-size: .95rem; }
+
+  /* Worked example: one bar split by each ingredient's calories. */
+  .sum { display: flex; margin-top: 1rem; min-height: 4.2rem; border: 2px solid var(--ink); border-radius: 6px; overflow: hidden; }
+  .sum-part { display: flex; flex-direction: column; justify-content: center; gap: .1rem; min-width: 0; padding: .4rem .6rem; background: var(--highlight); border-right: 2px solid var(--ink); }
+  .sum-part:nth-child(2) { background: #f3b6a6; } .sum-part:nth-child(3) { background: #a9c8e8; } .sum-part:last-child { border-right: 0; }
+  .sum-part span { font-size: .8rem; text-transform: capitalize; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sum-part b { font: 900 1.3rem/1 Arial, sans-serif; }
+  .sum-eq { font-size: 1.05rem; }
+
+  .how-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1rem; margin-top: 1rem; }
+  .how-cards.three { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+  .how-card { padding: 1rem 1.1rem; background: var(--card); border: 1px solid var(--line); border-radius: 6px; }
+  .how-card h3 { margin-top: 0; font-size: 1.05rem; }
+  .how-card p { margin-top: .55rem; }
+  .formula { padding: .5rem .7rem; background: var(--tint); border-left: 4px solid var(--accent); font: 700 .95rem/1.4 'Courier New', monospace; }
+  .yield { display: grid; gap: .35rem; margin-top: .8rem; }
+  .yield span { width: var(--w); padding: .3rem .5rem; background: #f3b6a6; border: 1px solid var(--ink); font: 700 .85rem/1.2 Arial, sans-serif; }
+  .yield span + span { background: #e9b85b; }
+
+  .bars { list-style: none; margin: .8rem 0; padding: 0; display: grid; gap: .35rem; max-width: 44rem; }
+  .bars li { display: grid; grid-template-columns: minmax(0, 15rem) 1fr 3rem; gap: .6rem; align-items: center; font-size: .92rem; }
+  .bar { height: .9rem; background: var(--tint); border: 1px solid var(--line); border-radius: 1rem; overflow: hidden; }
+  .bar span { display: block; height: 100%; background: var(--accent); }
+  .bars b { text-align: right; font-variant-numeric: tabular-nums; }
+  .how-small { font-size: .92rem; color: var(--soft); }
+
+  .adjusted { margin: .8rem 0; padding-left: 1.2rem; display: grid; gap: .6rem; }
+  .adjusted ul { margin-top: .25rem; padding-left: 1.1rem; font-size: .95rem; }
+
+  .how-table { width: 100%; max-width: 48rem; margin-top: .8rem; border-collapse: collapse; background: var(--card); }
+  .how-table th, .how-table td { padding: .45rem .6rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  .how-table thead th { font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--soft); border-bottom: 2px solid var(--ink); }
+  .dv { list-style: none; padding: 0; margin: .6rem 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); gap: .3rem 1.4rem; max-width: 48rem; }
+  .dv li { display: flex; justify-content: space-between; gap: 1rem; padding: .25rem 0; border-bottom: 1px dotted var(--line); }
+
+  .atwater { display: flex; gap: .3rem; margin-top: .7rem; }
+  .atwater span { flex: 1; padding: .3rem; text-align: center; font: 900 1.1rem/1 Arial, sans-serif; color: white; border-radius: 4px; }
+  .atwater span::after { display: block; margin-top: .2rem; font: 600 .65rem/1 Arial, sans-serif; }
+  .a-p { background: #24407c; } .a-p::after { content: 'protein'; }
+  .a-c { background: #b8862f; } .a-c::after { content: 'carbs'; }
+  .a-f { background: #b4232a; } .a-f::after { content: 'fat'; }
+  .a-a { background: #5a4a6e; } .a-a::after { content: 'alcohol'; }
+  .how-tally { margin-top: 1.2rem; font-size: 1.05rem; }
+  .t-pass { color: #2f6b3f; } .t-flag { color: #b4232a; } .t-skip { color: var(--soft); }
+  .audit-wrap { overflow-x: auto; }
+  .audit { max-width: none; min-width: 34rem; font-size: .92rem; }
+  .audit td { text-align: center; font-weight: 900; }
+  .audit td:nth-child(2) { font-weight: 600; }
+  .audit .is-pass { color: #2f6b3f; } .audit .is-flag { color: #b4232a; background: #b4232a14; } .audit .is-skip { color: var(--soft); font-weight: 600; }
+  .how-sources ul { padding-left: 1.2rem; display: grid; gap: .3rem; }
+  @media (max-width: 720px) {
+    .flow { grid-template-columns: minmax(0, 1fr); }
+    .flow li:not(:last-child)::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -1.35rem; translate: -50% 0; }
+    .bars li { grid-template-columns: 1fr 3rem; }
+    .bars .bar { grid-column: 1 / -1; grid-row: 2; }
+  }
+</style>

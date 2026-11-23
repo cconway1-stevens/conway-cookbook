@@ -149,6 +149,7 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
         <div class="box-print">
         <section class="nutrition-label" aria-labelledby="nutrition-title">
           <h2 id="nutrition-title">Nutrition Facts</h2>
+          <a class="nutrition-info" href={base + 'nutrition/'} aria-label="How this label is calculated" title="How this label is calculated">i</a>
           <p class="nutrition-basis"><strong>Serving size</strong> {nutrition.serving}</p>
           <p class="nutrition-estimate">Estimated amount per {nutrition.serving === 'Whole recipe' ? 'recipe' : 'serving'}</p>
           <p class="nutrition-calories"><strong>Calories</strong> <strong>{nutrition.rows[0].value}</strong></p>
@@ -199,11 +200,27 @@ const q = (key: string, value: string) => `${base}recipes/?${key}=${encodeURICom
         </div>
         </div>
         <section class="nutrition-guide"><h3>About this estimate</h3>
+          <ul class="nutrition-checks" aria-label="Automatic checks">{nutrition.checks.map(({ name, status, detail }) => (
+            <li class={`is-${status}`}><span class="check-mark" aria-hidden="true">{status === 'pass' ? '✓' : status === 'flag' ? '!' : '–'}</span>
+              <span><strong>{name}</strong> <span class="vh">{status === 'pass' ? 'passed' : status === 'flag' ? 'needs a look' : 'not checked yet'}.</span> {detail}</span></li>
+          ))}</ul>
+          <p><a href={base + 'nutrition/'}>How this label is calculated, and how to check it yourself</a></p>
           <p>Estimated from the listed ingredients and recipe yield. Brands, preparation, and portion size affect the actual values.</p>
           {nutrition.assumptions && <p>{nutrition.assumptions}</p>}
+          {nutrition.note && <p>{nutrition.note}</p>}
+          {nutrition.counted.length > 0 && <>
+            <p>To count what you eat rather than everything that goes in the pan, these lines are calculated differently:</p>
+            <ul class="counted">{nutrition.counted.map(({ line, as }) => <li>{line} → {as ? <strong>{as}</strong> : <em>left out</em>}</li>)}</ul>
+          </>}
           <p>Data: {nutrition.sources ? nutrition.sources.map(({ name, url }, i) => <>{i > 0 && ' · '}<a href={url}>{name}</a></>) : <a href="https://spoonacular.com/food-api">Spoonacular</a>}.</p>
         </section>
-      </> : <section class="nutrition-guide"><h2>Nutrition Facts</h2><p>An estimate for the current ingredients and yield is unavailable.</p></section>}
+      </> : <section class="nutrition-guide"><h2>Nutrition Facts</h2><p>An estimate for the current ingredients and yield is unavailable. It’s calculated again automatically the next time nutrition is saved.</p>
+        {data.nutritionNote && <p>{data.nutritionNote}</p>}
+        {data.nutritionAs && <>
+          <p>To count what you eat rather than everything that goes in the pan, these lines are calculated differently:</p>
+          <ul class="counted">{Object.entries(data.nutritionAs).map(([line, as]) => <li>{line} → {as ? <strong>{as}</strong> : <em>left out</em>}</li>)}</ul>
+        </>}
+      </section>}
     </div>
     <div id="details" role="tabpanel" aria-labelledby="tab-details">
       {skills.length > 0 && <details id="skills" class="technique-help"><summary>Technique help</summary>

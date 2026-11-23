@@ -19,8 +19,8 @@ const PER_CUP: [RegExp, number][] = [
   [/cocoa/, 85], [/flour|baking mix|bisquick/, 125], [/cornmeal/, 140], [/graham cracker crumbs|crumbs/, 100],
   [/oats/, 90], [/rice krispies|cereal/, 28], [/marshmallow/, 50], [/chocolate chips|chocolate/, 170],
   [/walnut|pecan|almond|nut/, 115], [/coconut/, 85],
-  [/butter|margarine/, 227], [/olive oil/, 216], [/oil|shortening/, 218],
-  [/mayonnaise/, 220], [/sour cream|yogurt/, 230], [/cream cheese/, 232], [/cheddar|mozzarella|parmesan|cheese/, 113],
+  [/buttermilk/, 245], [/butter|margarine/, 227], [/olive oil/, 216], [/oil|shortening/, 218],
+  [/mayonnaise/, 220], [/sour cream|yogurt/, 230], [/cream cheese/, 232], [/grated (?:parmesan|parmigiano)|parmigiano|parmesan/, 90], [/cheddar|mozzarella|cheese/, 113],
   [/maple syrup|syrup/, 315], [/honey|molasses/, 340],
   [/cream|half-and-half/, 238], [/milk|buttermilk/, 245],
   [/onion|celery|carrot|pepper|tomato/, 150], [/beans|rice/, 180], [/basil|parsley|cilantro|herb/, 25],
@@ -33,7 +33,7 @@ const EACH: [RegExp, number][] = [
   [/wedge|wheel/, 8], [/egg yolk/, 17], [/egg white/, 33], [/egg/, 50], [/garlic clove|clove/, 5], [/bell pepper/, 150],
   [/chile|chili|long hot/, 6], [/lime/, 67], [/lemon/, 85], [/orange/, 130], [/banana/, 118],
   [/onion/, 150], [/tomato/, 120], [/potato/, 170], [/tortilla/, 30], [/chicken thigh/, 140], [/chicken breast/, 200],
-  [/loaf/, 450], [/slice/, 30], [/can/, 400], [/package/, 225],
+  [/pie dough|pie crust/, 240], [/loaf/, 450], [/slice/, 30], [/can/, 400], [/package/, 225],
 ];
 
 const UNITS: [RegExp, (name: string) => number][] = [
@@ -64,7 +64,7 @@ export function estimateGrams(line: string) {
   const lower = line.toLowerCase();
   const name = ingredientName(lower);
   // "1 can (21 ounces) cherry pie filling", "3 packages (8 ounces each)", "1 loaf (about 1 pound)"
-  const inner = lower.match(new RegExp(String.raw`\((?:about\s+)?(${NUMBER})\s*(pounds?|ounces?|oz|lbs?)(\s+each)?`));
+  const inner = lower.match(new RegExp(String.raw`\((?:about\s+)?(${NUMBER})\s*-?\s*(pounds?|ounces?|oz|lbs?)(\s+each)?`));
   const lead = lower.match(new RegExp(String.raw`^(?:about\s+)?(${NUMBER})(?:\s*(?:to|-|–)\s*(${NUMBER}))?\s*(.*)$`));
   if (inner) {
     const per = toNumber(inner[1]) * (/^(?:pound|lb)/.test(inner[2]) ? 453.6 : 28.35);
@@ -117,4 +117,40 @@ export function allergensIn(lines: string[]) {
     .replace(/peanut butter/g, 'peanuts')
     .replace(/coconut milk|cream of coconut|coconut cream/g, 'coconut');
   return ALLERGENS.filter(([, pattern]) => pattern.test(text)).map(([name]) => name);
+}
+
+// Typical calories per gram, for a second opinion on each matched ingredient. Values are
+// rounded from USDA FoodData Central entries for the usual form of each food. First match
+// wins, so specific names come first. Foods with no entry aren't checked.
+const KCAL_PER_GRAM: [RegExp, number][] = [
+  [/water|ice\b|broth|stock|salt|baking soda|baking powder/, 0],
+  [/olive oil|vegetable oil|canola|\boil\b|shortening|cooking spray/, 8.8],
+  [/mayonnaise/, 6.8], [/peanut butter/, 5.9], [/buttermilk/, 0.4], [/butter|margarine/, 7.2],
+  [/walnut|pecan|almond|cashew|peanut/, 6.9],
+  [/chocolate chips|chocolate/, 5.3], [/cocoa/, 2.3],
+  [/cream cheese/, 3.4], [/parmesan|parmigiano/, 3.9], [/cheddar|mozzarella|feta|cotija|cheese/, 3.8],
+  [/heavy cream|whipping cream/, 3.4], [/half-and-half/, 1.3], [/sour cream/, 2.0],
+  [/condensed milk/, 3.2], [/evaporated milk/, 1.3], [/cream of coconut/, 3.4], [/coconut milk/, 2.0],
+  [/buttermilk/, 0.4], [/milk/, 0.6],
+  [/powdered sugar|confectioners/, 3.9], [/brown sugar/, 3.8], [/sugar/, 3.9],
+  [/maple syrup/, 2.6], [/corn syrup/, 2.9], [/honey/, 3.0], [/simple syrup/, 2.6],
+  [/marshmallow/, 3.2], [/rice krispies|cereal/, 3.9],
+  [/baking mix|bisquick/, 4.3], [/cornmeal/, 3.7], [/flour|cornstarch/, 3.6], [/oats/, 3.8],
+  [/spaghetti|pasta|noodles/, 3.7], [/graham cracker/, 4.3],
+  [/bread|tortilla/, 2.7], [/pie dough|pie crust/, 4.6], [/pie filling/, 1.1],
+  [/sausage/, 3.0], [/ground beef/, 2.5], [/ground pork/, 2.6],
+  [/roasted chicken thigh/, 2.3], [/chicken thigh/, 2.1], [/chicken breast/, 1.2],
+  [/egg/, 1.4],
+  [/\brum\b|\bgin\b|vodka|bourbon|whiskey|tequila/, 2.3], [/wine/, 0.85], [/ginger beer/, 0.4],
+  [/juice/, 0.45], [/black beans|beans/, 0.9],
+  [/potato/, 0.8], [/banana/, 0.9], [/apple|pear/, 0.55], [/pineapple/, 0.5],
+  [/avocado/, 1.6], [/olives/, 1.2], [/garlic/, 1.5],
+  [/tomato|cucumber|pepper|onion|celery|carrot|green beans|lettuce|lime|lemon|orange|cranberr/, 0.3],
+];
+
+/** Typical calories per gram for an ingredient line, or null when there's no entry. */
+export function caloriesPerGram(line: string) {
+  const name = ingredientName(line.toLowerCase());
+  const hit = KCAL_PER_GRAM.find(([pattern]) => pattern.test(name));
+  return hit ? hit[1] : null;
 }

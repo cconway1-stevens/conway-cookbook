@@ -14,7 +14,7 @@ const { recipes } = JSON.parse(await readFile('dist/cookbook.json', 'utf8'));
 await mkdir(folder, { recursive: true });
 for (const recipe of recipes) {
   const path = `${folder}/${recipe.id}.json`;
-  const input = nutritionInput(recipe.ingredients.flatMap(group => group.items), recipe.servings);
+  const input = nutritionInput(recipe.ingredients.flatMap(group => group.items), recipe.servings, recipe.nutritionAs);
   let existing;
   try { existing = JSON.parse(await readFile(path, 'utf8')); }
   catch (error) { if (error.code !== 'ENOENT') throw error; }

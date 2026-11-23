@@ -21,6 +21,9 @@
   "difficulty": "Easy",
   "image": "images/tomato-bruschetta.jpg",
   "imageAlt": "Tomato and basil bruschetta on toasted bread",
+  "nutritionAs": {
+    "8 slices country bread": "8 slices Italian bread"
+  },
   "ingredients": [
     "1 pound ripe tomatoes, diced",
     "¼ cup fresh basil, torn",

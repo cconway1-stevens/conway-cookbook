@@ -1,5 +1,5 @@
 {
-  "fingerprint": "1eb7ec6189861e09170a89558b426052001f530e75efabc1ff1280aec4f27632",
+  "fingerprint": "88aee384d454b96cf47f25d8e9cb7804c1b0bd779441738c918f890151833b16",
   "rows": [
     {
       "name": "Calories",
@@ -7,18 +7,28 @@
       "unit": "kcal"
     },
     {
-      "name": "Protein",
-      "amount": 4.83,
+      "name": "Fat",
+      "amount": 23,
       "unit": "g"
+    },
+    {
+      "name": "Saturated Fat",
+      "amount": 11.24,
+      "unit": "g"
+    },
+    {
+      "name": "Cholesterol",
+      "amount": 82.12,
+      "unit": "mg"
+    },
+    {
+      "name": "Sodium",
+      "amount": 261.74,
+      "unit": "mg"
     },
     {
       "name": "Carbohydrates",
       "amount": 36.16,
-      "unit": "g"
-    },
-    {
-      "name": "Fat",
-      "amount": 23,
       "unit": "g"
     },
     {
@@ -32,8 +42,28 @@
       "unit": "g"
     },
     {
-      "name": "Sodium",
-      "amount": 261.74,
+      "name": "Protein",
+      "amount": 4.83,
+      "unit": "g"
+    },
+    {
+      "name": "Vitamin D",
+      "amount": 0.17,
+      "unit": "µg"
+    },
+    {
+      "name": "Calcium",
+      "amount": 73.37,
+      "unit": "mg"
+    },
+    {
+      "name": "Iron",
+      "amount": 0.68,
+      "unit": "mg"
+    },
+    {
+      "name": "Potassium",
+      "amount": 143.86,
       "unit": "mg"
     }
   ]

@@ -1,0 +1,17 @@
+---
+import { recipeUrl } from '../../lib/recipes';
+const destination = recipeUrl('sausage-balls');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sausage Balls has moved</title>
+    <meta http-equiv="refresh" content={`0;url=${destination}`} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={destination} />
+  </head>
+  <body>
+    <p>This recipe has moved. <a href={destination}>Open Sausage Balls</a>.</p>
+  </body>
+</html>

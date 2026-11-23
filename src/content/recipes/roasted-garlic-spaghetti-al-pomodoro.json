@@ -1,0 +1,59 @@
+{
+  "title": "Roasted Garlic Spaghetti al Pomodoro",
+  "description": "Spaghetti finishes cooking in a silky sauce of blistered tomatoes, a whole head of roasted garlic, and oregano.",
+  "category": "Mains",
+  "meal": ["Lunch", "Dinner"],
+  "cuisine": ["Italian"],
+  "tags": ["Pasta", "Tomatoes"],
+  "author": "The Pasta Queen",
+  "date": "2026-11-22",
+  "time": "45 minutes",
+  "minutes": 45,
+  "servings": "4",
+  "difficulty": "Easy",
+  "image": "images/roasted-garlic-spaghetti-al-pomodoro.webp",
+  "imageAlt": "Spaghetti in smooth roasted tomato sauce with grated Parmigiano-Reggiano on a floral plate.",
+  "ingredients": [
+    "1½ pounds cherry or grape tomatoes",
+    "1 whole head garlic",
+    "¼ cup extra-virgin olive oil, divided",
+    "1 teaspoon dried oregano",
+    "1 teaspoon kosher salt, plus more for the pasta water and to taste",
+    "12 ounces dried spaghetti",
+    "½ cup finely grated Parmigiano-Reggiano"
+  ],
+  "steps": [
+    {
+      "title": "Set up the roasting dish",
+      "text": "Heat the oven to 425°F. Slice the top off the head of garlic to expose the cloves. Pour 2 tablespoons olive oil into a baking dish and add 1½ pounds tomatoes. Set the garlic cut-side up among the tomatoes, drizzle the remaining 2 tablespoons olive oil over everything, and sprinkle with 1 teaspoon oregano and 1 teaspoon kosher salt."
+    },
+    {
+      "title": "Roast until blistered",
+      "text": "Roast for about 30 minutes, until the tomatoes have burst and the garlic cloves are soft enough to squeeze. If the garlic still feels firm, leave it in the oven a little longer."
+    },
+    {
+      "title": "Blend the sauce",
+      "text": "When the garlic is cool enough to handle, squeeze the cloves out of their skins. Blend the garlic with the roasted tomatoes and all the pan juices until smooth. An immersion blender in a deep pot works well for this. Pour the sauce into a wide skillet and bring to a gentle simmer."
+    },
+    {
+      "title": "Parcook the spaghetti",
+      "text": "Bring a large pot of salted water to a boil and add 12 ounces spaghetti. Cook it for about half the time on the package. Scoop out 1 cup of the starchy pasta water before draining."
+    },
+    {
+      "title": "Finish in the tomato sauce",
+      "text": "Add the spaghetti to the skillet and toss over medium heat until al dente. Splash in some reserved pasta water as needed to keep the sauce loose enough to coat the strands. Taste and adjust with a little salt if needed.",
+      "why": "The spaghetti absorbs some of the tomato sauce as it finishes cooking. A splash of starchy pasta water helps the sauce cling to the noodles."
+    },
+    {
+      "title": "Serve with Parmigiano",
+      "text": "Divide the spaghetti among four plates and finish with the ½ cup grated Parmigiano-Reggiano."
+    }
+  ],
+  "notes": {
+    "Cookbook measurements": "The quantities and oven setting are estimates for a four-serving batch adapted from the video. Use the texture cues for the garlic, tomatoes, and pasta."
+  },
+  "source": {
+    "name": "The Pasta Queen’s spaghetti al pomodoro video",
+    "url": "https://www.tiktok.com/@the_pastaqueen/video/7403796756430933279"
+  }
+}

@@ -89,6 +89,13 @@
     margin-inline: -.5rem; padding-inline: .5rem;
     overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
   }
+  .drawer-group { display: flex; flex: none; gap: .4rem; }
+  .drawer-group:not(:has(a:not([hidden]))) { display: none; }
+  .drawer-group:has(a:not([hidden])) ~ .drawer-group:has(a:not([hidden])) {
+    border-inline-start: 1px solid var(--line);
+    margin-inline-start: .25rem;
+    padding-inline-start: .65rem;
+  }
   .drawer-index a { flex: none; white-space: nowrap; }
   /* Touch screens swipe; a mouse needs to see there is more to the right. */
   @media (hover: hover) and (pointer: fine) {

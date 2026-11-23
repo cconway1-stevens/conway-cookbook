@@ -11,6 +11,11 @@ const tags = tally(recipes.flatMap((r) => r.data.tags)).sort((a, b) => b[1] - a[
 const shortTags = 10;
 const times = [['', 'Any time'], ['20', '20 min'], ['30', '30 min'], ['60', '1 hour'], ['90', '1½ hours']];
 const drawers = book.courses.map(({ name }) => ({ name, id: slug(name), recipes: recipes.filter(recipe => recipe.data.category === name) })).filter(drawer => drawer.recipes.length);
+const drawerGroups = [
+  { label: 'Breakfast', drawers: drawers.filter(({ id }) => id === 'breakfast') },
+  { label: 'Savory recipes', drawers: drawers.filter(({ id }) => !['breakfast', 'desserts', 'drinks'].includes(id)) },
+  { label: 'Desserts and drinks', drawers: drawers.filter(({ id }) => ['desserts', 'drinks'].includes(id)) },
+].filter(group => group.drawers.length);
 const drawerAliases = Object.fromEntries(Object.entries(courseAliases).map(([alias, name]) => [`drawer-${alias}`, `drawer-${slug(name)}`]));
 import '../../catalog.css';
 ---
@@ -53,7 +58,11 @@ import '../../catalog.css';
       </div>
     </form>
     <nav class="drawer-index" aria-label="Jump to a category">
-      {drawers.map(drawer => <a data-drawer-link={drawer.id} href={'#drawer-' + drawer.id}>{drawer.name} <small>{drawer.recipes.length}</small></a>)}
+      {drawerGroups.map(group => (
+        <div class="drawer-group" role="group" aria-label={group.label}>
+          {group.drawers.map(drawer => <a data-drawer-link={drawer.id} href={'#drawer-' + drawer.id}>{drawer.name} <small>{drawer.recipes.length}</small></a>)}
+        </div>
+      ))}
     </nav>
     </div>
     <div class="results catalog-results">
@@ -236,7 +245,8 @@ import '../../catalog.css';
     if (!link) { nav.scrollTo({ left: 0, behavior: 'smooth' }); return; }
     link.setAttribute('aria-current', 'location');
     if (nav.scrollWidth > nav.clientWidth) {
-      nav.scrollTo({ left: link.offsetLeft - (nav.clientWidth - link.offsetWidth) / 2, behavior: 'smooth' });
+      const left = nav.scrollLeft + link.getBoundingClientRect().left - nav.getBoundingClientRect().left;
+      nav.scrollTo({ left: left - (nav.clientWidth - link.offsetWidth) / 2, behavior: 'smooth' });
     }
   }
   let ticking = false;

@@ -234,6 +234,14 @@
     scrollbar-width: thin;
     scrollbar-color: var(--line) transparent;
   }
+  .rolodex-tab-group {
+    display: flex;
+    align-items: end;
+    gap: .22rem;
+    border-inline-start: 1px solid var(--line);
+    margin-inline-start: .2rem;
+    padding-inline-start: .45rem;
+  }
   .rolodex-tabs button {
     flex: none;
     min-height: 44px;

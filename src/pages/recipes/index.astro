@@ -57,7 +57,7 @@ import '../../catalog.css';
     <ul id="active-filters" class="active-filters" aria-label="Applied filters" role="list" hidden></ul>
     <p id="cookie-jar" class="cookie-note" role="status" hidden>The cookie jar is open. There’s chocolate in that drawer.</p>
     <ul class="cards" id="catalog-sorted" hidden></ul>
-    {drawers.map(drawer => <section class="catalog-drawer" id={'drawer-' + drawer.id} data-drawer={drawer.id} aria-labelledby={'label-' + drawer.id}>
+    {drawers.map((drawer, i) => <section class="catalog-drawer" id={'drawer-' + drawer.id} data-drawer={drawer.id} aria-labelledby={'label-' + drawer.id} style={`--pos: ${[0, .5, 1][i % 3]}`}>
       <h2 id={'label-' + drawer.id}><span>{drawer.name}</span></h2>
       <RecipeSections name={drawer.name} recipes={drawer.recipes} level="h3" />
     </section>)}
@@ -208,7 +208,8 @@ import '../../catalog.css';
     bar.classList.toggle('stuck', scrollY > 0 && bar.getBoundingClientRect().top <= 0);
     const line = barHeight() + 64;
     const open = drawers.filter((drawer) => !drawer.hidden);
-    const here = open.findLast((drawer) => drawer.getBoundingClientRect().top <= line) ?? null;
+    // Measure from the folder's tab, which rises above the folder itself.
+    const here = open.findLast((drawer) => (drawer.querySelector('h2') ?? drawer).getBoundingClientRect().top <= line) ?? null;
     const link = here && box.querySelector<HTMLAnchorElement>(`[data-drawer-link="${here.dataset.drawer}"]`);
     if (link === current) return;
     current?.removeAttribute('aria-current');

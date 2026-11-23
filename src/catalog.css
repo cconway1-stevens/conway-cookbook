@@ -30,22 +30,76 @@
     .drawer-index { scrollbar-width: thin; padding-bottom: .3rem; }
   }
   .drawer-index a[aria-current] { background: var(--highlight); border-color: var(--ink); box-shadow: inset 0 -2px var(--ink); }
-  .drawer-index a, .catalog-drawer h2 span {
-    border: 1px solid var(--line);
-    border-radius: .55rem .55rem .12rem .12rem;
-    background: var(--tint);
-    color: var(--ink);
-    padding: .4rem .75rem;
-    text-decoration: none;
+  /* Manila card stock, shared by the folders and the little tabs that jump to them. */
+  .box {
+    --manila: #efd9a3; --manila-back: #e2c381; --manila-edge: #b08d4a; --label: #fffdf5;
+    --fiber: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Cfilter id=%27f%27 x=%270%27 y=%270%27 width=%27100%25%27 height=%27100%25%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.9 .45%27 numOctaves=%272%27 seed=%273%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 .42 0 0 0 0 .3 0 0 0 0 .12 0 0 0 .16 0%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23f)%27/%3E%3C/svg%3E");
   }
-  .drawer-index a { min-height: 44px; display: inline-flex; gap: .45rem; align-items: center; font-weight: 600; }
-  .drawer-index a:hover, .drawer-index a:focus-visible { background: var(--highlight); }
+  .drawer-index a {
+    min-height: 44px; display: inline-flex; gap: .45rem; align-items: center; font-weight: 600;
+    border: 1px solid var(--manila-edge); border-bottom-width: 3px;
+    border-radius: .6rem .6rem .15rem .15rem;
+    background: var(--fiber), var(--manila);
+    color: var(--ink); padding: .4rem .75rem; text-decoration: none;
+  }
+  .drawer-index a:hover, .drawer-index a:focus-visible { background: var(--fiber), var(--highlight); }
   .drawer-index small { font: inherit; color: var(--soft); font-size: .8em; }
-  .catalog-drawer { margin-top: 1.25rem; scroll-margin-top: calc(var(--catalog-bar, 0px) + .75rem); }
-  .catalog-drawer h2 { font-size: 1.4rem; margin-bottom: 1rem; border-bottom: 1px solid var(--line); }
-  .catalog-drawer h2 span { display: inline-block; }
+
+  /* Each category is a manila file folder. The front panel holds the cards; a strip of
+     the taller back panel shows above it, and the back panel's tab carries a typed label.
+     Tabs step left, center, right like a box of 1/3-cut folders. */
+  .catalog-drawer {
+    --tab-h: 2.7rem; --lip: .6rem;
+    position: relative;
+    margin-top: calc(1.6rem + var(--tab-h) + var(--lip));
+    padding: 1.3rem clamp(.75rem, 2.5vw, 1.5rem) 1.6rem;
+    background: linear-gradient(#fff8 0 1px, transparent 1px), var(--fiber), var(--manila);
+    border: 1px solid var(--manila-edge);
+    border-radius: 3px 3px 10px 10px;
+    /* Another folder filed behind this one. */
+    box-shadow: 0 5px 0 -2px var(--manila-back), 0 5px 0 -1px var(--manila-edge), 0 14px 22px -14px var(--shade);
+    scroll-margin-top: calc(var(--catalog-bar, 0px) + var(--tab-h) + var(--lip) + .75rem);
+  }
+  .catalog-drawer::before {
+    content: ''; position: absolute; left: -1px; right: -1px; bottom: 100%; height: var(--lip);
+    background: var(--fiber), var(--manila-back);
+    border: 1px solid var(--manila-edge); border-bottom: 0; border-radius: 10px 10px 0 0;
+  }
+  .catalog-drawer h2 {
+    position: absolute; z-index: 1; margin: 0;
+    bottom: calc(100% + var(--lip) - 1px);
+    left: calc(1rem + var(--pos, 0) * (100% - 2rem)); translate: calc(var(--pos, 0) * -100%);
+    height: var(--tab-h); display: flex; align-items: center;
+    width: max-content; max-width: calc(100% - 2rem); white-space: nowrap;
+    padding: .25rem .6rem 0;
+    /* Reinforced tab: a second ply of card stock folded over the top edge. */
+    background: linear-gradient(#0000 0 .9rem, #8a6a2a22 .9rem calc(.9rem + 1px), transparent 0), var(--fiber), var(--manila-back);
+    border: 1px solid var(--manila-edge); border-bottom: 0;
+    border-radius: 12px 12px 0 0;
+    font-size: 1.05rem;
+  }
+  /* The curve where the tab rises out of the panel. */
+  .catalog-drawer h2::before, .catalog-drawer h2::after {
+    content: ''; position: absolute; bottom: 0; width: 10px; height: 10px;
+  }
+  .catalog-drawer h2::before { right: 100%; background: radial-gradient(circle at 0 0, transparent 9px, var(--manila-edge) 9px 10px, var(--manila-back) 10px); }
+  .catalog-drawer h2::after { left: 100%; background: radial-gradient(circle at 100% 0, transparent 9px, var(--manila-edge) 9px 10px, var(--manila-back) 10px); }
+  .catalog-drawer h2 span {
+    display: block; padding: .2rem .85rem .15rem;
+    background: var(--label); color: var(--ink);
+    font: 700 1rem/1.3 var(--type, monospace); letter-spacing: .06em; text-transform: uppercase;
+    border: 1px solid #0000001f; border-radius: 2px;
+    box-shadow: 0 1px 1px #0000002e;
+  }
   .catalog-drawer .card-tab { display: none; }
-  .catalog-drawer .card-face { border-top: 3px solid var(--accent); }
+  .catalog-drawer .card-face { border-top: 3px solid var(--accent); box-shadow: 0 2px 4px #5a3d1026, 0 8px 16px -10px #5a3d1040; }
+  /* Cocktails sit behind their own divider inside the Drinks folder. */
+  .catalog-drawer .cocktails { margin-top: 2rem; padding-top: 1.1rem; border-top: 2px solid var(--manila-edge); }
+  .catalog-drawer .cocktails > h3 {
+    display: inline-block; margin: calc(-1.1rem - 2px - 1.9rem) 0 1rem; padding: .3rem .75rem .2rem;
+    background: var(--fiber), var(--manila-back); border: 1px solid var(--manila-edge); border-bottom: 0;
+    border-radius: 9px 9px 0 0; font: 700 .9rem/1.3 var(--type, monospace); letter-spacing: .06em; text-transform: uppercase;
+  }
   .catalog-results, .catalog-options { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem 1rem; }
   .catalog-options label { display: flex; align-items: center; gap: .45rem; }
   .catalog-options select { min-height: 44px; max-width: 100%; }
@@ -79,7 +133,9 @@
   .drawer-index a { font-size: .88rem; padding-inline: .55rem; }
   .catalog-bar { padding-top: .35rem; }
   .box .filters { padding: .5rem .6rem; }
-  .catalog-drawer { margin-top: .65rem; }
+  .catalog-drawer { --tab-h: 2.35rem; --lip: .45rem; margin-top: calc(1rem + var(--tab-h) + var(--lip)); }
+  .catalog-drawer h2 { left: calc(.6rem + var(--pos, 0) * (100% - 1.2rem)); padding-inline: .45rem; }
+  .catalog-drawer h2 span { font-size: .88rem; padding-inline: .6rem; }
 }
 
 @media screen {

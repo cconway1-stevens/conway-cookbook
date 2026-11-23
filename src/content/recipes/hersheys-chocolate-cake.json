@@ -22,7 +22,7 @@
       "group": "For the cake",
       "items": [
         "2 cups granulated sugar",
-        "1¾ cups all-purpose flour",
+        "1¾ cups all-purpose flour, plus more for the pans",
         "¾ cup Hershey’s unsweetened cocoa powder",
         "1½ teaspoons baking powder",
         "1½ teaspoons baking soda",
@@ -48,11 +48,11 @@
   "steps": [
     {
       "title": "Prepare the pans",
-      "text": "Heat the oven to 350°F. Grease and flour two 9-inch round cake pans."
+      "text": "Heat the oven to 350°F. Grease two 9-inch round cake pans and dust them lightly with extra flour."
     },
     {
       "title": "Mix the batter",
-      "text": "Whisk the sugar, flour, cocoa powder, baking powder, baking soda, and salt together. Add the eggs, milk, oil, and vanilla and beat on medium speed for 2 minutes. Carefully stir in the boiling water. The batter will be thin.",
+      "text": "Whisk the sugar, 1¾ cups flour, cocoa powder, baking powder, baking soda, and salt together. Add 2 eggs, milk, oil, and vanilla and beat on medium speed for 2 minutes. Carefully stir in the boiling water. The batter will be thin.",
       "group": "cake"
     },
     {
@@ -61,7 +61,7 @@
     },
     {
       "title": "Make the frosting",
-      "text": "Melt the butter and whisk in the cocoa. Beat in the powdered sugar and milk in alternating additions, then beat in the vanilla. Add a splash more milk if the frosting is too stiff to spread.",
+      "text": "Melt the butter and whisk in the cocoa. Beat in the powdered sugar and ⅓ cup milk in alternating additions, then beat in the vanilla. Add a splash more milk if the frosting is too stiff to spread.",
       "group": "frosting"
     },
     {

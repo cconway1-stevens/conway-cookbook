@@ -1,0 +1,60 @@
+{
+  "title": "Roasted Long Hots and Red Peppers",
+  "description": "Italian long hots and sweet red peppers charred until smoky, peeled, and dressed with olive oil, garlic, and salt.",
+  "category": "Appetizers",
+  "meal": ["Lunch", "Dinner"],
+  "cuisine": ["Italian", "American"],
+  "tags": ["Vegetarian", "Gluten free", "Make ahead"],
+  "date": "2026-11-22",
+  "time": "About 1 hour, plus 30 minutes resting",
+  "minutes": 90,
+  "servings": "6",
+  "difficulty": "Easy",
+  "ingredients": [
+    {
+      "group": "Peppers",
+      "items": [
+        "1 pound long hot peppers (10 to 12)",
+        "3 red bell peppers"
+      ]
+    },
+    {
+      "group": "Dressing",
+      "items": [
+        "⅓ cup extra-virgin olive oil, plus more for brushing",
+        "4 garlic cloves, thinly sliced",
+        "1 teaspoon kosher salt"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "title": "Heat the broiler",
+      "text": "Set an oven rack 4 to 6 inches below the broiler and heat the broiler to high. Line a baking sheet with foil."
+    },
+    {
+      "title": "Char the peppers",
+      "text": "Lay the long hots and red bell peppers on the sheet whole and brush the long hots with a little olive oil. Broil, turning every few minutes, until blistered and blackened all over: about 8 to 10 minutes for the long hots and 15 to 20 minutes for the red peppers. Take each out as it finishes.",
+      "why": "The char gives the smoky flavor and loosens the skins. Long hots have thin walls, so they finish well before the thick red peppers."
+    },
+    {
+      "title": "Steam",
+      "text": "Put all the charred peppers in a bowl while they’re still hot and cover it tightly for 15 minutes.",
+      "why": "Trapped steam lifts the blistered skins so they slip off."
+    },
+    {
+      "title": "Peel and seed",
+      "text": "Peel the red bell peppers, pull out the stems and seeds, and tear them into wide strips. Rub the loose skin off the long hots and leave them whole. A few flecks of char are fine.",
+      "why": "Wear gloves for the long hots. Their heat varies from pepper to pepper, and it stays on your fingers."
+    },
+    {
+      "title": "Dress and rest",
+      "text": "Layer the long hots and red peppers in a dish with the garlic and salt, and pour the olive oil over the top. Let them sit for at least 30 minutes before serving.",
+      "why": "Resting lets the garlic and salt season the oil, and the peppers soak it up."
+    }
+  ],
+  "notes": {
+    "Serving": "Serve at room temperature with crusty bread, on an antipasto platter, or on a sandwich.",
+    "Storing": "Cover and refrigerate. Because the garlic sits in oil, eat them within 4 days. Let them come to room temperature before serving."
+  }
+}

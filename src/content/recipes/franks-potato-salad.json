@@ -1,0 +1,73 @@
+{
+  "title": "Frank’s New York Style Potato Salad",
+  "description": "Thin-sliced red or Yukon potatoes soaked for a day in a sweet-and-sour onion brine, then folded with mayonnaise, deli style.",
+  "category": "Sides",
+  "meal": ["Lunch", "Dinner"],
+  "cuisine": ["American"],
+  "tags": ["Make ahead", "Vegetarian", "Family recipe"],
+  "author": "Frank",
+  "date": "2026-11-22",
+  "time": "13 minutes cooking, plus 24 to 48 hours brining",
+  "minutes": 1500,
+  "servings": "About 8",
+  "difficulty": "Easy",
+  "story": "Frank’s recipe, written out by hand on a weekly planner card.",
+  "ingredients": [
+    {
+      "group": "Potatoes",
+      "items": ["3½ pounds red or Yukon Gold potatoes"]
+    },
+    {
+      "group": "Brine",
+      "items": [
+        "¼ cup vegetable oil",
+        "¼ cup sugar",
+        "¼ cup water",
+        "¼ cup vinegar",
+        "3¼ teaspoons salt",
+        "1 teaspoon white pepper",
+        "½ cup grated onion"
+      ]
+    },
+    {
+      "group": "To finish",
+      "items": ["¾ cup mayonnaise"]
+    }
+  ],
+  "steps": [
+    {
+      "title": "Cook the potatoes",
+      "text": "Boil the potatoes for about 13 minutes, until fork tender. Drain.",
+      "why": "Fork tender, not soft: the potatoes are sliced thin later and have to hold together through a day in the brine."
+    },
+    {
+      "title": "Cool",
+      "text": "Let the potatoes cool completely.",
+      "why": "Warm potatoes crumble when you slice them this thin."
+    },
+    {
+      "title": "Make the brine",
+      "text": "Whisk the oil, sugar, water, vinegar, salt, white pepper, and grated onion until the sugar and salt dissolve."
+    },
+    {
+      "title": "Slice and brine",
+      "text": "Slice the potatoes 1/16 to 1/8 inch thick. Pour the brine over them, cover, and refrigerate for 24 to 48 hours.",
+      "why": "Thin slices soak up the brine all the way through. That long soak is what gives a New York deli potato salad its tang."
+    },
+    {
+      "title": "Mix halfway",
+      "text": "Halfway through the brining, gently mix the potatoes so every slice spends time in the brine."
+    },
+    {
+      "title": "Strain and add the mayonnaise",
+      "text": "At 24 hours, strain the potatoes and reserve the liquid. Gently fold in the mayonnaise. Keep chilled until you serve it."
+    }
+  ],
+  "notes": {
+    "Reading the card": "The card says to reserve the brine when you strain the potatoes but not what it is for. A spoonful stirred back in loosens a salad that seems too thick. The card doesn’t give a yield; 3½ pounds of potatoes serves about 8.",
+    "Source": "Transcribed from Frank’s handwritten card. A scan of the card is in the gallery."
+  },
+  "media": [
+    { "file": "franks-recipe-card.jpg", "caption": "Frank’s handwritten recipe card" }
+  ]
+}

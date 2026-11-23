@@ -1,26 +1,28 @@
 ---
 import Cookbook from '../layouts/Cookbook.astro';
-import { lessons, pantryHackLessonsUrl } from '../lib/academy';
-import { modules } from '../lib/coursework';
+import { chefStudioGuides, chefStudioUrl, fundamentals } from '../lib/academy';
 ---
 <Cookbook title="Cooking Academy" current="academy">
   <div class="wrap academy">
     <header>
       <h1>Cooking Academy</h1>
-      <p>Sign in to Pantry Hack to access the core cooking lessons.</p>
-      <a class="button" href={pantryHackLessonsUrl}>Open Pantry Hack</a>
+      <p>Build your kitchen skills with free, step-by-step guides from OvenSource’s ChefStudio.</p>
+      <a class="button" href={fundamentals.href}>Start with Kitchen Fundamentals</a>
     </header>
-    {modules.map(module => (
-      <section id={module.id} class="panel">
-        <h2>{module.title}</h2>
-        <ul>
-          {module.ids.map(id => {
-            const lesson = lessons.find(item => item.id === id)!;
-            return <li id={id}><a href={pantryHackLessonsUrl}>{lesson.title}</a></li>;
-          })}
-        </ul>
-      </section>
-    ))}
+    <section aria-labelledby="guides-heading">
+      <h2 id="guides-heading">ChefStudio guides</h2>
+      <ul class="guide-grid" role="list">
+        {chefStudioGuides.map(guide => (
+          <li>
+            <a class="guide-card" href={guide.href}>
+              <strong>{guide.title}</strong>
+              <span>{guide.steps} steps · {guide.level}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p><a href={chefStudioUrl}>Visit the ChefStudio lesson library</a></p>
+    </section>
     <section class="panel">
       <h2>Live classes</h2>
       <p>The Institute of Culinary Education lists free instructor-led classes and registration details on its site. <a href="https://www.ice.edu/newyork/free-online-cooking-classes">Explore ICE classes</a></p>
@@ -32,5 +34,9 @@ import { modules } from '../lib/coursework';
   .academy { max-width: 64rem; padding-block: 2rem 4rem; }
   .academy header { padding: clamp(1.25rem, 4vw, 2.5rem); background: var(--card); border: 1px solid var(--line); border-radius: .6rem; }
   .academy header .button { margin-top: 1rem; }
-  .academy li + li { margin-top: .45rem; }
+  .academy section { margin-top: 2rem; }
+  .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: .75rem; padding: 0; list-style: none; }
+  .guide-card { display: flex; flex-direction: column; gap: .35rem; height: 100%; padding: 1rem; background: var(--card); border: 1px solid var(--line); border-radius: .6rem; color: inherit; text-decoration: none; }
+  .guide-card:hover strong, .guide-card:focus-visible strong { text-decoration: underline; }
+  .guide-card span { font-size: .875rem; }
 </style>

@@ -1,35 +1,64 @@
-import { modules } from './coursework';
 import { directions, ingredients, type Recipe } from './recipes';
 
-export const pantryHackLessonsUrl = 'https://mypantryhack.com/login/?redirect_to=https%3A%2F%2Fmypantryhack.com%2Fdashboard%2F';
+export const chefStudioUrl = 'https://ovensource.com/chefstudio/courses/';
 
-export const lessons = [
-  { id: 'brown-butter', title: 'Brown butter by sight and smell', match: /brown (?:half the|the sauce) butter/i,
-    steps: ['Cut unsalted butter into even pieces. Melt it in a light-colored pan over medium-low heat so the milk solids are visible against the bottom.', 'Stir with a heatproof spatula, sweeping the corners. The bubbling comes from escaping water. As the foam settles, look under it for little golden specks.', 'When the flecks turn hazelnut brown and smell nutty, scrape everything into a heatproof bowl immediately. Black flecks and an acrid smell mean the solids have burned; start again.'] },
-  { id: 'stove-heat', title: 'Control the heat on your stove and oven', match: /brown (?:half the|the sauce) butter/i,
-    steps: ['Gas: center the pan over a burner and keep the flame under its base. Turn it down as the flecks turn golden.', 'Electric coil or radiant glass: the element stays hot after you lower the dial. Move the pan to a cool burner if the browning speeds up.', 'Induction: use a compatible flat-bottomed pan. Start low to medium-low and avoid boost. The pan heats quickly, especially with a small amount of butter.', 'Convection is an oven setting for the baking stage. If your oven does not automatically convert temperatures, a common starting point is 25°F below the conventional recipe setting. Check early: cookies need set edges, while bread pudding needs a set center at least 160°F.'] },
-  { id: 'scale', title: 'Scale a recipe by yield', match: /cups? (?:all-purpose )?flour/i,
-    steps: ['Write down the original and desired yields in the same units. Divide desired yield by original yield.', 'Multiply each measured ingredient by that factor. Keep the original units or convert to a known weight before scaling.', 'Select pans that maintain a similar depth. Check doneness as you cook and adjust seasoning to taste.'] },
-  { id: 'onion-strips', title: 'Slice an onion into fine strips', match: /(?:thinly sliced|sliced|julienned).*onion|onion[^.\n]*(?:thinly sliced|julienned)/i,
-    steps: ['Halve the onion through the root and stem. Peel it and trim the ends. Rest one half cut-side down on a steady board.', 'Curl your fingertips inward and work from one side of the half to the other. Make closely spaced lengthwise cuts following the grain.', 'Separate the layers with your fingers. Aim for even widths so the strips soften together.'] },
-  { id: 'dice', title: 'Dice vegetables evenly', match: /\bdic(?:e|ed|ing)\b/i,
-    steps: ['Trim a flat side and rest it against the board. Cut the vegetable into slabs of equal thickness.', 'Stack just a few slabs and cut them into sticks the same width. Turn the sticks across the board and cut across them to make cubes.', 'Check a few pieces side by side. Similar size helps them finish cooking together.'] },
-  { id: 'fold', title: 'Fold chocolate through dough', match: /fold.*(?:chocolate|shavings)|marble the chocolate/i,
-    steps: ['Scatter the mix-ins over the dough in a wide bowl.', 'Slide a flexible spatula down the side and underneath. Lift the dough over the chocolate, then turn the bowl a quarter turn.', 'Repeat until the pieces are distributed. Leave a few streaks of shaved chocolate for a marbled cookie.'] },
-  { id: 'simmer', title: 'Recognize a gentle simmer', match: /\bsimmer/i,
-    steps: ['Watch the surface as the liquid heats. At a simmer, small bubbles break occasionally and the surface moves gently.', 'Lower the heat if large bubbles churn across the pan. Give a thick soup or sauce a stir along the bottom.', 'Use the recipe’s doneness cue as well as its timer. A reducing sauce thickens as water escapes.'] },
-  { id: 'custard', title: 'Soak bread evenly for pudding', match: /soak the bread|bread cubes.*custard/i,
-    steps: ['Cut the bread into similarly sized pieces. Whisk the custard until the whites and yolks are fully blended.', 'Pour the custard slowly over the whole dish. Use a spoon to press down the pieces that float up.', 'After the recipe’s soaking time, open a cube from the middle. The center should be moist before the dish goes into the oven.'] },
-];
-export function academyLinksFor(recipe: Recipe) {
-  if (!recipe.data.academyLinks) return skillsFor(recipe);
-  return [...new Set(recipe.data.academyLinks)].map(id => {
-    const link = [...lessons, ...modules].find(item => item.id === id);
-    if (!link) throw new Error(`Unknown Academy link in ${recipe.id}: ${id}`);
-    return link;
-  });
+const guides = {
+  'kitchen-fundamentals': { title: 'Kitchen Fundamentals', steps: 10, level: 'Beginner' },
+  'knife-skills': { title: 'Knife Skills', steps: 10, level: 'Beginner' },
+  'fresh-pasta-masterclass': { title: 'Fresh Pasta Masterclass', steps: 11, level: 'All levels' },
+  'artisan-bread-making': { title: 'Artisan Bread Making', steps: 11, level: 'Beginner–Intermediate' },
+  'stocks-mother-sauces': { title: 'Stocks & Mother Sauces', steps: 11, level: 'Intermediate' },
+  'essential-cooking-methods': { title: 'Essential Cooking Methods', steps: 11, level: 'Beginner' },
+  'italian-cooking-essentials': { title: 'Italian Cooking Essentials', steps: 10, level: 'All levels' },
+  'meat-poultry': { title: 'Meat & Poultry', steps: 11, level: 'Intermediate' },
+  'fish-seafood': { title: 'Fish & Seafood', steps: 10, level: 'Intermediate' },
+  'pastry-desserts': { title: 'Pastry & Desserts', steps: 11, level: 'Intermediate' },
+};
+
+type GuideId = keyof typeof guides;
+
+function guideFor(id: GuideId) {
+  return { ...guides[id], href: `${chefStudioUrl}${id}/` };
 }
-export function skillsFor(recipe: Recipe) {
-  const text = [...ingredients(recipe).flatMap(g => g.items), ...directions(recipe).map(s => s.title + ' ' + s.text)].join('\n');
-  return lessons.filter(lesson => lesson.match.test(text));
+
+export const fundamentals = guideFor('kitchen-fundamentals');
+export const chefStudioGuides = (Object.keys(guides) as GuideId[]).map(guideFor);
+
+const techniqueMatches = {
+  'brown-butter': /brown (?:half the|the sauce) butter/i,
+  'stove-heat': /brown (?:half the|the sauce) butter/i,
+  scale: /cups? (?:all-purpose )?flour/i,
+  'onion-strips': /(?:thinly sliced|sliced|julienned).*onion|onion[^.\n]*(?:thinly sliced|julienned)/i,
+  dice: /\bdic(?:e|ed|ing)\b/i,
+  fold: /fold.*(?:chocolate|shavings)|marble the chocolate/i,
+  simmer: /\bsimmer/i,
+  custard: /soak the bread|bread cubes.*custard/i,
+};
+
+const legacyLinks: Record<string, GuideId> = {
+  'brown-butter': 'pastry-desserts',
+  'stove-heat': 'kitchen-fundamentals',
+  scale: 'kitchen-fundamentals',
+  'onion-strips': 'knife-skills',
+  dice: 'knife-skills',
+  fold: 'pastry-desserts',
+  simmer: 'essential-cooking-methods',
+  custard: 'pastry-desserts',
+  'prep-school': 'kitchen-fundamentals',
+  stovetop: 'essential-cooking-methods',
+  'baking-bench': 'pastry-desserts',
+};
+
+export function academyLinksFor(recipe: Recipe) {
+  const text = [...ingredients(recipe).flatMap(group => group.items), ...directions(recipe).map(step => step.title + ' ' + step.text)].join('\n');
+  const links = recipe.data.academyLinks ?? Object.entries(techniqueMatches)
+    .filter(([, match]) => match.test(text))
+    .map(([id]) => id);
+
+  const guideIds = links.map(id => {
+    if (Object.hasOwn(guides, id)) return id as GuideId;
+    if (Object.hasOwn(legacyLinks, id)) return legacyLinks[id];
+    throw new Error(`Unknown Academy link in ${recipe.id}: ${id}`);
+  });
+  return [...new Set(guideIds)].map(guideFor);
 }

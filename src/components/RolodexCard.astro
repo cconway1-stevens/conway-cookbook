@@ -2,7 +2,12 @@
 import Spot from './Spot.astro';
 import { base, recipeUrl, type Recipe } from '../lib/recipes';
 
-const { recipe, featured = false }: { recipe: Recipe; featured?: boolean } = Astro.props;
+interface Props {
+  recipe: Recipe;
+  featured?: boolean;
+}
+
+const { recipe, featured = false } = Astro.props;
 ---
 <a class="rolodex-card" href={recipeUrl(recipe.id)} data-filters={JSON.stringify(['course:' + recipe.data.category, ...recipe.data.meal.map((meal) => 'meal:' + meal)])} data-thumb={recipe.data.image ? base + 'thumbs/' + recipe.id + '.jpg' : undefined}>
   <div class="rolodex-art">

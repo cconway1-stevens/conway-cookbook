@@ -62,7 +62,7 @@ function render() {
   $('shared').hidden = !shared;
   for (const [id, value] of [['m-title', menu.title], ['m-note', menu.note]] as const) if (document.activeElement !== $(id)) $<HTMLInputElement>(id).value = value;
   $<HTMLInputElement>('m-blurbs').checked = menu.blurbs;
-  document.querySelectorAll<HTMLInputElement>('[name=paper]').forEach((r) => (r.checked = r.value === menu.paper));
+  for (const r of document.querySelectorAll<HTMLInputElement>('[name=paper]')) r.checked = r.value === menu.paper;
   const items = listed();
   $('menu-card-title').textContent = menu.title || 'Menu';
   const note = $('menu-card-note');
@@ -269,7 +269,9 @@ $('pick-meal').addEventListener('change', filter);
 $('m-title').addEventListener('input', (e) => commit(() => { menu.title = (e.target as HTMLInputElement).value; }));
 $('m-note').addEventListener('input', (e) => commit(() => { menu.note = (e.target as HTMLInputElement).value; }));
 $('m-blurbs').addEventListener('change', (e) => commit(() => { menu.blurbs = (e.target as HTMLInputElement).checked; }));
-document.querySelectorAll<HTMLInputElement>('[name=paper]').forEach((r) => r.addEventListener('change', () => commit(() => { menu.paper = r.value; })));
+for (const r of document.querySelectorAll<HTMLInputElement>('[name=paper]')) {
+  r.addEventListener('change', () => commit(() => { menu.paper = r.value; }));
+}
 
 let undo: MenuItem[] | null = null;
 const replaceItems = (items: MenuItem[], message: string) => {

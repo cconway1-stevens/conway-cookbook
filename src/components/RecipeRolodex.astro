@@ -3,7 +3,11 @@ import RolodexCard from './RolodexCard.astro';
 import type { Recipe } from '../lib/recipes';
 import { book } from '../lib/cookbook';
 
-const { recipes }: { recipes: Recipe[] } = Astro.props;
+interface Props {
+  recipes: Recipe[];
+}
+
+const { recipes } = Astro.props;
 const featured = recipes.find(({ id }) => id === 'apple-crumble-pie') ??
   recipes.find(({ data }) => data.image) ?? recipes[0];
 const filters = [

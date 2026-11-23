@@ -4,7 +4,11 @@ import { book } from '../lib/cookbook';
 import { base, type Recipe } from '../lib/recipes';
 import '../hero.css';
 
-const { recipes }: { recipes: Recipe[] } = Astro.props;
+interface Props {
+  recipes: Recipe[];
+}
+
+const { recipes } = Astro.props;
 ---
 <section class="cookbook-hero" aria-labelledby="cover-title">
   <div class="wrap">

@@ -46,7 +46,9 @@ document.querySelectorAll<HTMLButtonElement>('[data-pull]').forEach((button) => 
     setTimeout(go, 850);
   });
 });
-window.addEventListener('pageshow', () => document.querySelectorAll('.pulled').forEach((card) => card.classList.remove('pulled')));
+window.addEventListener('pageshow', () => {
+  for (const card of document.querySelectorAll('.pulled')) card.classList.remove('pulled');
+});
 
 // Follow a theme change made in another tab, or before a Back.
 const wear = () => {

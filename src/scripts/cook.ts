@@ -59,7 +59,7 @@ let narrator: Narrator | undefined;
 const recipeNarrator = () => narrator ??= !prefs.voice && data.recorded ? 'recorded' : chosen();
 function hush() {
   run++; speaking = false; quiet();
-  document.querySelectorAll('.cook-lines .now').forEach((el) => el.classList.remove('now'));
+  for (const el of document.querySelectorAll('.cook-lines .now')) el.classList.remove('now');
   $('cook-read').textContent = 'Read aloud';
 }
 async function say(lines: { line: Line; row?: number }[], voice = recipeNarrator()) {
@@ -67,7 +67,7 @@ async function say(lines: { line: Line; row?: number }[], voice = recipeNarrator
   const mine = run; speaking = true;
   $('cook-read').textContent = 'Stop reading';
   for (const { line, row } of lines) {
-    document.querySelectorAll('.cook-lines .now').forEach((el) => el.classList.remove('now'));
+    for (const el of document.querySelectorAll('.cook-lines .now')) el.classList.remove('now');
     if (row !== undefined) $('cook-lines').querySelector(`[data-row="${row}"]`)?.classList.add('now');
     const ok = await speak(line, voice);
     if (mine !== run) return;

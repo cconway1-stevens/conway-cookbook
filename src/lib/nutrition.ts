@@ -121,7 +121,7 @@ export function nutritionFor(recipe: Recipe) {
       const line = input.ingredients[i];
       const g = estimateGrams(line), per = caloriesPerGram(line);
       if (g === null || per === null || g < 10) return [];
-      const expected = g * per, actual = calories * input.servings;
+      const expected = g * per * (/\bbone-in\b/i.test(line) ? .75 : 1), actual = calories * input.servings;
       const off = expected > 30 ? actual / expected : 1;
       return off < .5 || off > 2 ? [`${line}: ${Math.round(actual / portionCount)} calories per serving, where about ${Math.round(expected / portionCount)} is typical`] : [];
     });

@@ -18,7 +18,7 @@ for (const recipe of recipes) {
   let existing;
   try { existing = JSON.parse(await readFile(path, 'utf8')); }
   catch (error) { if (error.code !== 'ENOENT') throw error; }
-  if (existing?.fingerprint === input.fingerprint && existing.version === VERSION) continue;
+  if (existing?.fingerprint === input.fingerprint && existing.version === VERSION && (existing.rows.length || existing.unmatched)) continue;
   const apiKey = process.env.SPOONACULAR_API_KEY;
   if (!apiKey) throw Error('Missing SPOONACULAR_API_KEY');
   await new Promise(resolve => setTimeout(resolve, 1100));
@@ -61,7 +61,12 @@ for (const recipe of recipes) {
   // Remember incomplete matches too, so unrelated edits cannot spend another point.
   // Notes written by hand (sources, assumptions) carry over.
   const kept = existing ? Object.fromEntries(['sources', 'assumptions'].filter(key => key in existing).map(key => [key, existing[key]])) : {};
-  const snapshot = { fingerprint: input.fingerprint, version: VERSION, rows: complete ? rows.map(nutrient) : [], ...extras, ...kept };
+  // When the match is incomplete, name the lines to reword.
+  const found = data.extendedIngredients ?? [];
+  const unmatched = complete ? undefined : found.length === input.ingredients.length
+    ? input.ingredients.filter((_, i) => !found[i]?.id)
+    : input.ingredients.filter(line => !found.some(i => i.original === line && i.id));
+  const snapshot = { fingerprint: input.fingerprint, version: VERSION, rows: complete ? rows.map(nutrient) : [], ...(unmatched && { unmatched }), ...extras, ...kept };
   await writeFile(path, JSON.stringify(snapshot, null, 2) + '\n');
-  console.log(recipe.id, complete ? 'saved' : 'needs ingredient review');
+  console.log(recipe.id, complete ? 'saved' : `needs ingredient review: ${unmatched.join(' | ') || 'no nutrients returned'}`);
 }

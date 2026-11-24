@@ -20,7 +20,7 @@ const PER_CUP: [RegExp, number][] = [
   [/oats/, 90], [/rice krispies|cereal/, 28], [/marshmallow/, 50], [/chocolate chips|chocolate/, 170],
   [/walnut|pecan|almond|nut/, 115], [/coconut/, 85],
   [/buttermilk/, 245], [/butter|margarine/, 227], [/olive oil/, 216], [/oil|shortening/, 218],
-  [/mayonnaise/, 220], [/sour cream|yogurt/, 230], [/cream cheese/, 232], [/grated (?:parmesan|parmigiano)|parmigiano|parmesan/, 90], [/cheddar|mozzarella|cheese/, 113],
+  [/mayonnaise/, 220], [/sour cream|yogurt/, 230], [/cream cheese/, 232], [/grated (?:parmesan|parmigiano)|parmigiano|parmesan/, 90], [/feta|cotija/, 130], [/cheddar|mozzarella|cheese/, 113],
   [/maple syrup|syrup/, 315], [/honey|molasses/, 340],
   [/cream|half-and-half/, 238], [/milk|buttermilk/, 245],
   [/onion|celery|carrot|pepper|tomato/, 150], [/beans|rice/, 180], [/basil|parsley|cilantro|herb/, 25],
@@ -32,7 +32,7 @@ const perCup = (name: string) => PER_CUP.find(([pattern]) => pattern.test(name))
 const EACH: [RegExp, number][] = [
   [/wedge|wheel/, 8], [/egg yolk/, 17], [/egg white/, 33], [/egg/, 50], [/garlic clove|clove/, 5], [/bell pepper/, 150],
   [/chile|chili|long hot/, 6], [/lime/, 67], [/lemon/, 85], [/orange/, 130], [/banana/, 118],
-  [/onion/, 150], [/tomato/, 120], [/potato/, 170], [/tortilla/, 30], [/chicken thigh/, 140], [/chicken breast/, 200],
+  [/avocado/, 150], [/onion/, 150], [/tomato/, 120], [/potato/, 170], [/tortilla/, 30], [/chicken thigh/, 140], [/chicken breast/, 200],
   [/pie dough|pie crust/, 240], [/loaf/, 450], [/slice/, 30], [/can/, 400], [/package/, 225],
 ];
 
@@ -68,7 +68,8 @@ export function estimateGrams(line: string) {
   const lead = lower.match(new RegExp(String.raw`^(?:about\s+)?(${NUMBER})(?:\s*(?:to|-|–)\s*(${NUMBER}))?\s*(.*)$`));
   if (inner) {
     const per = toNumber(inner[1]) * (/^(?:pound|lb)/.test(inner[2]) ? 453.6 : 28.35);
-    return inner[3] && lead ? per * toNumber(lead[1]) : per;
+    // "2 (15-ounce) cans" is two cans; "3 packages (8 ounces each)" is three packages.
+    return lead && (inner[3] || /^\(/.test(lead[3])) ? per * toNumber(lead[1]) : per;
   }
   if (!lead) return /pinch|dash/.test(lower) ? .4 : null;
   const amount = lead[2] ? (toNumber(lead[1]) + toNumber(lead[2])) / 2 : toNumber(lead[1]);
@@ -139,10 +140,10 @@ const KCAL_PER_GRAM: [RegExp, number][] = [
   [/spaghetti|pasta|noodles/, 3.7], [/graham cracker/, 4.3],
   [/bread|tortilla/, 2.7], [/pie dough|pie crust/, 4.6], [/pie filling/, 1.1],
   [/sausage/, 3.0], [/ground beef/, 2.5], [/ground pork/, 2.6],
-  [/roasted chicken thigh/, 2.3], [/chicken thigh/, 2.1], [/chicken breast/, 1.2],
+  [/roasted chicken thigh/, 2.3], [/skinless|skin removed/, 1.2], [/chicken thigh/, 2.1], [/chicken breast/, 1.2],
   [/egg/, 1.4],
   [/\brum\b|\bgin\b|vodka|bourbon|whiskey|tequila/, 2.3], [/wine/, 0.85], [/ginger beer/, 0.4],
-  [/juice/, 0.45], [/black beans|beans/, 0.9],
+  [/juice/, 0.45], [/green beans/, 0.31], [/black beans|beans/, 0.9],
   [/potato/, 0.8], [/banana/, 0.9], [/apple|pear/, 0.55], [/pineapple/, 0.5],
   [/avocado/, 1.6], [/olives/, 1.2], [/garlic/, 1.5],
   [/tomato|cucumber|pepper|onion|celery|carrot|green beans|lettuce|lime|lemon|orange|cranberr/, 0.3],
@@ -151,6 +152,8 @@ const KCAL_PER_GRAM: [RegExp, number][] = [
 /** Typical calories per gram for an ingredient line, or null when there's no entry. */
 export function caloriesPerGram(line: string) {
   const name = ingredientName(line.toLowerCase());
+  // "chicken thighs, skin removed": the note after the comma changes the food.
+  if (/\bchicken\b/.test(name) && /skinless|skin removed/i.test(line)) return 1.2;
   const hit = KCAL_PER_GRAM.find(([pattern]) => pattern.test(name));
   return hit ? hit[1] : null;
 }

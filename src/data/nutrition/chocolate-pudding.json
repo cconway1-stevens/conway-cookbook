@@ -1,5 +1,6 @@
 {
   "fingerprint": "98439190bad246056321d7f5a9e7e45ae363c367bc4ec8e5f0c0719df05d098b",
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
@@ -7,18 +8,28 @@
       "unit": "kcal"
     },
     {
-      "name": "Protein",
-      "amount": 8.81,
+      "name": "Fat",
+      "amount": 21.12,
       "unit": "g"
+    },
+    {
+      "name": "Saturated Fat",
+      "amount": 12.29,
+      "unit": "g"
+    },
+    {
+      "name": "Cholesterol",
+      "amount": 28.51,
+      "unit": "mg"
+    },
+    {
+      "name": "Sodium",
+      "amount": 217.14,
+      "unit": "mg"
     },
     {
       "name": "Carbohydrates",
       "amount": 54.46,
-      "unit": "g"
-    },
-    {
-      "name": "Fat",
-      "amount": 21.11,
       "unit": "g"
     },
     {
@@ -32,9 +43,165 @@
       "unit": "g"
     },
     {
-      "name": "Sodium",
-      "amount": 217.15,
+      "name": "Protein",
+      "amount": 8.81,
+      "unit": "g"
+    },
+    {
+      "name": "Vitamin D",
+      "amount": 1.9,
+      "unit": "µg"
+    },
+    {
+      "name": "Calcium",
+      "amount": 235.32,
       "unit": "mg"
+    },
+    {
+      "name": "Iron",
+      "amount": 4.16,
+      "unit": "mg"
+    },
+    {
+      "name": "Potassium",
+      "amount": 539.06,
+      "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 49.32,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0.34,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0.18,
+      "unit": "%"
+    },
+    {
+      "name": "Caffeine",
+      "amount": 35.04,
+      "unit": "mg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 0.77,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.7,
+      "unit": "mg"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 297.88,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 111.96,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B12",
+      "amount": 1,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.26,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 2,
+      "unit": "mg"
+    },
+    {
+      "name": "Selenium",
+      "amount": 6.25,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 0.76,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 370.28,
+      "unit": "IU"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.1,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 0.12,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 0.6,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 2.95,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 0.34,
+      "unit": "mg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 8,
+    "percentFat": 42.9,
+    "percentCarbs": 49.2
+  },
+  "ingredients": [
+    {
+      "name": "sugar",
+      "calories": 96.25
+    },
+    {
+      "name": "cocoa powder",
+      "calories": 12.26
+    },
+    {
+      "name": "cornstarch",
+      "calories": 22.86
+    },
+    {
+      "name": "kosher salt",
+      "calories": 0
+    },
+    {
+      "name": "milk",
+      "calories": 100.65
+    },
+    {
+      "name": "chocolate",
+      "calories": 169.53
+    },
+    {
+      "name": "butter",
+      "calories": 25.09
+    },
+    {
+      "name": "vanilla extract",
+      "calories": 2.88
     }
   ]
 }

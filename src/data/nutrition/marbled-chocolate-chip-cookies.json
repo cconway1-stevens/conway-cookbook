@@ -1,6 +1,6 @@
 {
   "fingerprint": "d5a15289ee557b5b7291a8e387fca0356edf90b52af572eb1b68bb54fde528f8",
-  "version": 2,
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
@@ -24,7 +24,7 @@
     },
     {
       "name": "Sodium",
-      "amount": 2600.04,
+      "amount": 2600.05,
       "unit": "mg"
     },
     {
@@ -34,12 +34,12 @@
     },
     {
       "name": "Fiber",
-      "amount": 30.89,
+      "amount": 30.88,
       "unit": "g"
     },
     {
       "name": "Sugar",
-      "amount": 433.9,
+      "amount": 433.91,
       "unit": "g"
     },
     {
@@ -49,29 +49,29 @@
     },
     {
       "name": "Vitamin D",
-      "amount": 5.41,
+      "amount": 5.4,
       "unit": "µg"
     },
     {
       "name": "Calcium",
-      "amount": 719.87,
+      "amount": 719.88,
       "unit": "mg"
     },
     {
       "name": "Iron",
-      "amount": 32.97,
+      "amount": 32.98,
       "unit": "mg"
     },
     {
       "name": "Potassium",
-      "amount": 2706.06,
+      "amount": 2706.07,
       "unit": "mg"
     }
   ],
   "more": [
     {
       "name": "Net Carbohydrates",
-      "amount": 677.75,
+      "amount": 677.76,
       "unit": "g"
     },
     {
@@ -91,7 +91,7 @@
     },
     {
       "name": "Manganese",
-      "amount": 5.51,
+      "amount": 5.52,
       "unit": "mg"
     },
     {
@@ -126,7 +126,7 @@
     },
     {
       "name": "Vitamin B2",
-      "amount": 2.24,
+      "amount": 2.26,
       "unit": "mg"
     },
     {
@@ -146,7 +146,7 @@
     },
     {
       "name": "Vitamin E",
-      "amount": 9.36,
+      "amount": 9.37,
       "unit": "mg"
     },
     {
@@ -156,24 +156,24 @@
     },
     {
       "name": "Vitamin K",
-      "amount": 41.85,
+      "amount": 41.84,
       "unit": "µg"
     },
     {
       "name": "Vitamin B12",
-      "amount": 1.98,
+      "amount": 1.97,
       "unit": "µg"
     },
     {
       "name": "Vitamin B6",
-      "amount": 0.57,
+      "amount": 0.58,
       "unit": "mg"
     }
   ],
   "caloricBreakdown": {
-    "percentProtein": 4.43,
-    "percentFat": 48.18,
-    "percentCarbs": 47.39
+    "percentProtein": 4.4,
+    "percentFat": 48.2,
+    "percentCarbs": 47.4
   },
   "ingredients": [
     {

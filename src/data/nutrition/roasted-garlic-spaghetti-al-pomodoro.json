@@ -1,10 +1,10 @@
 {
   "fingerprint": "2fd95d5addd966962f201381882b0c4f953ad8279602f76d2f80c932e21ab9fa",
-  "version": 2,
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
-      "amount": 526.24,
+      "amount": 526.25,
       "unit": "kcal"
     },
     {
@@ -14,7 +14,7 @@
     },
     {
       "name": "Saturated Fat",
-      "amount": 4.21,
+      "amount": 4.22,
       "unit": "g"
     },
     {
@@ -24,7 +24,7 @@
     },
     {
       "name": "Sodium",
-      "amount": 215.51,
+      "amount": 215.5,
       "unit": "mg"
     },
     {
@@ -44,12 +44,12 @@
     },
     {
       "name": "Protein",
-      "amount": 17.55,
+      "amount": 17.56,
       "unit": "g"
     },
     {
       "name": "Calcium",
-      "amount": 203.7,
+      "amount": 203.71,
       "unit": "mg"
     },
     {
@@ -59,7 +59,7 @@
     },
     {
       "name": "Potassium",
-      "amount": 638.79,
+      "amount": 638.8,
       "unit": "mg"
     }
   ],
@@ -81,32 +81,32 @@
     },
     {
       "name": "Selenium",
-      "amount": 57.58,
+      "amount": 57.57,
       "unit": "µg"
     },
     {
       "name": "Manganese",
-      "amount": 1.12,
+      "amount": 1.11,
       "unit": "mg"
     },
     {
       "name": "Vitamin C",
-      "amount": 25.5,
+      "amount": 25.49,
       "unit": "mg"
     },
     {
       "name": "Vitamin A",
-      "amount": 1523.67,
+      "amount": 1523.68,
       "unit": "IU"
     },
     {
       "name": "Phosphorus",
-      "amount": 299.77,
+      "amount": 299.76,
       "unit": "mg"
     },
     {
       "name": "Vitamin K",
-      "amount": 25.09,
+      "amount": 25.1,
       "unit": "µg"
     },
     {
@@ -126,12 +126,12 @@
     },
     {
       "name": "Vitamin B6",
-      "amount": 0.36,
+      "amount": 0.37,
       "unit": "mg"
     },
     {
       "name": "Zinc",
-      "amount": 1.93,
+      "amount": 1.92,
       "unit": "mg"
     },
     {
@@ -146,12 +146,12 @@
     },
     {
       "name": "Vitamin B1",
-      "amount": 0.16,
+      "amount": 0.15,
       "unit": "mg"
     },
     {
       "name": "Vitamin B2",
-      "amount": 0.14,
+      "amount": 0.13,
       "unit": "mg"
     },
     {
@@ -166,9 +166,9 @@
     }
   ],
   "caloricBreakdown": {
-    "percentProtein": 13.28,
-    "percentFat": 31.34,
-    "percentCarbs": 55.38
+    "percentProtein": 13.3,
+    "percentFat": 31.3,
+    "percentCarbs": 55.4
   },
   "ingredients": [
     {

@@ -1,15 +1,15 @@
 {
   "fingerprint": "6d8e9e0a765b1220a97e19d4108164fd301ed4f174238e9faeb52284c7e521fc",
-  "version": 2,
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
-      "amount": 199.27,
+      "amount": 199.26,
       "unit": "kcal"
     },
     {
       "name": "Fat",
-      "amount": 13.44,
+      "amount": 13.45,
       "unit": "g"
     },
     {
@@ -39,12 +39,12 @@
     },
     {
       "name": "Sugar",
-      "amount": 10.94,
+      "amount": 10.93,
       "unit": "g"
     },
     {
       "name": "Protein",
-      "amount": 4.72,
+      "amount": 4.71,
       "unit": "g"
     },
     {
@@ -59,12 +59,12 @@
     },
     {
       "name": "Iron",
-      "amount": 2.78,
+      "amount": 2.79,
       "unit": "mg"
     },
     {
       "name": "Potassium",
-      "amount": 674.14,
+      "amount": 674.13,
       "unit": "mg"
     }
   ],
@@ -96,12 +96,12 @@
     },
     {
       "name": "Vitamin E",
-      "amount": 3,
+      "amount": 2.99,
       "unit": "mg"
     },
     {
       "name": "Copper",
-      "amount": 0.39,
+      "amount": 0.38,
       "unit": "mg"
     },
     {
@@ -111,7 +111,7 @@
     },
     {
       "name": "Vitamin B6",
-      "amount": 0.35,
+      "amount": 0.36,
       "unit": "mg"
     },
     {
@@ -121,7 +121,7 @@
     },
     {
       "name": "Vitamin K",
-      "amount": 12.19,
+      "amount": 12.2,
       "unit": "µg"
     },
     {
@@ -131,22 +131,22 @@
     },
     {
       "name": "Vitamin B1",
-      "amount": 0.17,
-      "unit": "mg"
-    },
-    {
-      "name": "Vitamin B2",
       "amount": 0.16,
       "unit": "mg"
     },
     {
+      "name": "Vitamin B2",
+      "amount": 0.15,
+      "unit": "mg"
+    },
+    {
       "name": "Phosphorus",
-      "amount": 87.38,
+      "amount": 87.37,
       "unit": "mg"
     },
     {
       "name": "Folate",
-      "amount": 30.65,
+      "amount": 30.66,
       "unit": "µg"
     },
     {
@@ -156,7 +156,7 @@
     },
     {
       "name": "Zinc",
-      "amount": 0.66,
+      "amount": 0.68,
       "unit": "mg"
     },
     {
@@ -166,9 +166,9 @@
     }
   ],
   "caloricBreakdown": {
-    "percentProtein": 8.73,
-    "percentFat": 55.99,
-    "percentCarbs": 35.28
+    "percentProtein": 8.7,
+    "percentFat": 56,
+    "percentCarbs": 35.3
   },
   "ingredients": [
     {

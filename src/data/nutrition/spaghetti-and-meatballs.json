@@ -1,5 +1,6 @@
 {
   "fingerprint": "0bb11a8395fbf6bcf4b0490b09a0c344ed72b17952f26a1391218ce0be063307",
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
@@ -7,18 +8,28 @@
       "unit": "kcal"
     },
     {
-      "name": "Protein",
-      "amount": 40.04,
+      "name": "Fat",
+      "amount": 36.12,
       "unit": "g"
+    },
+    {
+      "name": "Saturated Fat",
+      "amount": 12.1,
+      "unit": "g"
+    },
+    {
+      "name": "Cholesterol",
+      "amount": 119.2,
+      "unit": "mg"
+    },
+    {
+      "name": "Sodium",
+      "amount": 1645.2,
+      "unit": "mg"
     },
     {
       "name": "Carbohydrates",
       "amount": 87.34,
-      "unit": "g"
-    },
-    {
-      "name": "Fat",
-      "amount": 36.13,
       "unit": "g"
     },
     {
@@ -28,13 +39,202 @@
     },
     {
       "name": "Sugar",
-      "amount": 15.28,
+      "amount": 15.29,
       "unit": "g"
     },
     {
-      "name": "Sodium",
-      "amount": 1645.2,
+      "name": "Protein",
+      "amount": 40.04,
+      "unit": "g"
+    },
+    {
+      "name": "Vitamin D",
+      "amount": 0.44,
+      "unit": "µg"
+    },
+    {
+      "name": "Calcium",
+      "amount": 277.08,
       "unit": "mg"
+    },
+    {
+      "name": "Iron",
+      "amount": 7.27,
+      "unit": "mg"
+    },
+    {
+      "name": "Potassium",
+      "amount": 1341.07,
+      "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 79.18,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0,
+      "unit": "%"
+    },
+    {
+      "name": "Selenium",
+      "amount": 78.46,
+      "unit": "µg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 1.35,
+      "unit": "mg"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 528.23,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 10.34,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 0.97,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.72,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 6.41,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 44.07,
+      "unit": "µg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.81,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B12",
+      "amount": 2.17,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 27.21,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 4.85,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 126.67,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.53,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 2.02,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 76.47,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 833.7,
+      "unit": "IU"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 19.2,
+    "percentFat": 39,
+    "percentCarbs": 41.9
+  },
+  "ingredients": [
+    {
+      "name": "breadcrumbs",
+      "calories": 53.33
+    },
+    {
+      "name": "milk",
+      "calories": 8.13
+    },
+    {
+      "name": "ground beef",
+      "calories": 192.02
+    },
+    {
+      "name": "ground pork",
+      "calories": 99.41
+    },
+    {
+      "name": "parmesan",
+      "calories": 32.67
+    },
+    {
+      "name": "egg",
+      "calories": 11.92
+    },
+    {
+      "name": "garlic cloves",
+      "calories": 1.49
+    },
+    {
+      "name": "parsley",
+      "calories": 0.48
+    },
+    {
+      "name": "kosher salt",
+      "calories": 0
+    },
+    {
+      "name": "olive oil",
+      "calories": 61.88
+    },
+    {
+      "name": "garlic cloves",
+      "calories": 2.23
+    },
+    {
+      "name": "tomatoes",
+      "calories": 84.67
+    },
+    {
+      "name": "basil sprig",
+      "calories": 0.08
+    },
+    {
+      "name": "kosher salt",
+      "calories": 0
+    },
+    {
+      "name": "spaghetti",
+      "calories": 280.47
     }
   ]
 }

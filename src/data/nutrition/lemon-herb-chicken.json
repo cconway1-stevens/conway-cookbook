@@ -1,35 +1,35 @@
 {
-  "fingerprint": "76cbdc8134591b56bcf9f51cad4e9eb097d51abd971bb4804a7f89635cc24dbe",
-  "version": 2,
+  "fingerprint": "597bfc51349b90f8d96f5573de3feae7ab5a9f549b3f0e4fef25ad7b4eb1f138",
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
-      "amount": 364.93,
+      "amount": 1629.58,
       "unit": "kcal"
     },
     {
       "name": "Fat",
-      "amount": 27.8,
+      "amount": 64.95,
       "unit": "g"
     },
     {
       "name": "Saturated Fat",
-      "amount": 7.03,
+      "amount": 17.58,
       "unit": "g"
     },
     {
       "name": "Cholesterol",
-      "amount": 141.61,
+      "amount": 720,
       "unit": "mg"
     },
     {
       "name": "Sodium",
-      "amount": 702.62,
+      "amount": 1311.3,
       "unit": "mg"
     },
     {
       "name": "Carbohydrates",
-      "amount": 4.38,
+      "amount": 4.01,
       "unit": "g"
     },
     {
@@ -44,29 +44,29 @@
     },
     {
       "name": "Protein",
-      "amount": 24.58,
+      "amount": 241.22,
       "unit": "g"
     },
     {
       "name": "Calcium",
-      "amount": 29.39,
+      "amount": 133,
       "unit": "mg"
     },
     {
       "name": "Iron",
-      "amount": 1.45,
+      "amount": 12.08,
       "unit": "mg"
     },
     {
       "name": "Potassium",
-      "amount": 377.45,
+      "amount": 2279.59,
       "unit": "mg"
     }
   ],
   "more": [
     {
       "name": "Net Carbohydrates",
-      "amount": 3.37,
+      "amount": 3.01,
       "unit": "g"
     },
     {
@@ -80,23 +80,58 @@
       "unit": "%"
     },
     {
-      "name": "Selenium",
-      "amount": 27.46,
-      "unit": "µg"
-    },
-    {
       "name": "Vitamin B3",
-      "amount": 7.18,
+      "amount": 76.13,
       "unit": "mg"
     },
     {
+      "name": "Selenium",
+      "amount": 236.6,
+      "unit": "µg"
+    },
+    {
       "name": "Vitamin B6",
-      "amount": 0.55,
+      "amount": 3.99,
       "unit": "mg"
     },
     {
       "name": "Phosphorus",
-      "amount": 246.38,
+      "amount": 1861.27,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 14.69,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 9.39,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 1.43,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 206.65,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B12",
+      "amount": 2.81,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.61,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.6,
       "unit": "mg"
     },
     {
@@ -105,75 +140,35 @@
       "unit": "mg"
     },
     {
-      "name": "Vitamin B12",
-      "amount": 0.95,
-      "unit": "µg"
-    },
-    {
-      "name": "Vitamin B5",
-      "amount": 1.54,
-      "unit": "mg"
-    },
-    {
-      "name": "Zinc",
-      "amount": 1.9,
-      "unit": "mg"
-    },
-    {
-      "name": "Vitamin B2",
-      "amount": 0.21,
-      "unit": "mg"
-    },
-    {
-      "name": "Vitamin B1",
-      "amount": 0.12,
-      "unit": "mg"
-    },
-    {
-      "name": "Magnesium",
-      "amount": 32.51,
-      "unit": "mg"
-    },
-    {
       "name": "Manganese",
-      "amount": 0.12,
+      "amount": 0.26,
       "unit": "mg"
     },
     {
-      "name": "Copper",
-      "amount": 0.11,
-      "unit": "mg"
-    },
-    {
-      "name": "Vitamin E",
-      "amount": 0.85,
-      "unit": "mg"
-    },
-    {
-      "name": "Vitamin K",
-      "amount": 5.59,
+      "name": "Folate",
+      "amount": 51.53,
       "unit": "µg"
     },
     {
       "name": "Vitamin A",
-      "amount": 167.73,
+      "amount": 448.62,
       "unit": "IU"
     },
     {
-      "name": "Folate",
-      "amount": 7.86,
-      "unit": "µg"
+      "name": "Vitamin E",
+      "amount": 0.18,
+      "unit": "mg"
     }
   ],
   "caloricBreakdown": {
-    "percentProtein": 26.86,
-    "percentFat": 68.35,
-    "percentCarbs": 4.79
+    "percentProtein": 61.6,
+    "percentFat": 37.3,
+    "percentCarbs": 1
   },
   "ingredients": [
     {
-      "name": "skin-on chicken thighs",
-      "calories": 316.45
+      "name": "roasted chicken thighs",
+      "calories": 1603.2
     },
     {
       "name": "kosher salt",
@@ -185,7 +180,7 @@
     },
     {
       "name": "olive oil",
-      "calories": 30.94
+      "calories": 8.84
     },
     {
       "name": "garlic cloves",

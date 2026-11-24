@@ -1,20 +1,20 @@
 {
   "fingerprint": "5f75bf38ba80664c499fe5338480a0d26362ba7f5a4ca9c80ed9e4cc6b68299d",
-  "version": 2,
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
-      "amount": 449.74,
+      "amount": 513.99,
       "unit": "kcal"
     },
     {
       "name": "Fat",
-      "amount": 12.83,
+      "amount": 20.09,
       "unit": "g"
     },
     {
       "name": "Saturated Fat",
-      "amount": 6.75,
+      "amount": 7.87,
       "unit": "g"
     },
     {
@@ -49,7 +49,7 @@
     },
     {
       "name": "Vitamin D",
-      "amount": 0.61,
+      "amount": 0.6,
       "unit": "µg"
     },
     {
@@ -59,12 +59,12 @@
     },
     {
       "name": "Iron",
-      "amount": 2.5,
+      "amount": 2.51,
       "unit": "mg"
     },
     {
       "name": "Potassium",
-      "amount": 231.15,
+      "amount": 231.16,
       "unit": "mg"
     }
   ],
@@ -91,12 +91,12 @@
     },
     {
       "name": "Manganese",
-      "amount": 0.52,
+      "amount": 0.51,
       "unit": "mg"
     },
     {
       "name": "Copper",
-      "amount": 0.43,
+      "amount": 0.42,
       "unit": "mg"
     },
     {
@@ -106,7 +106,7 @@
     },
     {
       "name": "Phosphorus",
-      "amount": 151.38,
+      "amount": 151.39,
       "unit": "mg"
     },
     {
@@ -121,7 +121,7 @@
     },
     {
       "name": "Vitamin B1",
-      "amount": 0.17,
+      "amount": 0.15,
       "unit": "mg"
     },
     {
@@ -146,7 +146,7 @@
     },
     {
       "name": "Vitamin K",
-      "amount": 4.42,
+      "amount": 17.77,
       "unit": "µg"
     },
     {
@@ -161,7 +161,7 @@
     },
     {
       "name": "Vitamin E",
-      "amount": 0.49,
+      "amount": 1.08,
       "unit": "mg"
     },
     {
@@ -171,9 +171,9 @@
     }
   ],
   "caloricBreakdown": {
-    "percentProtein": 4.94,
-    "percentFat": 24.19,
-    "percentCarbs": 70.87
+    "percentProtein": 4.3,
+    "percentFat": 33.3,
+    "percentCarbs": 62.3
   },
   "ingredients": [
     {

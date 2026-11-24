@@ -1,6 +1,6 @@
 {
   "fingerprint": "1eb7ec6189861e09170a89558b426052001f530e75efabc1ff1280aec4f27632",
-  "version": 2,
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
@@ -9,7 +9,7 @@
     },
     {
       "name": "Fat",
-      "amount": 23,
+      "amount": 23.01,
       "unit": "g"
     },
     {
@@ -24,7 +24,7 @@
     },
     {
       "name": "Sodium",
-      "amount": 261.74,
+      "amount": 261.77,
       "unit": "mg"
     },
     {
@@ -34,7 +34,7 @@
     },
     {
       "name": "Fiber",
-      "amount": 0.54,
+      "amount": 0.53,
       "unit": "g"
     },
     {
@@ -71,7 +71,7 @@
   "more": [
     {
       "name": "Net Carbohydrates",
-      "amount": 35.62,
+      "amount": 35.63,
       "unit": "g"
     },
     {
@@ -96,7 +96,7 @@
     },
     {
       "name": "Selenium",
-      "amount": 6.96,
+      "amount": 6.97,
       "unit": "µg"
     },
     {
@@ -111,7 +111,7 @@
     },
     {
       "name": "Vitamin E",
-      "amount": 0.65,
+      "amount": 0.66,
       "unit": "mg"
     },
     {
@@ -126,22 +126,22 @@
     },
     {
       "name": "Folate",
-      "amount": 14.33,
+      "amount": 14.34,
       "unit": "µg"
     },
     {
       "name": "Vitamin B6",
-      "amount": 0.07,
+      "amount": 0.06,
       "unit": "mg"
     },
     {
       "name": "Vitamin B12",
-      "amount": 0.2,
+      "amount": 0.19,
       "unit": "µg"
     },
     {
       "name": "Vitamin B1",
-      "amount": 0.05,
+      "amount": 0.04,
       "unit": "mg"
     },
     {
@@ -160,20 +160,20 @@
       "unit": "mg"
     },
     {
+      "name": "Manganese",
+      "amount": 0.01,
+      "unit": "mg"
+    },
+    {
       "name": "Vitamin K",
       "amount": 1.13,
       "unit": "µg"
-    },
-    {
-      "name": "Manganese",
-      "amount": 0.02,
-      "unit": "mg"
     }
   ],
   "caloricBreakdown": {
-    "percentProtein": 5.21,
-    "percentFat": 55.81,
-    "percentCarbs": 38.98
+    "percentProtein": 5.2,
+    "percentFat": 55.8,
+    "percentCarbs": 39
   },
   "ingredients": [
     {

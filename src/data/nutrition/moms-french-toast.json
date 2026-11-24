@@ -1,188 +1,196 @@
 {
-  "fingerprint": "d8ce908aaf1f7bc4961f480a53bbee9ced3626a98d0ee95e129fe2e868ec87ff",
-  "version": 2,
+  "fingerprint": "02a7e3b6fe9333a340032630fbb546c7241b0f02adebd6f9fe83d96c426b4284",
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
-      "amount": 3448.4,
+      "amount": 7046.39,
       "unit": "kcal"
     },
     {
       "name": "Fat",
-      "amount": 130.5,
+      "amount": 411.87,
       "unit": "g"
     },
     {
       "name": "Saturated Fat",
-      "amount": 52.02,
+      "amount": 201.03,
       "unit": "g"
     },
     {
       "name": "Cholesterol",
-      "amount": 834.5,
+      "amount": 2275.34,
       "unit": "mg"
     },
     {
       "name": "Sodium",
-      "amount": 3592.95,
+      "amount": 5093.65,
       "unit": "mg"
     },
     {
       "name": "Carbohydrates",
-      "amount": 487.17,
+      "amount": 736.38,
       "unit": "g"
     },
     {
       "name": "Fiber",
-      "amount": 14.96,
+      "amount": 20.05,
       "unit": "g"
     },
     {
       "name": "Sugar",
-      "amount": 240.38,
+      "amount": 521.06,
       "unit": "g"
     },
     {
       "name": "Protein",
-      "amount": 88.74,
+      "amount": 126.15,
       "unit": "g"
     },
     {
       "name": "Vitamin D",
-      "amount": 6.2,
+      "amount": 10.68,
       "unit": "µg"
     },
     {
       "name": "Calcium",
-      "amount": 1080.28,
+      "amount": 1940.36,
       "unit": "mg"
     },
     {
       "name": "Iron",
-      "amount": 23.06,
+      "amount": 26.63,
       "unit": "mg"
     },
     {
       "name": "Potassium",
-      "amount": 2153.66,
+      "amount": 3553.58,
       "unit": "mg"
     }
   ],
   "more": [
     {
       "name": "Net Carbohydrates",
-      "amount": 472.21,
+      "amount": 716.32,
       "unit": "g"
     },
     {
       "name": "Alcohol",
-      "amount": 1.38,
+      "amount": 4.47,
       "unit": "g"
     },
     {
       "name": "Alcohol %",
-      "amount": 0.13,
+      "amount": 0.23,
       "unit": "%"
     },
     {
       "name": "Manganese",
-      "amount": 12.2,
+      "amount": 14.94,
       "unit": "mg"
     },
     {
       "name": "Vitamin B2",
-      "amount": 7.29,
+      "amount": 9.01,
       "unit": "mg"
     },
     {
       "name": "Selenium",
-      "amount": 192.1,
+      "amount": 258.4,
       "unit": "µg"
     },
     {
       "name": "Vitamin B1",
-      "amount": 3.84,
+      "amount": 4.04,
       "unit": "mg"
-    },
-    {
-      "name": "Folate",
-      "amount": 700.19,
-      "unit": "µg"
     },
     {
       "name": "Phosphorus",
-      "amount": 1291.92,
-      "unit": "mg"
-    },
-    {
-      "name": "Vitamin B3",
-      "amount": 23.24,
-      "unit": "mg"
-    },
-    {
-      "name": "Magnesium",
-      "amount": 358.68,
-      "unit": "mg"
-    },
-    {
-      "name": "Copper",
-      "amount": 1.76,
-      "unit": "mg"
-    },
-    {
-      "name": "Zinc",
-      "amount": 12.16,
-      "unit": "mg"
-    },
-    {
-      "name": "Vitamin B6",
-      "amount": 1.25,
+      "amount": 2267.97,
       "unit": "mg"
     },
     {
       "name": "Vitamin A",
-      "amount": 3112.58,
+      "amount": 11179.79,
       "unit": "IU"
     },
     {
+      "name": "Folate",
+      "amount": 691.86,
+      "unit": "µg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 19.66,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 475.26,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 2.33,
+      "unit": "mg"
+    },
+    {
       "name": "Vitamin B5",
-      "amount": 5.54,
+      "amount": 11.21,
       "unit": "mg"
     },
     {
       "name": "Vitamin B12",
-      "amount": 3,
+      "amount": 6.27,
       "unit": "µg"
     },
     {
+      "name": "Vitamin B3",
+      "amount": 20.85,
+      "unit": "mg"
+    },
+    {
       "name": "Vitamin E",
-      "amount": 5,
+      "amount": 14.22,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 1.79,
       "unit": "mg"
     },
     {
       "name": "Vitamin K",
-      "amount": 11.54,
+      "amount": 34.41,
       "unit": "µg"
     },
     {
       "name": "Vitamin C",
-      "amount": 0.84,
+      "amount": 5.7,
       "unit": "mg"
     }
   ],
   "caloricBreakdown": {
-    "percentProtein": 10.21,
-    "percentFat": 33.77,
-    "percentCarbs": 56.02
+    "percentProtein": 7.1,
+    "percentFat": 51.8,
+    "percentCarbs": 41.2
   },
   "ingredients": [
     {
+      "name": "butter",
+      "calories": 35.85
+    },
+    {
       "name": "bread",
-      "calories": 1233.77
+      "calories": 1002.44
     },
     {
       "name": "eggs",
-      "calories": 251.68
+      "calories": 572
+    },
+    {
+      "name": "half-and-half",
+      "calories": 634.04
     },
     {
       "name": "milk",
@@ -190,15 +198,19 @@
     },
     {
       "name": "sugar",
-      "calories": 46.2
+      "calories": 92.4
     },
     {
-      "name": "vanilla",
-      "calories": 11.52
+      "name": "vanilla extract",
+      "calories": 37.44
     },
     {
-      "name": "cinnamon",
-      "calories": 4.94
+      "name": "ground cinnamon",
+      "calories": 2.47
+    },
+    {
+      "name": "ground nutmeg",
+      "calories": 5.25
     },
     {
       "name": "salt",
@@ -206,7 +218,27 @@
     },
     {
       "name": "butter",
-      "calories": 200.76
+      "calories": 1626.13
+    },
+    {
+      "name": "brown sugar",
+      "calories": 836
+    },
+    {
+      "name": "pecans",
+      "calories": 753.19
+    },
+    {
+      "name": "corn syrup",
+      "calories": 124.52
+    },
+    {
+      "name": "ground cinnamon",
+      "calories": 2.47
+    },
+    {
+      "name": "ground nutmeg",
+      "calories": 5.25
     },
     {
       "name": "maple syrup",
@@ -215,10 +247,6 @@
     {
       "name": "butter",
       "calories": 301.14
-    },
-    {
-      "name": "walnuts",
-      "calories": 382.59
     }
   ]
 }

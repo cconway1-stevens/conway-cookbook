@@ -1,68 +1,7 @@
 {
   "fingerprint": "cc0fae280e75feeb6c62053b472be4e911884fef7a02ae17269ec9365db786c0",
-  "rows": [
-    {
-      "name": "Calories",
-      "amount": 213.2300524,
-      "unit": "kcal"
-    },
-    {
-      "name": "Fat",
-      "amount": 0.021175000000000003,
-      "unit": "g"
-    },
-    {
-      "name": "Saturated Fat",
-      "amount": 0.003025,
-      "unit": "g"
-    },
-    {
-      "name": "Carbohydrates",
-      "amount": 20.54705,
-      "unit": "g"
-    },
-    {
-      "name": "Fiber",
-      "amount": 0.121,
-      "unit": "g"
-    },
-    {
-      "name": "Sugar",
-      "amount": 18.511225,
-      "unit": "g"
-    },
-    {
-      "name": "Added Sugar",
-      "amount": 18,
-      "unit": "g"
-    },
-    {
-      "name": "Protein",
-      "amount": 0.12705,
-      "unit": "g"
-    },
-    {
-      "name": "Sodium",
-      "amount": 0.605,
-      "unit": "mg"
-    },
-    {
-      "name": "Calcium",
-      "amount": 4.234999999999999,
-      "unit": "mg"
-    },
-    {
-      "name": "Iron",
-      "amount": 0.027225,
-      "unit": "mg"
-    },
-    {
-      "name": "Potassium",
-      "amount": 35.3925,
-      "unit": "mg"
-    }
-  ],
-  "assumptions": "One strained drink with 80-proof rum, fresh lime juice, and a standard cane syrup. Energy includes the alcohol. Ice contributes no energy.",
+  "version": 3,
+  "rows": [],
   "sources": [
     {
       "name": "TTB spirits serving reference",
@@ -76,5 +15,6 @@
       "name": "Monin cane syrup label",
       "url": "https://monin.us/products/pure-cane-syrup"
     }
-  ]
+  ],
+  "assumptions": "One strained drink with 80-proof rum, fresh lime juice, and a standard cane syrup. Energy includes the alcohol. Ice contributes no energy."
 }

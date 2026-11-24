@@ -1,20 +1,20 @@
 {
-  "fingerprint": "0308d5413187416b7661aa4afbc4accdc0c0935e687a2a233af4a55ae14c5c5a",
-  "version": 2,
+  "fingerprint": "81cec14e586155753fcf2eebe9f2c75d4f58988bc36263baeaf0aac089527e3d",
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
-      "amount": 5475.66,
+      "amount": 5320.63,
       "unit": "kcal"
     },
     {
       "name": "Fat",
-      "amount": 267.11,
+      "amount": 264.44,
       "unit": "g"
     },
     {
       "name": "Saturated Fat",
-      "amount": 109.25,
+      "amount": 108.78,
       "unit": "g"
     },
     {
@@ -24,27 +24,27 @@
     },
     {
       "name": "Sodium",
-      "amount": 3133.25,
+      "amount": 3130.79,
       "unit": "mg"
     },
     {
       "name": "Carbohydrates",
-      "amount": 761.95,
+      "amount": 734.25,
       "unit": "g"
     },
     {
       "name": "Fiber",
-      "amount": 75.71,
+      "amount": 71.58,
       "unit": "g"
     },
     {
       "name": "Sugar",
-      "amount": 415.25,
+      "amount": 414.85,
       "unit": "g"
     },
     {
       "name": "Protein",
-      "amount": 59.34,
+      "amount": 53.93,
       "unit": "g"
     },
     {
@@ -54,24 +54,24 @@
     },
     {
       "name": "Calcium",
-      "amount": 620.94,
+      "amount": 599.67,
       "unit": "mg"
     },
     {
       "name": "Iron",
-      "amount": 21.88,
+      "amount": 20.15,
       "unit": "mg"
     },
     {
       "name": "Potassium",
-      "amount": 3562.73,
+      "amount": 3414.64,
       "unit": "mg"
     }
   ],
   "more": [
     {
       "name": "Net Carbohydrates",
-      "amount": 686.24,
+      "amount": 662.66,
       "unit": "g"
     },
     {
@@ -86,47 +86,42 @@
     },
     {
       "name": "Manganese",
-      "amount": 10.55,
-      "unit": "mg"
-    },
-    {
-      "name": "Vitamin B1",
-      "amount": 2.55,
+      "amount": 9.04,
       "unit": "mg"
     },
     {
       "name": "Copper",
-      "amount": 3.37,
+      "amount": 3.2,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 2.35,
       "unit": "mg"
     },
     {
       "name": "Folate",
-      "amount": 568.05,
+      "amount": 554.96,
       "unit": "µg"
     },
     {
       "name": "Phosphorus",
-      "amount": 1270.89,
-      "unit": "mg"
-    },
-    {
-      "name": "Selenium",
-      "amount": 86.99,
-      "unit": "µg"
-    },
-    {
-      "name": "Magnesium",
-      "amount": 483.26,
+      "amount": 1103.17,
       "unit": "mg"
     },
     {
       "name": "Vitamin C",
-      "amount": 88.91,
+      "amount": 88.9,
       "unit": "mg"
     },
     {
-      "name": "Vitamin B2",
-      "amount": 1.77,
+      "name": "Selenium",
+      "amount": 75.16,
+      "unit": "µg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 426.81,
       "unit": "mg"
     },
     {
@@ -135,33 +130,38 @@
       "unit": "IU"
     },
     {
+      "name": "Vitamin B2",
+      "amount": 1.71,
+      "unit": "mg"
+    },
+    {
       "name": "Vitamin B6",
-      "amount": 1.7,
+      "amount": 1.66,
       "unit": "mg"
     },
     {
       "name": "Vitamin B3",
-      "amount": 16.58,
+      "amount": 16.14,
       "unit": "mg"
     },
     {
       "name": "Vitamin K",
-      "amount": 80.86,
+      "amount": 80.05,
       "unit": "µg"
     },
     {
-      "name": "Zinc",
-      "amount": 9.58,
+      "name": "Vitamin E",
+      "amount": 9.13,
       "unit": "mg"
     },
     {
-      "name": "Vitamin E",
-      "amount": 9.3,
+      "name": "Zinc",
+      "amount": 8.08,
       "unit": "mg"
     },
     {
       "name": "Vitamin B5",
-      "amount": 4.44,
+      "amount": 4,
       "unit": "mg"
     },
     {
@@ -171,9 +171,9 @@
     }
   ],
   "caloricBreakdown": {
-    "percentProtein": 4.17,
-    "percentFat": 42.26,
-    "percentCarbs": 53.57
+    "percentProtein": 3.9,
+    "percentFat": 43,
+    "percentCarbs": 53.1
   },
   "ingredients": [
     {
@@ -182,7 +182,7 @@
     },
     {
       "name": "old-fashioned rolled oats",
-      "calories": 310.09
+      "calories": 155.05
     },
     {
       "name": "brown sugar",

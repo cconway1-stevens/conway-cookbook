@@ -1,10 +1,10 @@
 {
   "fingerprint": "198e701084f138f1ad8bfb211c2f9ebe6596adb401db8c937d5cd9b37b7fe135",
-  "version": 2,
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
-      "amount": 526.31,
+      "amount": 526.33,
       "unit": "kcal"
     },
     {
@@ -29,12 +29,12 @@
     },
     {
       "name": "Carbohydrates",
-      "amount": 56.77,
+      "amount": 56.76,
       "unit": "g"
     },
     {
       "name": "Fiber",
-      "amount": 0.93,
+      "amount": 0.92,
       "unit": "g"
     },
     {
@@ -44,7 +44,7 @@
     },
     {
       "name": "Protein",
-      "amount": 10.38,
+      "amount": 10.36,
       "unit": "g"
     },
     {
@@ -54,7 +54,7 @@
     },
     {
       "name": "Calcium",
-      "amount": 170.36,
+      "amount": 170.38,
       "unit": "mg"
     },
     {
@@ -71,12 +71,12 @@
   "more": [
     {
       "name": "Net Carbohydrates",
-      "amount": 55.85,
+      "amount": 55.84,
       "unit": "g"
     },
     {
       "name": "Alcohol",
-      "amount": 1.6,
+      "amount": 1.59,
       "unit": "g"
     },
     {
@@ -86,12 +86,12 @@
     },
     {
       "name": "Selenium",
-      "amount": 20.82,
+      "amount": 20.83,
       "unit": "µg"
     },
     {
       "name": "Vitamin B2",
-      "amount": 0.44,
+      "amount": 0.43,
       "unit": "mg"
     },
     {
@@ -101,47 +101,47 @@
     },
     {
       "name": "Vitamin B1",
-      "amount": 0.31,
+      "amount": 0.3,
       "unit": "mg"
     },
     {
       "name": "Phosphorus",
-      "amount": 178.18,
+      "amount": 178.17,
       "unit": "mg"
     },
     {
       "name": "Folate",
-      "amount": 57.79,
+      "amount": 57.8,
       "unit": "µg"
     },
     {
       "name": "Manganese",
-      "amount": 0.27,
+      "amount": 0.26,
       "unit": "mg"
     },
     {
       "name": "Vitamin B12",
-      "amount": 0.64,
+      "amount": 0.63,
       "unit": "µg"
     },
     {
       "name": "Vitamin B3",
-      "amount": 1.87,
+      "amount": 1.86,
       "unit": "mg"
     },
     {
       "name": "Vitamin B5",
-      "amount": 0.9,
+      "amount": 0.91,
       "unit": "mg"
     },
     {
       "name": "Vitamin B6",
-      "amount": 0.15,
+      "amount": 0.16,
       "unit": "mg"
     },
     {
       "name": "Zinc",
-      "amount": 1.08,
+      "amount": 1.07,
       "unit": "mg"
     },
     {
@@ -151,24 +151,24 @@
     },
     {
       "name": "Vitamin E",
-      "amount": 0.99,
+      "amount": 0.98,
       "unit": "mg"
     },
     {
       "name": "Copper",
-      "amount": 0.1,
+      "amount": 0.09,
       "unit": "mg"
     },
     {
       "name": "Vitamin K",
-      "amount": 2.62,
+      "amount": 2.63,
       "unit": "µg"
     }
   ],
   "caloricBreakdown": {
-    "percentProtein": 7.91,
-    "percentFat": 48.78,
-    "percentCarbs": 43.31
+    "percentProtein": 7.9,
+    "percentFat": 48.8,
+    "percentCarbs": 43.3
   },
   "ingredients": [
     {

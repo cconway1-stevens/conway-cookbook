@@ -1,5 +1,6 @@
 {
   "fingerprint": "9780c85a17c0218ed0bf25d84aff6c71ddeafa124af6bc0cbadf18e73bf983ad",
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
@@ -7,9 +8,24 @@
       "unit": "kcal"
     },
     {
-      "name": "Protein",
-      "amount": 2.23,
+      "name": "Fat",
+      "amount": 5.94,
       "unit": "g"
+    },
+    {
+      "name": "Saturated Fat",
+      "amount": 3.66,
+      "unit": "g"
+    },
+    {
+      "name": "Cholesterol",
+      "amount": 15.05,
+      "unit": "mg"
+    },
+    {
+      "name": "Sodium",
+      "amount": 201.62,
+      "unit": "mg"
     },
     {
       "name": "Carbohydrates",
@@ -17,24 +33,158 @@
       "unit": "g"
     },
     {
-      "name": "Fat",
-      "amount": 5.94,
-      "unit": "g"
-    },
-    {
       "name": "Fiber",
-      "amount": 3.1,
+      "amount": 3.09,
       "unit": "g"
     },
     {
       "name": "Sugar",
-      "amount": 3.75,
+      "amount": 3.74,
       "unit": "g"
     },
     {
-      "name": "Sodium",
-      "amount": 201.63,
+      "name": "Protein",
+      "amount": 2.24,
+      "unit": "g"
+    },
+    {
+      "name": "Calcium",
+      "amount": 46.55,
       "unit": "mg"
+    },
+    {
+      "name": "Iron",
+      "amount": 1.2,
+      "unit": "mg"
+    },
+    {
+      "name": "Potassium",
+      "amount": 248.29,
+      "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 5.39,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0,
+      "unit": "%"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 49.28,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 957.6,
+      "unit": "IU"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 14.78,
+      "unit": "mg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 0.27,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 37.93,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 0.18,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 28.95,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.12,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.09,
+      "unit": "mg"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 47.17,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 0.84,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.08,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 0.62,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 0.28,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 0.3,
+      "unit": "mg"
+    },
+    {
+      "name": "Selenium",
+      "amount": 0.96,
+      "unit": "µg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 9.3,
+    "percentFat": 55.5,
+    "percentCarbs": 35.2
+  },
+  "ingredients": [
+    {
+      "name": "green beans",
+      "calories": 35.15
+    },
+    {
+      "name": "butter",
+      "calories": 50.19
+    },
+    {
+      "name": "garlic cloves",
+      "calories": 2.23
+    },
+    {
+      "name": "lemon juice",
+      "calories": 0.28
+    },
+    {
+      "name": "salt and pepper",
+      "calories": 0
     }
   ]
 }

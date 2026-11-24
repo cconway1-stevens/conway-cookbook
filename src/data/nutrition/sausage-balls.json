@@ -1,6 +1,6 @@
 {
   "fingerprint": "df7bccaf7d5704857314cc098d1f6c171dc9eca5ccb9d474791a73cf08dfbfef",
-  "version": 2,
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
@@ -24,7 +24,7 @@
     },
     {
       "name": "Sodium",
-      "amount": 11022.58,
+      "amount": 11022.57,
       "unit": "mg"
     },
     {
@@ -49,7 +49,7 @@
     },
     {
       "name": "Vitamin D",
-      "amount": 14.51,
+      "amount": 14.5,
       "unit": "µg"
     },
     {
@@ -96,12 +96,12 @@
     },
     {
       "name": "Zinc",
-      "amount": 37.35,
+      "amount": 37.36,
       "unit": "mg"
     },
     {
       "name": "Vitamin B1",
-      "amount": 3.66,
+      "amount": 3.65,
       "unit": "mg"
     },
     {
@@ -121,7 +121,7 @@
     },
     {
       "name": "Vitamin B6",
-      "amount": 3.22,
+      "amount": 3.23,
       "unit": "mg"
     },
     {
@@ -151,12 +151,12 @@
     },
     {
       "name": "Vitamin E",
-      "amount": 5.35,
+      "amount": 5.34,
       "unit": "mg"
     },
     {
       "name": "Manganese",
-      "amount": 0.7,
+      "amount": 0.71,
       "unit": "mg"
     },
     {
@@ -171,9 +171,9 @@
     }
   ],
   "caloricBreakdown": {
-    "percentProtein": 19.28,
-    "percentFat": 71.34,
-    "percentCarbs": 9.38
+    "percentProtein": 19.3,
+    "percentFat": 71.3,
+    "percentCarbs": 9.4
   },
   "ingredients": [
     {

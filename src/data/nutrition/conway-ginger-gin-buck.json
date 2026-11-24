@@ -1,24 +1,35 @@
 {
-  "fingerprint": "b1fe34b31193f53e76dcd75d2cb1987be53cb5b1336e4d0f446d9a92f413916d",
+  "fingerprint": "37b4270861a9889092f175a0e5e53be32885cd8f689dbac03a2f705a2c90431a",
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
-      "amount": 125.6,
+      "amount": 179.17,
       "unit": "kcal"
     },
     {
-      "name": "Protein",
-      "amount": 13.87,
+      "name": "Fat",
+      "amount": 0.05,
       "unit": "g"
+    },
+    {
+      "name": "Saturated Fat",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Cholesterol",
+      "amount": 0,
+      "unit": "mg"
+    },
+    {
+      "name": "Sodium",
+      "amount": 12.57,
+      "unit": "mg"
     },
     {
       "name": "Carbohydrates",
-      "amount": 13.5,
-      "unit": "g"
-    },
-    {
-      "name": "Fat",
-      "amount": 2.04,
+      "amount": 13.88,
       "unit": "g"
     },
     {
@@ -28,13 +39,92 @@
     },
     {
       "name": "Sugar",
-      "amount": 11.08,
+      "amount": 11.42,
       "unit": "g"
     },
     {
-      "name": "Sodium",
-      "amount": 49.58,
+      "name": "Protein",
+      "amount": 0.19,
+      "unit": "g"
+    },
+    {
+      "name": "Calcium",
+      "amount": 13.44,
       "unit": "mg"
+    },
+    {
+      "name": "Iron",
+      "amount": 0.36,
+      "unit": "mg"
+    },
+    {
+      "name": "Potassium",
+      "amount": 38.71,
+      "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 13.32,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 18.57,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 8.82,
+      "unit": "%"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 9.86,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.05,
+      "unit": "mg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 0.03,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 4.09,
+      "unit": "mg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 1.3,
+    "percentFat": 0.8,
+    "percentCarbs": 97.9
+  },
+  "ingredients": [
+    {
+      "name": "gin",
+      "calories": 128.44
+    },
+    {
+      "name": "lime juice",
+      "calories": 3.85
+    },
+    {
+      "name": "ginger beer",
+      "calories": 41.48
+    },
+    {
+      "name": "lime wedge",
+      "calories": 5.4
+    },
+    {
+      "name": "ice",
+      "calories": 0
     }
   ]
 }

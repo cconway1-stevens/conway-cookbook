@@ -1,20 +1,20 @@
 {
-  "fingerprint": "e65aceb44b7e9b42bd2e0ffcda3636f7cb3a89665cf8369364698002a4d616e0",
-  "version": 2,
+  "fingerprint": "a96f32828d43f3971fa218070ebc9af71fb05ffd21be7e235749e64cbef11608",
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
-      "amount": 154.77,
+      "amount": 110.57,
       "unit": "kcal"
     },
     {
       "name": "Fat",
-      "amount": 12.52,
+      "amount": 7.52,
       "unit": "g"
     },
     {
       "name": "Saturated Fat",
-      "amount": 1.72,
+      "amount": 1.04,
       "unit": "g"
     },
     {
@@ -24,7 +24,7 @@
     },
     {
       "name": "Sodium",
-      "amount": 397.34,
+      "amount": 397.24,
       "unit": "mg"
     },
     {
@@ -34,7 +34,7 @@
     },
     {
       "name": "Fiber",
-      "amount": 2.43,
+      "amount": 2.42,
       "unit": "g"
     },
     {
@@ -49,24 +49,24 @@
     },
     {
       "name": "Calcium",
-      "amount": 18.73,
+      "amount": 18.67,
       "unit": "mg"
     },
     {
       "name": "Iron",
-      "amount": 1.14,
+      "amount": 1.11,
       "unit": "mg"
     },
     {
       "name": "Potassium",
-      "amount": 377.19,
+      "amount": 377.15,
       "unit": "mg"
     }
   ],
   "more": [
     {
       "name": "Net Carbohydrates",
-      "amount": 8.48,
+      "amount": 8.49,
       "unit": "g"
     },
     {
@@ -91,18 +91,18 @@
     },
     {
       "name": "Vitamin B6",
-      "amount": 0.58,
-      "unit": "mg"
-    },
-    {
-      "name": "Vitamin E",
-      "amount": 3.19,
+      "amount": 0.57,
       "unit": "mg"
     },
     {
       "name": "Vitamin K",
-      "amount": 20.76,
+      "amount": 17.74,
       "unit": "µg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 2.47,
+      "unit": "mg"
     },
     {
       "name": "Manganese",
@@ -116,7 +116,7 @@
     },
     {
       "name": "Vitamin B3",
-      "amount": 1.54,
+      "amount": 1.53,
       "unit": "mg"
     },
     {
@@ -131,12 +131,12 @@
     },
     {
       "name": "Vitamin B1",
-      "amount": 0.09,
+      "amount": 0.08,
       "unit": "mg"
     },
     {
       "name": "Copper",
-      "amount": 0.11,
+      "amount": 0.12,
       "unit": "mg"
     },
     {
@@ -161,9 +161,9 @@
     }
   ],
   "caloricBreakdown": {
-    "percentProtein": 5.17,
-    "percentFat": 68.36,
-    "percentCarbs": 26.47
+    "percentProtein": 7.1,
+    "percentFat": 56.5,
+    "percentCarbs": 36.4
   },
   "ingredients": [
     {
@@ -176,7 +176,7 @@
     },
     {
       "name": "olive oil",
-      "calories": 106.08
+      "calories": 61.88
     },
     {
       "name": "garlic cloves",

@@ -1,6 +1,6 @@
 {
   "fingerprint": "3e8295f0bfdfe97e39016f5536441d2435e7041eb4d71c3d1b58a7c503bf5414",
-  "version": 2,
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
@@ -24,7 +24,7 @@
     },
     {
       "name": "Sodium",
-      "amount": 21.3,
+      "amount": 21.31,
       "unit": "mg"
     },
     {
@@ -39,7 +39,7 @@
     },
     {
       "name": "Sugar",
-      "amount": 27.47,
+      "amount": 27.48,
       "unit": "g"
     },
     {
@@ -49,17 +49,17 @@
     },
     {
       "name": "Calcium",
-      "amount": 38.38,
+      "amount": 38.37,
       "unit": "mg"
     },
     {
       "name": "Iron",
-      "amount": 0.27,
+      "amount": 0.28,
       "unit": "mg"
     },
     {
       "name": "Potassium",
-      "amount": 90.9,
+      "amount": 90.91,
       "unit": "mg"
     }
   ],
@@ -86,12 +86,12 @@
     },
     {
       "name": "Copper",
-      "amount": 0.07,
+      "amount": 0.06,
       "unit": "mg"
     },
     {
       "name": "Magnesium",
-      "amount": 8.65,
+      "amount": 8.66,
       "unit": "mg"
     },
     {
@@ -111,7 +111,7 @@
     },
     {
       "name": "Vitamin B5",
-      "amount": 0.1,
+      "amount": 0.11,
       "unit": "mg"
     }
   ],

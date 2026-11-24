@@ -1,40 +1,202 @@
 {
   "fingerprint": "b6b7e2e353a20ffa0148dd23d56861d420641c1e61cb37129ed653657fc88feb",
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
-      "amount": 264.51,
+      "amount": 264.52,
       "unit": "kcal"
     },
     {
-      "name": "Protein",
-      "amount": 6.85,
+      "name": "Fat",
+      "amount": 13.03,
       "unit": "g"
+    },
+    {
+      "name": "Saturated Fat",
+      "amount": 6.96,
+      "unit": "g"
+    },
+    {
+      "name": "Cholesterol",
+      "amount": 74.03,
+      "unit": "mg"
+    },
+    {
+      "name": "Sodium",
+      "amount": 532.58,
+      "unit": "mg"
     },
     {
       "name": "Carbohydrates",
-      "amount": 30.26,
-      "unit": "g"
-    },
-    {
-      "name": "Fat",
-      "amount": 13.02,
+      "amount": 30.27,
       "unit": "g"
     },
     {
       "name": "Fiber",
-      "amount": 3.02,
+      "amount": 3.01,
       "unit": "g"
     },
     {
       "name": "Sugar",
-      "amount": 2.73,
+      "amount": 2.75,
       "unit": "g"
     },
     {
-      "name": "Sodium",
-      "amount": 532.59,
+      "name": "Protein",
+      "amount": 6.86,
+      "unit": "g"
+    },
+    {
+      "name": "Vitamin D",
+      "amount": 0.99,
+      "unit": "µg"
+    },
+    {
+      "name": "Calcium",
+      "amount": 123.17,
       "unit": "mg"
+    },
+    {
+      "name": "Iron",
+      "amount": 1.59,
+      "unit": "mg"
+    },
+    {
+      "name": "Potassium",
+      "amount": 185.14,
+      "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 27.26,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0,
+      "unit": "%"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 162.95,
+      "unit": "mg"
+    },
+    {
+      "name": "Selenium",
+      "amount": 10.04,
+      "unit": "µg"
+    },
+    {
+      "name": "Manganese",
+      "amount": 0.24,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.21,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.17,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 0.22,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 40.11,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 1.31,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 32.88,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 404.14,
+      "unit": "IU"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 1.25,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 0.58,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B12",
+      "amount": 0.34,
+      "unit": "µg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.1,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin E",
+      "amount": 0.51,
+      "unit": "mg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 10.3,
+    "percentFat": 44.1,
+    "percentCarbs": 45.6
+  },
+  "ingredients": [
+    {
+      "name": "cornmeal",
+      "calories": 114.48
+    },
+    {
+      "name": "flour",
+      "calories": 28.44
+    },
+    {
+      "name": "baking powder",
+      "calories": 0.53
+    },
+    {
+      "name": "baking soda",
+      "calories": 0
+    },
+    {
+      "name": "kosher salt",
+      "calories": 0
+    },
+    {
+      "name": "buttermilk",
+      "calories": 27.9
+    },
+    {
+      "name": "eggs",
+      "calories": 17.88
+    },
+    {
+      "name": "butter",
+      "calories": 75.29
     }
   ]
 }

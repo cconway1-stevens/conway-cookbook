@@ -1,20 +1,20 @@
 {
-  "fingerprint": "21d12b0e5c40b233ef23abc71ac0a3ed2867a5da978018589fd66eff2d74c0a0",
-  "version": 2,
+  "fingerprint": "fba731273e20a8d429aca04c20521396310a8a89acd282e3aa0a0946177dd6b6",
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
-      "amount": 3088.51,
+      "amount": 2580.65,
       "unit": "kcal"
     },
     {
       "name": "Fat",
-      "amount": 181.88,
+      "amount": 140.85,
       "unit": "g"
     },
     {
       "name": "Saturated Fat",
-      "amount": 28.43,
+      "amount": 22.18,
       "unit": "g"
     },
     {
@@ -24,12 +24,12 @@
     },
     {
       "name": "Sodium",
-      "amount": 8727.9,
+      "amount": 2913.81,
       "unit": "mg"
     },
     {
       "name": "Carbohydrates",
-      "amount": 336.98,
+      "amount": 299.13,
       "unit": "g"
     },
     {
@@ -39,7 +39,7 @@
     },
     {
       "name": "Sugar",
-      "amount": 66.66,
+      "amount": 28.74,
       "unit": "g"
     },
     {
@@ -54,24 +54,24 @@
     },
     {
       "name": "Calcium",
-      "amount": 238.43,
+      "amount": 234.45,
       "unit": "mg"
     },
     {
       "name": "Iron",
-      "amount": 13.31,
+      "amount": 13.23,
       "unit": "mg"
     },
     {
       "name": "Potassium",
-      "amount": 6839.38,
+      "amount": 6837.41,
       "unit": "mg"
     }
   ],
   "more": [
     {
       "name": "Net Carbohydrates",
-      "amount": 300.17,
+      "amount": 262.32,
       "unit": "g"
     },
     {
@@ -91,7 +91,7 @@
     },
     {
       "name": "Vitamin K",
-      "amount": 404.55,
+      "amount": 329.33,
       "unit": "µg"
     },
     {
@@ -101,7 +101,7 @@
     },
     {
       "name": "Manganese",
-      "amount": 2.69,
+      "amount": 2.67,
       "unit": "mg"
     },
     {
@@ -111,22 +111,22 @@
     },
     {
       "name": "Magnesium",
-      "amount": 378.05,
+      "amount": 377.9,
       "unit": "mg"
     },
     {
       "name": "Copper",
-      "amount": 1.82,
+      "amount": 1.8,
       "unit": "mg"
     },
     {
       "name": "Vitamin B1",
-      "amount": 1.32,
+      "amount": 1.33,
       "unit": "mg"
     },
     {
       "name": "Vitamin B3",
-      "amount": 16.83,
+      "amount": 16.82,
       "unit": "mg"
     },
     {
@@ -135,28 +135,28 @@
       "unit": "µg"
     },
     {
-      "name": "Vitamin E",
-      "amount": 10.14,
-      "unit": "mg"
-    },
-    {
       "name": "Vitamin B5",
       "amount": 5.09,
       "unit": "mg"
     },
     {
-      "name": "Vitamin B2",
-      "amount": 0.57,
+      "name": "Vitamin E",
+      "amount": 6.8,
       "unit": "mg"
     },
     {
       "name": "Zinc",
-      "amount": 5.05,
+      "amount": 5.03,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.56,
       "unit": "mg"
     },
     {
       "name": "Selenium",
-      "amount": 9.73,
+      "amount": 9.47,
       "unit": "µg"
     },
     {
@@ -171,9 +171,9 @@
     }
   ],
   "caloricBreakdown": {
-    "percentProtein": 4.45,
-    "percentFat": 52.4,
-    "percentCarbs": 43.15
+    "percentProtein": 5.3,
+    "percentFat": 48.7,
+    "percentCarbs": 46
   },
   "ingredients": [
     {
@@ -182,11 +182,11 @@
     },
     {
       "name": "vegetable oil",
-      "calories": 481.78
+      "calories": 120.22
     },
     {
       "name": "sugar",
-      "calories": 192.5
+      "calories": 46.2
     },
     {
       "name": "water",

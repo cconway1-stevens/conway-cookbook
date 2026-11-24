@@ -1,53 +1,7 @@
 {
   "fingerprint": "ad429eee7750b072541089a5a2f7774ee88f7112a1345dd51b762a1b83188b6e",
-  "rows": [
-    {
-      "name": "Calories",
-      "amount": 124.56145833333335,
-      "unit": "kcal"
-    },
-    {
-      "name": "Fat",
-      "amount": 2.75,
-      "unit": "g"
-    },
-    {
-      "name": "Saturated Fat",
-      "amount": 1.75,
-      "unit": "g"
-    },
-    {
-      "name": "Cholesterol",
-      "amount": 7.5,
-      "unit": "mg"
-    },
-    {
-      "name": "Sodium",
-      "amount": 98.70286458333334,
-      "unit": "mg"
-    },
-    {
-      "name": "Carbohydrates",
-      "amount": 23.527864583333333,
-      "unit": "g"
-    },
-    {
-      "name": "Fiber",
-      "amount": 0,
-      "unit": "g"
-    },
-    {
-      "name": "Sugar",
-      "amount": 11.302947916666668,
-      "unit": "g"
-    },
-    {
-      "name": "Protein",
-      "amount": 0.6,
-      "unit": "g"
-    }
-  ],
-  "assumptions": "One of 16 bars, using label values for the cereal, marshmallows, and unsalted butter. The estimate excludes the small amount of extra butter used to grease the pan.",
+  "version": 3,
+  "rows": [],
   "sources": [
     {
       "name": "Kellogg’s original cereal label",
@@ -61,5 +15,6 @@
       "name": "Land O’Lakes unsalted butter label",
       "url": "https://www.landolakes.com/products/butter-spreads/unsalted-butter/"
     }
-  ]
+  ],
+  "assumptions": "One of 16 bars, using label values for the cereal, marshmallows, and unsalted butter. The estimate excludes the small amount of extra butter used to grease the pan."
 }

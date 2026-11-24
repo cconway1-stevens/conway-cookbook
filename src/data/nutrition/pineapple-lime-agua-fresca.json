@@ -1,5 +1,6 @@
 {
   "fingerprint": "5f2cd00a647b1d2822a8055f5d4ff0509bae8c02996450e93bddeffcd444d88b",
+  "version": 3,
   "rows": [
     {
       "name": "Calories",
@@ -7,18 +8,28 @@
       "unit": "kcal"
     },
     {
-      "name": "Protein",
-      "amount": 0.94,
+      "name": "Fat",
+      "amount": 0.21,
       "unit": "g"
+    },
+    {
+      "name": "Saturated Fat",
+      "amount": 0.01,
+      "unit": "g"
+    },
+    {
+      "name": "Cholesterol",
+      "amount": 0,
+      "unit": "mg"
+    },
+    {
+      "name": "Sodium",
+      "amount": 10.63,
+      "unit": "mg"
     },
     {
       "name": "Carbohydrates",
       "amount": 28.24,
-      "unit": "g"
-    },
-    {
-      "name": "Fat",
-      "amount": 0.2,
       "unit": "g"
     },
     {
@@ -32,9 +43,129 @@
       "unit": "g"
     },
     {
-      "name": "Sodium",
-      "amount": 10.64,
+      "name": "Protein",
+      "amount": 0.93,
+      "unit": "g"
+    },
+    {
+      "name": "Calcium",
+      "amount": 34.67,
       "unit": "mg"
+    },
+    {
+      "name": "Iron",
+      "amount": 0.51,
+      "unit": "mg"
+    },
+    {
+      "name": "Potassium",
+      "amount": 228.8,
+      "unit": "mg"
+    }
+  ],
+  "more": [
+    {
+      "name": "Net Carbohydrates",
+      "amount": 25.9,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol",
+      "amount": 0,
+      "unit": "g"
+    },
+    {
+      "name": "Alcohol %",
+      "amount": 0,
+      "unit": "%"
+    },
+    {
+      "name": "Vitamin C",
+      "amount": 18.93,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.18,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.22,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 28.96,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B6",
+      "amount": 0.13,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B3",
+      "amount": 0.51,
+      "unit": "mg"
+    },
+    {
+      "name": "Folate",
+      "amount": 9.62,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.04,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin A",
+      "amount": 92.47,
+      "unit": "IU"
+    },
+    {
+      "name": "Phosphorus",
+      "amount": 13.47,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 0.21,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin K",
+      "amount": 1.29,
+      "unit": "µg"
+    },
+    {
+      "name": "Selenium",
+      "amount": 0.72,
+      "unit": "µg"
+    }
+  ],
+  "caloricBreakdown": {
+    "percentProtein": 3.1,
+    "percentFat": 1.6,
+    "percentCarbs": 95.3
+  },
+  "ingredients": [
+    {
+      "name": "pineapple chunks",
+      "calories": 106.46
+    },
+    {
+      "name": "water",
+      "calories": 0
+    },
+    {
+      "name": "lime juice",
+      "calories": 1.88
+    },
+    {
+      "name": "ice",
+      "calories": 0
     }
   ]
 }

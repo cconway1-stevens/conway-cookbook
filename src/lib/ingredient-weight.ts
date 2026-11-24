@@ -140,7 +140,7 @@ const KCAL_PER_GRAM: [RegExp, number][] = [
   [/spaghetti|pasta|noodles/, 3.7], [/graham cracker/, 4.3],
   [/bread|tortilla/, 2.7], [/pie dough|pie crust/, 4.6], [/pie filling/, 1.1],
   [/sausage/, 3.0], [/ground beef/, 2.5], [/ground pork/, 2.6],
-  [/roasted chicken thigh/, 2.3], [/skinless|skin removed/, 1.2], [/chicken thigh/, 2.1], [/chicken breast/, 1.2],
+  [/chicken skin/, 4.5], [/roasted chicken thigh meat/, 1.8], [/roasted chicken thigh/, 2.3], [/skinless|skin removed/, 1.2], [/chicken thigh/, 2.1], [/chicken breast/, 1.2],
   [/egg/, 1.4],
   [/\brum\b|\bgin\b|vodka|bourbon|whiskey|tequila/, 2.3], [/wine/, 0.85], [/ginger beer/, 0.4],
   [/juice/, 0.45], [/green beans/, 0.31], [/black beans|beans/, 0.9],

@@ -19,10 +19,10 @@
   "image": "images/lemon-herb-chicken.jpg",
   "imageAlt": "Painted skillet of golden chicken thighs with lemon and thyme",
   "nutritionAs": {
-    "4 bone-in, skin-on chicken thighs": "13 ounces roasted chicken thigh meat with skin",
+    "4 bone-in, skin-on chicken thighs": "11 ounces roasted chicken thigh meat + 2 ounces roasted chicken skin",
     "1 tablespoon olive oil": "1 teaspoon olive oil"
   },
-  "nutritionNote": "Skin-on thighs are rich: most of their calories come from fat, and a good part of it renders into the pan. So they’re counted as cooked meat and skin: four bone-in thighs weigh about 1½ pounds raw, and with the bone left on the plate and USDA’s 69% roasting yield, that’s about 13 ounces, using USDA data for roasted thighs. Only a third of the oil is counted, since the rest stays in the skillet. Leave the skin on the plate and the fat drops much further.",
+  "nutritionNote": "Skin-on thighs are rich: most of their calories come from fat, and a good part of it renders into the pan. So they’re counted as cooked meat and skin: four bone-in thighs weigh about 1½ pounds raw, and with the bone left on the plate and USDA’s 69% roasting yield, that’s about 13 ounces: 11 of meat and 2 of skin, using USDA data for roasted chicken. Only a third of the oil is counted, since the rest stays in the skillet. Leave the skin on the plate and the fat drops much further.",
   "ingredients": [
     "4 bone-in, skin-on chicken thighs",
     "1 teaspoon kosher salt",

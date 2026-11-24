@@ -18,7 +18,7 @@ for (const recipe of recipes) {
   let existing;
   try { existing = JSON.parse(await readFile(path, 'utf8')); }
   catch (error) { if (error.code !== 'ENOENT') throw error; }
-  if (existing?.fingerprint === input.fingerprint && existing.version === VERSION && (existing.rows.length || existing.unmatched)) continue;
+  if (existing?.fingerprint === input.fingerprint && existing.version === VERSION && (existing.rows.length || existing.unmatched?.length)) continue;
   const apiKey = process.env.SPOONACULAR_API_KEY;
   if (!apiKey) throw Error('Missing SPOONACULAR_API_KEY');
   await new Promise(resolve => setTimeout(resolve, 1100));
@@ -44,8 +44,14 @@ for (const recipe of recipes) {
   });
   const rows = names.map(name => nutrients.find(n => n.name === name))
     .filter(n => n && Number.isFinite(n.amount) && n.amount >= 0 && n.unit);
-  const complete = data.extendedIngredients?.length === input.ingredients.length && data.extendedIngredients.every(i => i.id)
-    && required.every(name => rows.some(n => n.name === name));
+  const matched = data.extendedIngredients?.length === input.ingredients.length && data.extendedIngredients.every(i => i.id);
+  // Spoonacular leaves out nutrients that are zero (no fat in a daiquiri), so once every
+  // ingredient matched and there are calories, a missing required nutrient is 0.
+  const units = { Calories: 'kcal', Sodium: 'mg' };
+  if (matched && rows.some(n => n.name === 'Calories')) for (const name of required) {
+    if (!rows.some(n => n.name === name)) rows.push({ name, amount: 0, unit: units[name] ?? 'g' });
+  }
+  const complete = matched && required.every(name => rows.some(n => n.name === name));
   const nutrient = ({ name, amount, unit }) => ({ name, amount, unit });
   // Share of calories from each macronutrient, from the totals above (4, 9, and 4 kcal per gram).
   const grams = name => nutrients.find(n => n.name === name)?.amount ?? 0;

@@ -1,30 +1,30 @@
 {
-  "fingerprint": "597bfc51349b90f8d96f5573de3feae7ab5a9f549b3f0e4fef25ad7b4eb1f138",
+  "fingerprint": "c711a45db9c73add9cd4ee2a20f4d392aa6fec0ce8db783ff3e841bb783a1b1e",
   "version": 3,
   "rows": [
     {
       "name": "Calories",
-      "amount": 1629.58,
+      "amount": 180.25,
       "unit": "kcal"
     },
     {
       "name": "Fat",
-      "amount": 64.95,
+      "amount": 7.41,
       "unit": "g"
     },
     {
       "name": "Saturated Fat",
-      "amount": 17.58,
+      "amount": 1.87,
       "unit": "g"
     },
     {
       "name": "Cholesterol",
-      "amount": 720,
+      "amount": 69.1,
       "unit": "mg"
     },
     {
       "name": "Sodium",
-      "amount": 1311.3,
+      "amount": 660.4,
       "unit": "mg"
     },
     {
@@ -44,22 +44,22 @@
     },
     {
       "name": "Protein",
-      "amount": 241.22,
+      "amount": 24.16,
       "unit": "g"
     },
     {
       "name": "Calcium",
-      "amount": 133,
+      "amount": 28.86,
       "unit": "mg"
     },
     {
       "name": "Iron",
-      "amount": 12.08,
+      "amount": 1.57,
       "unit": "mg"
     },
     {
       "name": "Potassium",
-      "amount": 2279.59,
+      "amount": 292.18,
       "unit": "mg"
     }
   ],
@@ -81,57 +81,17 @@
     },
     {
       "name": "Vitamin B3",
-      "amount": 76.13,
+      "amount": 7.73,
       "unit": "mg"
     },
     {
       "name": "Selenium",
-      "amount": 236.6,
+      "amount": 23.11,
       "unit": "µg"
     },
     {
       "name": "Vitamin B6",
-      "amount": 3.99,
-      "unit": "mg"
-    },
-    {
-      "name": "Phosphorus",
-      "amount": 1861.27,
-      "unit": "mg"
-    },
-    {
-      "name": "Zinc",
-      "amount": 14.69,
-      "unit": "mg"
-    },
-    {
-      "name": "Vitamin B5",
-      "amount": 9.39,
-      "unit": "mg"
-    },
-    {
-      "name": "Vitamin B2",
-      "amount": 1.43,
-      "unit": "mg"
-    },
-    {
-      "name": "Magnesium",
-      "amount": 206.65,
-      "unit": "mg"
-    },
-    {
-      "name": "Vitamin B12",
-      "amount": 2.81,
-      "unit": "µg"
-    },
-    {
-      "name": "Vitamin B1",
-      "amount": 0.61,
-      "unit": "mg"
-    },
-    {
-      "name": "Copper",
-      "amount": 0.6,
+      "amount": 0.43,
       "unit": "mg"
     },
     {
@@ -140,18 +100,58 @@
       "unit": "mg"
     },
     {
+      "name": "Phosphorus",
+      "amount": 194.97,
+      "unit": "mg"
+    },
+    {
+      "name": "Zinc",
+      "amount": 1.5,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B5",
+      "amount": 0.96,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B2",
+      "amount": 0.16,
+      "unit": "mg"
+    },
+    {
+      "name": "Magnesium",
+      "amount": 24.4,
+      "unit": "mg"
+    },
+    {
       "name": "Manganese",
-      "amount": 0.26,
+      "amount": 0.12,
+      "unit": "mg"
+    },
+    {
+      "name": "Vitamin B12",
+      "amount": 0.3,
+      "unit": "µg"
+    },
+    {
+      "name": "Vitamin B1",
+      "amount": 0.07,
+      "unit": "mg"
+    },
+    {
+      "name": "Copper",
+      "amount": 0.1,
       "unit": "mg"
     },
     {
       "name": "Folate",
-      "amount": 51.53,
+      "amount": 8.14,
       "unit": "µg"
     },
     {
       "name": "Vitamin A",
-      "amount": 448.62,
+      "amount": 92.8,
       "unit": "IU"
     },
     {
@@ -161,14 +161,14 @@
     }
   ],
   "caloricBreakdown": {
-    "percentProtein": 61.6,
-    "percentFat": 37.3,
-    "percentCarbs": 1
+    "percentProtein": 53.9,
+    "percentFat": 37.2,
+    "percentCarbs": 8.9
   },
   "ingredients": [
     {
-      "name": "roasted chicken thighs",
-      "calories": 1603.2
+      "name": "roasted chicken thigh meat",
+      "calories": 153.87
     },
     {
       "name": "kosher salt",

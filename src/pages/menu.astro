@@ -73,7 +73,14 @@ const courses = courseNames.map((c) => ({ c, list: recipes.filter((r) => r.data.
         </section>
       </section>
       <section class="pane shopping" id="pane-shop" role="tabpanel" aria-labelledby="tab-shop" tabindex="0" hidden>
-        <h2>Shopping list</h2>
+        <div class="shop-head">
+          <h2>Shopping list</h2>
+          <div class="shop-views" role="group" aria-label="Shopping list view">
+            <button type="button" data-shop-view="recipe" aria-pressed="true">By recipe</button>
+            <button type="button" data-shop-view="grocery" aria-pressed="false">Grocery list</button>
+          </div>
+        </div>
+        <p class="shop-hint" id="shop-hint" hidden>The same ingredient from every dish on one line, added up, by store aisle.</p>
         <div id="shop"></div>
         <div class="block-actions"><button type="button" class="button quiet" id="print-shop">Print list</button><button type="button" class="button quiet" id="copy-shop">Copy list</button></div>
       </section>

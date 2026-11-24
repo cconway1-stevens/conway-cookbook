@@ -2,10 +2,10 @@
 // (most first, as on a package) and say which major allergens they contain.
 // These are kitchen estimates, not lab values.
 
-const FRACTIONS: Record<string, number> = { '¼': .25, '½': .5, '¾': .75, '⅓': 1 / 3, '⅔': 2 / 3, '⅛': .125, '⅜': .375, '⅝': .625, '⅞': .875 };
-const NUMBER = String.raw`\d+(?:\.\d+)?(?:\s*\d+\/\d+)?[¼½¾⅓⅔⅛⅜⅝⅞]?|\d+\/\d+|[¼½¾⅓⅔⅛⅜⅝⅞]`;
+export const FRACTIONS: Record<string, number> = { '¼': .25, '½': .5, '¾': .75, '⅓': 1 / 3, '⅔': 2 / 3, '⅛': .125, '⅜': .375, '⅝': .625, '⅞': .875 };
+export const NUMBER = String.raw`\d+(?:\.\d+)?(?:\s*\d+\/\d+)?[¼½¾⅓⅔⅛⅜⅝⅞]?|\d+\/\d+|[¼½¾⅓⅔⅛⅜⅝⅞]`;
 
-const toNumber = (text: string) => {
+export const toNumber = (text: string) => {
   let total = 0;
   for (const part of text.trim().match(/\d+\/\d+|\d+(?:\.\d+)?|[¼½¾⅓⅔⅛⅜⅝⅞]/g) ?? []) {
     total += part.includes('/') ? Number(part.split('/')[0]) / Number(part.split('/')[1]) : FRACTIONS[part] ?? Number(part);

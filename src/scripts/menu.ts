@@ -1,6 +1,7 @@
 import { replay } from './motion';
 import { decodeMenuPayload, encodeMenu, type Menu, type MenuItem } from '../lib/menu-link';
 import { book, clean, load, save, toast } from './menu-store';
+import { groceryList, totalText, useText } from '../lib/grocery';
 
 interface Dish { id: string; title: string; description: string; url: string; section: string;  }
 const SECTIONS = book.sections;
@@ -161,6 +162,52 @@ function detail(id: string) {
 let shoppingRevision = 0;
 let shoppingText = '';
 const checkedShoppingLines = new Set<string>();
+// Which way the list is shown: by recipe, or as one grocery list. Remembered on this device.
+let shopView: 'recipe' | 'grocery' = 'recipe';
+try { if (localStorage.getItem('shop-view') === 'grocery') shopView = 'grocery'; } catch { /* storage blocked */ }
+function showShopView() {
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-shop-view]')) button.setAttribute('aria-pressed', String(button.dataset.shopView === shopView));
+  $('shop-hint').hidden = shopView !== 'grocery';
+}
+for (const button of document.querySelectorAll<HTMLButtonElement>('[data-shop-view]')) button.addEventListener('click', () => {
+  shopView = button.dataset.shopView === 'grocery' ? 'grocery' : 'recipe';
+  try { localStorage.setItem('shop-view', shopView); } catch { /* storage blocked */ }
+  showShopView();
+  void shopping(listed());
+});
+showShopView();
+
+// A checkable row; ticks are kept while you switch views.
+function shopRow(key: string, ...content: Node[]) {
+  const li = el('li'), label = el('label'), input = document.createElement('input');
+  input.type = 'checkbox'; input.value = key; input.checked = checkedShoppingLines.has(key);
+  input.addEventListener('change', () => { if (input.checked) checkedShoppingLines.add(key); else checkedShoppingLines.delete(key); });
+  const body = el('span'); body.append(...content);
+  label.append(input, body); li.append(label);
+  return li;
+}
+
+function groceryView(box: HTMLElement, items: MenuItem[], data: Detail[]) {
+  const aisles = groceryList(data.map(({ lines }, i) => ({ title: byId.get(items[i].id)!.title, lines })));
+  const text: string[] = [];
+  for (const { aisle, items: rows } of aisles) {
+    box.append(el('h3', '', aisle));
+    const ul = el('ul', 'grocery');
+    text.push(aisle);
+    for (const item of rows) {
+      const total = totalText(item);
+      const name = el('span', 'g-name', item.name.charAt(0).toUpperCase() + item.name.slice(1));
+      const amount = el('span', 'g-amount', total);
+      const uses = el('span', 'g-uses', item.uses.map((u) => `${u.recipe}${u.amounts.length ? ' · ' + useText(u.amounts) : ''}`).join('  ·  '));
+      if (item.uses.length > 1) uses.prepend(el('b', '', `${item.uses.length} dishes: `));
+      ul.append(shopRow('g:' + item.key, name, amount, uses));
+      text.push(`- ${name.textContent}${total ? ' — ' + total : ''} (${item.uses.map((u) => u.recipe + (u.amounts.length ? ' ' + useText(u.amounts) : '')).join('; ')})`);
+    }
+    box.append(ul);
+    text.push('');
+  }
+  shoppingText = text.join('\n').trim();
+}
 async function shopping(items: MenuItem[]) {
   const revision = ++shoppingRevision;
   const box = $('shop');
@@ -172,6 +219,12 @@ async function shopping(items: MenuItem[]) {
     const data = await Promise.all(items.map(item => detail(item.id)));
     if (revision !== shoppingRevision) return;
     box.replaceChildren();
+    box.dataset.view = shopView;
+    if (shopView === 'grocery') {
+      groceryView(box, items, data);
+      buttons.forEach(button => button.disabled = false);
+      return;
+    }
     const groups = new Map<string, { key: string; text: string }[]>();
     const combined = new Map<string, { quantity: number; ingredient: string; unit: string; dishes: Set<string> }>();
     data.forEach(({ lines, measures }, index) => {
